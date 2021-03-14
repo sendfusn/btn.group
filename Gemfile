@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.1'
 
 # Provides Haml generators for Rails 4 etc
-gem 'haml-rails', '~> 1.0'
+gem "haml-rails", "~> 2.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'
 
