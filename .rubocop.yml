@@ -1,0 +1,123 @@
+# inherit_from: .rubocop_todo.yml
+require:
+  - rubocop-rails
+  - rubocop-performance
+  # - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.7.2
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'bin/**'
+    - 'lib/tasks/*'
+    - 'node_modules/**/*'
+    - vendor/bundle/**/*
+
+Rails:
+  Enabled: true
+
+Layout/HeredocIndentation:
+  Enabled: false
+
+Layout/ParameterAlignment:
+  Enabled: false
+
+Layout/CommentIndentation:
+  Enabled: false
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Layout/IndentationConsistency:
+  EnforcedStyle: indented_internal_methods
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 160
+  Exclude:
+    - 'Gemfile'
+
+Layout/IndentationStyle:
+  Enabled: false
+
+Lint/RescueException:
+  Exclude:
+    - 'config/application.rb'
+
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+Metrics/MethodLength:
+  Max: 40
+
+Metrics/ClassLength:
+  Max: 200
+  Exclude:
+    - 'app/models/*.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'app/**/concerns/*.rb'
+    - 'config/routes.rb'
+    - 'app/admin/*'
+
+Metrics/AbcSize:
+  Max: 50
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Performance/Casecmp:
+  Enabled: false
+
+Rails/ApplicationJob:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+# Warnings at application launch (Rails.logger not defined yet)
+Rails/Output:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: true
+
+Style/IfUnlessModifier: 
+  Enabled: true
+
+Style/Lambda:
+  EnforcedStyle: lambda
+
+Style/MixinUsage:
+  Exclude:
+    - 'db/seeds.rb'
+
+Style/RegexpLiteral:
+  EnforcedStyle: mixed
+  AllowInnerSlashes: true
+
+Style/RedundantPercentQ:
+  Enabled: true
+
+Style/SymbolProc:
+  Enabled: false
