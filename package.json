@@ -2,16 +2,22 @@
   "name": "pay-me-crypto",
   "private": true,
   "dependencies": {
+    "@chainapsis/cosmosjs": "0.0.3-alpha.3",
+    "@cosmjs/launchpad": "^0.23.0",
     "@popperjs/core": "2.0.0-alpha.1",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
+    "axios": "^0.21.1",
     "bootstrap": "5.0.0-beta2",
-    "jquery": "^3.6.0"
+    "fast-deep-equal": "^3.1.1",
+    "jquery": "^3.6.0",
+    "secretjs": "0.10.3"
   },
   "version": "0.1.0",
   "devDependencies": {
+    "html-webpack-plugin": "^4.3.0",
     "webpack-dev-server": "^3.11.2"
   }
 }

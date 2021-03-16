@@ -3,11 +3,24 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-import '../js/bootstrap_js_files.js'  
-
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+
+// BOOTSTRAP
+import 'bootstrap/js/src/alert'
+import 'bootstrap/js/src/button'
+import 'bootstrap/js/src/carousel'
+import 'bootstrap/js/src/collapse'
+import 'bootstrap/js/src/dropdown'
+import 'bootstrap/js/src/modal'
+import 'bootstrap/js/src/popover'
+import 'bootstrap/js/src/scrollspy'
+import 'bootstrap/js/src/tab'
+import 'bootstrap/js/src/toast'
+import 'bootstrap/js/src/tooltip'
 require("jquery")
 Rails.start()
 ActiveStorage.start()
+
+const { SigningCosmWasmClient } = require('secretjs');

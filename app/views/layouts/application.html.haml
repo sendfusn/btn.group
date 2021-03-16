@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title PayMeCrypto
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_pack_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
+  %body
+    %nav.navbar{ style: "background-color: #17a2b8" }
+      .container-fluid
+        %a.navbar-brand.text-white{ href: "/invoices" } Pay me crypto
+    = yield
