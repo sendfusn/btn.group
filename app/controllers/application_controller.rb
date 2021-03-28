@@ -4,4 +4,6 @@
 
 class ApplicationController < ActionController::Base
   def home; end
+
+  def secret_alias; end
 end

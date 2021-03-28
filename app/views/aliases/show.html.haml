@@ -1,0 +1,11 @@
+.container#alias-search
+  .row.mt-5
+    .col-lg-6.offset-lg-3
+      .card
+        .card-body
+          %h1 Alias Search
+          %form{:name => "aliasSearchForm"}
+            .mb-3
+              %label{ for: 'secret-alias' } Search
+              %input#secret-alias.form-control.w-100{:placeholder => "bane..."}
+            %input.btn.btn-primary{ type: 'submit', value: 'Search' }
