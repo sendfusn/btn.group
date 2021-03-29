@@ -1,0 +1,15 @@
+.container#aliases-search
+  .row.mt-5
+    .col-lg-6.offset-lg-3
+      .card
+        .card-body
+          %h1 Search
+          %form{:name => "aliasSearchForm"}
+            .mb-3
+              %label{ for: 'secret-alias' } Alias
+              %input#secret-alias.form-control.w-100{name: "alias"}
+            %button.btn.btn-primary#search-button{type: "submit"} Search
+      .card#result.mt-3.d-none
+        .card-body
+          %h3 Address
+          %p#human-address

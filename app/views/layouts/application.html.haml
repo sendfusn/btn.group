@@ -10,5 +10,6 @@
   %body
     %nav.navbar{ style: "background-color: #17a2b8" }
       .container-fluid
-        %a.navbar-brand.text-white{ href: "/invoices" } Pay me crypto
+        %a.navbar-brand.text-white{ href: "/" } Pay me crypto
+    .alert.alert-danger.d-none#alert-danger{role: 'alert'}
     = yield

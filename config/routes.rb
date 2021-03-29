@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :aliases, only: %i[index show]
+  resources :aliases, only: %i[index]
   resources :invoices, only: %i[index new show edit]
 
-  get 'secret-alias', to: 'application#secret_alias'
+  get 'aliases/search', to: 'aliases#search'
 
-  root 'application#home'
+  root 'aliases#search'
 end
