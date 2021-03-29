@@ -3,12 +3,11 @@
     .col-lg-6.offset-lg-3
       .card
         .card-body
-          %h1 Search
+          %h3 Alias
           %form{:name => "aliasSearchForm"}
             .mb-3
-              %label{ for: 'secret-alias' } Alias
               %input#secret-alias.form-control.w-100{name: "alias"}
-            %button.btn.btn-primary#search-button{type: "submit"} Search
+            %button.btn.btn-primary#search-button{type: "submit", disabled: true} Search
       .card#result.mt-3.d-none
         .card-body
           %h3 Address

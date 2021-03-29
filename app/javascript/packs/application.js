@@ -21,9 +21,9 @@ import 'bootstrap/js/src/toast'
 import 'bootstrap/js/src/tooltip'
 require("jquery")
 
-Rails.start()
-ActiveStorage.start()
-
 // APP
 import '../src/aliases/search'
-import '../src/aliases/edit'
+import '../src/invoices/edit'
+
+Rails.start()
+ActiveStorage.start()
