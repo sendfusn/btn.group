@@ -1,6 +1,9 @@
 .container#aliases-search
   .row.mt-5
     .col-lg-6.offset-lg-3
+      .row
+        .col-12
+          = link_to 'New', new_alias_path, class: 'btn btn-primary float-end mb-3'
       .card
         .card-body
           %h3 Alias

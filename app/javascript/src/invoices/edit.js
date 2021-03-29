@@ -1,7 +1,6 @@
 $(document).ready(function(){
   if($("#app").length) {
     window.onload = async () => { 
-      console.log(8888)
       const { SigningCosmWasmClient } = require('secretjs');
       var chainId = 'holodeck-2';
 

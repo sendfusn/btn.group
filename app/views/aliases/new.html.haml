@@ -1,0 +1,11 @@
+.container#aliases-new
+  .row.mt-5
+    .col-lg-6.offset-lg-3
+      .card
+        .card-body
+          %h3 New Alias
+          %form{:name => "aliasCreateForm"}
+            .mb-3
+              %input#alias.form-control.w-100{name: "alias"}
+            = link_to "Cancel", aliases_search_path, class: 'btn btn-link', id: 'cancel-button'
+            %button.btn.btn-primary#create-button{type: "submit"} Create
