@@ -89,6 +89,7 @@ $(document).ready(function(){
                 },
               },
             );
+            $("#create-button").prop("disabled", false);
           } catch (error) {
             console.error(error)
           }
@@ -99,6 +100,7 @@ $(document).ready(function(){
 
       document.aliasCreateForm.onsubmit = () => {
         (async () => {
+          $("#create-button").prop("disabled", true);
           const contracts = await cosmJS.getContracts(28039)
           const contractAddress = contracts[0].address
           try {
@@ -107,20 +109,18 @@ $(document).ready(function(){
             let promise = cosmJS.execute(contractAddress, handleMsg);
             promise.then(
               function(value) {
-                console.log(777)
                 console.log(value)
+                $("#create-button").prop("disabled", false);
               },
               function(error) {
-                console.log(33333)
                 console.log(error)
+                $("#create-button").prop("disabled", false);
               }
             );
           }
           catch(err) {
             $("#alert-danger").removeClass("d-none")
             $("#alert-danger").text(err)
-          }
-          finally {
             $("#create-button").prop("disabled", false);
           }
         })();
