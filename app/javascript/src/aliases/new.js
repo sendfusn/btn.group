@@ -101,22 +101,40 @@ $(document).ready(function(){
       document.aliasCreateForm.onsubmit = () => {
         (async () => {
           $("#create-button").prop("disabled", true);
-          const contracts = await cosmJS.getContracts(28039)
+          const contracts = await cosmJS.getContracts(28101)
           const contractAddress = contracts[0].address
+          (async () => {
+            try {
+              let alias = document.aliasSearchForm.alias.value;
+              let result = await client.queryContractSmart(contractAddress, { "show": { "alias_string": alias }})
+              $("#result").removeClass("d-none");
+              $("#human-address").text(result.alias.human_address)
+            }
+            catch(err) {
+              $("#alert-danger").removeClass("d-none")
+              $("#alert-danger").text(err)
+            }
+            finally {
+              $("#search-button").prop("disabled", false);
+            }
+          })();
           try {
             let alias = document.aliasCreateForm.alias.value;
             let handleMsg = { create: {alias_string: alias} }
-            let promise = cosmJS.execute(contractAddress, handleMsg);
-            promise.then(
-              function(value) {
-                console.log(value)
-                $("#create-button").prop("disabled", false);
-              },
-              function(error) {
-                console.log(error)
-                $("#create-button").prop("disabled", false);
-              }
-            );
+            let response = await cosmJS.execute(contractAddress, handleMsg);
+            console.log('response: ', response);
+            // promise.then(
+            //   function(value) {
+            //     console.log(value)
+            //     console.log(332423423)
+            //     $("#create-button").prop("disabled", false);
+            //   },
+            //   function(error) {
+            //     console.log(error)
+            //     console.log(54354353)
+            //     $("#create-button").prop("disabled", false);
+            //   }
+            // );
           }
           catch(err) {
             $("#alert-danger").removeClass("d-none")

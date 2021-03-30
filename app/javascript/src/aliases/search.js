@@ -4,7 +4,7 @@ $(document).ready(function(){
       const { CosmWasmClient } = require('secretjs');
       // var chainId = 'holodeck-2';
       const client = new CosmWasmClient("https://bootstrap.secrettestnet.io")
-      const contracts = await client.getContracts(28039)
+      const contracts = await client.getContracts(28101)
       const contractAddress = contracts[0].address
 
       // Keplr extension injects the offline signer that is compatible with cosmJS.
