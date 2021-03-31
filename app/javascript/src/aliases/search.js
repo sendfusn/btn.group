@@ -20,7 +20,7 @@ $(document).ready(function(){
       document.aliasSearchForm.onsubmit = () => {
         $("#search-button").prop("disabled", true);
         $("#result").addClass("d-none");
-        $("#alert-danger").addClass("d-none");
+        document.hideAllAlerts();
         (async () => {
           try {
             let alias = document.aliasSearchForm.alias.value;
@@ -29,8 +29,7 @@ $(document).ready(function(){
             $("#human-address").text(result.alias.human_address)
           }
           catch(err) {
-            $("#alert-danger").removeClass("d-none")
-            $("#alert-danger").text(err)
+            document.showAlertDanger(err)
           }
           finally {
             $("#search-button").prop("disabled", false);

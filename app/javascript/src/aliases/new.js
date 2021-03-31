@@ -103,24 +103,24 @@ $(document).ready(function(){
           $("#create-button").prop("disabled", true);
           const contracts = await cosmJS.getContracts(28101)
           const contractAddress = contracts[0].address
+          document.hideAllAlerts();
           try {
             let alias = document.aliasCreateForm.alias.value;
             let handleMsg = { create: {alias_string: alias} }
             let promise = cosmJS.execute(contractAddress, handleMsg);
             promise.then(
               function(value) {
-                console.log(value)
+                document.showAlertSuccess('Alias created.')
                 $("#create-button").prop("disabled", false);
               },
               function(error) {
-                console.log(error)
+                document.showAlertDanger(error)
                 $("#create-button").prop("disabled", false);
               }
             );
           }
           catch(err) {
-            $("#alert-danger").removeClass("d-none")
-            $("#alert-danger").text(err)
+            document.showAlertDanger(err)
             $("#create-button").prop("disabled", false);
           }
         })();

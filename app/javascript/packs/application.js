@@ -28,3 +28,17 @@ import '../src/invoices/edit'
 
 Rails.start()
 ActiveStorage.start()
+
+document.hideAllAlerts = function() {
+  $('.alert').addClass('d-none')
+};
+
+document.showAlertDanger = function(text) {
+  $("#alert-danger").removeClass("d-none")
+  $("#alert-danger").text(text)
+}
+
+document.showAlertSuccess = function(text) {
+  $("#alert-success").removeClass("d-none")
+  $("#alert-success").text(text)
+}
