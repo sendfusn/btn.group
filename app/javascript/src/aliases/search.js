@@ -16,10 +16,14 @@ $(document).ready(function(){
       }
 
       $("#search-button").prop("disabled", false);
+      $("#loading").addClass("d-none")
+      $("#ready").removeClass("d-none")
 
       document.aliasSearchForm.onsubmit = () => {
         $("#search-button").prop("disabled", true);
         $("#result").addClass("d-none");
+        $("#loading").removeClass("d-none")
+        $("#ready").addClass("d-none")
         document.hideAllAlerts();
         (async () => {
           try {
@@ -33,6 +37,8 @@ $(document).ready(function(){
           }
           finally {
             $("#search-button").prop("disabled", false);
+            $("#loading").addClass("d-none")
+            $("#ready").removeClass("d-none")
           }
         })();
 

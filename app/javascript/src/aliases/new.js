@@ -90,6 +90,8 @@ $(document).ready(function(){
               },
             );
             $("#create-button").prop("disabled", false);
+            $("#loading").addClass("d-none")
+            $("#ready").removeClass("d-none")
           } catch (error) {
             console.error(error)
           }
@@ -101,6 +103,8 @@ $(document).ready(function(){
       document.aliasCreateForm.onsubmit = () => {
         (async () => {
           $("#create-button").prop("disabled", true);
+          $("#loading").removeClass("d-none")
+          $("#ready").addClass("d-none")
           const contracts = await cosmJS.getContracts(28101)
           const contractAddress = contracts[0].address
           document.hideAllAlerts();
@@ -112,16 +116,22 @@ $(document).ready(function(){
               function(value) {
                 document.showAlertSuccess('Alias created.')
                 $("#create-button").prop("disabled", false);
+                $("#loading").addClass("d-none")
+                $("#ready").removeClass("d-none")
               },
               function(error) {
                 document.showAlertDanger(error)
                 $("#create-button").prop("disabled", false);
+                $("#loading").addClass("d-none")
+                $("#ready").removeClass("d-none")
               }
             );
           }
           catch(err) {
             document.showAlertDanger(err)
             $("#create-button").prop("disabled", false);
+            $("#loading").addClass("d-none")
+            $("#ready").removeClass("d-none")
           }
         })();
 

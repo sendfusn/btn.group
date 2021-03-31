@@ -8,4 +8,9 @@
             .mb-3
               %input#alias.form-control.w-100{name: "alias"}
             = link_to "Cancel", aliases_search_path, class: 'btn btn-link', id: 'cancel-button'
-            %button.btn.btn-primary#create-button{type: "submit", disabled: true} Create
+            %button.btn.btn-primary#create-button{type: "submit", disabled: true}
+              #loading
+                %span.spinner-grow.spinner-grow-sm{"aria-hidden" => "true", :role => "status"}
+                %span#loading Loading...
+              #ready.d-none
+                Create
