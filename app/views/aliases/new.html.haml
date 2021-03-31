@@ -6,7 +6,7 @@
           %h3 New Alias
           %form{:name => "aliasCreateForm"}
             .mb-3
-              %input#alias.form-control.w-100{name: "alias"}
+              %input#alias.form-control.w-100{name: "alias", required: true}
             = link_to "Cancel", aliases_search_path, class: 'btn btn-link', id: 'cancel-button'
             %button.btn.btn-primary#create-button{type: "submit", disabled: true}
               #loading
