@@ -1,8 +1,41 @@
 $(document).ready(function(){
   if($("#aliases-new").length) {
     window.onload = async () => { 
-      const { SigningCosmWasmClient } = require('secretjs');
-      var chainId = 'holodeck-2';
+      const customFees = {
+        upload: {
+          amount: [{ amount: '2000000', denom: 'uscrt' }],
+          gas: '2000000',
+        },
+        init: {
+          amount: [{ amount: '500000', denom: 'uscrt' }],
+          gas: '500000',
+        },
+        exec: {
+          amount: [{ amount: '500000', denom: 'uscrt' }],
+          gas: '500000',
+        },
+        send: {
+          amount: [{ amount: '80000', denom: 'uscrt' }],
+          gas: '80000',
+        },
+      };
+
+      require('dotenv').config();
+      const {
+        EnigmaUtils, Secp256k1Pen, SigningCosmWasmClient, pubkeyToAddress, encodeSecp256k1Pubkey,
+      } = require('secretjs');
+      const httpUrl = `https://secret-2--lcd--full.datahub.figment.io/apikey/${API_KEY}/`;
+
+      // 1. Initialize client
+      const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
+
+      const client = new SigningCosmWasmClient(
+        httpUrl,
+        accAddress,
+        (signBytes) => signingPen.sign(signBytes),
+        txEncryptionSeed, customFees,
+      );
+      var contractAddress = 'secret1zm55tcme6epjl4jt30v05gh9xetyp9e3vvv6nr'
 
       // Keplr extension injects the offline signer that is compatible with cosmJS.
       // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
@@ -10,122 +43,32 @@ $(document).ready(function(){
       // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
       if (!window.getOfflineSigner || !window.keplr) {
         alert("Please install keplr extension");
-      } else {
-        if (window.keplr.experimentalSuggestChain) {
-          try {
-            // Setup Secret Testnet (not needed on mainnet)
-            // Keplr v0.6.4 introduces an experimental feature that supports the feature to suggests the chain from a webpage.
-            // cosmoshub-3 is integrated to Keplr so the code should return without errors.
-            // The code below is not needed for cosmoshub-3, but may be helpful if you’re adding a custom chain.
-            // If the user approves, the chain will be added to the user's Keplr extension.
-            // If the user rejects it or the suggested chain information doesn't include the required fields, it will throw an error.
-            // If the same chain id is already registered, it will resolve and not require the user interactions.
-            await window.keplr.experimentalSuggestChain({
-              chainId: chainId,
-              chainName: 'Secret Testnet',
-              rpc: 'http://bootstrap.secrettestnet.io:26657',
-              rest: 'https://bootstrap.secrettestnet.io',
-              bip44: {
-                coinType: 529,
-              },
-              coinType: 529,
-              stakeCurrency: {
-                coinDenom: 'SCRT',
-                coinMinimalDenom: 'uscrt',
-                coinDecimals: 6,
-              },
-              bech32Config: {
-                bech32PrefixAccAddr: 'secret',
-                bech32PrefixAccPub: 'secretpub',
-                bech32PrefixValAddr: 'secretvaloper',
-                bech32PrefixValPub: 'secretvaloperpub',
-                bech32PrefixConsAddr: 'secretvalcons',
-                bech32PrefixConsPub: 'secretvalconspub',
-              },
-              currencies: [
-                {
-                  coinDenom: 'SCRT',
-                  coinMinimalDenom: 'uscrt',
-                  coinDecimals: 6,
-                },
-              ],
-              feeCurrencies: [
-                {
-                  coinDenom: 'SCRT',
-                  coinMinimalDenom: 'uscrt',
-                  coinDecimals: 6,
-                },
-              ],
-              gasPriceStep: {
-                low: 0.1,
-                average: 0.25,
-                high: 0.4,
-              },
-              features: ['secretwasm'],
-            });
-
-            // This method will ask the user whether or not to allow access if they haven't visited this website.
-            // Also, it will request user to unlock the wallet if the wallet is locked.
-            // If you don't request enabling before usage, there is no guarantee that other methods will work.
-            await window.keplr.enable(chainId);
-
-            // @ts-ignore
-            const keplrOfflineSigner = window.getOfflineSigner(chainId);
-            const accounts = await keplrOfflineSigner.getAccounts();
-            var address = accounts[0].address;
-            var cosmJS = new SigningCosmWasmClient(
-              'https://bootstrap.secrettestnet.io/',
-              address,
-              keplrOfflineSigner,
-              window.getEnigmaUtils(chainId),
-              {
-                init: {
-                  amount: [{ amount: '300000', denom: 'uscrt' }],
-                  gas: '300000',
-                },
-                exec: {
-                  amount: [{ amount: '300000', denom: 'uscrt' }],
-                  gas: '300000',
-                },
-              },
-            );
-            $("#create-button").prop("disabled", false);
-            $("#loading").addClass("d-none")
-            $("#ready").removeClass("d-none")
-          } catch (error) {
-            console.error(error)
-          }
-        } else {
-          alert("Please use the recent version of keplr extension");
-        }
       }
+
+      $("#create-button").prop("disabled", false);
+      $("#loading").addClass("d-none")
+      $("#ready").removeClass("d-none")
 
       document.aliasCreateForm.onsubmit = () => {
         (async () => {
           $("#create-button").prop("disabled", true);
           $("#loading").removeClass("d-none")
           $("#ready").addClass("d-none")
-          const contracts = await cosmJS.getContracts(28101)
-          const contractAddress = contracts[0].address
           document.hideAllAlerts();
           try {
             let alias = document.aliasCreateForm.alias.value;
             let handleMsg = { create: {alias_string: alias} }
-            let promise = cosmJS.execute(contractAddress, handleMsg);
-            promise.then(
-              function(value) {
-                document.showAlertSuccess('Alias created.')
+            let response = await client.execute(contractAddress, handleMsg)
+              .catch((err) => {
+                document.showAlertDanger(err)
                 $("#create-button").prop("disabled", false);
                 $("#loading").addClass("d-none")
                 $("#ready").removeClass("d-none")
-              },
-              function(error) {
-                document.showAlertDanger(error)
-                $("#create-button").prop("disabled", false);
-                $("#loading").addClass("d-none")
-                $("#ready").removeClass("d-none")
-              }
-            );
+              });
+            document.showAlertSuccess('Alias created.')
+            $("#create-button").prop("disabled", false);
+            $("#loading").addClass("d-none")
+            $("#ready").removeClass("d-none")
           }
           catch(err) {
             document.showAlertDanger(err)

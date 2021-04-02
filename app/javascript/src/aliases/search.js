@@ -1,11 +1,44 @@
 $(document).ready(function(){
   if($("#aliases-search").length) {
     window.onload = async () => {
-      const { CosmWasmClient } = require('secretjs');
-      // var chainId = 'holodeck-2';
-      const client = new CosmWasmClient("https://bootstrap.secrettestnet.io")
-      const contracts = await client.getContracts(28101)
-      const contractAddress = contracts[0].address
+      const customFees = {
+        upload: {
+          amount: [{ amount: '2000000', denom: 'uscrt' }],
+          gas: '2000000',
+        },
+        init: {
+          amount: [{ amount: '500000', denom: 'uscrt' }],
+          gas: '500000',
+        },
+        exec: {
+          amount: [{ amount: '500000', denom: 'uscrt' }],
+          gas: '500000',
+        },
+        send: {
+          amount: [{ amount: '80000', denom: 'uscrt' }],
+          gas: '80000',
+        },
+      };
+
+      require('dotenv').config();
+      const {
+        EnigmaUtils, Secp256k1Pen, SigningCosmWasmClient, pubkeyToAddress, encodeSecp256k1Pubkey,
+      } = require('secretjs');
+      const httpUrl = `https://secret-2--lcd--full.datahub.figment.io/apikey/${API_KEY}/`;
+
+      // 1. Initialize client
+      const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
+
+      const client = new SigningCosmWasmClient(
+        httpUrl,
+        accAddress,
+        (signBytes) => signingPen.sign(signBytes),
+        txEncryptionSeed, customFees,
+      );
+      var contractAddress = 'secret1zm55tcme6epjl4jt30v05gh9xetyp9e3vvv6nr'
+
+      // Load environment variables
+
 
       // Keplr extension injects the offline signer that is compatible with cosmJS.
       // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
@@ -28,7 +61,8 @@ $(document).ready(function(){
         (async () => {
           try {
             let alias = document.aliasSearchForm.alias.value;
-            let result = await client.queryContractSmart(contractAddress, { "show": { "alias_string": alias }})
+            console.log(contractAddress)
+            let result = await client.queryContractSmart(contractAddress, { show: { alias_string: alias }})
             $("#result").removeClass("d-none");
             $("#human-address").text(result.alias.human_address)
           }
