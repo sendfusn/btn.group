@@ -3,6 +3,8 @@
 class DatahubController < ApplicationController
   include ReverseProxy::Controller
 
+  skip_before_action :verify_authenticity_token
+
   def index
     datahub_url = "https://secret-2--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}"
     path = request.fullpath.split('datahub').second
