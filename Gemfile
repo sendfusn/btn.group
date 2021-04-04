@@ -10,6 +10,7 @@ gem 'haml-rails', '~> 2.0'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
+gem 'rack-cors'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'
 gem 'rails-reverse-proxy'
