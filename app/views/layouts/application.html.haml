@@ -1,12 +1,19 @@
 !!!
 %html
   %head
-    %title PayMeCrypto
+    %title Secret Network Services
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all'
     = javascript_pack_tag 'application'
+
+    // FONT AWESOME (REQUIRED BY BOOTSTRAP TABLE)
+    %link{:crossorigin => "anonymous", :href => "https://use.fontawesome.com/releases/v5.6.3/css/all.css", :integrity => "sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/", :rel => "stylesheet"}
+
+    // BOOTSTRAP TABLE
+    %link{:href => "https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css", :rel => "stylesheet"}/
+    %script{:src => "https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"}
   %body
     %nav.navbar{ style: "background-color: #17a2b8" }
       .container-fluid
