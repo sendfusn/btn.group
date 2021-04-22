@@ -9,27 +9,41 @@
             %th{ scope: 'col', 'data-field': 'tvl'} TVL
             %th{ scope: 'col', 'data-field': 'apy'} APY
             %th{ scope: 'col', 'data-field': 'deposit' } Deposit
+        %tbody
+          %tr
+            %td{'colspan': 4}
+              .card
+                .card-body
+                  .row
+                    .col-sm-3
+                      %div Wallet
+                      %input{val: 0}
+                    .col-sm-3
+                      %div Deposit
+                      %input{val: 0}
+                      %button
 
-:javascript
-  function detailFormatter(index, row) {
-    var html = []
-    $.each(row, function (key, value) {
-      html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-    })
-    return html.join('')
-  }
+
+-# :javascript
+-#   function detailFormatter(index, row) {
+-#     var html = ['<div class="card"><div class="card-body">This is some text within a card body.</div></div>']
+-#     $.each(row, function (key, value) {
+-#       html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+-#     })
+-#     return html.join('')
+-#   }
 
 
-  var $table = $('#table')
+-#   var $table = $('#table')
 
-  $(function() {
-    var data = [
-      {
-        'token': 'sSCRT-SEFI LP',
-        'tvl': '$0',
-        'apy': '0%',
-        'deposit': '$3'
-      }
-    ]
-    $table.bootstrapTable({data: data, detailView: true})
-  })
+-#   $(function() {
+-#     var data = [
+-#       {
+-#         'token': 'sSCRT-SEFI LP',
+-#         'tvl': '$0',
+-#         'apy': '0%',
+-#         'deposit': '$3'
+-#       }
+-#     ]
+-#     $table.bootstrapTable({data: data, detailView: true})
+-#   })

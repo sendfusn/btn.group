@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Secret Network Services
+    %title Button
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
@@ -17,7 +17,7 @@
   %body
     %nav.navbar{ style: "background-color: #17a2b8" }
       .container-fluid
-        %a.navbar-brand.text-white{ href: "/" } Secret Network Services
+        %a.navbar-brand.text-white{ href: "/" } Button
     .alert.alert-danger.d-none#alert-danger{role: 'alert'}
     .alert.alert-success.d-none#alert-success{role: 'alert'}
     = yield
