@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'about', to: 'application#about'
   get 'aliases/search', to: 'aliases#search'
   resources :aliases, only: %i[new]
   get 'farm-manager', to: 'farm_manager#home'
