@@ -2,22 +2,39 @@
 %html
   %head
     %title Button
-    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    %meta{ content: 'width=device-width,initial-scale=1', name: 'viewport' }/
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_pack_tag 'application', media: 'all'
     = javascript_pack_tag 'application'
 
     // FONT AWESOME (REQUIRED BY BOOTSTRAP TABLE)
-    %link{:crossorigin => "anonymous", :href => "https://use.fontawesome.com/releases/v5.6.3/css/all.css", :integrity => "sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/", :rel => "stylesheet"}
+    %link{ crossorigin: 'anonymous', href: 'https://use.fontawesome.com/releases/v5.6.3/css/all.css', integrity: 'sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/', rel: 'stylesheet' }
 
     // BOOTSTRAP TABLE
-    %link{:href => "https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css", :rel => "stylesheet"}/
-    %script{:src => "https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"}
+    %link{ href: 'https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css', rel: 'stylesheet' }/
+    %script{ src: 'https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js' }
   %body
-    %nav.navbar{ style: "background-color: #17a2b8" }
+    %nav.navbar{ style: 'background-color: #17a2b8' }
       .container-fluid
-        %a.navbar-brand.text-white{ href: "/" } Button
-    .alert.alert-danger.d-none#alert-danger{role: 'alert'}
-    .alert.alert-success.d-none#alert-success{role: 'alert'}
+        %a.navbar-brand.text-white{ href: '/' } Button
+    .alert.alert-danger.d-none#alert-danger{ role: 'alert' }
+    .alert.alert-success.d-none#alert-success{ role: 'alert' }
     = yield
+    %footer.pt-4.my-md-5.pt-md-5.border-top
+      .container
+        .row
+          .col-12.col-md
+            button
+            %small.d-block.mb-3.text-muted © 2021–2021
+          .col-6.col-md
+            %h5 Features
+            %ul.list-unstyled.text-small
+              %li.mb-1
+                %a.link-secondary.text-decoration-none{ href: '#' } Secret Alias
+          .col-6.col-md
+            %h5 Resources
+          .col-6.col-md
+            %h5 About
+            %ul.list-unstyled.text-small
+              %li.mb-1= link_to 'About', about_path, class: 'link-secondary text-decoration-none'

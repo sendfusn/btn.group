@@ -18,18 +18,6 @@ linters:
       - "app/views/invoices/new.html.haml"
       - "app/views/invoices/show.html.haml"
 
-  # Offense count: 29
-  LineLength:
-    exclude:
-      - "app/views/aliases/new.html.haml"
-      - "app/views/aliases/search.html.haml"
-      - "app/views/application/about.html.haml"
-      - "app/views/farm_manager/home.html.haml"
-      - "app/views/invoices/index.html.haml"
-      - "app/views/invoices/new.html.haml"
-      - "app/views/invoices/show.html.haml"
-      - "app/views/layouts/application.html.haml"
-
   # Offense count: 4
   RepeatedId:
     exclude:
