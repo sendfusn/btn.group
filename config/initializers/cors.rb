@@ -9,3 +9,4 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 end
 
 Rails.application.config.hosts << 'localhost'
+Rails.application.config.hosts << 'www.btn.group'
