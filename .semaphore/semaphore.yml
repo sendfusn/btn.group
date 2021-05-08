@@ -16,8 +16,8 @@ blocks:
         - name: bundle
           commands:
             - cache restore
-            - sem-version ruby 2.6.0
-            - bundle install --deployment -j 4 --path vendor/bundle
+            - sem-version ruby 3.0.0
+            - bundle config set --local deployment 'true'
             - cache store
   - name: Code scanning
     task:
