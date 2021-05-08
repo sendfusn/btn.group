@@ -1,0 +1,58 @@
+version: v1.0
+name: Test MyApp
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Setup
+    task:
+      env_vars:
+        - name: DATABASE_URL
+          value: 'postgresql://postgres:@0.0.0.0:5432/myapp_test'
+        - name: RAILS_ENV
+          value: test
+      jobs:
+        - name: bundle
+          commands:
+            - cache restore
+            - sem-version ruby 2.6.0
+            - bundle install --deployment -j 4 --path vendor/bundle
+            - cache store
+  - name: Code scanning
+    task:
+      jobs:
+        - name: Rubocop (Style)
+          commands:
+            - bundle exec rubocop
+        - name: Immigrant (Foreign keys)
+          commands:
+            - sem-service start postgres
+            - 'bundle exec rake db:setup'
+            - 'bundle exec rake immigrant:check_keys'
+        - name: Reek (Code smells)
+          commands:
+            - bundle exec reek
+        - name: haml-lint
+          commands:
+            - bundle exec haml-lint app/views/
+  - name: Tests
+    task:
+      jobs:
+        - name: RSpec - model tests
+          commands:
+            - bundle exec rspec spec/models
+        - name: RSpec - controller tests
+          commands:
+            - bundle exec rspec spec/controllers
+        - name: RSpec - non model and controller tests
+          commands:
+            - 'bundle exec rspec --exclude-pattern "spec/{features, models, controllers}/**/*_spec.rb"'
+        - name: RSpec - Features
+          commands:
+            - bundle exec rspec spec/features
+promotions:
+  - name: Deploy to production (Heroku)
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
