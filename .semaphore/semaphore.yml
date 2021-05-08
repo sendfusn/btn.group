@@ -1,43 +1,56 @@
 version: v1.0
-name: Test MyApp
+name: btn.group
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
   - name: Setup
+    dependencies: []
     task:
-      env_vars:
-        - name: DATABASE_URL
-          value: 'postgresql://postgres:@0.0.0.0:5432/myapp_test'
-        - name: RAILS_ENV
-          value: test
       jobs:
         - name: bundle
           commands:
-            - cache restore
             - sem-version ruby 3.0.0
-            - bundle config set --local deployment 'true'
+            - checkout
+            - cache restore
+            - bundle install
             - cache store
   - name: Code scanning
+    dependencies:
+      - Setup
     task:
+      prologue:
+        commands:
+            - sem-version ruby 3.0.0
+            - checkout
+            - cache restore
+            - bundle install
+            - cache store
       jobs:
-        - name: Rubocop (Style)
+        - name: Check style & security
           commands:
             - bundle exec rubocop
+            - bundle exec reek
+            - bundle exec haml-lint app/views/
         - name: Immigrant (Foreign keys)
           commands:
             - sem-service start postgres
             - 'bundle exec rake db:setup'
-            - 'bundle exec rake immigrant:check_keys'
-        - name: Reek (Code smells)
-          commands:
-            - bundle exec reek
-        - name: haml-lint
-          commands:
-            - bundle exec haml-lint app/views/
+            - bundle exec rake immigrant:check_keys
   - name: Tests
+    dependencies:
+      - Code scanning
     task:
+      prologue:
+        commands:
+            - sem-version ruby 3.0.0
+            - checkout
+            - cache restore
+            - bundle install
+            - cache store
+            - sem-service start postgres
+            - 'bundle exec rake db:setup'
       jobs:
         - name: RSpec - model tests
           commands:
@@ -53,6 +66,6 @@ blocks:
             - bundle exec rspec spec/features
 promotions:
   - name: Deploy to production (Heroku)
-    pipeline_file: pipeline_2.yml
+    pipeline_file: heroku.yml
     auto_promote:
       when: branch = 'master' AND result = 'passed'

@@ -1,13 +1,24 @@
 version: v1.0
-name: Pipeline 2
+name: Heroku deployment
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: Deploy
     task:
+      secrets:
+        - name: btn-group
+      env_vars:
+        - name: HEROKU_REMOTE
+          value: 'https://git.heroku.com/btn-group.git'
       jobs:
-        - name: 'Job #1'
+        - name: Deploy
           commands:
-            - echo "job 1"
+            - checkout
+            - ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
+            - chmod 600 ~/.ssh/id_rsa_heroku
+            - ssh-add ~/.ssh/id_rsa_heroku
+            - 'git config --global url.ssh://git@heroku.com/.insteadOf https://git.heroku.com/'
+            - git remote add heroku $HEROKU_REMOTE
+            - 'git push heroku -f $SEMAPHORE_GIT_BRANCH:master'
