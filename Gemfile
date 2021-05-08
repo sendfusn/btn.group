@@ -14,10 +14,6 @@ gem 'rack-cors'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'
 gem 'rails-reverse-proxy'
-# A Ruby static code analyzer and formatter, based on the community Ruby style guide.
-gem 'rubocop', require: false
-gem 'rubocop-performance'
-gem 'rubocop-rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -39,6 +35,12 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'haml_lint', require: false
+  # Reek is a tool that examines Ruby classes, modules and methods and reports any Code Smells it finds.
+  gem 'reek'
+  # A Ruby static code analyzer and formatter, based on the community Ruby style guide.
+  gem 'rubocop', require: false
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
 end
 
 group :development do
