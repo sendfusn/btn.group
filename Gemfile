@@ -7,6 +7,7 @@ ruby '3.0.0'
 
 # Provides Haml generators for Rails 4 etc
 gem 'haml-rails', '~> 2.0'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 gem 'rack-cors'
