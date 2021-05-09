@@ -33,40 +33,39 @@ blocks:
         - name: Check style & security
           commands:
             - bundle exec rubocop
-            - bundle exec reek
             - bundle exec haml-lint app/views/
-        # - name: Immigrant (Foreign keys)
+        - name: Immigrant (Foreign keys)
+          commands:
+            - sem-service start postgres
+            - 'bundle exec rake db:setup'
+            - bundle exec rake immigrant:check_keys
+  - name: Tests
+    dependencies:
+      - Code scanning
+    task:
+      prologue:
+        commands:
+            - sem-version ruby 3.0.0
+            - sem-version node 14.5.0
+            - checkout
+            - cache restore
+            - bundle install
+            - cache store
+            - sem-service start postgres
+            - 'bundle exec rake db:setup'
+      jobs:
+        - name: RSpec - model tests
+          commands:
+            - bundle exec rspec spec/models
+        # - name: RSpec - controller tests
         #   commands:
-        #     - sem-service start postgres
-        #     - 'bundle exec rake db:setup'
-        #     - bundle exec rake immigrant:check_keys
-  # - name: Tests
-  #   dependencies:
-  #     - Code scanning
-  #   task:
-  #     prologue:
-  #       commands:
-  #           - sem-version ruby 3.0.0
-  #           - sem-version node 14.5.0
-  #           - checkout
-  #           - cache restore
-  #           - bundle install
-  #           - cache store
-  #           - sem-service start postgres
-  #           - 'bundle exec rake db:setup'
-  #     jobs:
-  #       - name: RSpec - model tests
-  #         commands:
-  #           - bundle exec rspec spec/models
-  #       - name: RSpec - controller tests
-  #         commands:
-  #           - bundle exec rspec spec/controllers
-  #       - name: RSpec - non model and controller tests
-  #         commands:
-  #           - 'bundle exec rspec --exclude-pattern "spec/{features, models, controllers}/**/*_spec.rb"'
-  #       - name: RSpec - Features
-  #         commands:
-  #           - bundle exec rspec spec/features
+        #     - bundle exec rspec spec/controllers
+        - name: RSpec - non model and controller tests
+          commands:
+            - 'bundle exec rspec --exclude-pattern "spec/{features, models, controllers}/**/*_spec.rb"'
+        # - name: RSpec - Features
+        #   commands:
+        #     - bundle exec rspec spec/features
 promotions:
   - name: Deploy to production (Heroku)
     pipeline_file: heroku.yml
