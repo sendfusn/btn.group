@@ -6,11 +6,11 @@
           .col-lg-6.offset-lg-3
             .card
               .card-body
-                %h3 New Alias
+                %h3 Store in locker
                 %form{ name: 'aliasCreateForm' }
                   .mb-3
                     %input.form-control.w-100#alias{ name: 'alias', required: true }
-                  = link_to 'Cancel', feature_path(feature.slug), class: 'btn btn-link', id: 'cancel-button'
+                  = link_to 'Cancel', block_locker_index_path, class: 'btn btn-link', id: 'cancel-button'
                   %button.btn.btn-primary#create-button{ type: 'submit', disabled: true }
                     #loading
                       %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }

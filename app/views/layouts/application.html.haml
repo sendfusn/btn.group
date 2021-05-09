@@ -31,12 +31,12 @@
           .col-6.col-md
             %h5 Features
             %ul.list-unstyled.text-small
-              - Feature.find_each do |feature|
-                %li.mb-1= link_to feature.name, feature_path(feature.slug), class: 'text-decoration-none'
+              - features.each do |key, _values|
+                %li.mb-1= link_to key.to_s.underscore.humanize, "/#{key.to_s.underscore}", class: 'text-decoration-none'
           .col-6.col-md
             %h5 Resources
             %ul.list-unstyled.text-small
-              %li.mb-1= link_to 'Github', 'https://github.com/btn-group', class: 'link-secondary text-decoration-none', target: '_blank'
+              %li.mb-1= link_to 'Github', 'https://github.com/btn-group', class: 'link-secondary text-decoration-none', target: '_blank', rel: 'noopener'
           .col-6.col-md
             %h5 About
             %ul.list-unstyled.text-small

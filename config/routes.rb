@@ -2,12 +2,12 @@
 
 Rails.application.routes.draw do
   # COMPOUNDER
-  get 'farm-manager', to: 'farm_manager#home'
+  # get 'farm-manager', to: 'farm_manager#home'
 
   # INVOICE
-  resources :invoices, only: %i[index new show edit]
-  get 'features/block-locker/new', to: 'features#block_locker_new'
-  resources :features, only: %i[show]
+  # resources :invoices, only: %i[index new show edit]
+
+  resources :block_locker, only: %i[index new]
 
   # === DATAHUB REVERSE PROXY ===
   match 'datahub/*path' => 'datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }

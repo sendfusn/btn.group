@@ -1,0 +1,24 @@
+.container
+  .row.mt-5
+    .col-12
+      #block-locker-show
+        .col-lg-6.offset-lg-3
+          .card
+            .card-header
+              = link_to 'New', new_block_locker_path, class: 'btn btn-primary float-end mb-3'
+              %h1 Block locker
+              %p Blockchain: Secret Network
+            .card-body
+              %form{ name: 'aliasSearchForm' }
+                .mb-3
+                  %input.form-control.w-100#secret-alias{ name: 'alias', required: true }
+                %button.btn.btn-primary#search-button{ type: 'submit', disabled: true }
+                  #loading
+                    %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', role: 'status' }
+                    %span Loading...
+                  .d-none#ready
+                    Search
+          .card.mt-3.d-none#result
+            .card-body
+              %h3 Address
+              %p#human-address
