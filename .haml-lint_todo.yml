@@ -60,11 +60,6 @@ linters:
       - "app/views/application/home.html.haml"
 
   # Offense count: 1
-  ConsecutiveComments:
-    exclude:
-      - "app/views/farm_manager/home.html.haml"
-
-  # Offense count: 1
   InlineStyles:
     exclude:
       - "app/views/layouts/application.html.haml"

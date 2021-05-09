@@ -31,11 +31,11 @@
           .col-6.col-md
             %h5 Features
             %ul.list-unstyled.text-small
-              %li.mb-1
-                %a.link-secondary.text-decoration-none{ href: '#' } Secret Alias
+              - Feature.find_each do |feature|
+                %li.mb-1= link_to feature.name, feature_path(feature.slug), class: 'text-decoration-none'
           .col-6.col-md
             %h5 Resources
           .col-6.col-md
             %h5 About
             %ul.list-unstyled.text-small
-              %li.mb-1= link_to 'About', about_path, class: 'link-secondary text-decoration-none'
+              %li.mb-1= link_to 'About', about_path, class: 'text-decoration-none'

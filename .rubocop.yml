@@ -2,7 +2,7 @@
 require:
   - rubocop-rails
   - rubocop-performance
-  # - rubocop-rspec
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 2.7.2
@@ -91,6 +91,10 @@ Rails/HasAndBelongsToMany:
 
 # Warnings at application launch (Rails.logger not defined yet)
 Rails/Output:
+  Enabled: false
+
+# Need to keep this false for shoulda-matchers
+RSpec/ImplicitExpect:
   Enabled: false
 
 Style/ClassAndModuleChildren:

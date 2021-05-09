@@ -1,15 +1,14 @@
 .container
   .row.mt-5
     .col-12
+      %h1 btn.group
       %table.table-striped.table
         %thead
           %tr
-            %th{ scope: 'col' } Name
-            %th{ scope: 'col' } Category
+            %th{ scope: 'col' } Feature
+            %th{ scope: 'col' } Blockchain
         %tbody
-          %tr
-            %td=link_to 'Address alias', aliases_search_path
-            %td utility
-          %tr
-            %td=link_to 'Farm manager', farm_manager_path
-            %td defi
+          - Feature.find_each do |feature|
+            %tr
+              %td= link_to feature.name, feature_path(feature.slug), class: 'text-decoration-none'
+              %td= feature.blockchain.humanize
