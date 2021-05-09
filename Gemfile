@@ -37,6 +37,8 @@ group :development, :test do
   gem 'haml_lint', require: false
   # Reek is a tool that examines Ruby classes, modules and methods and reports any Code Smells it finds.
   gem 'reek'
+  # Behaviour Driven Development for Ruby
+  gem 'rspec-rails'
   # A Ruby static code analyzer and formatter, based on the community Ruby style guide.
   gem 'rubocop', require: false
   gem 'rubocop-performance'
