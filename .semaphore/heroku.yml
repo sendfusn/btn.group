@@ -1,3 +1,5 @@
+# https://docs.semaphoreci.com/examples/heroku-deployment/
+
 version: v1.0
 name: Heroku deployment
 agent:
@@ -8,7 +10,7 @@ blocks:
   - name: Deploy
     task:
       secrets:
-        - name: btn-group
+        - name: btn.group
       env_vars:
         - name: HEROKU_REMOTE
           value: 'https://git.heroku.com/btn-group.git'
@@ -24,3 +26,8 @@ blocks:
           - git config --global url.ssh://git@heroku.com/.insteadOf https://git.heroku.com/
           - git remote add heroku $HEROKU_REMOTE
           - git push heroku -f $SEMAPHORE_GIT_BRANCH:master
+          # I think we are running the migration in the Procfile anyways which I prefer as it means it will run during manual pushes
+          # and Semaphore
+          # - heroku run --app $HEROKU_APP_NAME rake db:migrate
+          # Not sure if we need this right now as we only have the one dyno running... May need in the future
+          # - heroku ps:restart
