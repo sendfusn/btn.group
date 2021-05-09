@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  if($("#aliases-search").length) {
+  if($("#block-locker-show").length) {
     window.onload = async () => {
       const {
         CosmWasmClient,

@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # ALIAS
-  get 'aliases/search', to: 'aliases#search'
-  resources :aliases, only: %i[new]
-
   # COMPOUNDER
   get 'farm-manager', to: 'farm_manager#home'
 
   # INVOICE
   resources :invoices, only: %i[index new show edit]
+  get 'features/block-locker/new', to: 'features#block_locker_new'
   resources :features, only: %i[show]
 
   # === DATAHUB REVERSE PROXY ===

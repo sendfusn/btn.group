@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  if($("#aliases-new").length) {
+  if($("#block-locker-new").length) {
     const { SigningCosmWasmClient } = require('secretjs');
     const httpUrl = '/datahub';
     const contractAddress = 'secret17fkl85nexfne274s578rsuatm62j96lvgmfs7u'

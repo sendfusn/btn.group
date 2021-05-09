@@ -22,8 +22,8 @@ import 'bootstrap/js/src/tooltip'
 require("jquery")
 
 // APP
-import '../src/aliases/new'
-import '../src/aliases/search'
+import '../src/block_locker/new'
+import '../src/block_locker/show'
 import '../src/invoices/edit'
 
 Rails.start()
