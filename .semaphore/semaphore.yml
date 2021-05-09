@@ -12,6 +12,7 @@ blocks:
         - name: bundle
           commands:
             - sem-version ruby 3.0.0
+            - sem-version node 14.5.0
             - checkout
             - cache restore
             - bundle install
@@ -23,6 +24,7 @@ blocks:
       prologue:
         commands:
             - sem-version ruby 3.0.0
+            - sem-version node 14.5.0
             - checkout
             - cache restore
             - bundle install
@@ -45,6 +47,7 @@ blocks:
   #     prologue:
   #       commands:
   #           - sem-version ruby 3.0.0
+  #           - sem-version node 14.5.0
   #           - checkout
   #           - cache restore
   #           - bundle install
