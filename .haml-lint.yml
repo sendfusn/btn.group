@@ -2,5 +2,7 @@ inherits_from:
   - .haml-lint_todo.yml
 
 linters:
+  ConsecutiveComments:
+    enabled: false
   LineLength:
     enabled: false
