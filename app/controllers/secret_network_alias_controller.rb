@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SecretAliasController < ApplicationController
+class SecretNetworkAliasController < ApplicationController
   def index; end
 
   def new; end

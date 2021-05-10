@@ -4,11 +4,10 @@
       #block-locker-show
         .col-lg-6.offset-lg-3
           .card
-            .card-header
-              = link_to 'New', new_block_locker_path, class: 'btn btn-primary float-end mb-3'
-              %h1 Block locker
-              %p Blockchain: Secret Network
             .card-body
+              = link_to 'New', new_block_locker_path, class: 'btn btn-secondary float-end mb-3'
+              %h3= features[:block_locker][:name]
+              %p Blockchain: #{features[:block_locker][:blockchain]}
               %form{ name: 'aliasSearchForm' }
                 .mb-3
                   %input.form-control.w-100#secret-alias{ name: 'alias', required: true }

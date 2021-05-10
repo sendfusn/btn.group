@@ -12,10 +12,12 @@ class ApplicationController < ActionController::Base
   def features
     {
       block_locker: {
-        blockchain: 'Secret network'
+        blockchain: 'Secret network',
+        name: 'Block locker'
       },
-      secret_alias: {
-        blockchain: 'Secret network'
+      secret_network_alias: {
+        blockchain: 'Secret network',
+        name: 'Secret network alias'
       }
     }
   end

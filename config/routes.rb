@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # resources :invoices, only: %i[index new show edit]
 
   resources :block_locker, only: %i[index new]
-  resources :secret_alias, only: %i[index new]
+  resources :secret_network_alias, only: %i[index new]
 
   # === DATAHUB REVERSE PROXY ===
   match 'datahub/*path' => 'datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }
