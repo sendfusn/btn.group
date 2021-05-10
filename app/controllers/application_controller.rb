@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
 
   def about; end
 
-  def buttcoin; end
-
   def home; end
 
   def features
@@ -14,6 +12,10 @@ class ApplicationController < ActionController::Base
       block_locker: {
         blockchain: 'Secret network',
         name: 'Block locker'
+      },
+      buttcoin: {
+        blockchain: 'Secret network',
+        name: 'Buttcoin (BUTT)'
       },
       secret_network_alias: {
         blockchain: 'Secret network',

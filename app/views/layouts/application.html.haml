@@ -31,8 +31,8 @@
           .col-6.col-md
             %h5 Features
             %ul.list-unstyled.text-small
-              - features.each do |key, values|
-                %li.mb-1= link_to values[:name], "/#{key.to_s.underscore}", class: 'text-decoration-none'
+              - features.each do |key, value|
+                %li.mb-1= link_to value[:name], "/#{key.to_s.underscore}", class: 'text-decoration-none'
           .col-6.col-md
             %h5 Resources
             %ul.list-unstyled.text-small
@@ -41,3 +41,4 @@
             %h5 About
             %ul.list-unstyled.text-small
               %li.mb-1= link_to 'About', about_path, class: 'text-decoration-none'
+              %li.mb-1= link_to features[:buttcoin][:name], buttcoin_index_path, class: 'text-decoration-none'

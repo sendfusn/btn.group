@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # resources :invoices, only: %i[index new show edit]
 
   resources :block_locker, only: %i[index new]
+  resources :buttcoin, only: :index
   resources :secret_network_alias, only: %i[index new]
 
   # === DATAHUB REVERSE PROXY ===
@@ -15,6 +16,5 @@ Rails.application.routes.draw do
 
   # SITE PAGES
   get 'about', to: 'application#about'
-  get 'buttcoin', to: 'application#buttcoin'
   root 'application#home'
 end

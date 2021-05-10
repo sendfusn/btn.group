@@ -1,7 +1,8 @@
 .container
   .row.mt-5
     .col-12
-      %h1 Buttcoin
+      %h1= features[:buttcoin][:name]
+      %p Blockchain: #{features[:buttcoin][:blockchain]}
       %p Our native coin
       %hr
       %h5 Why is it worth anything?
