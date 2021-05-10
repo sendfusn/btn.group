@@ -25,6 +25,8 @@ require("jquery")
 import '../src/block_locker/new'
 import '../src/block_locker/show'
 import '../src/invoices/edit'
+import '../src/secret_alias/new'
+import '../src/secret_alias/index'
 
 Rails.start()
 ActiveStorage.start()

@@ -13,6 +13,9 @@ class ApplicationController < ActionController::Base
     {
       block_locker: {
         blockchain: 'Secret network'
+      },
+      secret_alias: {
+        blockchain: 'Secret network'
       }
     }
   end
