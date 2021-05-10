@@ -11,15 +11,18 @@ class ApplicationController < ActionController::Base
     {
       block_locker: {
         blockchain: 'Secret network',
-        name: 'Block locker'
+        name: 'Block locker',
+        status: 'Work in progress'
       },
       buttcoin: {
         blockchain: 'Secret network',
-        name: 'Buttcoin (BUTT)'
+        name: 'Buttcoin (BUTT)',
+        status: 'Work in progress'
       },
       secret_network_alias: {
         blockchain: 'Secret network',
-        name: 'Secret network alias'
+        name: 'Secret network alias',
+        status: 'Live'
       }
     }
   end

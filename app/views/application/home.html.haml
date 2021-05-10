@@ -7,8 +7,10 @@
           %tr
             %th{ scope: 'col' } Feature
             %th{ scope: 'col' } Blockchain
+            %th{ scope: 'col' } Status
         %tbody
           - features.each do |key, value|
             %tr
               %td= link_to value[:name], "/#{key.to_s.underscore}", class: 'text-decoration-none'
               %td= value[:blockchain]
+              %td= value[:status]
