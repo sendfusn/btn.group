@@ -10,11 +10,15 @@
                 %p Blockchain: #{features[:block_locker][:blockchain]}
                 %form{ name: 'aliasCreateForm' }
                   .mb-3
-                    %input.form-control.w-100#alias{ name: 'alias', required: true }
+                    %label{ for: 'locker-name' } Locker name
+                    %input.form-control.w-100#locker-name{ name: 'key one', required: true }
+                  .mb-3
+                    %label{ for: 'password' } Password
+                    %input.form-control.w-100#password{ name: 'key two', required: true }
                   = link_to 'Cancel', block_locker_index_path, class: 'btn btn-link', id: 'cancel-button'
                   %button.btn.btn-primary#create-button{ type: 'submit', disabled: true }
                     #loading
                       %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                       %span Loading...
                     .d-none#ready
-                      Create
+                      Store

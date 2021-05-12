@@ -2,22 +2,37 @@
   .row.mt-5
     .col-12
       #block-locker-show
-        .col-lg-6.offset-lg-3
+        .col-lg-6.offset-lg-3.mb-3
           .card
             .card-body
-              = link_to 'New', new_block_locker_path, class: 'btn btn-secondary float-end mb-3'
+              = link_to 'Store', new_block_locker_path, class: 'btn btn-secondary float-end mb-3'
               %h3= features[:block_locker][:name]
               %p Blockchain: #{features[:block_locker][:blockchain]}
               %form{ name: 'aliasSearchForm' }
                 .mb-3
-                  %input.form-control.w-100#secret-alias{ name: 'alias', required: true }
+                  %label{ for: 'locker-name' } Locker name
+                  %input.form-control.w-100#locker-name{ name: 'key one', required: true }
+                .mb-3
+                  %label{ for: 'password' } Password
+                  %input.form-control.w-100#password{ name: 'key two', required: true }
                 %button.btn.btn-primary#search-button{ type: 'submit', disabled: true }
                   #loading
                     %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', role: 'status' }
                     %span Loading...
                   .d-none#ready
-                    Search
-          .card.mt-3.d-none#result
-            .card-body
-              %h3 Address
-              %p#human-address
+                    Open
+              .d-none#result
+                .card-body
+                  %h3 Address
+                  %p#human-address
+        %h5 Features
+        %ul
+          %li DECENTRALIZED: Stored on the Secret network blockchain, as long as a copy of this blockchain exists, you can access the data. Can't lose this in an old hard drive. A dog can't eat it. Nothing and nobody can stop you from accessing it.
+          %li PRIVATE: Locker ID, password and stored data are encrypted end to end.
+          %li PERMANENT: Once stored, it is on the blockchain forever.
+        %h5 Use cases
+        %ul
+          %li Chris wants to store his seed phrase somewhere. He's worried about storing in on paper or an external hard drive as that can get thrown away or destroyed. He's worried about it storing it in the cloud because of all the hacks that seem to happen. Chris decides that he likes the sound of Block locker so he selects a nice long locker name he'll never forget, 'chris@abcdefghijklmnopqrstuvwxyz' and a nice long password 'zyxwvutsrqponmlkjihgfedcba@sirhc'.
+        %h5 References
+        %ol
+          %li= link_to 'Privacy model of Secret Network smart contracts', 'https://build.scrt.network/dev/privacy-model-of-secret-contracts.html', target: '_blank', rel: 'noopener'
