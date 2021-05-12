@@ -14,11 +14,11 @@ class ApplicationController < ActionController::Base
         name: 'Block locker',
         status: 'Work in progress'
       },
-      buttcoin: {
-        blockchain: 'Secret network',
-        name: 'Buttcoin (BUTT)',
-        status: 'Work in progress'
-      },
+      # buttcoin: {
+      #   blockchain: 'Secret network',
+      #   name: 'Buttcoin (BUTT)',
+      #   status: 'Work in progress'
+      # },
       smart_contract_querier_secret_network: {
         blockchain: 'Secret network',
         name: 'Smart contract querier',
