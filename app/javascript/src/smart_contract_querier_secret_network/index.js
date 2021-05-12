@@ -25,11 +25,21 @@ $(document).ready(function(){
             // Set params
             let contractAddress = document.secretNetworkSmartContractQuerierForm.contractAddress.value;
             let functionName = document.secretNetworkSmartContractQuerierForm.functionName.value;
+
             let param_one_key = document.secretNetworkSmartContractQuerierForm.paramOneKey.value;
             let param_one_value = document.secretNetworkSmartContractQuerierForm.paramOneValue.value;
 
+            let param_two_key = document.secretNetworkSmartContractQuerierForm.paramTwoKey.value;
+            let param_two_value = document.secretNetworkSmartContractQuerierForm.paramTwoValue.value;
+
+            let param_three_key = document.secretNetworkSmartContractQuerierForm.paramThreeKey.value;
+            let param_three_value = document.secretNetworkSmartContractQuerierForm.paramThreeValue.value;
+
+            let param_four_key = document.secretNetworkSmartContractQuerierForm.paramFourKey.value;
+            let param_four_value = document.secretNetworkSmartContractQuerierForm.paramFourValue.value;
+
             // Query smart contract
-            let result = await client.queryContractSmart(contractAddress, { [functionName]: { [param_one_key]: param_one_value }});
+            let result = await client.queryContractSmart(contractAddress, { [functionName]: { [param_one_key]: param_one_value, [param_two_key]: param_two_value, [param_three_key]: param_three_value, [param_four_key]: parseFloat(param_four_value) }});
 
             // Display results
             $("#result-container").removeClass("d-none");
