@@ -4,10 +4,9 @@ $(document).ready(function(){
       const {
         CosmWasmClient,
       } = require('secretjs');
-      const httpUrl = '/datahub';
-      const client = new CosmWasmClient(httpUrl);
 
       document.secretNetworkSmartContractQuerierForm.onsubmit = () => {
+        // Disable form
         $("#search-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
         $("#loading").removeClass("d-none")
@@ -15,19 +14,32 @@ $(document).ready(function(){
         document.hideAllAlerts();
         (async () => {
           try {
+            // Set environment
+            let environment = document.secretNetworkSmartContractQuerierForm.environment.value;
+            let http_url = '/datahub';
+            if (environment == 'staging') {
+              http_url = http_url + '_staging'
+            };
+            let client =  new CosmWasmClient(http_url);
+
+            // Set params
             let contractAddress = document.secretNetworkSmartContractQuerierForm.contractAddress.value;
             let functionName = document.secretNetworkSmartContractQuerierForm.functionName.value;
             let param_one_key = document.secretNetworkSmartContractQuerierForm.paramOneKey.value;
             let param_one_value = document.secretNetworkSmartContractQuerierForm.paramOneValue.value;
+
+            // Query smart contract
             let result = await client.queryContractSmart(contractAddress, { [functionName]: { [param_one_key]: param_one_value }});
-            console.log(result);
+
+            // Display results
             $("#result-container").removeClass("d-none");
-            $("#result-value").html(syntaxHighlight(result));
+            $("#result-value").html(prettyPrintJSON(result));
           }
           catch(err) {
             document.showAlertDanger(err)
           }
           finally {
+            // Enable form
             $("#search-button").prop("disabled", false);
             $("#loading").addClass("d-none")
             $("#ready").removeClass("d-none")
@@ -40,24 +52,24 @@ $(document).ready(function(){
   };
 });
 
-function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-         json = JSON.stringify(json, undefined, 2);
+function prettyPrintJSON(json) {
+  if (typeof json != 'string') {
+    json = JSON.stringify(json, undefined, 2);
+  }
+  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+    var cls = 'number';
+    if (/^"/.test(match)) {
+      if (/:$/.test(match)) {
+        cls = 'key';
+      } else {
+        cls = 'string';
+      }
+    } else if (/true|false/.test(match)) {
+      cls = 'boolean';
+    } else if (/null/.test(match)) {
+      cls = 'null';
     }
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
-        }
-        return '<span class="' + cls + '">' + match + '</span>';
-    });
+    return '<span class="' + cls + '">' + match + '</span>';
+  });
 }

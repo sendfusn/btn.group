@@ -30,4 +30,19 @@ class DatahubController < ApplicationController
       # - on_complete
     end
   end
+
+  def index_staging
+    datahub_url = "https://secret-holodeck-2--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}"
+    path = request.fullpath.split('datahub_staging').second
+    reverse_proxy datahub_url, path: path, headers: { 'HOST' => nil } do |config|
+      # We got a 404!
+      config.on_missing do |_code, _response|
+        return redirect_to root_url
+      end
+
+      config.on_success do |_code, response|
+        return render json: JSON.parse(response.body)
+      end
+    end
+  end
 end

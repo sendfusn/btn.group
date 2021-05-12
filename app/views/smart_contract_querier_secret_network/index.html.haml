@@ -7,11 +7,20 @@
           %p Blockchain: #{features[:smart_contract_querier_secret_network][:blockchain]}
           %form{ name: 'secretNetworkSmartContractQuerierForm' }
             .mb-3
+              .form-check
+                %input.form-check-input#production{ checked: 'checked', name: 'environment', type: 'radio', value: 'production' }
+                %label.form-check-label{ for: 'production' } Production
+              .form-check
+                %input.form-check-input#staging{ name: 'environment', type: 'radio', value: 'staging' }
+                %label.form-check-label{ for: 'staging' } Staging / Testnet
+            .mb-3
               %label.form-label{ for: 'contract-address' } Contract address
               %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
             .mb-3
-              %label.form-label{ for: 'function-name' } Function name
-              %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+              .row
+                .col-md-6
+                  %label.form-label{ for: 'function-name' } Function name
+                  %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
             .row
               .col-sm-6
                 .mb-3

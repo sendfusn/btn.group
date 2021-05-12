@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       smart_contract_querier_secret_network: {
         blockchain: 'Secret network',
         name: 'Smart contract querier',
-        status: 'Work in progress'
+        status: 'Live'
       },
       secret_network_alias: {
         blockchain: 'Secret network',
