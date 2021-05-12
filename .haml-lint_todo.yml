@@ -11,55 +11,24 @@ linters:
   # Offense count: 20
   ClassesBeforeIds:
     exclude:
-      - "app/views/aliases/new.html.haml"
-      - "app/views/aliases/search.html.haml"
       - "app/views/invoices/edit.html.haml"
       - "app/views/invoices/index.html.haml"
       - "app/views/invoices/new.html.haml"
       - "app/views/invoices/show.html.haml"
-
-  # Offense count: 4
-  RepeatedId:
-    exclude:
-      - "app/views/aliases/new.html.haml"
-      - "app/views/aliases/search.html.haml"
 
   # Offense count: 184
   RuboCop:
     exclude:
-      - "app/views/aliases/new.html.haml"
-      - "app/views/aliases/search.html.haml"
       - "app/views/invoices/edit.html.haml"
       - "app/views/invoices/index.html.haml"
       - "app/views/invoices/new.html.haml"
       - "app/views/invoices/show.html.haml"
-      - "app/views/layouts/application.html.haml"
 
   # Offense count: 97
   SpaceInsideHashAttributes:
     exclude:
-      - "app/views/aliases/new.html.haml"
-      - "app/views/aliases/search.html.haml"
       - "app/views/farm_manager/home.html.haml"
       - "app/views/invoices/edit.html.haml"
       - "app/views/invoices/index.html.haml"
       - "app/views/invoices/new.html.haml"
       - "app/views/invoices/show.html.haml"
-      - "app/views/layouts/application.html.haml"
-
-  # Offense count: 3
-  FinalNewline:
-    exclude:
-      - "app/views/application/home.html.haml"
-      - "app/views/application/secret_alias.html.haml"
-      - "app/views/farm_manager/home.html.haml"
-
-  # Offense count: 2
-  SpaceBeforeScript:
-    exclude:
-      - "app/views/application/home.html.haml"
-
-  # Offense count: 1
-  InlineStyles:
-    exclude:
-      - "app/views/layouts/application.html.haml"
