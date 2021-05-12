@@ -1,0 +1,33 @@
+.container#secret-network-smart-contract-querier
+  .row.my-5
+    .col-lg-8.offset-lg-2
+      .card
+        .card-body
+          %h3= features[:smart_contract_querier_secret_network][:name]
+          %p Blockchain: #{features[:smart_contract_querier_secret_network][:blockchain]}
+          %form{ name: 'secretNetworkSmartContractQuerierForm' }
+            .mb-3
+              %label.form-label{ for: 'contract-address' } Contract address
+              %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
+            .mb-3
+              %label.form-label{ for: 'function-name' } Function name
+              %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+            .row
+              .col-sm-6
+                .mb-3
+                  %label.form-label{ for: 'param-one-key' } Param one key
+                  %input.form-control#param-one-key{ name: 'paramOneKey' }
+              .col-sm-6
+                .mb-3
+                  %label.form-label{ for: 'param-one-value' } Param one value
+                  %input.form-control#param-one-value{ name: 'paramOneValue' }
+            %button.btn.btn-primary#search-button{ type: 'submit' }
+              .d-none#loading
+                %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                %span Loading...
+              #ready
+                Search
+      .card.my-3.d-none#result-container
+        .card-body
+          %h3 Result
+          %pre.p-1.m-1#result-value

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :block_locker, only: %i[index new]
   resources :buttcoin, only: :index
   resources :secret_network_alias, only: %i[index new]
+  resources :smart_contract_querier_secret_network, only: :index
 
   # === DATAHUB REVERSE PROXY ===
   match 'datahub/*path' => 'datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }

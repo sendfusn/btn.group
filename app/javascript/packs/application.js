@@ -27,6 +27,7 @@ import '../src/block_locker/show'
 import '../src/invoices/edit'
 import '../src/secret_alias/new'
 import '../src/secret_alias/index'
+import '../src/smart_contract_querier_secret_network/index'
 
 Rails.start()
 ActiveStorage.start()

@@ -19,10 +19,15 @@ class ApplicationController < ActionController::Base
         name: 'Buttcoin (BUTT)',
         status: 'Work in progress'
       },
+      smart_contract_querier_secret_network: {
+        blockchain: 'Secret network',
+        name: 'Smart contract querier',
+        status: 'Work in progress'
+      },
       secret_network_alias: {
         blockchain: 'Secret network',
         name: 'Secret network alias',
-        status: 'Live'
+        status: 'Work in progress'
       }
     }
   end
