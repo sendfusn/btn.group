@@ -21,15 +21,10 @@
                 .col-md-6
                   %label.form-label{ for: 'function-name' } Function name
                   %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
-            .row
-              .col-sm-6
-                .mb-3
-                  %label.form-label{ for: 'param-one-key' } Param one key
-                  %input.form-control#param-one-key{ name: 'paramOneKey' }
-              .col-sm-6
-                .mb-3
-                  %label.form-label{ for: 'param-one-value' } Param one value
-                  %input.form-control#param-one-value{ name: 'paramOneValue' }
+            #params-container
+            .mb-3
+              .d-grid.gap-2.col-6.mx-auto
+                %button.btn.btn-outline-primary#add-new-param{ type: 'button' } + Param
             %button.btn.btn-primary#search-button{ type: 'submit' }
               .d-none#loading
                 %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
