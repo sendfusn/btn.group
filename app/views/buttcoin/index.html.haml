@@ -3,8 +3,12 @@
     .col-12
       %h1= features[:buttcoin][:name]
       %p Blockchain: #{features[:buttcoin][:blockchain]}
-      %p Our native coin
+      %p Our native coin based on the SNIP-20 standard.
       %hr
+      %h5 Features
+      %ol
+        %li Private
+        %li Fungible
       %h5 Why is it worth anything?
       %p Governance and profit sharing.
 
@@ -14,3 +18,15 @@
         %li Profit sharing
         %li Incentive for early user's of our products. Risks are involved, there should be rewards.
         %li Revenue raising. Defi is exploding and we need to go guns blazing to be competitive.
+
+      %h5 Some distribution thoughts
+      %ol
+        %li Want to do an initial offering on the secret network. Thinking that it will be based on people exchanging their sSCRT-SEFI LP.
+        %li Want people to earn more of it by providing liquidity into SEFI and then staking the lp tokens.
+        %li Thinking some accounts should be public so that people can see how much was minted etc.
+        %li Want to distribute to people that provide liquidity but also want people to be able to earn it by learning and contributing.
+        %li Want to distribute to people and developers that have done a lot of work already.
+
+      %h5 References
+      %ol
+        %li= link_to 'SNIP-20', 'https://github.com/SecretFoundation/SNIPs/blob/master/SNIP-20.md', target: '_blank', rel: 'noopener'
