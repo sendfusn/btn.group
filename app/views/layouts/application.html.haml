@@ -56,26 +56,14 @@
             / Block @s
             .nk-block.nk-block-footer
               .row.justify-content-between.text-center.text-sm-left
-                .col-lg-3.col-md-4.col-sm-5
+                .col-lg-4.col-md-6.col-sm-5
                   .wgs.wgs-menu
                     %h6.wgs-title.text-white Features
                     .wgs-body
                       %ul.wgs-links.wgs-links-s3
                         - features.each do |key, _values|
                           %li= link_to key.to_s.underscore.humanize, "/#{key.to_s.underscore}"
-                .col-lg-2.col-md-4.col-sm-3
-                  .wgs.wgs-menu
-                    %h6.wgs-title.text-white Resorces
-                    .wgs-body
-                      %ul.wgs-links.wgs-links-s3
-                        %li
-                          %a{ href: '#' } Whitepaper
-                        %li
-                          %a{ href: '#' } One Pager
-                        %li
-                          %a{ href: '#' } Market Research
-                / .col
-                .col-lg-2.col-md-4.col-sm-3
+                .col-lg-3.col-md-4.col-sm-3
                   .wgs.wgs-menu
                     %h6.wgs-title.text-white Company
                     .wgs-body
@@ -87,15 +75,14 @@
                         %li= link_to 'Team', "#{root_url}#team"
                         %li
                           %a{ href: '#' } Roadmap
-                / .col
-                .col-lg-4.col-md-8.offset-lg-1
+                .col-lg-4.col-md-6.offset-lg-1
                   .wgs.wgs-text
                     .wgs-logo
                       %a{ href: './' }
                         %img{ alt: 'logo', src: 'ico-crypto-html-v1.9.3/main-html/images/logo-white.png', srcset: 'ico-crypto-html-v1.9.3/main-html/images/logo-white.png' }
                     .wgs-body
                       .wgs-subscribe.wgs-subscribe-s2
-                        %p ICO Crypto All the best selling ICO Template. It’s most stylish and modern design with isometric illustration which makes website gorgeous
+                        %p © 2021
                         %ul.social.pt-2
                           %li
                             %a{ href: '#' }
