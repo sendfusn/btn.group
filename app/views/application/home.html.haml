@@ -1,5 +1,3 @@
-/ .header-main @e
-/ Banner @s
 .header-banner.bg-theme-grad-s2
   .nk-banner
     .banner.banner-fs.banner-single.banner-s1.banner-s1-overlay
@@ -9,7 +7,7 @@
             .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
               .token-status.token-status-s3.round.bg-theme.tc-light
                 %h4.title-md.title-thin Pre-Sale Ends In
-                .countdown-s2.countdown{"data-date" => "2021/08/10 20:00:00"}
+                .countdown-s2.countdown{ 'data-date' => '2021/08/10 20:00:00' }
                 .token-info.token-info-s1
                   .token-info-item.token-info-item-s1
                     .token-info-item-list
@@ -27,11 +25,10 @@
                       on Pre-Sale:
                     %h4 90,000,000 ICOX
                 .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
-                  %a.btn.btn-md.btn-secondary{:href => "#"} Buy Tokens Now
+                  %a.btn.btn-md.btn-secondary{ href: '#' } Buy Tokens Now
                   .token-min-s2
                     %span Minimum Purchase:
                     %span 10,000 ICOX
-            / .col
             .col-lg-6.col-xl-6.text-center.text-lg-left
               .banner-caption.tc-light
                 .cpn-head.mt-0
@@ -41,58 +38,49 @@
                 .cpn-btns
                   %ul.btn-grp
                     %li
-                      %a.btn.btn-md.btn-primary.btn-outline{:href => "#"} White Paper
+                      %a.btn.btn-md.btn-primary.btn-outline{ href: '#' } White Paper
                     %li
-                      %a.btn.btn-md.btn-primary.btn-outline{:href => "#"} One Pager
+                      %a.btn.btn-md.btn-primary.btn-outline{ href: '#' } One Pager
                 .cpn-social
                   %h4.title-xs JOIN OUR COMMUNITY
                   %ul.social
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.social-icon.fas.fa-paper-plane
                         %span Telegram
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.social-icon.fab.fa-facebook-f
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.social-icon.fab.fa-twitter
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.social-icon.fab.fa-youtube
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.social-icon.fab.fa-github
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.social-icon.fab.fa-bitcoin
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.social-icon.fab.fa-medium-m
-            / .col
-          / .row
-  / .nk-banner
   .nk-ovm.shape-q
-  / Place Particle Js
-  #particles-bg.particles-container.particles-bg{"data-pt-base" => "#00c0fa", "data-pt-base-op" => ".3", "data-pt-line" => "#2b56f5", "data-pt-line-op" => ".5", "data-pt-shape" => "#00c0fa", "data-pt-shape-op" => ".2"}
-/ .header-banner @e
+  .particles-container.particles-bg#particles-bg{ 'data-pt-base' => '#00c0fa', 'data-pt-base-op' => '.3', 'data-pt-line' => '#2b56f5', 'data-pt-line-op' => '.5', 'data-pt-shape' => '#00c0fa', 'data-pt-shape-op' => '.2' }
 %main.nk-pages
-%section#about.section.bg-light
+%section.section.bg-light#about
   .container
-    / Block @s
     .nk-block.nk-block-features-s2
       .row.align-items-center.flex-row-reverse.gutter-vr-30px
         .col-lg-5
           .gfx.py-4.mx-auto.mx-lg-0
-            %img{:alt => "gfx", :src => "ico-crypto-html-v1.9.3/main-html/images/salvia/gfx-i.png"}/
-        / .col
+            %img{ alt: 'gfx', src: 'ico-crypto-html-v1.9.3/main-html/images/salvia/gfx-i.png' }
         .col-lg-7
-          / Section Head @s
           .nk-block-text.pdb-r
             %h2.title.title-thin About ICO Crypto
             %p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
             %p Deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-          / .section-head @e
           .row.gutter-vr-20px.flex-wrap
             .col-sm-6
               .feature.feature-s1
@@ -100,42 +88,31 @@
                   %em.icon.fas.fa-check
                 .feature-text.feature-text-s1
                   %p Makes you the sole owner of a secure decentralize registry
-            / .col
             .col-sm-6
               .feature.feature-s1
                 .feature-icon.feature-icon-s5.feature-icon-s5-2
                   %em.icon.fas.fa-check
                 .feature-text.feature-text-s1
                   %p It’s allows startups to launch and manage crowdfunding
-            / .col
             .col-sm-6
               .feature.feature-s1
                 .feature-icon.feature-icon-s5.feature-icon-s5-3
                   %em.icon.fas.fa-check
                 .feature-text.feature-text-s1
                   %p Our contributor payouts perfectly simple and easy
-            / .col
             .col-sm-6
               .feature.feature-s1
                 .feature-icon.feature-icon-s5.feature-icon-s5-4
                   %em.icon.fas.fa-check
                 .feature-text.feature-text-s1
                   %p Owners of cryptocurrency keep their digital coins in ICO
-            / .col
-          / .row
-        / .col
-      / .row
-    / .block @e
-/ //
-%section#overview.section.bg-white
+%section.section.bg-white#overview
   .container
-    / Block @s
     .nk-block.nk-block-features-s2
       .row.align-items-center.gutter-vr-30px
         .col-lg-6
           .gfx.py-4.mx-auto.mx-lg-0
-            %img{:alt => "gfx", :src => "ico-crypto-html-v1.9.3/main-html/images/salvia/gfx-j.png"}/
-        / .col
+            %img{ alt: 'gfx', src: 'ico-crypto-html-v1.9.3/main-html/images/salvia/gfx-j.png' }
         .col-lg-6
           .feature
             %h2.title-xl-2.title-thin.pdb-s Why?
@@ -149,13 +126,8 @@
             %h2.title-xl-2.title-thin.pdb-s How?
             .feature-text.feature-text-s1
               %p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-        / .col
-      / .row
-    / .block @e
-/ //
 %section.section.bg-light
   .container
-    / Block @s
     .nk-block.nk-block-features-s3
       .section-head.section-head-s7.wide-auto-sm.text-center
         %h2.title.title-thin Problems
@@ -168,7 +140,6 @@
             .feature-text
               %h4.title-sm.title-semibold No World Wide Platform:
               %p.fw-4 Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi.
-        / .col
         .col-lg-4.col-md-6
           .feature.feature-s3.feature-center
             .feature-icon.feature-icon-auto
@@ -176,7 +147,6 @@
             .feature-text
               %h4.title-sm.title-semibold No Safe Transactions:
               %p.fw-4 Ut enim ad minima veniam, quis nostrum exercitationem ullam suscipit no laboriosam, nisi ut aliquid eos qui ratione voluptatem sequi nesciunt.
-        / .col
         .col-lg-4.col-md-6
           .feature.feature-s3.feature-center
             .feature-icon.feature-icon-auto
@@ -184,9 +154,6 @@
             .feature-text
               %h4.title-sm.title-semibold No Global Payment Systems:
               %p.fw-4 Sed do eiusmod tempor incididunt ut labore et dolore aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris fugiat runull dolore magna.
-        / .col
-      / .row
-    / Block @e
     .nk-block.nk-block-features-s3
       .section-head.section-head-s7.wide-auto-sm.text-center
         %h2.title.title-thin Solutions
@@ -199,7 +166,6 @@
             .feature-text
               %h4.title-sm.title-semibold Global Single-Platform:
               %p.fw-4 Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-        / .col
         .col-lg-4.col-md-6
           .feature.feature-s3.feature-center
             .feature-icon.feature-icon-auto
@@ -207,7 +173,6 @@
             .feature-text
               %h4.title-sm.title-semibold Be Safe and Secure:
               %p.fw-4 Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid eos qui ratione voluptatem sequi nesciunt.
-        / .col
         .col-lg-4.col-md-6
           .feature.feature-s3.feature-center
             .feature-icon.feature-icon-auto
@@ -215,13 +180,8 @@
             .feature-text
               %h4.title-sm.title-semibold Decentralize Payment Systems
               %p.fw-4 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim, quis nostrud exercitation ullamco laboris fugiat runull dolore magna.
-        / .col
-      / .row
-    / .block @e
-/ //
 %section.section.bg-theme.ov-h.text-center.tc-light.overlay-x
   .container
-    / Block @s
     .nk-block.nk-block-text-wrap
       .row.align-items-center.justify-content-center
         .col
@@ -233,17 +193,11 @@
               At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
               %br.d-none.d-lg-block/
               deleniti atque corrupti quos dolores et quas molestias.
-          / .nk-block @e
-        / .col
-      / .row
-    / .block @e
-/ //
-%section#works.section.bg-white.ov-h.text-center
+%section.section.bg-white.ov-h.text-center#works
   .section-head.section-head-s7.wide-auto-xs
     %h2.title.title-thin How it works
     %p.lead Our Ecosystem based on blockchain and we solved issues of current and future
   .container
-    / Block @s
     .nk-block.nk-block-text-wrap
       .nk-block-text
         .row.justify-content-center
@@ -259,7 +213,7 @@
                 %em.ikon.ikon-user-chat
               %button.feature-slider-dot.owl-dots
                 %em.ikon.ikon-car
-            .feature-slider-pane.has-carousel.owl-carousel{"data-animate-out" => "fadeOut", "data-custom-dots" => "feature-slider-dots", "data-dots" => "true", "data-items" => "1"}
+            .feature-slider-pane.has-carousel.owl-carousel{ 'data-animate-out' => 'fadeOut', 'data-custom-dots' => 'feature-slider-dots', 'data-dots' => 'true', 'data-items' => '1' }
               .ft-slider-pane-item.pane-item-1
                 %h5.animate-up.delay-5ms Build blockchain algotrading models
                 %p.animate-up.delay-6ms This makes it much easier for both quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliqu am quaerat voluptatem. Numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat volup  tatem.Ut enim ad minima veniam, quis nostrum exercitation em ullam corporis suscipit laboriosam.
@@ -280,28 +234,17 @@
                 %h5.animate-up.delay-5ms Make transaction easy and with a less fee.
                 %p.animate-up.delay-6ms This makes it much easier for both quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliqu am quaerat voluptatem. Numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat volup  tatem. Ut enim ad minima veniam, quis nostrum exercitation em ullam corporis suscipit laboriosam.
                 %p.animate-up.delay-7ms We will establish an incentivizing mechanism numquam eius modi tempora,incidunt ut labore et dolore magnam aliquam quaerat volup  tatem.
-          / .col
-        / .row
-      / .nk-block @e
-    / .block @e
-/ //
 %section.section.bg-light
   .container
-    / Block @s
     .nk-block.nk-block-features-s2
       .row.align-items-center.flex-row-reverse.justify-content-between.gutter-vr-30px
         .col-lg-7
           .gfx.gfx-auto.mb-lg-3
-            %img{:alt => "gfx", :src => "ico-crypto-html-v1.9.3/main-html/images/app-screens/sc-large-k.png"}/
-        / .col
+            %img{ alt: 'gfx', src: 'ico-crypto-html-v1.9.3/main-html/images/app-screens/sc-large-k.png' }
         .col-lg-4
-          / Section Head @s
           .section-head.pb-lg-0
             %h2.title.title-thin Introducing ICO Usercenter
             %p First of we release our major update with usercenter design which is most important part of ICO Token Sales management. It allows to manage whole process of tokens sales.
-          / .section-head @e
-        / .col
-      / .row
       .row.features-list.flex-wrap.gutter-vr-30px
         .col-lg-3.col-sm-6
           .feature.feature-s1.feature-s1-1.boxed.boxed-xs.bg-white.bordered
@@ -309,38 +252,31 @@
               %em.icon.fas.fa-check
             .feature-text.feature-text-s1
               %span.title-xs-alt.title-mid Safe & Secure Transactions
-        / .col
         .col-lg-3.col-sm-6
           .feature.feature-s1.feature-s1-2.boxed.boxed-xs.bg-white.bordered
             .feature-icon.feature-icon-s5.feature-icon-s5-2
               %em.icon.fas.fa-check
             .feature-text.feature-text-s1
               %span.title-xs-alt.title-mid Encrypted and Kept Private
-        / .col
         .col-lg-3.col-sm-6
           .feature.feature-s1.feature-s1-3.boxed.boxed-xs.bg-white.bordered
             .feature-icon.feature-icon-s5.feature-icon-s5-3
               %em.icon.fas.fa-check
             .feature-text.feature-text-s1
               %span.title-xs-alt.title-mid Multiple Payment Gateway
-        / .col
         .col-lg-3.col-sm-6
           .feature.feature-s1.feature-s1-4.boxed.boxed-xs.bg-white.bordered
             .feature-icon.feature-icon-s5.feature-icon-s5-4
               %em.icon.fas.fa-check
             .feature-text.feature-text-s1
               %span.title-xs-alt.title-mid KYC Verification
-        / .col
-      / .row
-    / .block @e
-/ //
-%section#token.bg-theme
+%section.bg-theme#token
   .section.section-tokendes.tc-light
     .container
       .section-head.section-head-s7.text-center.wide-auto-sm
         %h2.title.title-thin
           ICO Crypto
-          = succeed "Token" do
+          = succeed 'Token' do
             %br/
         %p.lead Our initial coin offering will run till softcap reached.Full details of the ICO can be found within the platform.
       / .section-head @e
@@ -352,181 +288,146 @@
               .token-sale-box
                 %span.token-sale-info 24,000,000
                 %span.token-sale-title TOTAL TOKEN SUPPLY
-            / .col
             .col-lg-4.col-md-6
               .token-sale-box
                 %span.token-sale-info 20,000,000
                 %span.token-sale-title HARDCAP (ICOX)
-            / .col
             .col-lg-4.col-md-6
               .token-sale-box
                 %span.token-sale-info 5,000,000
                 %span.token-sale-title SOFTCAP (ICOX)
-            / .col
             .col-lg-4.col-md-6
               .token-sale-box
                 %span.token-sale-info 14,400,000
                 %span.token-sale-title TOKENS FOR PUBLIC
-            / .col
             .col-lg-4.col-md-6
               .token-sale-box
                 %span.token-sale-info $0.50 USD
                 %span.token-sale-title ICO TOKEN PRICE
-            / .col
             .col-lg-4.col-md-6
               .token-sale-box
                 %span.token-sale-info ETH, BTC, USD
                 %span.token-sale-title ACCEPTED CURRENCY
-            / .col
-          / .row
-      / .block @e
       .nk-block
         .token-box-bottom
           .section-head.section-head-s7.text-center.wide-auto-sm
             %h2.title.title-thin Bonus Details
-          / .section-head @e
           .row.justify-content-center
             .col-xl-3.col-md-4
               .token-bonus-item.one
                 %span.token-bonus-title PRE-SALE
                 %span.token-bonus-percent 25%
                 %span.token-bonus-txt Bonus
-            / .col
             .col-xl-3.col-md-4
               .token-bonus-item.two
                 %span.token-bonus-title ICO SALE - WEEK 1
                 %span.token-bonus-percent 15%
                 %span.token-bonus-txt Bonus
-            / .col
             .col-xl-3.col-md-4
               .token-bonus-item.three
                 %span.token-bonus-title ICO SALE - WEEK 2
                 %span.token-bonus-percent 0%
                 %span.token-bonus-txt Bonus
-            / .col
-          / .row
           .text-center.pdt-r
-            %a.btn.btn-lg.btn-secondary{:href => ""} Buy ICO Crypto Tokens Now
-      / .block @e
+            %a.btn.btn-lg.btn-secondary{ href: '' } Buy ICO Crypto Tokens Now
   .section-tokendes
     .container
-      / Block @s
       .nk-block.nk-block-alocation.mgb-m30
         .row
           .col-lg-6
             .token-alocate-item
               .token-alocate-graph
-                %img{:alt => "icon", :src => "ico-crypto-html-v1.9.3/main-html/images/icon.png"}/
+                %img{ alt: 'icon', src: 'ico-crypto-html-v1.9.3/main-html/images/icon.png' }
                 %span
                   Token
                   %br/
                   Allocation
-                %canvas#token-alocate-salvia2.chart-canvas
-              %ul.chart-data{"data-canvas" => "token-alocate-salvia2", "data-canvas-cutout" => "77", "data-canvas-type" => "doughnut"}
-                %li{"data-amount" => "60", "data-color" => "#6d6af6", "data-title" => "Token Sale Program"}
-                %li{"data-amount" => "8", "data-color" => "#f0a561", "data-title" => "Reserve Fund"}
-                %li{"data-amount" => "15", "data-color" => "#7dbef9", "data-title" => "Team and Founders"}
-                %li{"data-amount" => "4", "data-color" => "#7adac9", "data-title" => "Board Advisors"}
-                %li{"data-amount" => "7", "data-color" => "#7654e1", "data-title" => "Ecosystem Development"}
-                %li{"data-amount" => "6", "data-color" => "#371e8d", "data-title" => "Marketing and Bounty"}
-          / .col
+                %canvas.chart-canvas#token-alocate-salvia2
+              %ul.chart-data{ 'data-canvas' => 'token-alocate-salvia2', 'data-canvas-cutout' => '77', 'data-canvas-type' => 'doughnut' }
+                %li{ 'data-amount' => '60', 'data-color' => '#6d6af6', 'data-title' => 'Token Sale Program' }
+                %li{ 'data-amount' => '8', 'data-color' => '#f0a561', 'data-title' => 'Reserve Fund' }
+                %li{ 'data-amount' => '15', 'data-color' => '#7dbef9', 'data-title' => 'Team and Founders' }
+                %li{ 'data-amount' => '4', 'data-color' => '#7adac9', 'data-title' => 'Board Advisors' }
+                %li{ 'data-amount' => '7', 'data-color' => '#7654e1', 'data-title' => 'Ecosystem Development' }
+                %li{ 'data-amount' => '6', 'data-color' => '#371e8d', 'data-title' => 'Marketing and Bounty' }
           .col-lg-6
             .token-alocate-item
               .token-alocate-graph
-                %img{:alt => "icon", :src => "ico-crypto-html-v1.9.3/main-html/images/icon.png"}/
+                %img{ alt: 'icon', src: 'ico-crypto-html-v1.9.3/main-html/images/icon.png' }
                 %span
                   Funds
                   %br/
                   Allocation
-                %canvas#fund-alocate-salvia2.chart-canvas
-              %ul.chart-data{"data-canvas" => "fund-alocate-salvia2", "data-canvas-cutout" => "77", "data-canvas-type" => "doughnut"}
-                %li{"data-amount" => "40", "data-color" => "#371e8d", "data-title" => "Engineering and Development"}
-                %li{"data-amount" => "12", "data-color" => "#7654e1", "data-title" => "Business Development"}
-                %li{"data-amount" => "20", "data-color" => "#7adac9", "data-title" => "Marketing & Promotion"}
-                %li{"data-amount" => "10", "data-color" => "#72a3f4", "data-title" => "Legal & Regulation"}
-                %li{"data-amount" => "8", "data-color" => "#f0a561", "data-title" => "Operational & Administration"}
-                %li{"data-amount" => "4", "data-color" => "#da6bc1", "data-title" => "Contingency"}
-                %li{"data-amount" => "6", "data-color" => "#371e8d", "data-title" => "Partners"}
-          / .col
-        / .row
-      / .block @e
+                %canvas.chart-canvas#fund-alocate-salvia2
+              %ul.chart-data{ 'data-canvas' => 'fund-alocate-salvia2', 'data-canvas-cutout' => '77', 'data-canvas-type' => 'doughnut' }
+                %li{ 'data-amount' => '40', 'data-color' => '#371e8d', 'data-title' => 'Engineering and Development' }
+                %li{ 'data-amount' => '12', 'data-color' => '#7654e1', 'data-title' => 'Business Development' }
+                %li{ 'data-amount' => '20', 'data-color' => '#7adac9', 'data-title' => 'Marketing & Promotion' }
+                %li{ 'data-amount' => '10', 'data-color' => '#72a3f4', 'data-title' => 'Legal & Regulation' }
+                %li{ 'data-amount' => '8', 'data-color' => '#f0a561', 'data-title' => 'Operational & Administration' }
+                %li{ 'data-amount' => '4', 'data-color' => '#da6bc1', 'data-title' => 'Contingency' }
+                %li{ 'data-amount' => '6', 'data-color' => '#371e8d', 'data-title' => 'Partners' }
     .nk-ovm.ovm-bottom.ovm-h-40.bg-light
-  / .section-tokendes
   .nk-ovm.nk-ovm-fixed.shape-q
-/ //
-%section#document.section.bg-light
+%section.section.bg-light#document
   .container
-    / Block @s
     .section-head.section-head-s7.text-center.wide-auto-sm
       %h2.title.title-thin Documentation
       %p.lead Download the whitepaper and learn about ICO Token, the unique ICO Crypto approach and the team/advisors.
-    / .section-head @e
     .nk-block.nk-block-features
       .row
         .col-lg-3.col-sm-6
           .feature.feature-document
             .feature-document-img
-              %img{:alt => "", :src => "ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-a.jpg"}/
+              %img{ alt: '', src: 'ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-a.jpg' }
             .feature-document-text
               %span.feature-document-info
                 White Paper
                 %span (PDF)
-              %a.feature-document-link{:href => "#"}
+              %a.feature-document-link{ href: '#' }
                 %em.ti.ti-import
-        / .col
         .col-lg-3.col-sm-6
           .feature.feature-document
             .feature-document-img
-              %img{:alt => "", :src => "ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-b.jpg"}/
+              %img{ alt: '', src: 'ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-b.jpg' }
             .feature-document-text
               %span.feature-document-info
                 One Pager
                 %span (PDF)
-              %a.feature-document-link{:href => "#"}
+              %a.feature-document-link{ href: '#' }
                 %em.ti.ti-import
-        / .col
         .col-lg-3.col-sm-6
           .feature.feature-document
             .feature-document-img
-              %img{:alt => "", :src => "ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-c.jpg"}/
+              %img{ alt: '', src: 'ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-c.jpg' }
             .feature-document-text
               %span.feature-document-info
                 Terms of Sales
                 %span (PDF)
-              %a.feature-document-link{:href => "#"}
+              %a.feature-document-link{ href: '#' }
                 %em.ti.ti-import
-        / .col
         .col-lg-3.col-sm-6
           .feature.feature-document
             .feature-document-img
-              %img{:alt => "", :src => "ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-d.jpg"}/
+              %img{ alt: '', src: 'ico-crypto-html-v1.9.3/main-html/images/salvia/docs-sm-d.jpg' }
             .feature-document-text
               %span.feature-document-info
                 Privacy & Policy
                 %span (PDF)
-              %a.feature-document-link{:href => "#"}
+              %a.feature-document-link{ href: '#' }
                 %em.ti.ti-import
-        / .col
-      / .row
-    / .block @s
-/ //
-%section#roadmap.section.bg-white
+%section.section.bg-white#roadmap
   .container
-    / Section Head @s
     .row.justify-content-center
       .col-lg-6
         .section-head.section-head-s7.text-center.wide-auto-sm
           %h2.title.title-thin Roadmap
           %p.lead Our roadmap is a planned where we take on the most complex problems and turn them into great solutions
-        / .section-head @e
-      / .col
-    / .row
-    / Block @s
     .nk-block
       .row.justify-content-center.text-center
         .col-xl-12
           .roadmap-carousel-container
-            .has-carousel.roadmap-carousel.owl-carousel{"data-dots" => "true", "data-items" => "5", "data-items-mobile-s" => "1", "data-margin" => "15"}
+            .has-carousel.roadmap-carousel.owl-carousel{ 'data-dots' => 'true', 'data-items' => '5', 'data-items-mobile-s' => '1', 'data-margin' => '15' }
               .roadmap.roadmap-done.roadmap-s3
                 .roadmap-step.roadmap-step-s3
                   .roadmap-head.roadmap-head-s3
@@ -567,36 +468,27 @@
                   .roadmap-head.roadmap-head-s3
                     %span.roadmap-time.roadmap-time-s3 April 2019
                   %p Start of the Preparation for the ICO Token Sale
-        / .col
-      / .row
-    / .block @e
-/ //
 %section.section.bg-theme.ov-h.text-center.tc-light.overlay-x
   .container
     .section-head.section-head-s7.wide-auto-sm
       %h2.title.title-thin Beta Products
       %p.lead ICO Backend is the ICO token sales management software,which helps you to lunch and mange your ICO.
-    / Block @s
     .nk-block.nk-block-text-wrap
       .row.justify-content-center.gutter-vr-30px
         .col-lg-5
-          %a.product-box{:href => "#"}
+          %a.product-box{ href: '#' }
             %h5.product-name USER DASHDOARD
             .product-image
-              %img{:alt => "prdouct", :src => "ico-crypto-html-v1.9.3/main-html/images/products/c.jpg"}/
+              %img{ alt: 'prdouct', src: 'ico-crypto-html-v1.9.3/main-html/images/products/c.jpg' }
         .col-lg-5
-          %a.product-box{:href => "#"}
+          %a.product-box{ href: '#' }
             %h5.product-name Admin DASHDOARD
             .product-image
-              %img{:alt => "prdouct", :src => "ico-crypto-html-v1.9.3/main-html/images/products/d.jpg"}/
-      / .row
-    / .block @e
-/ //
-%section#team.section.bg-white
+              %img{ alt: 'prdouct', src: 'ico-crypto-html-v1.9.3/main-html/images/products/d.jpg' }
+%section.section.bg-white#team
   .container
     .section-head.section-head-s7.text-center.wide-auto-sm
       %h2.title.title-thin Team
-    / Block @s
     .nk-block.nk-block-team-list
       .section-head.section-head-sm.section-head-s7.text-center.wide-auto-sm
         %h2.title-md.title-thin Core Team Member
@@ -604,36 +496,28 @@
         .col-lg-3.col-sm-6
           .team
             .team-photo.team-photo-s2
-              %a.team-show.content-popup{"data-overlay" => "bg-theme-grad-alternet", :href => "#team-popup-1"}
-              %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/md-a-color.jpg"}/
+              %a.team-show.content-popup{ 'data-overlay' => 'bg-theme-grad-alternet', href: '#team-popup-1' }
+              %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/md-a-color.jpg' }
               %ul.team-social
                 %li
-                  %a{:href => "#"}
-                    %em.fab.fa-linkedin-in
-                %li
-                  %a{:href => "#"}
+                  %a{ href: '#' }
                     %em.fab.fa-facebook-f
             %h5.team-name.title.title-sm Louis Baker
             %span.team-position CEO & Lead Blockchain
-          / Start .team-profile
-          #team-popup-1.team-popup.mfp-hide
-            %a.mfp-close{:title => "Close"} ×
+          .team-popup.mfp-hide#team-popup-1
+            %a.mfp-close{ title: 'Close' } ×
             .row.align-items-start
               .col-md-6
                 .team-photo
-                  %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/a-color.jpg"}/
-              / .col
-              .col-md-6
+                  %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/a-color.jpg' }
+                .col-md-6
                 .team-popup-info.pl-md-3
                   %h3.team-name.title.title-lg.pt-4 Louis Baker
                   %p.team-position.mb-1 CEO & Lead Blockchain
                   %ul.team-social.team-social-s2.mb-4
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.fab.fa-facebook-f
-                    %li
-                      %a{:href => "#"}
-                        %em.fab.fa-linkedin-in
                   %p He is a great man to work Lorem ipsum dolor sit amet, consec tetur adipis icing elit. Simi lique, autem.
                   %p Tenetur quos facere magnam volupt ates quas esse Sedrep ell endus mole stiae tates quas esse Sed repell endus molesti aela uda ntium quis quam iusto minima thanks.
                   .progress-list
@@ -642,50 +526,38 @@
                         Blockchain
                         %span.progress-amount 85%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-theme-accent-alt{"data-percent" => "85"}
+                        .progress-percent.bg-theme-accent-alt{ 'data-percent' => '85' }
                     .progress-wrap
                       .progress-title
                         Decentralization
                         %span.progress-amount 68%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-theme-accent-alt{"data-percent" => "68"}
-              / .col
-            / .row
-          / .team-profile
-        / .col
+                        .progress-percent.bg-theme-accent-alt{ 'data-percent' => '68' }
         .col-lg-3.col-sm-6
           .team
             .team-photo.team-photo-s2
-              %a.team-show.content-popup{:href => "#team-popup-2"}
-              %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/md-b-color.jpg"}/
+              %a.team-show.content-popup{ href: '#team-popup-2' }
+              %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/md-b-color.jpg' }
               %ul.team-social
                 %li
-                  %a{:href => "#"}
-                    %em.fab.fa-linkedin-in
-                %li
-                  %a{:href => "#"}
+                  %a{ href: '#' }
                     %em.fab.fa-facebook-f
             %h5.team-name.title.title-sm Jonathan Rios
             %span.team-position CTO & Software Engineer
-          / Start .team-profile
-          #team-popup-2.team-popup.mfp-hide
-            %a.mfp-close{:title => "Close"} ×
+          .team-popup.mfp-hide#team-popup-2
+            %a.mfp-close{ title: 'Close' } ×
             .row.align-items-start
               .col-md-6
                 .team-photo
-                  %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/b-color.jpg"}/
-              / .col
-              .col-md-6
+                  %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/b-color.jpg' }
+                .col-md-6
                 .team-popup-info.pl-md-3
                   %h3.team-name.title.title-lg.pt-4 Louis Baker
                   %p.team-position.mb-1 CEO & Lead Blockchain
                   %ul.team-social.team-social-s2.mb-4
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.fab.fa-facebook-f
-                    %li
-                      %a{:href => "#"}
-                        %em.fab.fa-linkedin-in
                   %p He is a great man to work Lorem ipsum dolor sit amet, consec tetur adipis icing elit. Simi lique, autem.
                   %p Tenetur quos facere magnam volupt ates quas esse Sedrep ell endus mole stiae tates quas esse Sed repell endus molesti aela uda ntium quis quam iusto minima thanks.
                   .progress-list
@@ -694,50 +566,38 @@
                         Blockchain
                         %span.progress-amount 85%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "85"}
+                        .progress-percent.bg-primary{ 'data-percent' => '85' }
                     .progress-wrap
                       .progress-title
                         Decentralization
                         %span.progress-amount 68%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "68"}
-              / .col
-            / .row
-          / .team-profile
-        / .col
+                        .progress-percent.bg-primary{ 'data-percent' => '68' }
         .col-lg-3.col-sm-6
           .team
             .team-photo.team-photo-s2
-              %a.team-show.content-popup{:href => "#team-popup-3"}
-              %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/md-c-color.jpg"}/
+              %a.team-show.content-popup{ href: '#team-popup-3' }
+              %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/md-c-color.jpg' }
               %ul.team-social
                 %li
-                  %a{:href => "#"}
-                    %em.fab.fa-linkedin-in
-                %li
-                  %a{:href => "#"}
+                  %a{ href: '#' }
                     %em.fab.fa-facebook-f
             %h5.team-name.title.title-sm Jason Morales
             %span.team-position Sr.Backend developer
-          / Start .team-profile
-          #team-popup-3.team-popup.mfp-hide
-            %a.mfp-close{:title => "Close"} ×
+          .team-popup.mfp-hide#team-popup-3
+            %a.mfp-close{ title: 'Close' } ×
             .row.align-items-start
               .col-md-6
                 .team-photo
-                  %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/c-color.jpg"}/
-              / .col
-              .col-md-6
+                  %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/c-color.jpg' }
+                .col-md-6
                 .team-popup-info.pl-md-3
                   %h3.team-name.title.title-lg.pt-4 Louis Baker
                   %p.team-position.mb-1 CEO & Lead Blockchain
                   %ul.team-social.team-social-s2.mb-4
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.fab.fa-facebook-f
-                    %li
-                      %a{:href => "#"}
-                        %em.fab.fa-linkedin-in
                   %p He is a great man to work Lorem ipsum dolor sit amet, consec tetur adipis icing elit. Simi lique, autem.
                   %p Tenetur quos facere magnam volupt ates quas esse Sedrep ell endus mole stiae tates quas esse Sed repell endus molesti aela uda ntium quis quam iusto minima thanks.
                   .progress-list
@@ -746,50 +606,38 @@
                         Blockchain
                         %span.progress-amount 85%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "85"}
+                        .progress-percent.bg-primary{ 'data-percent' => '85' }
                     .progress-wrap
                       .progress-title
                         Decentralization
                         %span.progress-amount 68%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "68"}
-              / .col
-            / .row
-          / .team-profile
-        / .col
+                        .progress-percent.bg-primary{ 'data-percent' => '68' }
         .col-lg-3.col-sm-6
           .team
             .team-photo.team-photo-s2
-              %a.team-show.content-popup{:href => "#team-popup-4"}
-              %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/md-d-color.jpg"}/
+              %a.team-show.content-popup{ href: '#team-popup-4' }
+              %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/md-d-color.jpg' }
               %ul.team-social
                 %li
-                  %a{:href => "#"}
-                    %em.fab.fa-linkedin-in
-                %li
-                  %a{:href => "#"}
+                  %a{ href: '#' }
                     %em.fab.fa-facebook-f
             %h5.team-name.title.title-sm Joseph Jordan
             %span.team-position Software Engineer
-          / Start .team-profile
-          #team-popup-4.team-popup.mfp-hide
-            %a.mfp-close{:title => "Close"} ×
+          .team-popup.mfp-hide#team-popup-4
+            %a.mfp-close{ title: 'Close' } ×
             .row.align-items-start
               .col-md-6
                 .team-photo
-                  %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/d-color.jpg"}/
-              / .col
-              .col-md-6
+                  %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/d-color.jpg' }
+                .col-md-6
                 .team-popup-info.pl-md-3
                   %h3.team-name.title.title-lg.pt-4 Louis Baker
                   %p.team-position.mb-1 CEO & Lead Blockchain
                   %ul.team-social.team-social-s2.mb-4
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.fab.fa-facebook-f
-                    %li
-                      %a{:href => "#"}
-                        %em.fab.fa-linkedin-in
                   %p He is a great man to work Lorem ipsum dolor sit amet, consec tetur adipis icing elit. Simi lique, autem.
                   %p Tenetur quos facere magnam volupt ates quas esse Sedrep ell endus mole stiae tates quas esse Sed repell endus molesti aela uda ntium quis quam iusto minima thanks.
                   .progress-list
@@ -798,19 +646,13 @@
                         Blockchain
                         %span.progress-amount 85%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "85"}
+                        .progress-percent.bg-primary{ 'data-percent' => '85' }
                     .progress-wrap
                       .progress-title
                         Decentralization
                         %span.progress-amount 68%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "68"}
-              / .col
-            / .row
-          / .team-profile
-        / .col
-      / .row
-    / Block @e
+                        .progress-percent.bg-primary{ 'data-percent' => '68' }
     .nk-block.nk-block-team-list
       .section-head.section-head-sm.section-head-s7.text-center.wide-auto-sm
         %h2.title-md.title-thin Board Advisor
@@ -818,36 +660,28 @@
         .col-lg-3.col-sm-6
           .team
             .team-photo.team-photo-s2
-              %a.team-show.content-popup{"data-overlay" => "bg-theme-grad-alternet", :href => "#team-popup-5"}
-              %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/md-e-color.jpg"}/
+              %a.team-show.content-popup{ 'data-overlay' => 'bg-theme-grad-alternet', href: '#team-popup-5' }
+              %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/md-e-color.jpg' }
               %ul.team-social
                 %li
-                  %a{:href => "#"}
-                    %em.fab.fa-linkedin-in
-                %li
-                  %a{:href => "#"}
+                  %a{ href: '#' }
                     %em.fab.fa-facebook-f
             %h5.team-name.title.title-sm Jonathan Rios
             %span.team-position CTO & Software Engineer
-          / Start .team-profile
-          #team-popup-5.team-popup.mfp-hide
-            %a.mfp-close{:title => "Close"} ×
+          .team-popup.mfp-hide#team-popup-5
+            %a.mfp-close{ title: 'Close' } ×
             .row.align-items-start
               .col-md-6
                 .team-photo
-                  %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/e-color.jpg"}/
-              / .col
-              .col-md-6
+                  %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/e-color.jpg' }
+                .col-md-6
                 .team-popup-info.pl-md-3
                   %h3.team-name.title.title-lg.pt-4 Louis Baker
                   %p.team-position.mb-1 CEO & Lead Blockchain
                   %ul.team-social.team-social-s2.mb-4
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.fab.fa-facebook-f
-                    %li
-                      %a{:href => "#"}
-                        %em.fab.fa-linkedin-in
                   %p He is a great man to work Lorem ipsum dolor sit amet, consec tetur adipis icing elit. Simi lique, autem.
                   %p Tenetur quos facere magnam volupt ates quas esse Sedrep ell endus mole stiae tates quas esse Sed repell endus molesti aela uda ntium quis quam iusto minima thanks.
                   .progress-list
@@ -856,50 +690,39 @@
                         Blockchain
                         %span.progress-amount 85%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "85"}
+                        .progress-percent.bg-primary{ 'data-percent' => '85' }
                     .progress-wrap
                       .progress-title
                         Decentralization
                         %span.progress-amount 68%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "68"}
-              / .col
-            / .row
-          / .team-profile
-        / .col
+                        .progress-percent.bg-primary{ 'data-percent' => '68' }
         .col-lg-3.col-sm-6
           .team
             .team-photo.team-photo-s2
-              %a.team-show.content-popup{"data-overlay" => "bg-theme-grad-alternet", :href => "#team-popup-6"}
-              %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/md-f-color.jpg"}/
+              %a.team-show.content-popup{ 'data-overlay' => 'bg-theme-grad-alternet', href: '#team-popup-6' }
+              %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/md-f-color.jpg' }
               %ul.team-social
                 %li
-                  %a{:href => "#"}
-                    %em.fab.fa-linkedin-in
-                %li
-                  %a{:href => "#"}
+                  %a{ href: '#' }
                     %em.fab.fa-facebook-f
             %h5.team-name.title.title-sm Jason Morales
             %span.team-position Sr.Backend developer
           / Start .team-profile
-          #team-popup-6.team-popup.mfp-hide
-            %a.mfp-close{:title => "Close"} ×
+          .team-popup.mfp-hide#team-popup-6
+            %a.mfp-close{ title: 'Close' } ×
             .row.align-items-start
               .col-md-6
                 .team-photo
-                  %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/f-color.jpg"}/
-              / .col
-              .col-md-6
+                  %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/f-color.jpg' }
+                .col-md-6
                 .team-popup-info.pl-md-3
                   %h3.team-name.title.title-lg.pt-4 Louis Baker
                   %p.team-position.mb-1 CEO & Lead Blockchain
                   %ul.team-social.team-social-s2.mb-4
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.fab.fa-facebook-f
-                    %li
-                      %a{:href => "#"}
-                        %em.fab.fa-linkedin-in
                   %p He is a great man to work Lorem ipsum dolor sit amet, consec tetur adipis icing elit. Simi lique, autem.
                   %p Tenetur quos facere magnam volupt ates quas esse Sedrep ell endus mole stiae tates quas esse Sed repell endus molesti aela uda ntium quis quam iusto minima thanks.
                   .progress-list
@@ -908,50 +731,38 @@
                         Blockchain
                         %span.progress-amount 85%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "85"}
+                        .progress-percent.bg-primary{ 'data-percent' => '85' }
                     .progress-wrap
                       .progress-title
                         Decentralization
                         %span.progress-amount 68%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "68"}
-              / .col
-            / .row
-          / .team-profile
-        / .col
+                        .progress-percent.bg-primary{ 'data-percent' => '68' }
         .col-lg-3.col-sm-6
           .team
             .team-photo.team-photo-s2
-              %a.team-show.content-popup{"data-overlay" => "bg-theme-grad-alternet", :href => "#team-popup-7"}
-              %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/md-g-color.jpg"}/
+              %a.team-show.content-popup{ 'data-overlay' => 'bg-theme-grad-alternet', href: '#team-popup-7' }
+              %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/md-g-color.jpg' }
               %ul.team-social
                 %li
-                  %a{:href => "#"}
-                    %em.fab.fa-linkedin-in
-                %li
-                  %a{:href => "#"}
+                  %a{ href: '#' }
                     %em.fab.fa-facebook-f
             %h5.team-name.title.title-sm Joseph Jordan
             %span.team-position Software Engineer
-          / Start .team-profile
-          #team-popup-7.team-popup.mfp-hide
-            %a.mfp-close{:title => "Close"} ×
+          .team-popup.mfp-hide#team-popup-7
+            %a.mfp-close{ title: 'Close' } ×
             .row.align-items-start
               .col-md-6
                 .team-photo
-                  %img{:alt => "team", :src => "ico-crypto-html-v1.9.3/main-html/images/team/g-color.jpg"}/
-              / .col
-              .col-md-6
+                  %img{ alt: 'team', src: 'ico-crypto-html-v1.9.3/main-html/images/team/g-color.jpg' }
+                .col-md-6
                 .team-popup-info.pl-md-3
                   %h3.team-name.title.title-lg.pt-4 Louis Baker
                   %p.team-position.mb-1 CEO & Lead Blockchain
                   %ul.team-social.team-social-s2.mb-4
                     %li
-                      %a{:href => "#"}
+                      %a{ href: '#' }
                         %em.fab.fa-facebook-f
-                    %li
-                      %a{:href => "#"}
-                        %em.fab.fa-linkedin-in
                   %p He is a great man to work Lorem ipsum dolor sit amet, consec tetur adipis icing elit. Simi lique, autem.
                   %p Tenetur quos facere magnam volupt ates quas esse Sedrep ell endus mole stiae tates quas esse Sed repell endus molesti aela uda ntium quis quam iusto minima thanks.
                   .progress-list
@@ -960,21 +771,14 @@
                         Blockchain
                         %span.progress-amount 85%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "85"}
+                        .progress-percent.bg-primary{ 'data-percent' => '85' }
                     .progress-wrap
                       .progress-title
                         Decentralization
                         %span.progress-amount 68%
                       .progress-bar.progress-bar-xs.bg-black-10
-                        .progress-percent.bg-primary{"data-percent" => "68"}
-              / .col
-            / .row
-          / .team-profile
-        / .col
-      / .row
-    / Block @e
-/ //
-%section#faq.section.bg-light-alt
+                        .progress-percent.bg-primary{ 'data-percent' => '68' }
+%section.section.bg-light-alt#faq
   .container
     .row.justify-content-between.gutter-vr-30px
       .col-lg-4
@@ -983,42 +787,37 @@
           %p.lead Below we’ve provided a bit of ICO, ICO Token, cryptocurrencies, and few others common question answers. If you have any other questions, please get in touch via email.
       / .col
       .col-lg-7
-        #faq-36.accordion
+        .accordion#faq-36
           .accordion-item.accordion-item-s3
-            %h5.accordion-title.accordion-title-sm{"data-target" => "#faq-36-1", "data-toggle" => "collapse"}
+            %h5.accordion-title.accordion-title-sm{ 'data-target' => '#faq-36-1', 'data-toggle' => 'collapse' }
               What is ICO Crypto?
               %span.accordion-icon.accordion-icon-s1
-            #faq-36-1.collapse.show{"data-parent" => "#faq-36"}
+            .collapse.show#faq-36-1{ 'data-parent' => '#faq-36' }
               .accordion-content
                 %p ICO Crypto - is unique platform; that is secure, smart and easy-to-use platform, and completely disrupting the way businesses raise capital.
           .accordion-item.accordion-item-s3
-            %h5.accordion-title.accordion-title-sm.collapsed{"data-target" => "#faq-36-2", "data-toggle" => "collapse"}
+            %h5.accordion-title.accordion-title-sm.collapsed{ 'data-target' => '#faq-36-2', 'data-toggle' => 'collapse' }
               What cryptocurrencies can I use to purchase?
               %span.accordion-icon.accordion-icon-s1
-            #faq-36-2.collapse{"data-parent" => "#faq-36"}
+            .collapse#faq-36-2{ 'data-parent' => '#faq-36' }
               .accordion-content
                 %p ICO Crypto - is unique platform; that is secure, smart and easy-to-use platform, and completely disrupting the way businesses raise capital.
           .accordion-item.accordion-item-s3
-            %h5.accordion-title.accordion-title-sm.collapsed{"data-target" => "#faq-36-3", "data-toggle" => "collapse"}
+            %h5.accordion-title.accordion-title-sm.collapsed{ 'data-target' => '#faq-36-3', 'data-toggle' => 'collapse' }
               How can I participate in the ICO Token sale?
               %span.accordion-icon.accordion-icon-s1
-            #faq-36-3.collapse{"data-parent" => "#faq-36"}
+            .collapse#faq-36-3{ 'data-parent' => '#faq-36' }
               .accordion-content
                 %p ICO Crypto - is unique platform; that is secure, smart and easy-to-use platform, and completely disrupting the way businesses raise capital.
           .accordion-item.accordion-item-s3
-            %h5.accordion-title.accordion-title-sm.collapsed{"data-target" => "#faq-36-4", "data-toggle" => "collapse"}
+            %h5.accordion-title.accordion-title-sm.collapsed{ 'data-target' => '#faq-36-4', 'data-toggle' => 'collapse' }
               How do I benefit from the ICO Token?
               %span.accordion-icon.accordion-icon-s1
-            #faq-36-4.collapse{"data-parent" => "#faq-36"}
+            .collapse#faq-36-4{ 'data-parent' => '#faq-36' }
               .accordion-content
                 %p ICO Crypto - is unique platform; that is secure, smart and easy-to-use platform, and completely disrupting the way businesses raise capital.
-      / .col
-    / .row
-  / .container
-/ //
-%section#contact.section.section-contact.bg-white
+%section.section.section-contact.bg-white#contact
   .container
-    / Block @s
     .nk-block.block-contact
       .row.justify-content-between.gutter-vr-30px
         .col-lg-4
@@ -1038,43 +837,36 @@
               %em.contact-icon.fas.fa-paper-plane
               .contact-text
                 %span Join us on Telegram
-        / .col
         .col-lg-7
           .bg-light.round
-            %form#contact-form.contact-form.contact-form-s2.boxed.boxed-md.nk-form-submit{:action => "form/contact.php", :method => "post"}
+            %form.contact-form.contact-form-s2.boxed.boxed-md.nk-form-submit#contact-form{ action: 'form/contact.php', method: 'post' }
               .field-item.field-item-s2
-                %input.input-bordered.input-bordered-lg.input-bordered-light.required{:name => "contact-name", :placeholder => "Your Name", :type => "text"}/
+                %input.input-bordered.input-bordered-lg.input-bordered-light.required{ name: 'contact-name', placeholder: 'Your Name', type: 'text' }
               .field-item.field-item-s2
-                %input.input-bordered.input-bordered-lg.input-bordered-light.required.email{:name => "contact-email", :placeholder => "Your Email", :type => "email"}/
+                %input.input-bordered.input-bordered-lg.input-bordered-light.required.email{ name: 'contact-email', placeholder: 'Your Email', type: 'email' }
               .field-item.field-item-s2
-                %textarea.input-bordered.input-bordered-lg.input-bordered-light.input-textarea.required{:name => "contact-message", :placeholder => "Your Message"}
-              %input.d-none{:name => "form-anti-honeypot", :type => "text", :value => ""}/
+                %textarea.input-bordered.input-bordered-lg.input-bordered-light.input-textarea.required{ name: 'contact-message', placeholder: 'Your Message' }
+              %input.d-none{ name: 'form-anti-honeypot', type: 'text', value: '' }
               .row
                 .col-sm-12
-                  %button.btn.btn-md.btn-primary{:type => "submit"} Submit
+                  %button.btn.btn-md.btn-primary{ type: 'submit' } Submit
                 .col-sm-12
                   .form-results
-        / .col
-      / .row
-    / .block @e
-/ //
 %section.section.section-s.bg-light
   .container
-    / Block @s
     .nk-block.block-partners
       .section-head.section-head-sm
         %h6.title-md.title-thin.text-center Our Partners
       %ul.partner-list.flex-lg-nowrap.mgb-m30
         %li.partner-logo-s3
-          %img{:alt => "partner", :src => "ico-crypto-html-v1.9.3/main-html/images/partners/a-xs.png"}/
+          %img{ alt: 'partner', src: 'ico-crypto-html-v1.9.3/main-html/images/partners/a-xs.png' }
         %li.partner-logo-s3
-          %img{:alt => "partner", :src => "ico-crypto-html-v1.9.3/main-html/images/partners/b-xs.png"}/
+          %img{ alt: 'partner', src: 'ico-crypto-html-v1.9.3/main-html/images/partners/b-xs.png' }
         %li.partner-logo-s3
-          %img{:alt => "partner", :src => "ico-crypto-html-v1.9.3/main-html/images/partners/c-xs.png"}/
+          %img{ alt: 'partner', src: 'ico-crypto-html-v1.9.3/main-html/images/partners/c-xs.png' }
         %li.partner-logo-s3
-          %img{:alt => "partner", :src => "ico-crypto-html-v1.9.3/main-html/images/partners/d-xs.png"}/
+          %img{ alt: 'partner', src: 'ico-crypto-html-v1.9.3/main-html/images/partners/d-xs.png' }
         %li.partner-logo-s3
-          %img{:alt => "partner", :src => "ico-crypto-html-v1.9.3/main-html/images/partners/e-xs.png"}/
+          %img{ alt: 'partner', src: 'ico-crypto-html-v1.9.3/main-html/images/partners/e-xs.png' }
         %li.partner-logo-s3
-          %img{:alt => "partner", :src => "ico-crypto-html-v1.9.3/main-html/images/partners/f-xs.png"}/
-    / Block @e
+          %img{ alt: 'partner', src: 'ico-crypto-html-v1.9.3/main-html/images/partners/f-xs.png' }
