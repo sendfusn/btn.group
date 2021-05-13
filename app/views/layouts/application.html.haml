@@ -86,15 +86,12 @@
                         %ul.social.pt-2
                           %li
                             %a{ href: '#' }
-                              %em.social-icon.fab.fa-facebook-f
-                          %li
-                            %a{ href: '#' }
                               %em.social-icon.fab.fa-twitter
                           %li
                             %a{ href: '#' }
                               %em.social-icon.fab.fa-medium-m
                           %li
-                            %a{ href: '#' }
+                            = link_to 'https://github.com/btn-group', class: 'text-decoration-none', target: '_blank', rel: 'noopener' do
                               %em.social-icon.fab.fa-github
     .preloader
       %span.spinner.spinner-round
