@@ -3,8 +3,6 @@
 class ApplicationController < ActionController::Base
   helper_method :features
 
-  def about; end
-
   def home; end
 
   def features
