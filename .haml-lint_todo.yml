@@ -7,7 +7,6 @@
 # versions of Haml-Lint, may require this file to be generated again.
 
 linters:
-
   # Offense count: 20
   ClassesBeforeIds:
     exclude:

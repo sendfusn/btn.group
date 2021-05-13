@@ -4,5 +4,9 @@ inherits_from:
 linters:
   ConsecutiveComments:
     enabled: false
+  IdNames:
+    enabled: false
   LineLength:
+    enabled: false
+  ViewLength:
     enabled: false
