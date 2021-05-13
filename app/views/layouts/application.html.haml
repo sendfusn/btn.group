@@ -58,18 +58,11 @@
               .row.justify-content-between.text-center.text-sm-left
                 .col-lg-3.col-md-4.col-sm-5
                   .wgs.wgs-menu
-                    %h6.wgs-title.text-white Address
+                    %h6.wgs-title.text-white Features
                     .wgs-body
-                      %ul.wgs-list.mt-3
-                        %li
-                          ICO Crypto
-                          %br/
-                          Company Number ALX455
-                        %li
-                          2237 Gnatty Creek Road
-                          %br/
-                          Huntington, NY 11743
-                / .col
+                      %ul.wgs-links.wgs-links-s3
+                        - features.each do |key, _values|
+                          %li= link_to key.to_s.underscore.humanize, "/#{key.to_s.underscore}"
                 .col-lg-2.col-md-4.col-sm-3
                   .wgs.wgs-menu
                     %h6.wgs-title.text-white Resorces
