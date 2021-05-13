@@ -17,44 +17,43 @@
     %link{ href: 'ico-crypto-html-v1.9.3/main-html/assets/css/theme.css?ver=1930', rel: 'stylesheet' }
   %body.nk-body.body-wider.theme-dark.mode-onepage
     .nk-wrap
-      %header#header.nk-header.page-header.is-transparent.is-sticky.is-shrink
+      %header.nk-header.page-header.is-transparent.is-sticky.is-shrink#header
         / Header @s
         .header-main
           .container
             .header-wrap
               / Logo @s
               .header-logo.logo
-                %a.logo-link{:href => "./"}
-                  %img.logo-dark{:alt => "logo", :src => "ico-crypto-html-v1.9.3/main-html/images/logo.png", :srcset => "ico-crypto-html-v1.9.3/main-html/images/logo2x.png 2x"}/
-                  %img.logo-light{:alt => "logo", :src => "ico-crypto-html-v1.9.3/main-html/images/logo-full-white.png", :srcset => "ico-crypto-html-v1.9.3/main-html/images/logo-full-white2x.png 2x"}/
+                %a.logo-link{ href: './' }
+                  %h3.text-white btn.group
               / Menu Toogle @s
               .header-nav-toggle
-                %a.navbar-toggle{"data-menu-toggle" => "header-menu", :href => "#"}
+                %a.navbar-toggle{ 'data-menu-toggle' => 'header-menu', href: '#' }
                   .toggle-line
                     %span
               / Menu @s
               .header-navbar.header-navbar-s2
-                %nav#header-menu.header-menu.justify-content-between
+                %nav.header-menu.justify-content-between#header-menu
                   %ul.menu
                     %li.menu-item
-                      %a.menu-link.nav-link{:href => "#about"} About
+                      %a.menu-link.nav-link{ href: '#about' } About
                     %li.menu-item
-                      %a.menu-link.nav-link{:href => "#overview"} Overview
+                      %a.menu-link.nav-link{ href: '#overview' } Overview
                     %li.menu-item
-                      %a.menu-link.nav-link{:href => "#works"} How It Works
+                      %a.menu-link.nav-link{ href: '#works' } How It Works
                     %li.menu-item
-                      %a.menu-link.nav-link{:href => "#token"} ICO Token
+                      %a.menu-link.nav-link{ href: '#token' } Buttcoin
                     %li.menu-item
-                      %a.menu-link.nav-link{:href => "#roadmap"} Roadmap
+                      %a.menu-link.nav-link{ href: '#roadmap' } Roadmap
                     %li.menu-item
-                      %a.menu-link.nav-link{:href => "#team"} Team
+                      %a.menu-link.nav-link{ href: '#team' } Team
                     %li.menu-item.has-sub
-                      %a.menu-link.nav-link.menu-toggle{:href => "#"} More
+                      %a.menu-link.nav-link.menu-toggle{ href: '#' } More
                       %ul.menu-sub.menu-drop
                         %li.menu-item
-                          %a.menu-link.nav-link{:href => "#faq"} Faq
+                          %a.menu-link.nav-link{ href: '#faq' } Faq
                         %li.menu-item
-                          %a.menu-link.nav-link{:href => "#document"} Document
+                          %a.menu-link.nav-link{ href: '#document' } Document
               / .header-navbar @e
         = yield
       %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
@@ -83,11 +82,11 @@
                     .wgs-body
                       %ul.wgs-links.wgs-links-s3
                         %li
-                          %a{:href => "#"} Whitepaper
+                          %a{ href: '#' } Whitepaper
                         %li
-                          %a{:href => "#"} One Pager
+                          %a{ href: '#' } One Pager
                         %li
-                          %a{:href => "#"} Market Research
+                          %a{ href: '#' } Market Research
                 / .col
                 .col-lg-2.col-md-4.col-sm-3
                   .wgs.wgs-menu
@@ -95,50 +94,41 @@
                     .wgs-body
                       %ul.wgs-links.wgs-links-s3
                         %li
-                          %a{:href => "#"} Home
+                          %a{ href: '#' } Home
                         %li
-                          %a{:href => "#"} Tokens
+                          %a{ href: '#' } Tokens
                         %li
-                          %a{:href => "#"} Team
+                          %a{ href: '#' } Team
                         %li
-                          %a{:href => "#"} Roadmap
+                          %a{ href: '#' } Roadmap
                 / .col
                 .col-lg-4.col-md-8.offset-lg-1
                   .wgs.wgs-text
                     .wgs-logo
-                      %a{:href => "./"}
-                        %img{:alt => "logo", :src => "ico-crypto-html-v1.9.3/main-html/images/logo-white.png", :srcset => "ico-crypto-html-v1.9.3/main-html/images/logo-white.png"}/
+                      %a{ href: './' }
+                        %img{ alt: 'logo', src: 'ico-crypto-html-v1.9.3/main-html/images/logo-white.png', srcset: 'ico-crypto-html-v1.9.3/main-html/images/logo-white.png' }
                     .wgs-body
                       .wgs-subscribe.wgs-subscribe-s2
                         %p ICO Crypto All the best selling ICO Template. It’s most stylish and modern design with isometric illustration which makes website gorgeous
                         %ul.social.pt-2
                           %li
-                            %a{:href => "#"}
+                            %a{ href: '#' }
                               %em.social-icon.fab.fa-facebook-f
                           %li
-                            %a{:href => "#"}
+                            %a{ href: '#' }
                               %em.social-icon.fab.fa-twitter
                           %li
-                            %a{:href => "#"}
+                            %a{ href: '#' }
                               %em.social-icon.fab.fa-medium-m
                           %li
-                            %a{:href => "#"}
+                            %a{ href: '#' }
                               %em.social-icon.fab.fa-github
                           %li
-                            %a{:href => "#"}
+                            %a{ href: '#' }
                               %em.social-icon.fab.fa-bitcoin
-                / .col
-              / .row
-              .footer-bottom.pdt-r
-                .copyright-text.copyright-text-s1.text-center.text-sm-left.text-lg-center
-                  %p
-                    © 2019 ICO Crypto Template. Template Made by
-                    %a{:href => "./"} Softnio.
-                    %a.ml-4{:href => "./"} Privacy policy
-            / .block @e
     .preloader
       %span.spinner.spinner-round
     / JavaScript
-    %script{:src => "ico-crypto-html-v1.9.3/main-html/assets/js/jquery.bundle.js?ver=1930"}
-    %script{:src => "ico-crypto-html-v1.9.3/main-html/assets/js/scripts.js?ver=1930"}
-    %script{:src => "ico-crypto-html-v1.9.3/main-html/assets/js/charts.js?var=161"}
+    %script{ src: 'ico-crypto-html-v1.9.3/main-html/assets/js/jquery.bundle.js?ver=1930' }
+    %script{ src: 'ico-crypto-html-v1.9.3/main-html/assets/js/scripts.js?ver=1930' }
+    %script{ src: 'ico-crypto-html-v1.9.3/main-html/assets/js/charts.js?var=161' }
