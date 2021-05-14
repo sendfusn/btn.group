@@ -21,8 +21,9 @@
                 %td.table-head Blockchain
                 %td.table-head Status
             %tbody
-              - features.each do |key, value|
-                %tr
-                  %td= link_to value[:name], "/#{key.to_s.underscore}", class: 'text-decoration-none'
-                  %td= value[:blockchain]
-                  %td= value[:status]
+              - features.each do |blockchain_symbol, blockchain_object|
+                - blockchain_object[:features].each do |feature_key, feature_value|
+                  %tr
+                    %td= link_to feature_value[:name], "/#{blockchain_symbol}/#{feature_key}", class: 'text-decoration-none'
+                    %td= blockchain_object[:name]
+                    %td= feature_value[:status]
