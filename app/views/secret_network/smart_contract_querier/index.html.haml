@@ -3,8 +3,8 @@
     .col-lg-8.offset-lg-2
       .card
         .card-body
-          %h3= features[:smart_contract_querier_secret_network][:name]
-          %p Blockchain: #{features[:smart_contract_querier_secret_network][:blockchain]}
+          %h3= features[:secret_network][:features][:smart_contract_querier][:name]
+          %p Blockchain: #{features[:secret_network][:name]}
           %form{ name: 'secretNetworkSmartContractQuerierForm' }
             .mb-3
               .form-check

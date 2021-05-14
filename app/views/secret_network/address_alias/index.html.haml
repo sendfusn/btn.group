@@ -7,9 +7,9 @@
             .col-lg-8.offset-lg-2
               .card
                 .card-body
-                  = link_to 'New', new_secret_network_alias_path, class: 'btn btn-secondary float-right mb-3'
-                  %h3= features[:secret_network_aliases][:name]
-                  %p Blockchain: #{features[:secret_network_aliases][:blockchain]}
+                  = link_to 'New', new_secret_network_address_alias_path, class: 'btn btn-secondary float-right mb-3'
+                  %h3= features[:secret_network][:features][:address_alias][:name]
+                  %p Blockchain: #{features[:secret_network][:name]}
                   %form{ name: 'aliasSearchForm' }
                     .mb-3
                       %input.form-control.w-100#secret-alias{ name: 'alias', required: true }

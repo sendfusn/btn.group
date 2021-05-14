@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # COMPOUNDER
-  # get 'farm-manager', to: 'farm_manager#home'
-
-  # INVOICE
-  # resources :invoices, only: %i[index new show edit]
-
-  resources :block_locker, only: %i[index new]
-  resources :buttcoin, only: :index
   resources :features, only: :index
-  resources :secret_network_aliases, only: %i[index new]
-  resources :smart_contract_querier_secret_network, only: :index
+
+  namespace :secret_network do
+    # COMPOUNDER
+    # get 'farm-manager', to: 'farm_manager#home'
+
+    # INVOICE
+    # resources :invoices, only: %i[index new show edit]
+    resources :block_locker, only: %i[index new]
+    resources :buttcoin, only: :index
+    resources :address_alias, only: %i[index new]
+    resources :smart_contract_querier, only: :index
+  end
 
   # === DATAHUB REVERSE PROXY ===
   match 'datahub/*path' => 'datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }

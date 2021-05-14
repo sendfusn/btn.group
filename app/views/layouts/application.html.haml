@@ -52,8 +52,9 @@
                     %h6.wgs-title.text-white Features
                     .wgs-body
                       %ul.wgs-links.wgs-links-s3
-                        - features.each do |key, value|
-                          %li= link_to value[:name], "/#{key.to_s.underscore}"
+                        - features.each do |blockchain_symbol, blockchain_object|
+                          - blockchain_object[:features].each do |feature_key, feature_value|
+                            %li= link_to feature_value[:name], "/#{blockchain_symbol}/#{feature_key}"
                 .col-lg-3.col-md-4.col-sm-3
                   .wgs.wgs-menu
                     %h6.wgs-title.text-white Company
