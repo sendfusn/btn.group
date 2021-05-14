@@ -24,7 +24,7 @@
             .header-wrap
               / Logo @s
               .header-logo.logo
-                %a.logo-link{ href: './' }
+                = link_to root_path, class: 'logo-link' do
                   %h3.text-white btn.group
               / Menu Toogle @s
               .header-nav-toggle
@@ -68,18 +68,16 @@
                     %h6.wgs-title.text-white Company
                     .wgs-body
                       %ul.wgs-links.wgs-links-s3
-                        %li
-                          %a{ href: '#' } Home
-                        %li
-                          %a{ href: '#' } Tokens
+                        %li= link_to 'Buttcoin', "#{root_url}#token"
                         %li= link_to 'Team', "#{root_url}#team"
                         %li
                           %a{ href: '#' } Roadmap
                 .col-lg-4.col-md-6.offset-lg-1
                   .wgs.wgs-text
                     .wgs-logo
+                      = link_to root_path, class: 'logo-link' do
+                        %h3.text-white btn.group
                       %a{ href: './' }
-                        %img{ alt: 'logo', src: 'ico-crypto-html-v1.9.3/main-html/images/logo-white.png', srcset: 'ico-crypto-html-v1.9.3/main-html/images/logo-white.png' }
                     .wgs-body
                       .wgs-subscribe.wgs-subscribe-s2
                         %p © 2021
