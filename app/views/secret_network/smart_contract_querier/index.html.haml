@@ -8,7 +8,10 @@
               .card
                 .card-body
                   %h3= features[:secret_network][:features][:smart_contract_querier][:name]
-                  %p Blockchain: #{features[:secret_network][:name]}
+                  %p
+                    Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
                   %form{ name: 'secretNetworkSmartContractQuerierForm' }
                     .mb-3
                       .form-check
@@ -31,8 +34,8 @@
                         %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
                     %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
                       .d-none#loading
-                        %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %span Loading...
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
                       #ready
                         Search
               .card.my-3.d-none#result-container

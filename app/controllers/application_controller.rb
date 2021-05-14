@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   def features
     {
       secret_network: {
+        cloudinary_public_id: 'logos/external-content.duckduckgo_s4rezw',
         name: 'Secret network',
         features: {
           address_alias: {

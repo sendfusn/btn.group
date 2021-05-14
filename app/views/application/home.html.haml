@@ -17,7 +17,7 @@
                       %span We Accept:
                       %h4
                         %em.fab.fa-scrt
-                          %img{ alt: 'gfx', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_24,q_auto,w_24/v1620959783/logos/external-content.duckduckgo_s4rezw.png', width: 24, height: 24 }
+                          = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                         SCRT
                 .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
                   %a.btn.btn-md.btn-secondary.w-100{ href: '#' } Learn more
