@@ -15,16 +15,22 @@
                     = features[:secret_network][:name].to_s
                   %form{ name: 'aliasSearchForm' }
                     .mb-3
-                      %input.form-control.w-100#secret-alias{ name: 'alias', required: true }
+                      .form-check
+                        %input.form-check-input#address{ checked: 'checked', name: 'searchType', type: 'radio', value: 'address' }
+                        %label.form-check-label{ for: 'address' } Address
+                      .form-check
+                        %input.form-check-input#alias{ name: 'searchType', type: 'radio', value: 'alias' }
+                        %label.form-check-label{ for: 'alias' } Alias
+                    .mb-3
+                      %input.form-control.w-100#search-value{ name: 'searchValue', required: true }
                     %button.btn.btn-primary.btn-md#search-button{ type: 'submit', disabled: true }
                       #loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
                       .d-none#ready
                         Search
-              .card.mt-3.d-none#result
+              .card.my-3.d-none#result-container
                 .card-body
-                  %h3 Address
-                  %p#human-address
-
-%main.nk-pages
+                  %h3 Result
+                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                  .alert.alert-danger.d-none.mt-3#alert-danger

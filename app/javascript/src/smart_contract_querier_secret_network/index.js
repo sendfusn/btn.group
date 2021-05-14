@@ -16,7 +16,6 @@ $(document).ready(function(){
         // Disable form
         $("#search-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
-
         $("#loading").removeClass("d-none")
         $("#ready").addClass("d-none")
         document.hideAllAlerts();
