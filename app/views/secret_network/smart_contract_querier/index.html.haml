@@ -3,8 +3,8 @@
     .banner.banner-page
       .banner-wrap
         .container#secret-network-smart-contract-querier
-          .row.my-5
-            .col-lg-8.offset-lg-2
+          .row.mb-5.mt-3
+            .col-lg-10.offset-lg-1
               .card
                 .card-body
                   %h3= features[:secret_network][:features][:smart_contract_querier][:name]
@@ -41,5 +41,6 @@
               .card.my-3.d-none#result-container
                 .card-body
                   %h3 Result
-                  %pre.p-1.m-1#result-value
+                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                  .alert.alert-danger.d-none.mt-3#alert-danger
   .nk-ovm.shape-q
