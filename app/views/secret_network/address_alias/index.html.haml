@@ -7,16 +7,19 @@
             .col-lg-8.offset-lg-2
               .card
                 .card-body
-                  = link_to 'New', new_secret_network_address_alias_path, class: 'btn btn-secondary float-right mb-3'
+                  = link_to 'New', new_secret_network_address_alias_path, class: 'btn btn-secondary btn-md float-right mb-3'
                   %h3= features[:secret_network][:features][:address_alias][:name]
-                  %p Blockchain: #{features[:secret_network][:name]}
+                  %p
+                    Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
                   %form{ name: 'aliasSearchForm' }
                     .mb-3
                       %input.form-control.w-100#secret-alias{ name: 'alias', required: true }
-                    %button.btn.btn-primary#search-button{ type: 'submit', disabled: true }
+                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit', disabled: true }
                       #loading
-                        %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %span Loading...
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
                       .d-none#ready
                         Search
               .card.mt-3.d-none#result
