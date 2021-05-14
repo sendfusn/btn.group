@@ -1,21 +1,27 @@
-.container#aliases-search
-  .row.mt-5
-    .col-lg-6.offset-lg-3
-      .card
-        .card-body
-          = link_to 'New', new_secret_network_alias_path, class: 'btn btn-secondary float-end mb-3'
-          %h3= features[:secret_network_aliases][:name]
-          %p Blockchain: #{features[:secret_network_aliases][:blockchain]}
-          %form{ name: 'aliasSearchForm' }
-            .mb-3
-              %input.form-control.w-100#secret-alias{ name: 'alias', required: true }
-            %button.btn.btn-primary#search-button{ type: 'submit', disabled: true }
-              #loading
-                %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                %span Loading...
-              .d-none#ready
-                Search
-      .card.mt-3.d-none#result
-        .card-body
-          %h3 Address
-          %p#human-address
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .banner-wrap
+        .container#aliases-search
+          .row
+            .col-lg-8.offset-lg-2
+              .card
+                .card-body
+                  = link_to 'New', new_secret_network_alias_path, class: 'btn btn-secondary float-right mb-3'
+                  %h3= features[:secret_network_aliases][:name]
+                  %p Blockchain: #{features[:secret_network_aliases][:blockchain]}
+                  %form{ name: 'aliasSearchForm' }
+                    .mb-3
+                      %input.form-control.w-100#secret-alias{ name: 'alias', required: true }
+                    %button.btn.btn-primary#search-button{ type: 'submit', disabled: true }
+                      #loading
+                        %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %span Loading...
+                      .d-none#ready
+                        Search
+              .card.mt-3.d-none#result
+                .card-body
+                  %h3 Address
+                  %p#human-address
+
+%main.nk-pages
