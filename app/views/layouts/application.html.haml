@@ -59,8 +59,8 @@
                     %h6.wgs-title.text-white Features
                     .wgs-body
                       %ul.wgs-links.wgs-links-s3
-                        - features.each do |key, _values|
-                          %li= link_to key.to_s.underscore.humanize, "/#{key.to_s.underscore}"
+                        - features.each do |key, value|
+                          %li= link_to value[:name], "/#{key.to_s.underscore}"
                 .col-lg-3.col-md-4.col-sm-3
                   .wgs.wgs-menu
                     %h6.wgs-title.text-white Company

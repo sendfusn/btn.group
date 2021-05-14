@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :block_locker, only: %i[index new]
   resources :buttcoin, only: :index
-  resources :secret_network_alias, only: %i[index new]
+  resources :secret_network_aliases, only: %i[index new]
   resources :smart_contract_querier_secret_network, only: :index
 
   # === DATAHUB REVERSE PROXY ===
