@@ -1,0 +1,19 @@
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .banner-wrap
+        .container#features
+          .row
+            .col-12
+              %table.table-striped.table
+                %thead
+                  %tr
+                    %th{ scope: 'col' } Feature
+                    %th{ scope: 'col' } Blockchain
+                    %th{ scope: 'col' } Status
+                %tbody
+                  - features.each do |key, value|
+                    %tr
+                      %td= link_to value[:name], "/#{key.to_s.underscore}", class: 'text-decoration-none'
+                      %td= value[:blockchain]
+                      %td= value[:status]
