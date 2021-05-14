@@ -1,37 +1,42 @@
-.container#secret-network-smart-contract-querier
-  .row.my-5
-    .col-lg-8.offset-lg-2
-      .card
-        .card-body
-          %h3= features[:secret_network][:features][:smart_contract_querier][:name]
-          %p Blockchain: #{features[:secret_network][:name]}
-          %form{ name: 'secretNetworkSmartContractQuerierForm' }
-            .mb-3
-              .form-check
-                %input.form-check-input#production{ checked: 'checked', name: 'environment', type: 'radio', value: 'production' }
-                %label.form-check-label{ for: 'production' } Production
-              .form-check
-                %input.form-check-input#staging{ name: 'environment', type: 'radio', value: 'staging' }
-                %label.form-check-label{ for: 'staging' } Staging / Testnet
-            .mb-3
-              %label.form-label{ for: 'contract-address' } Contract address
-              %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
-            .mb-3
-              .row
-                .col-md-6
-                  %label.form-label{ for: 'function-name' } Function name
-                  %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
-            #params-container
-            .mb-3
-              .d-grid.gap-2.col-6.mx-auto
-                %button.btn.btn-outline-primary#add-new-param{ type: 'button' } + Param
-            %button.btn.btn-primary#search-button{ type: 'submit' }
-              .d-none#loading
-                %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                %span Loading...
-              #ready
-                Search
-      .card.my-3.d-none#result-container
-        .card-body
-          %h3 Result
-          %pre.p-1.m-1#result-value
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .banner-wrap
+        .container#secret-network-smart-contract-querier
+          .row.my-5
+            .col-lg-8.offset-lg-2
+              .card
+                .card-body
+                  %h3= features[:secret_network][:features][:smart_contract_querier][:name]
+                  %p Blockchain: #{features[:secret_network][:name]}
+                  %form{ name: 'secretNetworkSmartContractQuerierForm' }
+                    .mb-3
+                      .form-check
+                        %input.form-check-input#production{ checked: 'checked', name: 'environment', type: 'radio', value: 'production' }
+                        %label.form-check-label{ for: 'production' } Production
+                      .form-check
+                        %input.form-check-input#staging{ name: 'environment', type: 'radio', value: 'staging' }
+                        %label.form-check-label{ for: 'staging' } Staging / Testnet
+                    .mb-3
+                      %label.form-label{ for: 'contract-address' } Contract address
+                      %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
+                    .mb-3
+                      .row
+                        .col-md-6
+                          %label.form-label{ for: 'function-name' } Function name
+                          %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+                    #params-container
+                    .mb-3
+                      .text-center
+                        %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
+                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
+                      .d-none#loading
+                        %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %span Loading...
+                      #ready
+                        Search
+              .card.my-3.d-none#result-container
+                .card-body
+                  %h3 Result
+                  %pre.p-1.m-1#result-value
+  .nk-ovm.shape-q
