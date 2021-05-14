@@ -3,17 +3,26 @@
     .banner.banner-page
       .banner-wrap
         .container#features
-          .row
-            .col-12
-              %table.table-striped.table
-                %thead
-                  %tr
-                    %th{ scope: 'col' } Feature
-                    %th{ scope: 'col' } Blockchain
-                    %th{ scope: 'col' } Status
-                %tbody
-                  - features.each do |key, value|
-                    %tr
-                      %td= link_to value[:name], "/#{key.to_s.underscore}", class: 'text-decoration-none'
-                      %td= value[:blockchain]
-                      %td= value[:status]
+          .row.justify-content-center
+            .col-xl-6.col-lg-9
+              .banner-caption.cpntc-light.text-center
+                .cpn-head.mt-0
+                  %h2.title.ttu.text-white Features
+  .nk-ovm.shape-q
+%main.nk-pages
+  %section.section.bg-white
+    .container
+      .row
+        .col-12
+          %table.table-bordered.table
+            %thead
+              %tr
+                %td.table-head Feature
+                %td.table-head Blockchain
+                %td.table-head Status
+            %tbody
+              - features.each do |key, value|
+                %tr
+                  %td= link_to value[:name], "/#{key.to_s.underscore}", class: 'text-decoration-none'
+                  %td= value[:blockchain]
+                  %td= value[:status]
