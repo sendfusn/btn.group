@@ -41,48 +41,52 @@
                     %li.menu-item
                       %a.menu-link.nav-link{ href: '#roadmap' } Roadmap
         = yield
-      %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
-        %section.section.section-m.tc-light.tc-light-alt.bg-transparent
-          .container
-            / Block @s
-            .nk-block.nk-block-footer
-              .row.justify-content-between.text-center.text-sm-left
-                .col-lg-4.col-md-6.col-sm-5
-                  .wgs.wgs-menu
-                    %h6.wgs-title.text-white Features
-                    .wgs-body
-                      %ul.wgs-links.wgs-links-s3
-                        - features.each do |blockchain_symbol, blockchain_object|
-                          - blockchain_object[:features].each do |feature_key, feature_value|
-                            %li= link_to feature_value[:name], "/#{blockchain_symbol}/#{feature_key}"
-                .col-lg-3.col-md-4.col-sm-3
-                  .wgs.wgs-menu
-                    %h6.wgs-title.text-white Company
-                    .wgs-body
-                      %ul.wgs-links.wgs-links-s3
-                        %li= link_to 'Buttcoin', "#{root_url}#token"
-                        %li= link_to 'Team', "#{root_url}#team"
-                        %li
-                          %a{ href: '#' } Roadmap
-                .col-lg-4.col-md-6.offset-lg-1
-                  .wgs.wgs-text
-                    .wgs-logo
-                      = link_to root_path, class: 'logo-link' do
-                        %h3.text-white btn.group
-                      %a{ href: './' }
-                    .wgs-body
-                      .wgs-subscribe.wgs-subscribe-s2
-                        %p © 2021
-                        %ul.social.pt-2
+        %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
+          %section.section.section-m.tc-light.tc-light-alt.bg-transparent.pb-0
+            .container
+              .nk-block.block-footer
+                .row.my-md-0.mb-n4
+                  .col-lg-5.col-sm-7
+                    .wgs.wgs-menu
+                      %h6.wgs-title.wgs-title-s2.text-white FEATURES
+                      .wgs-body
+                        %ul.wgs-links.wgs-links-uline.wgs-links-s2
+                          - features.each do |blockchain_symbol, blockchain_object|
+                            - blockchain_object[:features].each do |feature_key, feature_value|
+                              %li= link_to feature_value[:name], "/#{blockchain_symbol}/#{feature_key}"
+                  .col-lg-4.col-sm-5
+                    .wgs.wgs-menu
+                      %h6.wgs-title.text-white Company
+                      .wgs-body
+                        %ul.wgs-links.wgs-links-s3
+                          %li= link_to 'Buttcoin', "#{root_url}#token"
+                          %li= link_to 'Team', "#{root_url}#team"
                           %li
-                            %a{ href: '#' }
-                              %em.social-icon.fab.fa-twitter
-                          %li
-                            %a{ href: '#' }
-                              %em.social-icon.fab.fa-medium-m
-                          %li
-                            = link_to 'https://github.com/btn-group', class: 'text-decoration-none', target: '_blank', rel: 'noopener' do
-                              %em.social-icon.fab.fa-github
+                            %a{ href: '#' } Roadmap
+                  .col-lg-3.col-md
+                    .wgs.wgs-subscribe-form
+                      %h6.wgs-title.wgs-title-s2.text-white NewsLetter
+                      .wgs-body
+                        .wgs-subscribe
+                          %p Lorem ipsum dolor sit amet, cons ectetur adipiscing elit, sed
+                          %form.nk-form-submit{ action: 'form/subscribe.php', method: 'post', novalidate: 'novalidate' }
+                            .field-inline.field-inline-s3.field-split
+                              .field-wrap
+                                %input.input-bordered.required{ placeholder: 'Enter your email', type: 'text' }
+                                %input.d-none{ name: 'form-anti-honeypot', type: 'text', value: '' }
+                              .submit-wrap
+                                %button.btn.btn-icon.btn-light.btn-auto
+                                  %i.fas.fa-paper-plane
+                            .form-results
+              .footer-bottom.section-sm
+                .row.justify-content-between.align-items-center
+                  .col-6
+                    = link_to root_path, class: 'logo-link wgs-logo-s2' do
+                      %h3.text-white btn.group
+                  / .col
+                  .col-6
+                    .copyright-text.text-right
+                      %p © btn.group, 2021
     .preloader
       %span.spinner.spinner-round
     / JavaScript

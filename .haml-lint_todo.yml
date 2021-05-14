@@ -10,24 +10,24 @@ linters:
   # Offense count: 20
   ClassesBeforeIds:
     exclude:
-      - "app/views/invoices/edit.html.haml"
-      - "app/views/invoices/index.html.haml"
-      - "app/views/invoices/new.html.haml"
-      - "app/views/invoices/show.html.haml"
+      - "app/views/secret_network/invoices/edit.html.haml"
+      - "app/views/secret_network/invoices/index.html.haml"
+      - "app/views/secret_network/invoices/new.html.haml"
+      - "app/views/secret_network/invoices/show.html.haml"
 
   # Offense count: 184
   RuboCop:
     exclude:
-      - "app/views/invoices/edit.html.haml"
-      - "app/views/invoices/index.html.haml"
-      - "app/views/invoices/new.html.haml"
-      - "app/views/invoices/show.html.haml"
+      - "app/views/secret_network/invoices/edit.html.haml"
+      - "app/views/secret_network/invoices/index.html.haml"
+      - "app/views/secret_network/invoices/new.html.haml"
+      - "app/views/secret_network/invoices/show.html.haml"
 
   # Offense count: 97
   SpaceInsideHashAttributes:
     exclude:
-      - "app/views/farm_manager/home.html.haml"
-      - "app/views/invoices/edit.html.haml"
-      - "app/views/invoices/index.html.haml"
-      - "app/views/invoices/new.html.haml"
-      - "app/views/invoices/show.html.haml"
+      - "app/views/secret_network/farm_manager/home.html.haml"
+      - "app/views/secret_network/invoices/edit.html.haml"
+      - "app/views/secret_network/invoices/index.html.haml"
+      - "app/views/secret_network/invoices/new.html.haml"
+      - "app/views/secret_network/invoices/show.html.haml"
