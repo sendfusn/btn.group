@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
 
   def features
     {
+      secret_network_aliases: {
+        blockchain: 'Secret network',
+        name: 'Address alias',
+        status: 'Work in progress'
+      },
       block_locker: {
         blockchain: 'Secret network',
         name: 'Block locker',
@@ -21,11 +26,6 @@ class ApplicationController < ActionController::Base
         blockchain: 'Secret network',
         name: 'Smart contract querier',
         status: 'Live'
-      },
-      secret_network_aliases: {
-        blockchain: 'Secret network',
-        name: 'Secret network aliases',
-        status: 'Work in progress'
       }
     }
   end

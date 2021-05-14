@@ -15,8 +15,8 @@
                     = link_to 'Cancel', secret_network_aliases_path, class: 'btn btn-link', id: 'cancel-button'
                     %button.btn.btn-primary#create-button{ type: 'submit', disabled: true }
                       #loading
-                        %span.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %span Loading...
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
                       .d-none#ready
                         Create
 
