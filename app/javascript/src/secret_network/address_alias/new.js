@@ -1,10 +1,5 @@
 $(document).ready(function(){
-  if($("#aliases-new").length) {
-    const { SigningCosmWasmClient } = require('secretjs');
-    const httpUrl = '/datahub';
-    const contractAddress = 'secret17fkl85nexfne274s578rsuatm62j96lvgmfs7u'
-    // Load environment variables
-
+  if($("#secret-network-address-alias-new").length) {
     window.onload = async () => {
       this.chainId = 'secret-2';
 
@@ -61,6 +56,16 @@ $(document).ready(function(){
           $("#ready").addClass("d-none")
           document.hideAllAlerts();
           try {
+            // Set environment
+            let contractAddress;
+            let environment = document.aliasCreateForm.environment.value;
+            let client =  document.secretNetworkClient(environment);
+            if (environment == 'staging') {
+              contractAddress = 'tobefilled'
+            } else {
+              contractAddress = 'secret17fkl85nexfne274s578rsuatm62j96lvgmfs7u'
+            };
+
             let alias = document.aliasCreateForm.alias.value;
             let handleMsg = { create: {alias_string: alias} }
             let response = await this.client.execute(contractAddress, handleMsg)

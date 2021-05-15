@@ -2,9 +2,9 @@
   .nk-banner
     .banner.banner-page
       .banner-wrap
-        .container#aliases-new
-          .row.mt-5
-            .col-lg-6.offset-lg-3
+        .container#secret-network-address-alias-new
+          .row.mb-5.mt-3
+            .col-lg-10.offset-lg-1
               .card
                 .card-body
                   %h3= features[:secret_network][:features][:address_alias][:name]
@@ -13,6 +13,12 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
                   %form{ name: 'aliasCreateForm' }
+                    .form-group
+                      .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#production{ name: 'environment', type: 'radio', value: 'production', checked: true } Production
+                        %label.btn.btn-md.btn-light
+                          %input#staging{ name: 'environment', type: 'radio', value: 'staging' } Staging / Testnet
                     .mb-3
                       %input.form-control.w-100#alias{ name: 'alias', required: true }
                     = link_to 'Cancel', secret_network_address_alias_index_path, class: 'btn btn-light btn-md', id: 'cancel-button'

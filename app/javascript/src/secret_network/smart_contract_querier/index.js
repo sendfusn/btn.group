@@ -1,10 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-smart-contract-querier").length) {
     window.onload = async () => {
-      const {
-        CosmWasmClient,
-      } = require('secretjs');
-
       let param_count = 0;
       $('#add-new-param').click(function(event){
         event.preventDefault();
@@ -23,11 +19,7 @@ $(document).ready(function(){
           try {
             // Set environment
             let environment = document.secretNetworkSmartContractQuerierForm.environment.value;
-            let http_url = '/datahub';
-            if (environment == 'staging') {
-              http_url = http_url + '_staging'
-            };
-            let client =  new CosmWasmClient(http_url);
+            let client =  document.secretNetworkClient(environment);
 
             // Set params
             let contractAddress = document.secretNetworkSmartContractQuerierForm.contractAddress.value;
@@ -60,7 +52,7 @@ $(document).ready(function(){
 
             // Display results
             $("#result-value").removeClass("d-none");
-            $("#result-value").html(prettyPrintJSON(result));
+            $("#result-value").html(document.prettyPrintJSON(result));
           }
           catch(err) {
             document.showAlertDanger(err)
@@ -79,25 +71,3 @@ $(document).ready(function(){
     }
   };
 });
-
-function prettyPrintJSON(json) {
-  if (typeof json != 'string') {
-    json = JSON.stringify(json, undefined, 2);
-  }
-  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-    var cls = 'number';
-    if (/^"/.test(match)) {
-      if (/:$/.test(match)) {
-        cls = 'key';
-      } else {
-        cls = 'string';
-      }
-    } else if (/true|false/.test(match)) {
-      cls = 'boolean';
-    } else if (/null/.test(match)) {
-      cls = 'null';
-    }
-    return '<span class="' + cls + '">' + match + '</span>';
-  });
-}

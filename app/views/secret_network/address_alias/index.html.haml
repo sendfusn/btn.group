@@ -2,9 +2,9 @@
   .nk-banner
     .banner.banner-page
       .banner-wrap
-        .container#aliases-search
-          .row
-            .col-lg-8.offset-lg-2
+        .container#secret-network-address-alias-index
+          .row.mb-5.mt-3
+            .col-lg-10.offset-lg-1
               .card
                 .card-body
                   = link_to 'New', new_secret_network_address_alias_path, class: 'btn btn-secondary btn-md float-right mb-3'
@@ -14,20 +14,25 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
                   %form{ name: 'aliasSearchForm' }
-                    .mb-3
-                      .form-check
-                        %input.form-check-input#address{ checked: 'checked', name: 'searchType', type: 'radio', value: 'address' }
-                        %label.form-check-label{ for: 'address' } Address
-                      .form-check
-                        %input.form-check-input#alias{ name: 'searchType', type: 'radio', value: 'alias' }
-                        %label.form-check-label{ for: 'alias' } Alias
+                    .form-group
+                      .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#production{ name: 'environment', type: 'radio', value: 'production', checked: true } Production
+                        %label.btn.btn-md.btn-light
+                          %input#staging{ name: 'environment', type: 'radio', value: 'staging' } Staging / Testnet
+                    .form-group
+                      .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#address{ name: 'searchType', type: 'radio', value: 'address' } Address
+                        %label.btn.btn-md.btn-light
+                          %input#alias{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
                     .mb-3
                       %input.form-control.w-100#search-value{ name: 'searchValue', required: true }
-                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit', disabled: true }
-                      #loading
+                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
+                      .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
-                      .d-none#ready
+                      #ready
                         Search
               .card.my-3.d-none#result-container
                 .card-body
