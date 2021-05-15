@@ -10,12 +10,12 @@ import "channels"
 // BOOTSTRAP IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
 
 // APP
-import '../src/block_locker/new'
-import '../src/block_locker/show'
-import '../src/invoices/edit'
-import '../src/secret_alias/new'
-import '../src/secret_alias/index'
-import '../src/smart_contract_querier_secret_network/index'
+import '../src/secret_network/block_locker/new'
+import '../src/secret_network/block_locker/show'
+import '../src/secret_network/invoices/edit'
+import '../src/secret_network/address_alias/new'
+import '../src/secret_network/address_alias/index'
+import '../src/secret_network/smart_contract_querier/index'
 
 Rails.start()
 ActiveStorage.start()
