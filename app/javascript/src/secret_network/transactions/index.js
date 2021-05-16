@@ -58,12 +58,21 @@ $(document).ready(function(){
             }
             let transactions_response = await client.queryContractSmart(contractAddress, params);
             _.each(transactions_response["transfer_history"]["txs"], function(value){
+              // Format amount & description
               let amount = value['coins']['amount']
+              let description
               if (address != value['receiver']) {
                 amount *= -1
+                description = value['receiver']
+              } else {
+                description = value['from']
               }
               amount = parseFloat(amount).toLocaleString('en')
-              $('tbody').append('<tr><td>' + '' + '</td>' + '<td>' + '' + '</td>' + '<td>' + amount + '</td>' + '<td>' + '' + '</td>' + '</tr><tr><td colspan="4"><p>id: ' + value['id'] + '<br>sender: ' + value['sender'] + '<br>from: ' + value['from'] + '<br>receiver: ' + value['receiver'] + '</p></td></tr>')
+
+              // Figure out description (the opposite party
+
+              $('tbody').append('<tr><td>' + '' + '</td>' + '<td>' + description + '</td>' + '<td>' + amount + '</td>' + '</tr><tr><td colspan="3"><p>id: ' + value['id'] + '<br>sender/spender: ' + value['sender'] + '<br>from/owner: ' + value['from'] + '<br>receiver: ' + value['receiver'] + '</p></td></tr>')
+              // Put denom next to amount header
               $('#denomination').text('(' + value['coins']['denom'] + ')')
             })
             params = {
