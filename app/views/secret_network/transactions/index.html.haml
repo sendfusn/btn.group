@@ -1,10 +1,10 @@
 .header-banner.bg-theme-grad-s2
   .nk-banner
     .banner.banner-page
-      .banner-wrap
+      .mt-3.w-100
         .container#secret-network-transactions
-          .row.mb-5.mt-3
-            .col-lg-10.offset-lg-1
+          .row.mb-5
+            .col-12
               .card
                 .card-body
                   %h3= features[:secret_network][:features][:transactions][:name]
@@ -21,62 +21,36 @@
                         %span.slider
                       Production
                     .form-group
-                    -# .mb-3
-                    -#   %label.form-label{ for: 'contract-address' } Contract address
-                    -#   %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
-                    -# %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
-                    -#   .d-none#loading
-                    -#     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                    -#     %em Loading...
-                    -#   #ready
-                    -#     Search
-              .card.my-3.d-none#result-container
-                .card-body
-                  %h3 Result
-                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                      %label.form-label{ for: 'address' } Address
+                      %input.form-control#address{ name: 'address' }
+                    .form-group
+                      %label.form-label{ for: 'contract-address' } Contract address
+                      %select.form-control#contract-address{ name: 'contractAddress' }
+                        - tokens[:production].each do |token|
+                          %option{ value: token[:address] }= token[:name]
+                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
+                      .d-none#loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      #ready
+                        Search
+                    .mb-5
                   .alert.alert-danger.d-none.mt-3#alert-danger
+                  %h6
+                    Balance:
+                    %span#balance
+                  .block
+                    %table.table.table-striped.table-bordered
+                      %thead
+                        %tr
+                          %td ID
+                          %td Sender
+                          %td From
+                          %td Receiver
+                          %td
+                            Amount
+                            %span#denomination
+                      %tbody
+
+                  %p * Minting transactions are not included (e.g. receiving tokens via the bridge etc)
   .nk-ovm.shape-q
-
-
-
--# .container
--#   .row.mt-5
--#     .col-12
--#       %h1 Invoices
--#       .btn-group{"aria-label" => "Basic radio toggle button group", :role => "group"}
--#         %input#btnradio1.btn-check{:autocomplete => "off", :checked => "checked", :name => "btnradio", :type => "radio"}/
--#         %label.btn.btn-outline-primary{:for => "btnradio1"} Created
--#         %input#btnradio2.btn-check{:autocomplete => "off", :name => "btnradio", :type => "radio"}/
--#         %label.btn.btn-outline-primary{:for => "btnradio2"} Received
--#       %a.btn.btn-primary.float-end{href: "/invoices/new"}
--#         New
--#       %table.table.table-striped
--#         %thead
--#           %tr
--#             %th #
--#             %th To
--#             %th Description
--#             %th Date
--#             %th Amount
--#             %th Accepted crypto
--#             %th Received
--#             %th Status
--#         %tbody
--#           %tr
--#             %td 1
--#             %td secret42wmn324k23jrkj2435n2n332jn432jkn42k3n
--#             %td Mushroom omelette
--#             %td= Date.current - 1.day
--#             %td 33 AUD$
--#             %td sETH, sSCRT, sWBTC
--#             %td
--#             %td Pending
--#           %tr
--#             %td 2
--#             %td secret42wmn324k23jrkj2435n2n332jn432jkn42k3n
--#             %td Coffee & TV
--#             %td= Date.current
--#             %td 5 AUD$
--#             %td sSCRT
--#             %td 1.5 sSCRT
--#             %td Pending

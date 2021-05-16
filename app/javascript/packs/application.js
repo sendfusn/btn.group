@@ -9,6 +9,8 @@ import "channels"
 
 // BOOTSTRAP & jquery IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
 
+import 'lodash'
+
 // APP
 import '../src/secret_network/block_locker/new'
 import '../src/secret_network/block_locker/show'
