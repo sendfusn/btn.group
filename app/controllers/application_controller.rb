@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  helper_method :features
+  helper_method :features, :logo_cloudinary_public_id
 
   def home; end
 
@@ -34,5 +34,9 @@ class ApplicationController < ActionController::Base
         }
       }
     }
+  end
+
+  def logo_cloudinary_public_id
+    'logos/button.group_logo_ecemui'
   end
 end
