@@ -7,7 +7,7 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-// BOOTSTRAP IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
+// BOOTSTRAP & jquery IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
 
 // APP
 import '../src/secret_network/block_locker/new'
@@ -16,6 +16,7 @@ import '../src/secret_network/invoices/edit'
 import '../src/secret_network/address_alias/new'
 import '../src/secret_network/address_alias/index'
 import '../src/secret_network/smart_contract_querier/index'
+import '../src/secret_network/transactions/index'
 
 Rails.start()
 ActiveStorage.start()

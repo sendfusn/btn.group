@@ -8,17 +8,19 @@
               .card
                 .card-body
                   %h3= features[:secret_network][:features][:transactions][:name]
-                  %p
-                    Blockchain:
+                  %p.mb-0
+                    %b Blockchain:
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
                   %form{ name: 'secretNetworkTransactionsForm' }
+                    %p
+                      %b Environment:
+                      Staging / Testnet
+                      %label.switch
+                        %input{ name: 'production', type: 'checkbox', checked: true }
+                        %span.slider
+                      Production
                     .form-group
-                      .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light.btn-md
-                          %input#production{ name: 'environment', type: 'radio', value: 'production', checked: true } Production
-                        %label.btn.btn-md.btn-light
-                          %input#staging{ name: 'environment', type: 'radio', value: 'staging' } Staging / Testnet
                     -# .mb-3
                     -#   %label.form-label{ for: 'contract-address' } Contract address
                     -#   %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
