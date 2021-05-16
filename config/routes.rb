@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :buttcoin, only: :index
     resources :address_alias, only: %i[index new]
     resources :smart_contract_querier, only: :index
+    resources :transactions, only: :index
   end
 
   # === DATAHUB REVERSE PROXY ===

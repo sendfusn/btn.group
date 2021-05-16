@@ -1,0 +1,80 @@
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .banner-wrap
+        .container#secret-network-transactions
+          .row.mb-5.mt-3
+            .col-lg-10.offset-lg-1
+              .card
+                .card-body
+                  %h3= features[:secret_network][:features][:transactions][:name]
+                  %p
+                    Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+                  %form{ name: 'secretNetworkTransactionsForm' }
+                    .form-group
+                      .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#production{ name: 'environment', type: 'radio', value: 'production', checked: true } Production
+                        %label.btn.btn-md.btn-light
+                          %input#staging{ name: 'environment', type: 'radio', value: 'staging' } Staging / Testnet
+                    -# .mb-3
+                    -#   %label.form-label{ for: 'contract-address' } Contract address
+                    -#   %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
+                    -# %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
+                    -#   .d-none#loading
+                    -#     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                    -#     %em Loading...
+                    -#   #ready
+                    -#     Search
+              .card.my-3.d-none#result-container
+                .card-body
+                  %h3 Result
+                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                  .alert.alert-danger.d-none.mt-3#alert-danger
+  .nk-ovm.shape-q
+
+
+
+-# .container
+-#   .row.mt-5
+-#     .col-12
+-#       %h1 Invoices
+-#       .btn-group{"aria-label" => "Basic radio toggle button group", :role => "group"}
+-#         %input#btnradio1.btn-check{:autocomplete => "off", :checked => "checked", :name => "btnradio", :type => "radio"}/
+-#         %label.btn.btn-outline-primary{:for => "btnradio1"} Created
+-#         %input#btnradio2.btn-check{:autocomplete => "off", :name => "btnradio", :type => "radio"}/
+-#         %label.btn.btn-outline-primary{:for => "btnradio2"} Received
+-#       %a.btn.btn-primary.float-end{href: "/invoices/new"}
+-#         New
+-#       %table.table.table-striped
+-#         %thead
+-#           %tr
+-#             %th #
+-#             %th To
+-#             %th Description
+-#             %th Date
+-#             %th Amount
+-#             %th Accepted crypto
+-#             %th Received
+-#             %th Status
+-#         %tbody
+-#           %tr
+-#             %td 1
+-#             %td secret42wmn324k23jrkj2435n2n332jn432jkn42k3n
+-#             %td Mushroom omelette
+-#             %td= Date.current - 1.day
+-#             %td 33 AUD$
+-#             %td sETH, sSCRT, sWBTC
+-#             %td
+-#             %td Pending
+-#           %tr
+-#             %td 2
+-#             %td secret42wmn324k23jrkj2435n2n332jn432jkn42k3n
+-#             %td Coffee & TV
+-#             %td= Date.current
+-#             %td 5 AUD$
+-#             %td sSCRT
+-#             %td 1.5 sSCRT
+-#             %td Pending

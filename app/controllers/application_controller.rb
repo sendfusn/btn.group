@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
           smart_contract_querier: {
             name: 'Smart contract querier',
             status: 'Live'
+          },
+          transactions: {
+            name: 'Transactions',
+            status: 'Work in progress'
           }
         }
       }
