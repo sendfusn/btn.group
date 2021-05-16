@@ -58,8 +58,13 @@ $(document).ready(function(){
             }
             let transactions_response = await client.queryContractSmart(contractAddress, params);
             _.each(transactions_response["transfer_history"]["txs"], function(value){
-              $('tbody').append('<tr><td>' + value['id'] + '</td>' + '<td>' + value['sender'] + '</td>' + '<td>' + value['from'] + '</td>' + '<td>' + value['receiver'] + '</td>' + '<td>' + value['coins']['amount'] + '</td>' + '</tr>')
-              $('#denomination').text(value['coins']['denom'])
+              let amount = value['coins']['amount']
+              if (address != value['receiver']) {
+                amount *= -1
+              }
+              amount = parseFloat(amount).toLocaleString('en')
+              $('tbody').append('<tr><td>' + '' + '</td>' + '<td>' + '' + '</td>' + '<td>' + amount + '</td>' + '<td>' + '' + '</td>' + '</tr><tr><td colspan="4"><p>id: ' + value['id'] + '<br>sender: ' + value['sender'] + '<br>from: ' + value['from'] + '<br>receiver: ' + value['receiver'] + '</p></td></tr>')
+              $('#denomination').text('(' + value['coins']['denom'] + ')')
             })
             params = {
               balance: {
