@@ -1,14 +1,46 @@
-.btn-group-toggle
+.btn-group-toggle {
   .active {
     background-color: #c4cbff;
     border-color: #c4cbff;
     color: #415076 !important;;
   }
+}
 
+//=== DATATABLES ===
+#transactions-table_wrapper
+  .toolbar {
+    float:left;
+    margin: 4px 0;
+    padding: 13px 20px 10px;
+  }
 
-/**
- * Switch
- */
+  table {
+    width: 100% !important;
+  }
+  .dataTables_filter {
+    input {
+      height: 38px;
+      padding: 0.375rem 0.75rem;
+    }
+
+    label {
+      border: 0 !important;
+    }
+  }
+
+  #transactions-table_length {
+    label {
+      align-items: center;
+      padding: 13px 20px 10px;
+
+      select {
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+      }
+    }
+  }
+
+//=== SWITCH ===
 
 /* Style Wired */
 /* Style Flat */

@@ -10,6 +10,10 @@ import "channels"
 // BOOTSTRAP & jquery IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
 
 import 'lodash'
+// DATATABLES
+import 'datatables.net-bs4'
+import 'datatables.net-buttons-bs4'
+import 'datatables.net-buttons/js/buttons.html5.js'
 
 // APP
 import '../src/secret_network/block_locker/new'

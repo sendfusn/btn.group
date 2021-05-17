@@ -28,6 +28,18 @@
                       %select.form-control#contract-address{ name: 'contractAddress' }
                         - tokens[:production].each do |token|
                           %option{ value: token[:address] } #{token[:name]} - #{token[:address]}
+                    .row
+                      .col-6.col-md-3
+                        .form-group
+                          %label.form-label{ for: 'page-size' } Show
+                          %select.form-control#page-size{ name: 'pageSize' }
+                            %option{ value: 50, selected: true } 50
+                            %option{ value: 100 } 100
+                            %option{ value: 1000 } 1000
+                      .col-6.col-md-3
+                        .form-group
+                          %label.form-label{ for: 'page' } Page
+                          %input.form-control#page{ type: 'number', name: 'page', value: '1', min: 1 }
                     %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
                       .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -39,16 +51,6 @@
                   %h6
                     Balance:
                     %span#balance
-                  .block
-                    %table.table.table-striped.table-bordered
-                      %thead
-                        %tr
-                          %td Date
-                          %td Description
-                          %td
-                            Amount
-                            %span#denomination
-                      %tbody
-
+                  %table.table.table-striped.table-bordered#transactions-table
                   %p * Minting transactions are not included (e.g. receiving tokens via the bridge etc)
   .nk-ovm.shape-q
