@@ -27,7 +27,7 @@
                       %label.form-label{ for: 'contract-address' } Contract address
                       %select.form-control#contract-address{ name: 'contractAddress' }
                         - tokens[:production].each do |token|
-                          %option{ value: token[:address] }= token[:name]
+                          %option{ value: token[:address] } #{token[:name]} - #{token[:address]}
                     %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
                       .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
