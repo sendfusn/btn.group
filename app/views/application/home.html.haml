@@ -47,191 +47,231 @@
   .nk-ovm.shape-q
   .particles-container.particles-bg#particles-bg{ 'data-pt-base' => '#00c0fa', 'data-pt-base-op' => '.3', 'data-pt-line' => '#2b56f5', 'data-pt-line-op' => '.5', 'data-pt-shape' => '#00c0fa', 'data-pt-shape-op' => '.2' }
 %main.nk-pages
-%section.bg-theme#token
-  .section.section-tokendes.tc-light
+  %section.section.bg-light#about
+    .container
+      .nk-block.nk-block-features-s2
+        .row.align-items-center.flex-row-reverse.gutter-vr-30px
+          .col-lg-5
+            .gfx.py-4.mx-auto.mx-lg-0
+              %img{ alt: 'gfx', src: '/ico-crypto-html-v1.9.3/main-html/images/dark/gfx-d-dark.png' }
+          .col-lg-7
+            .nk-block-text.pdb-r
+              %h2.title.title-thin About btn.group
+              %p We develop software for blockchain. Our current focus is on the Secret network as it provides public and private functionality on a low fee proof of stake blockchain.
+              %p We have built, and are working on more auditing tools for the community to increase transparency and help the public audit our work.
+              %p Building on from that, we are working on bigger projects that will help attract more developers and users to blockchain. Come have a look at our features for more details.
+            .row.gutter-vr-20px.flex-wrap
+              .col-sm-6
+                .feature.feature-s1
+                  .feature-icon.feature-icon-s5.feature-icon-s5-1
+                    %em.icon.fas.fa-check
+                  .feature-text.feature-text-s1
+                    %p Private and public functionality
+              .col-sm-6
+                .feature.feature-s1
+                  .feature-icon.feature-icon-s5.feature-icon-s5-4
+                    %em.icon.fas.fa-check
+                  .feature-text.feature-text-s1
+                    %p Easily to use and check
+              .col-sm-6
+                .feature.feature-s1
+                  .feature-icon.feature-icon-s5.feature-icon-s5-2
+                    %em.icon.fas.fa-check
+                  .feature-text.feature-text-s1
+                    %p Diverse projects
+              .col-sm-6
+                .feature.feature-s1
+                  .feature-icon.feature-icon-s5.feature-icon-s5-3
+                    %em.icon.fas.fa-check
+                  .feature-text.feature-text-s1
+                    %p Known team
+
+  %section.bg-theme#token
+    .section.section-tokendes.tc-light
+      .container
+        .section-head.section-head-s7.text-center.wide-auto-sm
+          %h2.title.title-thin
+            ICO Crypto
+            = succeed 'Token' do
+              %br/
+          %p.lead Our initial coin offering will run till softcap reached.Full details of the ICO can be found within the platform.
+        / .section-head @e
+        / .block @s
+        .nk-block
+          .token-box-top
+            .row.gutter-vr-30px
+              .col-lg-4.col-md-6
+                .token-sale-box
+                  %span.token-sale-info 24,000,000
+                  %span.token-sale-title TOTAL TOKEN SUPPLY
+              .col-lg-4.col-md-6
+                .token-sale-box
+                  %span.token-sale-info 20,000,000
+                  %span.token-sale-title HARDCAP (BUTT)
+              .col-lg-4.col-md-6
+                .token-sale-box
+                  %span.token-sale-info 5,000,000
+                  %span.token-sale-title SOFTCAP (BUTT)
+              .col-lg-4.col-md-6
+                .token-sale-box
+                  %span.token-sale-info 14,400,000
+                  %span.token-sale-title TOKENS FOR PUBLIC
+              .col-lg-4.col-md-6
+                .token-sale-box
+                  %span.token-sale-info $0.50 USD
+                  %span.token-sale-title BUTTCOIN PRICE
+              .col-lg-4.col-md-6
+                .token-sale-box
+                  %span.token-sale-info SCRT
+                  %span.token-sale-title ACCEPTED CURRENCY
+        .nk-block
+          .token-box-bottom
+            .section-head.section-head-s7.text-center.wide-auto-sm
+              %h2.title.title-thin Bonus Details
+            .row.justify-content-center
+              .col-xl-3.col-md-4
+                .token-bonus-item.one
+                  %span.token-bonus-title PRE-SALE
+                  %span.token-bonus-percent 25%
+                  %span.token-bonus-txt Bonus
+              .col-xl-3.col-md-4
+                .token-bonus-item.two
+                  %span.token-bonus-title ICO SALE - WEEK 1
+                  %span.token-bonus-percent 15%
+                  %span.token-bonus-txt Bonus
+              .col-xl-3.col-md-4
+                .token-bonus-item.three
+                  %span.token-bonus-title ICO SALE - WEEK 2
+                  %span.token-bonus-percent 0%
+                  %span.token-bonus-txt Bonus
+            .text-center.pdt-r
+              %a.btn.btn-lg.btn-secondary{ href: '' } Learn more
+    .section-tokendes
+      .container
+        .nk-block.nk-block-alocation.mgb-m30
+          .row
+            .col-lg-6
+              .token-alocate-item
+                .token-alocate-graph
+                  %img{ alt: 'icon', src: 'ico-crypto-html-v1.9.3/main-html/images/icon.png' }
+                  %span
+                    Token
+                    %br/
+                    Allocation
+                  %canvas.chart-canvas#token-alocate-salvia2
+                %ul.chart-data{ 'data-canvas' => 'token-alocate-salvia2', 'data-canvas-cutout' => '77', 'data-canvas-type' => 'doughnut' }
+                  %li{ 'data-amount' => '60', 'data-color' => '#6d6af6', 'data-title' => 'Token Sale Program' }
+                  %li{ 'data-amount' => '8', 'data-color' => '#f0a561', 'data-title' => 'Reserve Fund' }
+                  %li{ 'data-amount' => '15', 'data-color' => '#7dbef9', 'data-title' => 'Team and Founders' }
+                  %li{ 'data-amount' => '4', 'data-color' => '#7adac9', 'data-title' => 'Board Advisors' }
+                  %li{ 'data-amount' => '7', 'data-color' => '#7654e1', 'data-title' => 'Ecosystem Development' }
+                  %li{ 'data-amount' => '6', 'data-color' => '#371e8d', 'data-title' => 'Marketing and Bounty' }
+            .col-lg-6
+              .token-alocate-item
+                .token-alocate-graph
+                  %img{ alt: 'icon', src: 'ico-crypto-html-v1.9.3/main-html/images/icon.png' }
+                  %span
+                    Funds
+                    %br/
+                    Allocation
+                  %canvas.chart-canvas#fund-alocate-salvia2
+                %ul.chart-data{ 'data-canvas' => 'fund-alocate-salvia2', 'data-canvas-cutout' => '77', 'data-canvas-type' => 'doughnut' }
+                  %li{ 'data-amount' => '40', 'data-color' => '#371e8d', 'data-title' => 'Engineering and Development' }
+                  %li{ 'data-amount' => '12', 'data-color' => '#7654e1', 'data-title' => 'Business Development' }
+                  %li{ 'data-amount' => '20', 'data-color' => '#7adac9', 'data-title' => 'Marketing & Promotion' }
+                  %li{ 'data-amount' => '10', 'data-color' => '#72a3f4', 'data-title' => 'Legal & Regulation' }
+                  %li{ 'data-amount' => '8', 'data-color' => '#f0a561', 'data-title' => 'Operational & Administration' }
+                  %li{ 'data-amount' => '4', 'data-color' => '#da6bc1', 'data-title' => 'Contingency' }
+                  %li{ 'data-amount' => '6', 'data-color' => '#371e8d', 'data-title' => 'Partners' }
+      .nk-ovm.ovm-bottom.ovm-h-40.bg-light
+    .nk-ovm.nk-ovm-fixed.shape-q
+  %section.section.bg-white#roadmap
+    .container
+      .section-head.section-head-s9.wide-md
+        %h2.title Road Map
+      .nk-block.nk-block-left
+        .roadmap-all.mgb-m50
+          .roadmap-wrap.roadmap-wrap-s1.roadmap-wrap-s1-alt.mb-0.ml-0
+            .row.no-gutters
+              .col-lg
+                .roadmap.roadmap-s1.roadmap-s1-alt.roadmap-done.text-lg-center
+                  .roadmap-step.roadmap-step-s1
+                    .roadmap-head.roadmap-head-s1
+                      %span.roadmap-time.roadmap-time-s1 2021 Q2
+                      %span.roadmap-title.roadmap-title-s1 Concept
+                    %ul.roadmap-step-list.roadmap-step-list-s1
+                      %li Concept Generation
+                      %li Team Assemble
+              .col-lg
+                .roadmap.roadmap-current.roadmap-s1.roadmap-s1-alt.text-lg-center
+                  .roadmap-step.roadmap-step-s1
+                    .roadmap-head.roadmap-head-s1
+                      %span.roadmap-time.roadmap-time-s1 2021 Q2
+                      %span.roadmap-title.roadmap-title-s1 Create core resources (WIP)
+                    %ul.roadmap-step-list.roadmap-step-list-s1
+                      %li Website / Logo
+              .col-lg
+                .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
+                  .roadmap-step.roadmap-step-s1
+                    .roadmap-head.roadmap-head-s1
+                      %span.roadmap-time.roadmap-time-s1 2021 Q2
+                      %span.roadmap-title.roadmap-title-s1 Auditing tools for Secret network (WIP)
+                    %ul.roadmap-step-list.roadmap-step-list-s1
+                      %li Address alias
+                      %li Smart contract querier
+                      %li Transactions (SNIP-20)
+          .roadmap-wrap.roadmap-wrap-s1.roadmap-wrap-s1-alt.mb-0.ml-0
+            .row.flex-row-reverse.no-gutters
+              .col-lg
+                .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
+                  .roadmap-step.roadmap-step-s1
+                    .roadmap-head.roadmap-head-s1
+                      %span.roadmap-time.roadmap-time-s1 2021 Q2
+                      %span.roadmap-title.roadmap-title-s1 Buttcoin (WIP)
+                    %ul.roadmap-step-list.roadmap-step-list-s1
+                      %li Build / Test / Audit
+              .col-lg
+                .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
+                  .roadmap-step.roadmap-step-s1
+                    .roadmap-head.roadmap-head-s1
+                      %span.roadmap-time.roadmap-time-s1 2021 Q2
+                      %span.roadmap-title.roadmap-title-s1 Launch pad for Secret network (WIP)
+                    %ul.roadmap-step-list.roadmap-step-list-s1
+                      %li R & D
+                      %li Build / Test / Audit
+              .col-lg
+                .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
+                  .roadmap-step.roadmap-step-s1
+                    .roadmap-head.roadmap-head-s1
+                      %span.roadmap-time.roadmap-time-s1 2021 Q2
+                      %span.roadmap-title.roadmap-title-s1 Buttcoin Sale (WIP)
+                    %ul.roadmap-step-list.roadmap-step-list-s1
+                      %li Create partnerships
+                      %li R & D Tokenomics
+  %section.section.bg-white#team
     .container
       .section-head.section-head-s7.text-center.wide-auto-sm
-        %h2.title.title-thin
-          ICO Crypto
-          = succeed 'Token' do
-            %br/
-        %p.lead Our initial coin offering will run till softcap reached.Full details of the ICO can be found within the platform.
-      / .section-head @e
-      / .block @s
-      .nk-block
-        .token-box-top
-          .row.gutter-vr-30px
-            .col-lg-4.col-md-6
-              .token-sale-box
-                %span.token-sale-info 24,000,000
-                %span.token-sale-title TOTAL TOKEN SUPPLY
-            .col-lg-4.col-md-6
-              .token-sale-box
-                %span.token-sale-info 20,000,000
-                %span.token-sale-title HARDCAP (BUTT)
-            .col-lg-4.col-md-6
-              .token-sale-box
-                %span.token-sale-info 5,000,000
-                %span.token-sale-title SOFTCAP (BUTT)
-            .col-lg-4.col-md-6
-              .token-sale-box
-                %span.token-sale-info 14,400,000
-                %span.token-sale-title TOKENS FOR PUBLIC
-            .col-lg-4.col-md-6
-              .token-sale-box
-                %span.token-sale-info $0.50 USD
-                %span.token-sale-title BUTTCOIN PRICE
-            .col-lg-4.col-md-6
-              .token-sale-box
-                %span.token-sale-info SCRT
-                %span.token-sale-title ACCEPTED CURRENCY
-      .nk-block
-        .token-box-bottom
-          .section-head.section-head-s7.text-center.wide-auto-sm
-            %h2.title.title-thin Bonus Details
-          .row.justify-content-center
-            .col-xl-3.col-md-4
-              .token-bonus-item.one
-                %span.token-bonus-title PRE-SALE
-                %span.token-bonus-percent 25%
-                %span.token-bonus-txt Bonus
-            .col-xl-3.col-md-4
-              .token-bonus-item.two
-                %span.token-bonus-title ICO SALE - WEEK 1
-                %span.token-bonus-percent 15%
-                %span.token-bonus-txt Bonus
-            .col-xl-3.col-md-4
-              .token-bonus-item.three
-                %span.token-bonus-title ICO SALE - WEEK 2
-                %span.token-bonus-percent 0%
-                %span.token-bonus-txt Bonus
-          .text-center.pdt-r= link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-lg btn-secondary'
-  .section-tokendes
-    .container
-      .nk-block.nk-block-alocation.mgb-m30
-        .row
-          .col-lg-6
-            .token-alocate-item
-              .token-alocate-graph
-                %img{ alt: 'icon', src: 'ico-crypto-html-v1.9.3/main-html/images/icon.png' }
-                %span
-                  Token
-                  %br/
-                  Allocation
-                %canvas.chart-canvas#token-alocate-salvia2
-              %ul.chart-data{ 'data-canvas' => 'token-alocate-salvia2', 'data-canvas-cutout' => '77', 'data-canvas-type' => 'doughnut' }
-                %li{ 'data-amount' => '60', 'data-color' => '#6d6af6', 'data-title' => 'Token Sale Program' }
-                %li{ 'data-amount' => '8', 'data-color' => '#f0a561', 'data-title' => 'Reserve Fund' }
-                %li{ 'data-amount' => '15', 'data-color' => '#7dbef9', 'data-title' => 'Team and Founders' }
-                %li{ 'data-amount' => '4', 'data-color' => '#7adac9', 'data-title' => 'Board Advisors' }
-                %li{ 'data-amount' => '7', 'data-color' => '#7654e1', 'data-title' => 'Ecosystem Development' }
-                %li{ 'data-amount' => '6', 'data-color' => '#371e8d', 'data-title' => 'Marketing and Bounty' }
-          .col-lg-6
-            .token-alocate-item
-              .token-alocate-graph
-                %img{ alt: 'icon', src: 'ico-crypto-html-v1.9.3/main-html/images/icon.png' }
-                %span
-                  Funds
-                  %br/
-                  Allocation
-                %canvas.chart-canvas#fund-alocate-salvia2
-              %ul.chart-data{ 'data-canvas' => 'fund-alocate-salvia2', 'data-canvas-cutout' => '77', 'data-canvas-type' => 'doughnut' }
-                %li{ 'data-amount' => '40', 'data-color' => '#371e8d', 'data-title' => 'Engineering and Development' }
-                %li{ 'data-amount' => '12', 'data-color' => '#7654e1', 'data-title' => 'Business Development' }
-                %li{ 'data-amount' => '20', 'data-color' => '#7adac9', 'data-title' => 'Marketing & Promotion' }
-                %li{ 'data-amount' => '10', 'data-color' => '#72a3f4', 'data-title' => 'Legal & Regulation' }
-                %li{ 'data-amount' => '8', 'data-color' => '#f0a561', 'data-title' => 'Operational & Administration' }
-                %li{ 'data-amount' => '4', 'data-color' => '#da6bc1', 'data-title' => 'Contingency' }
-                %li{ 'data-amount' => '6', 'data-color' => '#371e8d', 'data-title' => 'Partners' }
-    .nk-ovm.ovm-bottom.ovm-h-40.bg-light
-  .nk-ovm.nk-ovm-fixed.shape-q
-%section.section.bg-white#roadmap
-  .container
-    .section-head.section-head-s9.wide-md
-      %h2.title Road Map
-    .nk-block.nk-block-left
-      .roadmap-all.mgb-m50
-        .roadmap-wrap.roadmap-wrap-s1.roadmap-wrap-s1-alt.mb-0.ml-0
-          .row.no-gutters
-            .col-lg
-              .roadmap.roadmap-s1.roadmap-s1-alt.roadmap-done.text-lg-center
-                .roadmap-step.roadmap-step-s1
-                  .roadmap-head.roadmap-head-s1
-                    %span.roadmap-time.roadmap-time-s1 2021 Q2
-                    %span.roadmap-title.roadmap-title-s1 Concept
-                  %ul.roadmap-step-list.roadmap-step-list-s1
-                    %li Concept Generation
-                    %li Team Assemble
-            .col-lg
-              .roadmap.roadmap-current.roadmap-s1.roadmap-s1-alt.text-lg-center
-                .roadmap-step.roadmap-step-s1
-                  .roadmap-head.roadmap-head-s1
-                    %span.roadmap-time.roadmap-time-s1 2021 Q2
-                    %span.roadmap-title.roadmap-title-s1 Create core resources (WIP)
-                  %ul.roadmap-step-list.roadmap-step-list-s1
-                    %li Website / Logo
-            .col-lg
-              .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
-                .roadmap-step.roadmap-step-s1
-                  .roadmap-head.roadmap-head-s1
-                    %span.roadmap-time.roadmap-time-s1 2021 Q2
-                    %span.roadmap-title.roadmap-title-s1 Auditing tools for Secret network (WIP)
-                  %ul.roadmap-step-list.roadmap-step-list-s1
-                    %li Address alias
-                    %li Smart contract querier
-                    %li Transactions (SNIP-20)
-        .roadmap-wrap.roadmap-wrap-s1.roadmap-wrap-s1-alt.mb-0.ml-0
-          .row.flex-row-reverse.no-gutters
-            .col-lg
-              .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
-                .roadmap-step.roadmap-step-s1
-                  .roadmap-head.roadmap-head-s1
-                    %span.roadmap-time.roadmap-time-s1 2021 Q2
-                    %span.roadmap-title.roadmap-title-s1 Buttcoin (WIP)
-                  %ul.roadmap-step-list.roadmap-step-list-s1
-                    %li Build / Test / Audit
-            .col-lg
-              .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
-                .roadmap-step.roadmap-step-s1
-                  .roadmap-head.roadmap-head-s1
-                    %span.roadmap-time.roadmap-time-s1 2021 Q2
-                    %span.roadmap-title.roadmap-title-s1 Launch pad for Secret network (WIP)
-                  %ul.roadmap-step-list.roadmap-step-list-s1
-                    %li R & D
-                    %li Build / Test / Audit
-            .col-lg
-              .roadmap.roadmap-s1.roadmap-s1-alt.text-lg-center
-                .roadmap-step.roadmap-step-s1
-                  .roadmap-head.roadmap-head-s1
-                    %span.roadmap-time.roadmap-time-s1 2021 Q2
-                    %span.roadmap-title.roadmap-title-s1 Buttcoin Sale (WIP)
-                  %ul.roadmap-step-list.roadmap-step-list-s1
-                    %li Create partnerships
-                    %li R & D Tokenomics
-%section.section.bg-white#team
-  .container
-    .section-head.section-head-s7.text-center.wide-auto-sm
-      %h2.title.title-thin Team
-    .nk-block.nk-block-team-list
-      .row.justify-content-center
-        .col-lg-3.col-sm-6
-          .team
-            .team-photo.team-photo-s2
-              %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_277,q_auto,w_230/v1620523941/team/14280689_uuuoab' }
-            %h5.team-name.title.title-sm Steven Chang
-            .block Founder & CTO
-            .team-position Sydney, Australia
-        .col-lg-3.col-sm-6
-          .team
-            .team-photo.team-photo-s2
-              %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_277,q_auto,w_230/v1620884680/team/image000000-3_2_u1df0q' }
-            %h5.team-name.title.title-sm Chris Asnins
-            .block Creative / Marketing
-            .team-position Brisbane, Australia
-        .col-lg-3.col-sm-6
-          .team
-            .team-photo.team-photo-s2
-              %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_270,q_auto,w_230/v1620865143/team/IMG_1589_fbdtba' }
-            %h5.team-name.title.title-sm Ella Kabel
-            .block Data analyst
-            .block.team-position Brisbane, Australia
+        %h2.title.title-thin Team
+      .nk-block.nk-block-team-list
+        .row.justify-content-center
+          .col-lg-3.col-sm-6
+            .team
+              .team-photo.team-photo-s2
+                %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_277,q_auto,w_230/v1620523941/team/14280689_uuuoab' }
+              %h5.team-name.title.title-sm Steven Chang
+              .block Founder & CTO
+              .team-position Sydney, Australia
+          .col-lg-3.col-sm-6
+            .team
+              .team-photo.team-photo-s2
+                %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_277,q_auto,w_230/v1620884680/team/image000000-3_2_u1df0q' }
+              %h5.team-name.title.title-sm Chris Asnins
+              .block Creative / Marketing
+              .team-position Brisbane, Australia
+          .col-lg-3.col-sm-6
+            .team
+              .team-photo.team-photo-s2
+                %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_270,q_auto,w_230/v1620865143/team/IMG_1589_fbdtba' }
+              %h5.team-name.title.title-sm Ella Kabel
+              .block Data analyst
+              .block.team-position Brisbane, Australia
