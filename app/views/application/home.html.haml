@@ -20,8 +20,7 @@
                         -# %em.fab
                         -#   = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, fetch_format: :auto)
                         -# SCRT
-                .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
-                  %a.btn.btn-md.btn-secondary.w-100{ href: '#' } Learn more
+                .token-action.token-action-s2.flex-wrap.flex-sm-nowrap= link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-md btn-secondary w-100'
             .col-lg-6.col-xl-6.text-center.text-lg-left
               .banner-caption.tc-light
                 .cpn-head.mt-0
@@ -106,8 +105,7 @@
                 %span.token-bonus-title ICO SALE - WEEK 2
                 %span.token-bonus-percent 0%
                 %span.token-bonus-txt Bonus
-          .text-center.pdt-r
-            %a.btn.btn-lg.btn-secondary{ href: '' } Learn more
+          .text-center.pdt-r= link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-lg btn-secondary'
   .section-tokendes
     .container
       .nk-block.nk-block-alocation.mgb-m30

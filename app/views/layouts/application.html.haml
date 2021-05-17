@@ -38,8 +38,7 @@
                 %nav.header-menu.justify-content-between#header-menu
                   %ul.menu
                     %li.menu-item= link_to 'Features', features_path, class: 'menu-link nav-link'
-                    %li.menu-item
-                      %a.menu-link.nav-link{ href: '#token' } Buttcoin
+                    %li.menu-item= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'menu-link nav-link'
                     %li.menu-item
                       %a.menu-link.nav-link{ href: '#roadmap' } Roadmap
         = yield
@@ -61,7 +60,7 @@
                       %h6.wgs-title.text-white Company
                       .wgs-body
                         %ul.wgs-links.wgs-links-s3
-                          %li= link_to 'Buttcoin', "#{root_url}#token"
+                          %li= link_to 'Buttcoin', secret_network_buttcoin_index_path
                           %li= link_to 'Team', "#{root_url}#team"
                           %li
                             %a{ href: '#' } Roadmap
