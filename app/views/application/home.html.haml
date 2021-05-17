@@ -16,9 +16,10 @@
                     .token-info-item-list
                       %span We Accept:
                       %h4
-                        %em.fab.fa-scrt
-                          = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                        SCRT
+                        TBA
+                        -# %em.fab
+                        -#   = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, fetch_format: :auto)
+                        -# SCRT
                 .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
                   %a.btn.btn-md.btn-secondary.w-100{ href: '#' } Learn more
             .col-lg-6.col-xl-6.text-center.text-lg-left
@@ -29,26 +30,21 @@
                   %p.lead-s2.lead-light Simplicity, transparency and communication are key.
                 .cpn-btns
                   %ul.btn-grp
-                    %li
-                      %a.btn.btn-md.btn-primary.btn-outline{ href: '#' } White Paper
-                    %li
-                      %a.btn.btn-md.btn-primary.btn-outline{ href: '#' } One Pager
+                    %li= link_to 'Features', features_path, class: 'btn btn-md btn-primary btn-outline'
+                    %li= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'btn btn-md btn-primary btn-outline'
                 .cpn-social
-                  %h4.title-xs JOIN OUR COMMUNITY
+                  %h4.title-xs CURRENTLY BUILDING ON
                   %ul.social
                     %li
-                      %a{ href: '#' }
-                        %em.social-icon.fas.fa-paper-plane
-                        %span Telegram
+                      = link_to 'http://scrt.network', target: '_blank', rel: 'noopener' do
+                        %em.social-icon.fab
+                          = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 21, height: 21, crop: :scale, dpr: 2, fetch_format: :auto)
+                        %span Secret Network
                     %li
-                      %a{ href: '#' }
-                        %em.social-icon.fab.fa-twitter
-                    %li
-                      = link_to 'https://github.com/btn-group', class: 'text-decoration-none', target: '_blank', rel: 'noopener' do
-                        %em.social-icon.fab.fa-github
-                    %li
-                      %a{ href: '#' }
-                        %em.social-icon.fab.fa-medium-m
+                      = link_to 'http://binance.com', target: '_blank', rel: 'noopener' do
+                        %em.social-icon.fab
+                          = cl_image_tag('logos/54043975-b6cdb800-4182-11e9-83bd-0cd2eb757c6e_vhapj8', width: 21, height: 21, crop: :scale, dpr: 2, fetch_format: :auto)
+                        %span Binance Exchange
   .nk-ovm.shape-q
   .particles-container.particles-bg#particles-bg{ 'data-pt-base' => '#00c0fa', 'data-pt-base-op' => '.3', 'data-pt-line' => '#2b56f5', 'data-pt-line-op' => '.5', 'data-pt-shape' => '#00c0fa', 'data-pt-shape-op' => '.2' }
 %main.nk-pages
