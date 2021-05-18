@@ -2,7 +2,7 @@ $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     this.datatable = window.$('#transactions-table').DataTable({
       columns: [
-          { title: "Data" },
+          { title: "ID/Date" },
           { title: "Description" },
           { title: "Amount" },
       ],
@@ -77,7 +77,8 @@ $(document).ready(function(){
             _.each(transactions_response["transfer_history"]["txs"], function(value){
               let row = [];
               // data
-              row.push('');
+              let id = value['id']
+              row.push(id);
               description & amount
               let amount = value['coins']['amount']
               let description
