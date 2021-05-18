@@ -7,6 +7,7 @@ $(document).ready(function(){
           { title: "Amount" },
       ],
       dom: '<"top"i>frtp',
+      ordering: false,
       paging: false
     });
     window.onload = async () => {

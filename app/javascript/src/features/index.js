@@ -7,6 +7,7 @@ $(document).ready(function(){
           { title: "Status" },
       ],
       dom: '<"top"i>frtp',
+      ordering: false,
       paging: false
     });
   };
