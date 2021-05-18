@@ -16,6 +16,7 @@ import 'datatables.net-buttons-bs4'
 import 'datatables.net-buttons/js/buttons.html5.js'
 
 // APP
+import '../src/features/index'
 import '../src/secret_network/block_locker/new'
 import '../src/secret_network/block_locker/show'
 import '../src/secret_network/invoices/edit'

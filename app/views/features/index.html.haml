@@ -1,31 +1,20 @@
 .header-banner.bg-theme-grad-s2
   .nk-banner
     .banner.banner-page
-      .banner-wrap
-        .container#features
-          .row.justify-content-center
-            .col-xl-6.col-lg-9
-              .banner-caption.cpntc-light.text-center
-                .cpn-head.mt-0
-                  %h2.title.ttu.text-white Features
+      .mt-3.w-100
+        .container#secret-network-transactions
+          .row.mb-5
+            .col-12
+              .card
+                .card-body
+                  %h3 Features
+                  %table.table.table-striped.table-bordered#features-table
+                    - features.each do |blockchain_symbol, blockchain_object|
+                      - blockchain_object[:features].each do |feature_key, feature_value|
+                        %tr
+                          %td= link_to feature_value[:name], "/#{blockchain_symbol}/#{feature_key}", class: 'text-decoration-none'
+                          %td
+                            = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                            = blockchain_object[:name]
+                          %td= feature_value[:status]
   .nk-ovm.shape-q
-%main.nk-pages
-  %section.section.bg-white
-    .container
-      .row
-        .col-12
-          %table.table-bordered.table
-            %thead
-              %tr
-                %td.table-head Feature
-                %td.table-head Blockchain
-                %td.table-head Status
-            %tbody
-              - features.each do |blockchain_symbol, blockchain_object|
-                - blockchain_object[:features].each do |feature_key, feature_value|
-                  %tr
-                    %td= link_to feature_value[:name], "/#{blockchain_symbol}/#{feature_key}", class: 'text-decoration-none'
-                    %td
-                      = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
-                      = blockchain_object[:name]
-                    %td= feature_value[:status]
