@@ -14,12 +14,13 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
                   %form{ name: 'aliasSearchForm' }
-                    .form-group
-                      .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light.btn-md
-                          %input#production{ name: 'environment', type: 'radio', value: 'production', checked: true } Production
-                        %label.btn.btn-md.btn-light
-                          %input#staging{ name: 'environment', type: 'radio', value: 'staging' } Staging / Testnet
+                    %p
+                      %b Environment:
+                      Staging / Testnet
+                      %label.switch
+                        %input{ name: 'production', type: 'checkbox', checked: true }
+                        %span.slider
+                      Production
                     .form-group
                       .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
                         %label.btn.btn-light.btn-md
