@@ -3,7 +3,7 @@ $(document).ready(function(){
     this.datatable = window.$('#features-table').DataTable({
       columns: [
           { title: "Name" },
-          { title: "Blockchain" },
+          { title: "Blockchain / Platform" },
           { title: "Status" },
       ],
       dom: '<"top"i>frtp',
