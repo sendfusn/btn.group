@@ -50,41 +50,30 @@
   %section.section.bg-light#about
     .container
       .nk-block.nk-block-features-s2
-        .row.align-items-center.flex-row-reverse.gutter-vr-30px
-          .col-lg-5
-            .gfx.py-4.mx-auto.mx-lg-0
-              %img{ alt: 'gfx', src: '/ico-crypto-html-v1.9.3/main-html/images/dark/gfx-d-dark.png' }
-          .col-lg-7
-            .nk-block-text.pdb-r
-              %h2.title.title-thin About btn.group
-              %p We develop software for blockchain. Our current focus is on the Secret network as it provides public and private functionality on a low fee proof of stake blockchain.
-              %p We have built, and are working on more auditing tools for the community to increase transparency and help the public audit our work.
-              %p Building on from that, we are working on bigger projects that will help attract more developers and users to blockchain. Come have a look at our features for more details.
-            .row.gutter-vr-20px.flex-wrap
-              .col-sm-6
-                .feature.feature-s1
-                  .feature-icon.feature-icon-s5.feature-icon-s5-1
-                    %em.icon.fas.fa-check
-                  .feature-text.feature-text-s1
-                    %p Private and public functionality
-              .col-sm-6
-                .feature.feature-s1
-                  .feature-icon.feature-icon-s5.feature-icon-s5-4
-                    %em.icon.fas.fa-check
-                  .feature-text.feature-text-s1
-                    %p Easily to use and check
-              .col-sm-6
-                .feature.feature-s1
-                  .feature-icon.feature-icon-s5.feature-icon-s5-2
-                    %em.icon.fas.fa-check
-                  .feature-text.feature-text-s1
-                    %p Diverse projects
-              .col-sm-6
-                .feature.feature-s1
-                  .feature-icon.feature-icon-s5.feature-icon-s5-3
-                    %em.icon.fas.fa-check
-                  .feature-text.feature-text-s1
-                    %p Known team
+        .row.align-items-center.gutter-vr-30px
+          .col-12
+            %h2.title.title-thin In development...
+          .col-lg-4
+            .card.card-lg-y.feature.feature-center
+              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
+                = image_tag "https://www.si.com/.image/c_limit%2Ccs_srgb%2Cq_auto:good%2Cw_520/MTY4MTY5MTAyNDg5ODg4MDE3/ronda-rousey-michael-jordanjpg.webp"
+              .feature-text
+                %h4.title.title-md.title-dark.mb-4 btn x
+                %p Launch pad for projects on the Secret network to raise liquidity and distribute tokens.
+          .col-lg-4
+            .card.card-lg-y.feature.feature-center
+              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
+                = image_tag "https://pbs.twimg.com/media/CaLd_JRWAAEjjth?format=jpg&name=small"
+              .feature-text
+                %h4.title.title-md.title-dark.mb-4 btn pounder
+                %p Yield farming optimizer for the Secret network.
+          .col-lg-4
+            .card.card-lg-y.feature.feature-center
+              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
+                = image_tag "https://images.solecollector.com/complex/image/upload/k0cpmenk1k6frufwaunf.jpg"
+              .feature-text
+                %h4.title.title-md.title-dark.mb-4 btn auto trader
+                %p Auto trader for the Binance exchange.
 
   %section.bg-theme#token
     .section.section-tokendes.tc-light
