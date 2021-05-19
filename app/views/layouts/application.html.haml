@@ -39,31 +39,20 @@
                   %ul.menu
                     %li.menu-item= link_to 'Features', features_path, class: 'menu-link nav-link'
                     %li.menu-item= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'menu-link nav-link'
-                    %li.menu-item
-                      %a.menu-link.nav-link{ href: '#roadmap' } Roadmap
         = yield
         %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
           %section.section.section-m.tc-light.tc-light-alt.bg-transparent.pb-0
             .container
               .nk-block.block-footer
                 .row.my-md-0.mb-n4
-                  .col-lg-5.col-sm-7
-                    .wgs.wgs-menu
-                      %h6.wgs-title.wgs-title-s2.text-white FEATURES
-                      .wgs-body
-                        %ul.wgs-links.wgs-links-uline.wgs-links-s2
-                          - features.each do |blockchain_symbol, blockchain_object|
-                            - blockchain_object[:features].each do |feature_key, feature_value|
-                              %li= link_to feature_value[:name], "/#{blockchain_symbol}/#{feature_key}"
-                  .col-lg-4.col-sm-5
+                  .col-lg-9
                     .wgs.wgs-menu
                       %h6.wgs-title.text-white Company
                       .wgs-body
                         %ul.wgs-links.wgs-links-s3
+                          %li= link_to 'Features', features_path
                           %li= link_to 'Buttcoin', secret_network_buttcoin_index_path
                           %li= link_to 'Team', "#{root_url}#team"
-                          %li
-                            %a{ href: '#' } Roadmap
                   .col-lg-3.col-md
                     .wgs.wgs-subscribe-form
                       %h6.wgs-title.wgs-title-s2.text-white NewsLetter
