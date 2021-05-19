@@ -1,32 +1,51 @@
-.container
-  .row.mt-5
-    .col-12
-      %h1= features[:secret_network][:features][:buttcoin][:name]
-      %p Blockchain: #{features[:secret_network][:name]}
-      %p Our native coin based on the SNIP-20 standard.
-      %hr
-      %h5 Features
-      %ol
-        %li Private
-        %li Fungible
-      %h5 Why is it worth anything?
-      %p Governance and profit sharing.
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .mt-3.w-100
+        .container#secret-network-buttcoin
+          .row.mb-5
+            .col-12
+              .card
+                .card-body
+                  %h3
+                    = cl_image_tag('logos/buttcoin_q7ftzs.png', drp: 2, crop: :scale, height: 38, class: 'align-top', style: 'height: 38px;')
+                    = features[:secret_network][:features][:buttcoin][:name]
+                  %p
+                    Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+                    %hr
+                    %h5 What is it?
+                    %p Our native token.
+                    %h5 What's it for?
+                    %p Governance & utility.
+                    %h5 Why offer it?
+                    %p To incentivize users and raise revenue for expansion.
+                    %h5 Tokenomics
+                    %p 1 billion total supply to be destributed over the course of 4 years.
+                    .token-info
+                      %h4.title.title-md Percentage breakdown of total supply
+                      %table.table.table-token
+                        %tbody
+                          %tr
+                            %td.table-head Community
+                            %td.table-des 70% released over 4 years
+                          %tr
+                            %td.table-head Team
+                            %td.table-des 20% with 4 year vesting
+                          %tr
+                            %td.table-head Reserve
+                            %td.table-des 10%
+                    -# %h5.mt-3 How will it be destributed?
+                    -# %ol
+                    -#   %li Want to do an initial offering on the secret network. Thinking that it will be based on people exchanging their sSCRT-SEFI LP.
+                    -#   %li Want people to earn more of it by providing liquidity into SEFI and then staking the lp tokens.
+                    -#   %li Thinking some accounts should be public so that people can see how much was minted etc.
+                    -#   %li Want to distribute to people that provide liquidity but also want people to be able to earn it by learning and contributing.
+                    -#   %li Want to distribute to people and developers that have done a lot of work already.
 
-      %h5 Why offer it?
-      %ol
-        %li Governance
-        %li Profit sharing
-        %li Incentive for early user's of our products. Risks are involved, there should be rewards.
-        %li Revenue raising. Defi is exploding and we need to go guns blazing to be competitive.
-
-      %h5 Some distribution thoughts
-      %ol
-        %li Want to do an initial offering on the secret network. Thinking that it will be based on people exchanging their sSCRT-SEFI LP.
-        %li Want people to earn more of it by providing liquidity into SEFI and then staking the lp tokens.
-        %li Thinking some accounts should be public so that people can see how much was minted etc.
-        %li Want to distribute to people that provide liquidity but also want people to be able to earn it by learning and contributing.
-        %li Want to distribute to people and developers that have done a lot of work already.
-
-      %h5 References
-      %ol
-        %li= link_to 'SNIP-20', 'https://github.com/SecretFoundation/SNIPs/blob/master/SNIP-20.md', target: '_blank', rel: 'noopener'
+                    %hr
+                    %h5 References
+                    %ul
+                      %li= link_to 'Smart contract', 'https://github.com/btn-group/buttcoin', target: '_blank', rel: 'noopener'
+                      %li= link_to 'SNIP-20', 'https://github.com/SecretFoundation/SNIPs/blob/master/SNIP-20.md', target: '_blank', rel: 'noopener'
