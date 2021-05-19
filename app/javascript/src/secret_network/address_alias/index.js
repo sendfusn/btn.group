@@ -11,7 +11,6 @@ $(document).ready(function(){
           try {
             // Set environment
             let contractAddress;
-            // Set environment
             let environment;
             if ('on' == document.aliasSearchForm.production.value) {
               environment = 'production'

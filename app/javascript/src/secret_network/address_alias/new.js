@@ -58,7 +58,12 @@ $(document).ready(function(){
           try {
             // Set environment
             let contractAddress;
-            let environment = document.aliasCreateForm.environment.value;
+            let environment;
+            if ('on' == document.aliasCreateForm.production.value) {
+              environment = 'production'
+            } else {
+              environment = 'staging'
+            }
             let client =  document.secretNetworkClient(environment);
             if (environment == 'staging') {
               contractAddress = 'tobefilled'
