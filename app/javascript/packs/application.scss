@@ -39,6 +39,21 @@
       }
     }
   }
+}
+
+//=== MAILCHIMP ===
+#mc-embedded-subscribe-form {
+  #anti-spam-container {
+    position: absolute;
+    left: -5000px;
+  }
+
+  #mce-responses {
+    .response {
+      display: none;
+    }
+  }
+}
 
 //=== SWITCH ===
 

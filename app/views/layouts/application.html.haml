@@ -57,17 +57,24 @@
                     .wgs.wgs-subscribe-form
                       %h6.wgs-title.wgs-title-s2.text-white NewsLetter
                       .wgs-body
-                        .wgs-subscribe
-                          %p Lorem ipsum dolor sit amet, cons ectetur adipiscing elit, sed
-                          %form.nk-form-submit{ action: 'form/subscribe.php', method: 'post', novalidate: 'novalidate' }
-                            .field-inline.field-inline-s3.field-split
+                        .wgs-subscribe#mc_embed_signup
+                          %form.nk-form-submit.validate#mc-embedded-subscribe-form{ action: 'https://group.us6.list-manage.com/subscribe/post?u=eb5f49c9e796d26b7737589fb&id=3ba7db12dc', method: 'post', target: '_blank', name: 'mc-embedded-subscribe-form' }
+                            .field-inline.field-inline-s3.field-split#mc_embed_signup_scroll
                               .field-wrap
-                                %input.input-bordered.required{ placeholder: 'Enter your email', type: 'text' }
-                                %input.d-none{ name: 'form-anti-honeypot', type: 'text', value: '' }
+                                %input.input-bordered.required.email#mce-EMAIL{ name: 'EMAIL', type: 'email', placeholder: 'Enter your email' }
+                              #anti-spam-container{ 'aria-hidden' => 'true' }
+                                %input{ name: 'b_eb5f49c9e796d26b7737589fb_3ba7db12dc', tabindex: '-1', type: 'text', value: '' }
                               .submit-wrap
                                 %button.btn.btn-icon.btn-light.btn-auto
                                   %i.fas.fa-paper-plane
-                            .form-results
+                            .clear#mce-responses
+                              .response#mce-error-response
+                              .response#mce-success-response
+                        -# Mailchimp
+                        %script{ src: '//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js', type: 'text/javascript' }
+                        :javascript
+                          (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);
+
               .footer-bottom.section-sm
                 .row.justify-content-between.align-items-center
                   .col-6
