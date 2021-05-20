@@ -19,6 +19,9 @@
                     .form-group
                       %label{ for: 'alias' } Alias
                       %input.form-control.w-100#alias{ name: 'alias', required: true }
+                    .form-group
+                      %label{ for: 'avatar-url' } Avatar url
+                      %input.form-control.w-100#avatar-url{ name: 'avatarUrl' }
                     = link_to 'Cancel', secret_network_address_alias_index_path, class: 'btn btn-light btn-md', id: 'cancel-button'
                     %button.btn.btn-primary.btn-md#create-button{ type: 'submit', disabled: true }
                       #loading
@@ -26,5 +29,9 @@
                         %em Loading...
                       .d-none#ready
                         Create
-
+              .card.my-3.d-none#result-container
+                .card-body
+                  %h3 Result
+                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                  .alert.alert-danger.d-none.mt-3#alert-danger
 %main.nk-pages

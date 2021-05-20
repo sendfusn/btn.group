@@ -66,21 +66,16 @@ $(document).ready(function(){
             }
 
             let alias = document.aliasCreateForm.alias.value;
-            let handleMsg = { create: { alias: alias } }
+            let avatarUrl = document.aliasCreateForm.avatarUrl.value;
+            let handleMsg = { create: { alias: alias, avatar_url: avatarUrl } }
             let response = await this.client.execute(contractAddress, handleMsg)
-              .catch((err) => {
-                document.showAlertDanger(err)
-                $("#create-button").prop("disabled", false);
-                $("#loading").addClass("d-none")
-                $("#ready").removeClass("d-none")
-              });
             document.showAlertSuccess('Alias created.')
-            $("#create-button").prop("disabled", false);
-            $("#loading").addClass("d-none")
-            $("#ready").removeClass("d-none")
           }
           catch(err) {
             document.showAlertDanger(err)
+          }
+          finally {
+            $("#result-container").removeClass("d-none");
             $("#create-button").prop("disabled", false);
             $("#loading").addClass("d-none")
             $("#ready").removeClass("d-none")
