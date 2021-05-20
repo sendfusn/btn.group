@@ -18,7 +18,9 @@ $(document).ready(function(){
             let search_params = { search_type: search_type, search_value: search_value };
             let result = await client.queryContractSmart(contractAddress, { search: search_params })
             $("#result-value").removeClass("d-none");
-            $("#result-value").html(document.prettyPrintJSON(result));
+            // $("#result-value").html(document.prettyPrintJSON(result));
+            let resultValueHtml = '<h3>' + result['attributes']['alias'] + '</h3><h5>' + result['attributes']['address'] + '</h5><img style="max-width: 333px;" src="' + result['attributes']['avatar_url'] + '">'
+            $("#result-value").html(resultValueHtml)
           }
           catch(err) {
             document.showAlertDanger(err)

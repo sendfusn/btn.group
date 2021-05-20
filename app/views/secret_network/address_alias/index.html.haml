@@ -1,10 +1,10 @@
 .header-banner.bg-theme-grad-s2
   .nk-banner
     .banner.banner-page
-      .banner-wrap
+      .mt-3.w-100
         .container#secret-network-address-alias-index
-          .row.mb-5.mt-3
-            .col-lg-10.offset-lg-1
+          .row.mb-5
+            .col-12
               .card
                 .card-body
                   = link_to 'New', new_secret_network_address_alias_path, class: 'btn btn-secondary btn-md float-right mb-3'
@@ -34,6 +34,5 @@
                         Search
               .card.my-3.d-none#result-container
                 .card-body
-                  %h3 Result
                   %pre.p-1.m-1.alert.alert-success.d-none#result-value
                   .alert.alert-danger.d-none.mt-3#alert-danger
