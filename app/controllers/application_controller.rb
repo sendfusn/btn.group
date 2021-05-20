@@ -25,7 +25,11 @@ class ApplicationController < ActionController::Base
           address_alias: {
             name: 'Address alias',
             show_link: true,
-            status: 'Work in progress'
+            status: 'Work in progress',
+            contracts: {
+              staging: 'secret1ghzaz67v647drlghd6m8njgl5lhavcwkal97ju',
+              production: 'secret17fkl85nexfne274s578rsuatm62j96lvgmfs7u'
+            }
           },
           # block_locker: {
           #   name: 'Block locker',

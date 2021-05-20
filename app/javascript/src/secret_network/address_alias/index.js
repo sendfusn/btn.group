@@ -10,14 +10,9 @@ $(document).ready(function(){
         (async () => {
           try {
             // Set environment
-            let contractAddress;
             let environment = document.featureEnvironment();
             let client =  document.secretNetworkClient(environment);
-            if (environment == 'staging') {
-              contractAddress = 'secret1ghzaz67v647drlghd6m8njgl5lhavcwkal97ju'
-            } else {
-              contractAddress = 'secret17fkl85nexfne274s578rsuatm62j96lvgmfs7u'
-            };
+            let contractAddress = document.featureContractAddress(environment);
             let search_type = document.aliasSearchForm.searchType.value;
             let search_value = document.aliasSearchForm.searchValue.value;
             let search_params = { search_type: search_type, search_value: search_value };

@@ -17,8 +17,8 @@ $(document).ready(function(){
           document.hideAllAlerts();
           try {
             // Set environment
-            let contractAddress;
             let environment = document.featureEnvironment();
+            let contractAddress = document.featureContractAddress(environment);
             let chainId = document.secretNetworkChainId(environment)
             let httpUrl = document.secretNetworkHttpUrl(environment)
 
@@ -64,12 +64,6 @@ $(document).ready(function(){
                 alert("Please use the recent version of keplr extension");
               }
             }
-
-            if (environment == 'staging') {
-              contractAddress = 'secret1ghzaz67v647drlghd6m8njgl5lhavcwkal97ju'
-            } else {
-              contractAddress = 'secret17fkl85nexfne274s578rsuatm62j96lvgmfs7u'
-            };
 
             let alias = document.aliasCreateForm.alias.value;
             let handleMsg = { create: { alias: alias } }

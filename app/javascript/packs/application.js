@@ -16,6 +16,7 @@ import 'datatables.net-buttons-bs4'
 import 'datatables.net-buttons/js/buttons.html5.js'
 
 // APP
+import '../src/application/_environment_switch'
 import '../src/features/index'
 import '../src/secret_network/block_locker/new'
 import '../src/secret_network/block_locker/show'
@@ -28,14 +29,14 @@ import '../src/secret_network/transactions/index'
 Rails.start()
 ActiveStorage.start()
 
-document.featureEnvironment = function() {
-  let environment;
-  if($('#production-switch')[0].checked) {
-    environment = 'production'
+document.featureContractAddress = function(environment) {
+  let contractAddress
+  if (environment == 'staging') {
+    contractAddress = $('#staging-contract-link').text()
   } else {
-    environment = 'staging'
-  }
-  return environment
+    contractAddress = $('#production-contract-link').text()
+  };
+  return contractAddress
 }
 
 document.hideAllAlerts = function() {
