@@ -2,7 +2,7 @@ $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     this.datatable = window.$('#transactions-table').DataTable({
       columns: [
-          { title: "ID/Date" },
+          { title: "ID/Date/Blockheight" },
           { title: "Description" },
           { title: "Amount" },
       ],
