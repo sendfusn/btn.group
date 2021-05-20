@@ -22,12 +22,13 @@
                         %span.slider
                       Production
                     .form-group
-                      .btn-group.btn-group-toggle{ 'data-toggle' => 'buttons' }
+                      %label.control-label Search by
+                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
                         %label.btn.btn-light.btn-md
                           %input#address{ name: 'searchType', type: 'radio', value: 'address' } Address
                         %label.btn.btn-md.btn-light
                           %input#alias{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
-                    .mb-3
+                    .form-group
                       %input.form-control.w-100#search-value{ name: 'searchValue', required: true }
                     %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
                       .d-none#loading
