@@ -23,7 +23,11 @@ $(document).ready(function(){
             $("#result-value").html(resultValueHtml)
           }
           catch(err) {
-            document.showAlertDanger(err)
+            let errorDisplayMessage = err;
+            if (err.message.includes('not_found')) {
+              errorDisplayMessage = 'Alias not found'
+            }
+            document.showAlertDanger(errorDisplayMessage)
           }
           finally {
             $("#result-container").removeClass("d-none");
