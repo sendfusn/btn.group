@@ -11,12 +11,7 @@ $(document).ready(function(){
           try {
             // Set environment
             let contractAddress;
-            let environment;
-            if (true == document.aliasSearchForm.production.checked) {
-              environment = 'production'
-            } else {
-              environment = 'staging'
-            }            
+            let environment = document.featureEnvironment();
             let client =  document.secretNetworkClient(environment);
             if (environment == 'staging') {
               contractAddress = 'secret1ghzaz67v647drlghd6m8njgl5lhavcwkal97ju'

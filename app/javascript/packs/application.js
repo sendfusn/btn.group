@@ -28,6 +28,16 @@ import '../src/secret_network/transactions/index'
 Rails.start()
 ActiveStorage.start()
 
+document.featureEnvironment = function() {
+  let environment;
+  if($('#production-switch')[0].checked) {
+    environment = 'production'
+  } else {
+    environment = 'staging'
+  }
+  return environment
+}
+
 document.hideAllAlerts = function() {
   $('.alert').addClass('d-none')
 };

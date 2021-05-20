@@ -18,7 +18,7 @@ $(document).ready(function(){
         (async () => {
           try {
             // Set environment
-            let environment = document.secretNetworkSmartContractQuerierForm.environment.value;
+            let environment = document.featureEnvironment();
             let client =  document.secretNetworkClient(environment);
 
             // Set params

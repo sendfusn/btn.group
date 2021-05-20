@@ -52,20 +52,13 @@ $(document).ready(function(){
         (async () => {
           try {
             // Set environment
-            let environment;
-            if ('on' == document.secretNetworkTransactionsForm.production.value) {
-              environment = 'production'
-            } else {
-              environment = 'staging'
-            }
+            let environment = document.featureEnvironment();
             let client =  document.secretNetworkClient(environment);
             let address = document.secretNetworkTransactionsForm.address.value;
             let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
             let viewingKey = await window.keplr.getSecret20ViewingKey("secret-2", contractAddress);
             let pageSize = document.secretNetworkTransactionsForm.pageSize.value;
             let page = document.secretNetworkTransactionsForm.page.value;
-            console.log(page)
-            console.log(pageSize)
             let params = {
               transfer_history: {
                 address: address,

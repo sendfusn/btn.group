@@ -18,12 +18,7 @@ $(document).ready(function(){
           try {
             // Set environment
             let contractAddress;
-            let environment;
-            if (true == document.aliasCreateForm.production.value) {
-              environment = 'production'
-            } else {
-              environment = 'staging'
-            }
+            let environment = document.featureEnvironment();
             let chainId = document.secretNetworkChainId(environment)
             let httpUrl = document.secretNetworkHttpUrl(environment)
 
