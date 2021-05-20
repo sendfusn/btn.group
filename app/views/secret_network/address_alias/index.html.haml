@@ -15,7 +15,8 @@
                     = features[:secret_network][:name].to_s
                   = render 'environment_switch'
                   = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:address_alias][:contracts][:production], staging_contract: features[:secret_network][:features][:address_alias][:contracts][:staging]
-                  %form.mt-3{ name: 'aliasSearchForm' }
+                  %hr
+                  %form{ name: 'aliasSearchForm' }
                     .form-group
                       %label.control-label Search by
                       .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }

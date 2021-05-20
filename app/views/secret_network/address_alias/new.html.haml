@@ -14,8 +14,10 @@
                     = features[:secret_network][:name].to_s
                   = render 'environment_switch'
                   = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:address_alias][:contracts][:production], staging_contract: features[:secret_network][:features][:address_alias][:contracts][:staging]
-                  %form.mt-3{ name: 'aliasCreateForm' }
-                    .mb-3
+                  %hr
+                  %form{ name: 'aliasCreateForm' }
+                    .form-group
+                      %label{ for: 'alias' } Alias
                       %input.form-control.w-100#alias{ name: 'alias', required: true }
                     = link_to 'Cancel', secret_network_address_alias_index_path, class: 'btn btn-light btn-md', id: 'cancel-button'
                     %button.btn.btn-primary.btn-md#create-button{ type: 'submit', disabled: true }

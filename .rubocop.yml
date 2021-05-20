@@ -53,13 +53,14 @@ Lint/RescueException:
 Layout/TrailingEmptyLines:
   Enabled: true
 
+# Fix this when you get more time
 Metrics/MethodLength:
   Max: 40
+  Exclude:
+    - 'app/controllers/application_controller.rb'
 
 Metrics/ClassLength:
   Max: 200
-  Exclude:
-    - 'app/models/*.rb'
 
 Metrics/BlockLength:
   Exclude:
