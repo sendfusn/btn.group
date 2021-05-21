@@ -52,19 +52,25 @@
       .nk-block.nk-block-features-s2
         .row.align-items-center.gutter-vr-30px
           .col-lg-4
-            .card.card-lg-y.feature.feature-center
-              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
-                = image_tag 'https://i.kym-cdn.com/photos/images/newsfeed/001/111/505/1aa.jpg'
-              .feature-text
-                %h4.title.title-md.title-dark.mb-4 Address alias
-                %p Create an easy to search alias for your wallet.
+            = link_to secret_network_address_alias_index_path do
+              .card.card-lg-y.feature.feature-center
+                .feature-icon.feature-icon-bg-grd.feature-icon-s5-2
+                  = cl_image_tag 'secret_network/address_alias/wallet_jkkqa4', crop: :lpad, dpr: 2, fetch_format: :auto, height: 246, width: 230
+                .feature-text
+                  %h4.title.title-md.title-dark.mb-1 Address alias
+                  %p
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                    = features[:secret_network][:name]
           .col-lg-4
-            .card.card-lg-y.feature.feature-center
-              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
-                = image_tag 'https://i.kym-cdn.com/photos/images/original/001/322/569/e9d.jpg'
-              .feature-text
-                %h4.title.title-md.title-dark.mb-4 Smart contract iterface
-                %p Create an easy to search alias for your wallet.
+            = link_to secret_network_smart_contract_interface_index_path do
+              .card.card-lg-y.feature.feature-center
+                .feature-icon.feature-icon-bg-grd.feature-icon-s5-3
+                  = cl_image_tag 'secret_network/smart_contract_interface/contract_rough_MG_tw1vei', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
+                .feature-text
+                  %h4.title.title-md.title-dark.mb-1 Smart contract interface
+                  %p
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                    = features[:secret_network][:name]
           .col-lg-4
             .card.card-lg-y.feature.feature-center
               .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
