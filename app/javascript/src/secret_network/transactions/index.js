@@ -1,16 +1,18 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
-    this.datatable = window.$('#transactions-table').DataTable({
-      columns: [
-          { title: "ID/Date/Blockheight" },
-          { title: "Description" },
-          { title: "Amount" },
-      ],
-      dom: '<"top"i>frtp',
-      ordering: false,
-      paging: false
-    });
     window.onload = async () => {
+      // initDatatable
+      this.datatable = window.$('#transactions-table').DataTable({
+        columns: [
+            { title: "ID/Date/Blockheight" },
+            { title: "Description" },
+            { title: "Amount" },
+        ],
+        dom: '<"top"i>frtp',
+        ordering: false,
+        paging: false
+      });
+      initListeners()
       this.chainId = 'secret-2';
 
       // Keplr extension injects the offline signer that is compatible with cosmJS.
@@ -43,7 +45,6 @@ $(document).ready(function(){
       document.secretNetworkTransactionsForm.onsubmit = () => {
         let transactions = [];
         this.datatable.clear().draw();
-
         // Disable form
         $("#search-button").prop("disabled", true);
         $("#loading").removeClass("d-none")
@@ -56,7 +57,8 @@ $(document).ready(function(){
             let client =  document.secretNetworkClient(environment);
             let address = document.secretNetworkTransactionsForm.address.value;
             let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
-            let viewingKey = await window.keplr.getSecret20ViewingKey("secret-2", contractAddress);
+            let chainId = document.secretNetworkChainId(environment);
+            let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
             let pageSize = document.secretNetworkTransactionsForm.pageSize.value;
             let page = document.secretNetworkTransactionsForm.page.value;
             let params = {
@@ -89,20 +91,7 @@ $(document).ready(function(){
             this.datatable.rows.add(transactions);
             this.datatable.draw();
 
-            // _.each(transactions_response["transfer_history"]["txs"], function(value){
-            //   // Format amount & description
-            //   let amount = value['coins']['amount']
-            //   let description
-            //   if (address != value['receiver']) {
-            //     amount *= -1
-            //     description = value['receiver']
-            //   } else {
-            //     description = value['from']
-            //   }
-            //   amount = parseFloat(amount).toLocaleString('en')
-
-            //   // Figure out description (the opposite party
-
+            // ADD DENOMINATION
             //   $('tbody').append('<tr><td>' + '' + '</td>' + '<td>' + description + '</td>' + '<td>' + amount + '</td>' + '</tr><tr><td colspan="3"><p>id: ' + value['id'] + '<br>sender/spender: ' + value['sender'] + '<br>from/owner: ' + value['from'] + '<br>receiver: ' + value['receiver'] + '</p></td></tr>')
             //   // Put denom next to amount header
             //   $('#denomination').text('(' + value['coins']['denom'] + ')')
@@ -130,6 +119,27 @@ $(document).ready(function(){
 
         return false;
       };
+    }
+
+    function initListeners() {
+      $('#viewing-key-container .fa-eye').click(function(){
+        if($('#viewing-key-input').attr('type') == 'text') {
+          $('#viewing-key-input').attr('type', 'password')
+        } else {
+          $('#viewing-key-input').attr('type', 'text')
+        }
+      })
+
+      $('#contract-address').change(function(){
+        $('#viewing-key-input').val('')
+        let environment = document.featureEnvironment();
+        let client =  document.secretNetworkClient(environment);
+        let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
+        let chainId = document.secretNetworkChainId(environment);
+        window.keplr.getSecret20ViewingKey(chainId, contractAddress).then(function(result){
+          $('#viewing-key-input').val(result) 
+        });
+      })
     }
   };
 });

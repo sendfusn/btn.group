@@ -24,6 +24,15 @@
                         - tokens[:production].each do |token|
                           %option{ value: token[:address] } #{token[:name]} - #{token[:address]}
                     .row
+                      .col-lg-6
+                        .form-group#viewing-key-container
+                          %label.form-label{ for: 'viewing-key' } Viewing key
+                          .input-group
+                            %input.form-control.border-right-0#viewing-key-input{ type: 'password', required: true, spellcheck: false, autocorrect: 'off', autocapitalize: 'off', autocomplete: 'off', name: 'viewingKey' }
+                            .input-group-append
+                              %span.input-group-text.bg-white.border-left-0
+                                %i.fa.fa-eye
+                    .row
                       .col-6.col-md-3
                         .form-group
                           %label.form-label{ for: 'page-size' } Show

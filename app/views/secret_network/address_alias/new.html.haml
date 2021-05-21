@@ -23,11 +23,11 @@
                       %label{ for: 'avatar-url' } Avatar url
                       %input.form-control.w-100#avatar-url{ name: 'avatarUrl' }
                     = link_to 'Cancel', secret_network_address_alias_index_path, class: 'btn btn-light btn-md', id: 'cancel-button'
-                    %button.btn.btn-primary.btn-md#create-button{ type: 'submit', disabled: true }
-                      #loading
+                    %button.btn.btn-primary.btn-md#create-button{ type: 'submit' }
+                      .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
-                      .d-none#ready
+                      #ready
                         Create
               .card.my-3.d-none#result-container
                 .card-body

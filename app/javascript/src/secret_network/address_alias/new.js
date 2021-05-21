@@ -5,10 +5,6 @@ $(document).ready(function(){
     } = require('secretjs');
 
     window.onload = async () => {
-      $("#create-button").prop("disabled", false);
-      $("#loading").addClass("d-none")
-      $("#ready").removeClass("d-none")
-
       document.aliasCreateForm.onsubmit = () => {
         (async () => {
           $("#create-button").prop("disabled", true);
