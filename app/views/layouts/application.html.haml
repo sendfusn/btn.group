@@ -37,7 +37,21 @@
               .header-navbar.header-navbar-s2
                 %nav.header-menu.justify-content-between#header-menu
                   %ul.menu
-                    %li.menu-item= link_to 'Features', features_path, class: 'menu-link nav-link'
+                    %li.menu-item.has-sub
+                      %a.menu-link.nav-link.menu-toggle{ href: '#' }
+                        Features
+                      %ul.menu-sub.menu-drop
+                        - features.each do |blockchain_symbol, blockchain_object|
+                          - if blockchain_symbol == :secret_network
+                            %li.menu-item.has-sub
+                              = link_to blockchain_object[:name], '#', class: 'menu-link nav-link menu-toggle'
+                              %ul.menu-sub.menu-drop
+                                - blockchain_object[:features].each do |feature_key, feature_value|
+                                  - if feature_value[:show_link]
+                                    %li.menu-item
+                                      = link_to "#{feature_value[:name]} - #{blockchain_object[:name]}", "/#{blockchain_symbol}/#{feature_key}", class: 'menu-link nav-link'
+                        %li.menu-item
+                          = link_to 'See all', features_path, class: 'menu-link nav-link'
                     %li.menu-item= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'menu-link nav-link'
         = yield
         %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
