@@ -65,22 +65,23 @@
                           -# %li= link_to 'Buttcoin', secret_network_buttcoin_index_path
                           %li= link_to 'Team', "#{root_url}#team"
                   .col-lg-3.col-md
-                    .wgs.wgs-subscribe-form
-                      %h6.wgs-title.wgs-title-s2.text-white NewsLetter
-                      .wgs-body
-                        .wgs-subscribe#mc_embed_signup
-                          %form.nk-form-submit.validate#mc-embedded-subscribe-form{ action: 'https://group.us6.list-manage.com/subscribe/post?u=eb5f49c9e796d26b7737589fb&id=3ba7db12dc', method: 'post', target: '_blank', name: 'mc-embedded-subscribe-form' }
-                            .field-inline.field-inline-s3.field-split#mc_embed_signup_scroll
-                              .field-wrap
-                                %input.input-bordered.required.email#mce-EMAIL{ name: 'EMAIL', type: 'email', placeholder: 'Enter your email' }
-                              #anti-spam-container{ 'aria-hidden' => 'true' }
-                                %input{ name: 'b_eb5f49c9e796d26b7737589fb_3ba7db12dc', tabindex: '-1', type: 'text', value: '' }
-                              .submit-wrap
-                                %button.btn.btn-icon.btn-light.btn-auto{ type: 'submit' }
-                                  %i.fas.fa-paper-plane
-                              .clear#mce-responses
-                                .response#mce-error-response
-                                .response#mce-success-response
+                    - unless current_page?(root_path)
+                      .wgs.wgs-subscribe-form
+                        %h6.wgs-title.wgs-title-s2.text-white Newsletter
+                        .wgs-body
+                          .wgs-subscribe#mc_embed_signup
+                            %form.nk-form-submit.validate#mc-embedded-subscribe-form{ action: 'https://group.us6.list-manage.com/subscribe/post?u=eb5f49c9e796d26b7737589fb&id=3ba7db12dc', method: 'post', target: '_blank', name: 'mc-embedded-subscribe-form' }
+                              .field-inline.field-inline-s3.field-split#mc_embed_signup_scroll
+                                .field-wrap
+                                  %input.input-bordered.required.email#mce-EMAIL{ name: 'EMAIL', type: 'email', placeholder: 'Enter your email' }
+                                #anti-spam-container{ 'aria-hidden' => 'true' }
+                                  %input{ name: 'b_eb5f49c9e796d26b7737589fb_3ba7db12dc', tabindex: '-1', type: 'text', value: '' }
+                                .submit-wrap
+                                  %button.btn.btn-icon.btn-light.btn-auto{ type: 'submit' }
+                                    %i.fas.fa-paper-plane
+                                .clear#mce-responses
+                                  .response#mce-error-response
+                                  .response#mce-success-response
               .footer-bottom.section-sm
                 .row.justify-content-between.align-items-center
                   .col-6
@@ -99,3 +100,8 @@
 %script{ src: '/ico-crypto-html-v1.9.3/main-html/assets/js/jquery.bundle.js?ver=1930' }
 %script{ src: '/ico-crypto-html-v1.9.3/main-html/assets/js/scripts.js?ver=1930' }
 %script{ src: '/ico-crypto-html-v1.9.3/main-html/assets/js/charts.js?var=161' }
+
+-# Mailchimp
+%script{:src => "//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js", :type => "text/javascript"}
+:javascript
+  (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);

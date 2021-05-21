@@ -12,11 +12,14 @@
                   %form.nk-form-submit.validate#mc-embedded-subscribe-form{ action: 'https://group.us6.list-manage.com/subscribe/post?u=eb5f49c9e796d26b7737589fb&id=3ba7db12dc', method: 'post', target: '_blank', name: 'mc-embedded-subscribe-form' }
                     .field-inline.field-inline-s2.d-block.bg-white.shadow-soft#mc_embed_signup_scroll
                       .field-wrap
-                        %input.input-solid.input-solid-md.required.email.text-center{ name: 'EMAIL', type: 'email', placeholder: 'Enter your email' }
+                        %input.input-solid.input-line.required.email.text-center{ name: 'EMAIL', type: 'email', placeholder: 'Enter your email' }
                       #anti-spam-container{ 'aria-hidden' => 'true' }
                         %input{ name: 'b_eb5f49c9e796d26b7737589fb_3ba7db12dc', tabindex: '-1', type: 'text', value: '' }
                       .submit-wrap
-                        %button.btn.btn-secondary.btn-md.w-100{ type: 'submit' } Subscribe
+                        %input.button.btn.btn-secondary.btn-md.w-100#mc-embedded-subscribe{ name: 'subscribe', type: 'submit', value: 'Subscribe' }
+                    .clear#mce-responses
+                      .response#mce-error-response
+                      .response#mce-success-response
             .col-lg-6.col-xl-6.text-center.text-lg-left
               .banner-caption.tc-light
                 .cpn-head.mt-0
