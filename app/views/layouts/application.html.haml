@@ -52,7 +52,7 @@
                                       = link_to "#{feature_value[:name]} - #{blockchain_object[:name]}", "/#{blockchain_symbol}/#{feature_key}", class: 'menu-link nav-link'
                         %li.menu-item
                           = link_to 'See all', features_path, class: 'menu-link nav-link'
-                    %li.menu-item= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'menu-link nav-link'
+                    -# %li.menu-item= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'menu-link nav-link'
         = yield
         %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
           %section.section.section-m.tc-light.tc-light-alt.bg-transparent.pb-0
@@ -65,7 +65,7 @@
                       .wgs-body
                         %ul.wgs-links.wgs-links-s3
                           %li= link_to 'Features', features_path
-                          %li= link_to 'Buttcoin', secret_network_buttcoin_index_path
+                          -# %li= link_to 'Buttcoin', secret_network_buttcoin_index_path
                           %li= link_to 'Team', "#{root_url}#team"
                   .col-lg-3.col-md
                     .wgs.wgs-subscribe-form
