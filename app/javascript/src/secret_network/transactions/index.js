@@ -4,7 +4,7 @@ $(document).ready(function(){
       // initDatatable
       this.datatable = window.$('#transactions-table').DataTable({
         columns: [
-            { title: "ID/Date/Blockheight" },
+            { title: "ID" },
             { title: "Description" },
             { title: "Amount" },
         ],
