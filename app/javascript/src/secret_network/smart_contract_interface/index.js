@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  if($("#secret-network-smart-contract-querier").length) {
+  if($("#secret-network-smart-contract-interface").length) {
     window.onload = async () => {
       let param_count = 0;
       $('#add-new-param').click(function(event){
@@ -8,7 +8,7 @@ $(document).ready(function(){
         param_count++;
       });
 
-      document.secretNetworkSmartContractQuerierForm.onsubmit = () => {
+      document.secretNetworkSmartContractInterfaceForm.onsubmit = () => {
         // Disable form
         $("#search-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
@@ -22,8 +22,8 @@ $(document).ready(function(){
             let client =  document.secretNetworkClient(environment);
 
             // Set params
-            let contractAddress = document.secretNetworkSmartContractQuerierForm.contractAddress.value;
-            let functionName = document.secretNetworkSmartContractQuerierForm.functionName.value;
+            let contractAddress = document.secretNetworkSmartContractInterfaceForm.contractAddress.value;
+            let functionName = document.secretNetworkSmartContractInterfaceForm.functionName.value;
 
             let params = {};
             let last_key;

@@ -23,7 +23,7 @@ import '../src/secret_network/block_locker/show'
 import '../src/secret_network/invoices/edit'
 import '../src/secret_network/address_alias/new'
 import '../src/secret_network/address_alias/index'
-import '../src/secret_network/smart_contract_querier/index'
+import '../src/secret_network/smart_contract_interface/index'
 import '../src/secret_network/transactions/index'
 
 Rails.start()

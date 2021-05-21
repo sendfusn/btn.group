@@ -40,15 +40,15 @@ class ApplicationController < ActionController::Base
           #   show_link: true,
           #   status: 'Work in progress'
           # },
-          smart_contract_querier: {
-            name: 'Smart contract querier',
+          smart_contract_interface: {
+            name: 'Smart contract interface',
             show_link: true,
             status: 'Live'
           },
           transactions: {
             name: 'Transactions',
             show_link: true,
-            status: 'Work in progress'
+            status: 'Live'
           }
         }
       }
