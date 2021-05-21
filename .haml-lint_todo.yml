@@ -15,6 +15,10 @@ linters:
       - "app/views/secret_network/invoices/new.html.haml"
       - "app/views/secret_network/invoices/show.html.haml"
 
+  # Offense count: 20
+  InlineStyles:
+    enabled: false
+
   # Offense count: 184
   RuboCop:
     exclude:

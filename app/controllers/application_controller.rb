@@ -7,17 +7,17 @@ class ApplicationController < ActionController::Base
 
   def features
     {
-      binance: {
-        cloudinary_public_id: 'logos/54043975-b6cdb800-4182-11e9-83bd-0cd2eb757c6e_vhapj8',
-        name: 'Binance exchange',
-        features: {
-          auto_trader: {
-            name: 'Auto trader',
-            show_link: false,
-            status: 'Work in progress'
-          }
-        }
-      },
+      # binance: {
+      #   cloudinary_public_id: 'logos/54043975-b6cdb800-4182-11e9-83bd-0cd2eb757c6e_vhapj8',
+      #   name: 'Binance exchange',
+      #   features: {
+      #     auto_trader: {
+      #       name: 'Auto trader',
+      #       show_link: false,
+      #       status: 'Work in progress'
+      #     }
+      #   }
+      # },
       secret_network: {
         cloudinary_public_id: 'logos/external-content.duckduckgo_s4rezw',
         name: 'Secret network',
