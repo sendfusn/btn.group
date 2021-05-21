@@ -27,7 +27,7 @@ $(document).ready(function(){
 
             let params = {};
             let last_key;
-            $('#params-container input').each(function(index){
+            $('#params-container input, #params-container select').each(function(index){
               if (index % 3 == 0) {
                 last_key = this.value;
               } else if (index % 3 == 1) {
@@ -40,7 +40,7 @@ $(document).ready(function(){
                 if (this.value == 'number') {
                   if (last_key.length) {
                     if (params[last_key].length) {
-                      params[last_key] == parseFloat(params[last_key])
+                      params[last_key] = parseFloat(params[last_key])
                     }
                   }
                 }
