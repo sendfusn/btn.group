@@ -5,22 +5,18 @@
         .container
           .row.align-items-center.justify-content-center.justify-content-lg-between.gutter-vr-60px
             .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
-              .token-status.token-status-s3.round.bg-theme.tc-light
-                %h4.title-md.title-thin Buttcoin Pre-Sale Starting In
-                .countdown-s2.countdown{ 'data-date' => '2021/06/14 12:00:00' }
+              .pb-2.token-status.token-status-s3.round.bg-theme.tc-light
+                %h4.title-md.title-thin Big news coming!
                 .token-info.token-info-s1
-                  .token-info-item.token-info-item-s1
-                    .token-info-item-list
-                      %span Token Price:
-                      %h4 TBA
-                    .token-info-item-list
-                      %span We Accept:
-                      %h4
-                        TBA
-                        -# %em.fab
-                        -#   = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, fetch_format: :auto)
-                        -# SCRT
-                .token-action.token-action-s2.flex-wrap.flex-sm-nowrap= link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-md btn-secondary w-100'
+                  %p.text-center Don’t miss out. Be the first to know.
+                  %form.nk-form-submit.validate#mc-embedded-subscribe-form{ action: 'https://group.us6.list-manage.com/subscribe/post?u=eb5f49c9e796d26b7737589fb&id=3ba7db12dc', method: 'post', target: '_blank', name: 'mc-embedded-subscribe-form' }
+                    .field-inline.field-inline-s2.d-block.bg-white.shadow-soft#mc_embed_signup_scroll
+                      .field-wrap
+                        %input.input-solid.input-solid-md.required.email.text-center{ name: 'EMAIL', type: 'email', placeholder: 'Enter your email' }
+                      #anti-spam-container{ 'aria-hidden' => 'true' }
+                        %input{ name: 'b_eb5f49c9e796d26b7737589fb_3ba7db12dc', tabindex: '-1', type: 'text', value: '' }
+                      .submit-wrap
+                        %button.btn.btn-secondary.btn-md.w-100{ type: 'submit' } Subscribe
             .col-lg-6.col-xl-6.text-center.text-lg-left
               .banner-caption.tc-light
                 .cpn-head.mt-0
@@ -30,7 +26,6 @@
                 .cpn-btns
                   %ul.btn-grp
                     %li= link_to 'Features', features_path, class: 'btn btn-md btn-primary btn-outline'
-                    %li= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'btn btn-md btn-primary btn-outline'
                 .cpn-social
                   %h4.title-xs CURRENTLY BUILDING ON
                   %ul.social
@@ -49,10 +44,10 @@
 %main.nk-pages
   %section.section.bg-light#about
     .container
+      .section-head.section-head-s7.text-center.wide-auto-sm
+        %h2.title.title-thin Features
       .nk-block.nk-block-features-s2
         .row.align-items-center.gutter-vr-30px
-          .col-12
-            %h2.title.title-thin Features
           .col-lg-4
             .card.card-lg-y.feature.feature-center
               .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
@@ -74,27 +69,6 @@
               .feature-text
                 %h4.title.title-md.title-dark.mb-4 Transactions
                 %p Create an easy to search alias for your wallet.
-          .col-lg-4
-            .card.card-lg-y.feature.feature-center
-              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
-                = image_tag 'https://www.si.com/.image/c_limit%2Ccs_srgb%2Cq_auto:good%2Cw_520/MTY4MTY5MTAyNDg5ODg4MDE3/ronda-rousey-michael-jordanjpg.webp'
-              .feature-text
-                %h4.title.title-md.title-dark.mb-4 Launch pad
-                %p Launch pad for projects on the Secret network to raise liquidity and distribute tokens.
-          .col-lg-4
-            .card.card-lg-y.feature.feature-center
-              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
-                = image_tag 'https://pbs.twimg.com/media/CaLd_JRWAAEjjth?format=jpg&name=small'
-              .feature-text
-                %h4.title.title-md.title-dark.mb-4 Farm optimizer
-                %p Yield farming optimizer for the Secret network.
-          .col-lg-4
-            .card.card-lg-y.feature.feature-center
-              .feature-icon.feature-icon-bg-grd.feature-icon-bg-grd-s1
-                = image_tag 'https://images.solecollector.com/complex/image/upload/k0cpmenk1k6frufwaunf.jpg'
-              .feature-text
-                %h4.title.title-md.title-dark.mb-4 Auto trader
-                %p Auto trader for the Binance exchange.
   %section.section.bg-white#team
     .container
       .section-head.section-head-s7.text-center.wide-auto-sm
