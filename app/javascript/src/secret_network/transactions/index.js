@@ -15,6 +15,8 @@ $(document).ready(function(){
       let transactions = [];
       this.datatable.clear().draw();
       // Disable form
+      $("#balance").text('')
+      $($('th')[2]).text('Amount')
       $("#search-button").prop("disabled", true);
       $("#loading").removeClass("d-none")
       $("#ready").addClass("d-none")
@@ -29,6 +31,7 @@ $(document).ready(function(){
           let chainId = document.secretNetworkChainId(environment);
           let token_info_response = await client.queryContractSmart(contractAddress, { token_info: {} });
           let token_decimals = token_info_response["token_info"]["decimals"]
+          let token_symbol = token_info_response["token_info"]["symbol"]
           let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
           let pageSize = document.secretNetworkTransactionsForm.pageSize.value;
           let page = document.secretNetworkTransactionsForm.page.value;
@@ -46,7 +49,6 @@ $(document).ready(function(){
             // data
             let id = value['id']
             row.push(id);
-            description & amount
             let amount = value['coins']['amount']
             amount = applyDecimals(amount, token_decimals)
             let description
@@ -57,13 +59,13 @@ $(document).ready(function(){
               description = value['from']
             }
             row.push(description)
-            row.push(parseFloat(amount).toLocaleString('en'))
+            row.push(parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }))
             transactions.push(row)
           })
           this.datatable.rows.add(transactions);
           this.datatable.draw();
           // Add token symbol next to amount header
-          $($('th')[2]).text($($('th')[2]).text() + '(' + token_info_response["token_info"]["symbol"] + ')')
+          $($('th')[2]).text('Amount' + '(' + token_symbol + ')')
 
           params = {
             balance: {
@@ -73,7 +75,7 @@ $(document).ready(function(){
           }
           let balance_response = await client.queryContractSmart(contractAddress, params);
           // Display results
-          $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals))
+          $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals) + ' ' + token_symbol)
         }
         catch(err) {
           document.showAlertDanger(err)
