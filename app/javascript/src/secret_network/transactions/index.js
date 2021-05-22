@@ -44,6 +44,9 @@ $(document).ready(function(){
             }
           }
           let transactions_response = await client.queryContractSmart(contractAddress, params);
+          if (transactions_response['viewing_key_error']) {
+            throw(transactions_response['viewing_key_error']['msg'])
+          }
           _.each(transactions_response["transfer_history"]["txs"], function(value){
             let row = [];
             // data
@@ -104,16 +107,16 @@ $(document).ready(function(){
         }
       })
 
-      $('#contract-address').change(function(){
-        $('#viewing-key-input').val('')
-        let environment = document.featureEnvironment();
-        let client =  document.secretNetworkClient(environment);
-        let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
-        let chainId = document.secretNetworkChainId(environment);
-        window.keplr.getSecret20ViewingKey(chainId, contractAddress).then(function(result){
-          $('#viewing-key-input').val(result) 
-        });
-      })
+      // $('#contract-address').change(function(){
+      //   $('#viewing-key-input').val('')
+      //   let environment = document.featureEnvironment();
+      //   let client =  document.secretNetworkClient(environment);
+      //   let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
+      //   let chainId = document.secretNetworkChainId(environment);
+      //   window.keplr.getSecret20ViewingKey(chainId, contractAddress).then(function(result){
+      //     $('#viewing-key-input').val(result) 
+      //   });
+      // })
     }
   };
 });

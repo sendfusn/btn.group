@@ -13,6 +13,10 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
                   = render 'environment_switch'
+                  %p
+                    * Viewing SNIP-20 transactions is live.
+                    %br
+                    Regular transactions and improved ui/ux in development.
                   %hr
                   %form{ name: 'secretNetworkTransactionsForm' }
                     .form-group
@@ -20,9 +24,7 @@
                       %input.form-control#address{ name: 'address' }
                     .form-group
                       %label.form-label{ for: 'contract-address' } Contract address
-                      %select.form-control#contract-address{ name: 'contractAddress' }
-                        - tokens[:production].each do |token|
-                          %option{ value: token[:address] } #{token[:name]} - #{token[:address]}
+                      %input.form-control#contract-address{ name: 'contractAddress' }
                     .row
                       .col-lg-6
                         .form-group#viewing-key-container
