@@ -89,6 +89,13 @@
                                 .clear#mce-responses
                                   .response#mce-error-response
                                   .response#mce-success-response
+                    %ul.social.pt-2
+                      %li
+                        = mail_to 'support@btn.group' do
+                          %em.social-icon.far.fa-envelope
+                      %li
+                        = link_to 'https://www.github.com/btn-group', target: '_blank', rel: 'noopener' do
+                          %em.social-icon.fab.fa-github
               .footer-bottom.section-sm
                 .row.justify-content-between.align-items-center
                   .col-6
