@@ -19,7 +19,8 @@ $(document).ready(function(){
             let result = await client.queryContractSmart(contractAddress, { search: search_params })
             $("#result-value").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
-            let resultValueHtml = '<h3>' + result['attributes']['alias'] + '</h3><h5>' + result['attributes']['address'] + '</h5><img style="max-width: 333px;" src="' + result['attributes']['avatar_url'] + '">'
+            let url = 'https://secretnodes.com/secret/chains/' + document.secretNetworkChainId(environment) + '/accounts/' + result['attributes']['address']
+            let resultValueHtml = '<h3 class="mb-0">' + result['attributes']['alias'] + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + result['attributes']['address'] + '</a><img style="max-width: 333px;" src="' + result['attributes']['avatar_url'] + '">'
             $("#result-value").html(resultValueHtml)
           }
           catch(err) {
