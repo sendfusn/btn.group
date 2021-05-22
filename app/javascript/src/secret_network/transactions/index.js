@@ -6,7 +6,7 @@ $(document).ready(function(){
           { title: "Description" },
           { title: "Amount" },
       ],
-      dom: '<"top"i>frtp',
+      dom: '<"top">frtp',
       ordering: false,
       paging: false
     });
@@ -27,6 +27,8 @@ $(document).ready(function(){
           let address = document.secretNetworkTransactionsForm.address.value;
           let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
           let chainId = document.secretNetworkChainId(environment);
+          let token_info_response = await client.queryContractSmart(contractAddress, { token_info: {} });
+          let token_decimals = token_info_response["token_info"]["decimals"]
           let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
           let pageSize = document.secretNetworkTransactionsForm.pageSize.value;
           let page = document.secretNetworkTransactionsForm.page.value;
@@ -46,6 +48,7 @@ $(document).ready(function(){
             row.push(id);
             description & amount
             let amount = value['coins']['amount']
+            amount = applyDecimals(amount, token_decimals)
             let description
             if (address != value['receiver']) {
               amount *= -1
@@ -59,12 +62,9 @@ $(document).ready(function(){
           })
           this.datatable.rows.add(transactions);
           this.datatable.draw();
+          // Add token symbol next to amount header
+          $($('th')[2]).text($($('th')[2]).text() + '(' + token_info_response["token_info"]["symbol"] + ')')
 
-          // ADD DENOMINATION
-          //   $('tbody').append('<tr><td>' + '' + '</td>' + '<td>' + description + '</td>' + '<td>' + amount + '</td>' + '</tr><tr><td colspan="3"><p>id: ' + value['id'] + '<br>sender/spender: ' + value['sender'] + '<br>from/owner: ' + value['from'] + '<br>receiver: ' + value['receiver'] + '</p></td></tr>')
-          //   // Put denom next to amount header
-          //   $('#denomination').text('(' + value['coins']['denom'] + ')')
-          // })
           params = {
             balance: {
               address: address,
@@ -73,7 +73,7 @@ $(document).ready(function(){
           }
           let balance_response = await client.queryContractSmart(contractAddress, params);
           // Display results
-          $('#balance').text(balance_response["balance"]["amount"])
+          $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals))
         }
         catch(err) {
           document.showAlertDanger(err)
@@ -87,6 +87,10 @@ $(document).ready(function(){
       })();
 
       return false;
+    }
+
+    function applyDecimals(amount, decimals) {
+      return amount / parseFloat("1" + '0'.repeat(decimals))
     }
 
     function initListeners() {
