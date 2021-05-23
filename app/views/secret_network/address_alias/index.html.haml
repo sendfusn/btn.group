@@ -3,7 +3,7 @@
     .banner.banner-page
       .mt-3.w-100
         .container#secret-network-address-alias-index
-          .row.mb-5
+          .row
             .col-12
               .card
                 .card-body
@@ -32,7 +32,13 @@
                         %em Loading...
                       #ready
                         Search
-              .card.my-3.d-none#result-container
-                .card-body
-                  .p-1.m-1.d-none#result-value
-                  .alert.alert-danger.d-none.mt-3#alert-danger
+          .row
+            .col-12
+              .card.bg-light.my-3.d-none#result-container
+                .row
+                  .col-sm-8.offset-sm-2.col-lg-6.offset-lg-3
+                    .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
+                      .d-none#result-value
+                      %button.btn.btn-danger.w-100.mt-3.d-none#delete-button
+                        Delete
+                      .alert.alert-danger.d-none.mt-3#alert-danger
