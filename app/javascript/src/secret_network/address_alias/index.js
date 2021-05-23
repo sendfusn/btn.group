@@ -22,7 +22,7 @@ $(document).ready(function(){
             let search_value = document.aliasSearchForm.searchValue.value;
             let search_params = { search_type: search_type, search_value: search_value };
             let result = await client.queryContractSmart(contractAddress, { search: search_params })
-            $("#result-value").removeClass("d-none");
+            $("#result-value-container").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
             let url = 'https://secretnodes.com/secret/chains/' + chainId + '/accounts/' + result['attributes']['address']
             let resultValueHtml = '<h3 class="mb-0">' + result['attributes']['alias'] + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + result['attributes']['address'] + '</a><img class="w-100" src="' + result['attributes']['avatar_url'] + '">'
@@ -109,6 +109,8 @@ $(document).ready(function(){
           let alias = $("#delete-button").data('alias');
           let handleMsg = { destroy: { alias: alias } }
           let response = await this.client.execute(contractAddress, handleMsg)
+          $("#result-value").html('')
+          $("#result-value-container").addClass("d-none");
           document.showAlertSuccess('Alias destroyed.')
         }
         catch(err) {
