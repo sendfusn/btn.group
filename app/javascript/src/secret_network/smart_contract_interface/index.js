@@ -55,7 +55,12 @@ $(document).ready(function(){
             $("#result-value").html(document.prettyPrintJSON(result));
           }
           catch(err) {
-            document.showAlertDanger(err)
+            console.error(err)
+            let errorDisplayMessage = err.message;
+            if (err.message.includes('decoding bech32 failed')) {
+              errorDisplayMessage = 'Smart contract address is invalid.'
+            }
+            document.showAlertDanger(errorDisplayMessage)
           }
           finally {
             $("#result-container").removeClass("d-none");

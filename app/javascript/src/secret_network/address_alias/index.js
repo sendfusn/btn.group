@@ -29,6 +29,7 @@ $(document).ready(function(){
             $("#result-container").removeClass("d-none");
           }
           catch(err) {
+            console.error(err)
             let errorDisplayMessage = err;
             if (err.message.includes('not_found')) {
               errorDisplayMessage = 'Alias not found.'
