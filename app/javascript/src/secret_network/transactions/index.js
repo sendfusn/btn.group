@@ -81,7 +81,12 @@ $(document).ready(function(){
           $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals) + ' ' + token_symbol)
         }
         catch(err) {
-          document.showAlertDanger(err)
+          console.error(err)
+          let errorDisplayMessage = err.message;
+          if (err.message.includes('decoding bech32 failed')) {
+            errorDisplayMessage = 'Smart contract or wallet address is invalid.'
+          }
+          document.showAlertDanger(errorDisplayMessage)
         }
         finally {
           // Enable form
