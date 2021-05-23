@@ -4,6 +4,25 @@ $(document).ready(function(){
       SigningCosmWasmClient,
     } = require('secretjs');
 
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: 'hv5cxagki',
+      cropping: true,
+      uploadPreset: "yxh7df5b",
+      multiple: false,
+      maxImageFileSize: 5_000_000,
+      resourceType: 'image'
+      }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        console.log("Done! Here is the image info: ", result.info);
+        $("#avatar-url").val(result.info.url);
+      }
+    })
+    document.getElementById("cloudinary-upload-widget").addEventListener("click", function(evt){
+      myWidget.open();
+      evt.preventDefault();
+    }, false);
+
+
     window.onload = async () => {
       document.aliasCreateForm.onsubmit = () => {
         (async () => {

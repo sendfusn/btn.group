@@ -20,7 +20,8 @@
                       %label{ for: 'alias' } Alias
                       %input.form-control.w-100#alias{ name: 'alias', required: true }
                     .form-group
-                      %label{ for: 'avatar-url' } Avatar url
+                      %label{ for: 'avatar-url' } Avatar url *
+                      %button.btn.btn-light.btn-sm.ml-2.border#cloudinary-upload-widget Upload image
                       %input.form-control.w-100#avatar-url{ name: 'avatarUrl' }
                     = link_to 'Back', secret_network_address_alias_index_path, class: 'btn btn-light btn-md', id: 'cancel-button'
                     %button.btn.btn-primary.btn-md#create-button{ type: 'submit' }
@@ -29,4 +30,5 @@
                         %em Loading...
                       #ready
                         Create
+                %p * Uploaded images will be removed after a year or so. We are using cloudinary while investigating decentralized options. Please use your own storage and url if possible.
               = render partial: 'profile'
