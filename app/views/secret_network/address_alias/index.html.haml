@@ -25,24 +25,11 @@
                         %label.btn.btn-md.btn-light
                           %input#alias{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
                     .form-group
-                      %input.form-control.w-100#search-value{ name: 'searchValue', required: true }
+                      %input.form-control.w-100#search-value{ name: 'searchValue', required: true, autocomplete: 'off' }
                     %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
                       .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
                       #ready
                         Search
-          .row
-            .col-12
-              .card.bg-light.my-3.d-none#result-container
-                .alert.alert-danger.d-none.mt-3#alert-danger
-                .row.d-none#result-value-container
-                  .col-sm-8.offset-sm-2.col-lg-6.offset-lg-3
-                    .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
-                      #result-value
-                      %button.btn.btn-danger.w-100.mt-3.btn-md#delete-button
-                        .d-none#delete-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        #delete-ready
-                          Delete
+          = render partial: 'profile'

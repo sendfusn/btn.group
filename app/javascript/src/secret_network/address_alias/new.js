@@ -65,13 +65,24 @@ $(document).ready(function(){
             let avatarUrl = document.aliasCreateForm.avatarUrl.value;
             let handleMsg = { create: { alias: alias, avatar_url: avatarUrl } }
             let response = await this.client.execute(contractAddress, handleMsg)
-            document.showAlertSuccess('Alias created.')
+            $("#result-value-container").removeClass("d-none");
+            // $("#result-value").html(document.prettyPrintJSON(result));
+            let url = 'https://secretnodes.com/secret/chains/' + chainId + '/accounts/' + this.address
+            let resultValueHtml = '<h3 class="mb-0">' + alias + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + this.address + '</a><img class="w-100" src="' + avatarUrl + '">'
+            $("#result-value").html(resultValueHtml)
+            // Set data on delete button
+            $("#delete-button").data('environment', environment)
+            $("#delete-button").data('alias', alias)
+            $("#result-container").removeClass("d-none");
           }
           catch(err) {
-            document.showAlertDanger(err)
+            let errorDisplayMessage = err;
+            if (err.message.includes('Address already has an alias')) {
+              errorDisplayMessage = 'Address already has an alias.'
+            }
+            document.showAlertDanger(errorDisplayMessage)
           }
           finally {
-            $("#result-container").removeClass("d-none");
             $("#create-button").prop("disabled", false);
             $("#loading").addClass("d-none")
             $("#ready").removeClass("d-none")

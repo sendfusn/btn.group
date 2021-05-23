@@ -21,6 +21,7 @@ import '../src/features/index'
 import '../src/secret_network/block_locker/new'
 import '../src/secret_network/block_locker/show'
 import '../src/secret_network/invoices/edit'
+import '../src/secret_network/address_alias/_profile'
 import '../src/secret_network/address_alias/new'
 import '../src/secret_network/address_alias/index'
 import '../src/secret_network/smart_contract_interface/index'
@@ -123,11 +124,19 @@ document.secretNetworkHttpUrl = function(environment) {
 }
 
 document.showAlertDanger = function(text) {
-  $("#alert-danger").removeClass("d-none")
-  $("#alert-danger").text(text)
+  toastr.options.tapToDismiss = false
+  toastr.options.closeDuration = 0;
+  toastr.options.timeOut = 0;
+  toastr.options.extendedTimeOut = 0;
+  toastr.options.closeButton = true;
+  toastr.error(text);
 }
 
 document.showAlertSuccess = function(text) {
-  $("#alert-success").removeClass("d-none")
-  $("#alert-success").text(text)
+  toastr.options.tapToDismiss = false
+  toastr.options.closeDuration = 0;
+  toastr.options.timeOut = 0;
+  toastr.options.extendedTimeOut = 0;
+  toastr.options.closeButton = true;
+  toastr.success(text);
 }

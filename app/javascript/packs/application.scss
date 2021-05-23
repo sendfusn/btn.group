@@ -56,3 +56,14 @@
     }
   }
 }
+
+// === TOASTR ===
+#toast-container>div {
+  opacity: 1 !important;
+}
+
+#toast-container {
+  .toast-message {
+    font-weight: 400;
+  }
+}
