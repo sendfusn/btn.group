@@ -53,6 +53,7 @@ $(document).ready(function(){
             // Display results
             $("#result-value").removeClass("d-none");
             $("#result-value").html(document.prettyPrintJSON(result));
+            $("#result-container").removeClass("d-none");
           }
           catch(err) {
             console.error(err)
@@ -63,7 +64,6 @@ $(document).ready(function(){
             document.showAlertDanger(errorDisplayMessage)
           }
           finally {
-            $("#result-container").removeClass("d-none");
             // Enable form
             $("#search-button").prop("disabled", false);
             $("#loading").addClass("d-none")
