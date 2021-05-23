@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
             show_link: true,
             status: 'Work in progress',
             contracts: {
-              staging: 'secret1ghzaz67v647drlghd6m8njgl5lhavcwkal97ju',
-              production: 'secret17fkl85nexfne274s578rsuatm62j96lvgmfs7u'
+              staging: 'secret1jyh69wsrq6ml8e7lp7jymupjqa2u736l3pnns0',
+              production: 'secret1v2kg4uf4ffjyez3g50h3d0hze6858qgszlluzz'
             }
           },
           # block_locker: {
