@@ -22,5 +22,6 @@ Rails.application.routes.draw do
 
   # SITE PAGES
   get 'company_compass' => 'application#company_compass'
+  get 'roadmap' => 'application#roadmap'
   root 'application#home'
 end

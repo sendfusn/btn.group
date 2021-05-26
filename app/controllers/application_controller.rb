@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   def home; end
 
+  def roadmap; end
+
   def features
     {
       # binance: {
