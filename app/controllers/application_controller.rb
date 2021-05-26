@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
   helper_method :features, :logo_cloudinary_public_id
 
+  def company_compass; end
+
   def home; end
 
   def features

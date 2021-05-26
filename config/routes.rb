@@ -21,5 +21,6 @@ Rails.application.routes.draw do
   match 'datahub_staging/*path' => 'datahub#index_staging', via: %i[get post put patch delete], defaults: { format: 'json' }
 
   # SITE PAGES
+  get 'company_compass' => 'application#company_compass'
   root 'application#home'
 end
