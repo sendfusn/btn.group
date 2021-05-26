@@ -10,3 +10,4 @@ end
 
 Rails.application.config.hosts << 'localhost'
 Rails.application.config.hosts << 'www.btn.group'
+Rails.application.config.hosts << 'btn.group'
