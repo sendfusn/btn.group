@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'scss_lint', require: false
 end
 
 group :development do

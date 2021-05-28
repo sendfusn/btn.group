@@ -36,6 +36,9 @@ blocks:
         - name: haml-lint
           commands:
             - bundle exec haml-lint app/views/
+        - name: scss-lint
+          commands:
+            - bundle exec scss-lint app/javascript/
   - name: Tests
     dependencies:
       - Code scanning
