@@ -69,11 +69,8 @@ $(document).ready(function(){
 
                     // @ts-ignore
                     const keplrOfflineSigner = window.getOfflineSigner(chainId);
-                    console.log(keplrOfflineSigner)
                     const accounts = await keplrOfflineSigner.getAccounts();
-                    console.log(accounts)
                     this.address = accounts[0].address;
-                    console.log(this.address)
                     this.client = new SigningCosmWasmClient(
                       httpUrl,
                       this.address,
@@ -90,9 +87,7 @@ $(document).ready(function(){
                         },
                       },
                     );
-                    console.log(this.client)
                     this.account = await this.client.getAccount(this.address);
-                    console.log(this.account)
                   } catch (error) {
                     console.error(error)
                   }
@@ -106,7 +101,6 @@ $(document).ready(function(){
 
             // Display results
             $("#result-value").removeClass("d-none");
-            console.log(result)
             $("#result-value").html(document.prettyPrintJSON(result));
             $("#result-container").removeClass("d-none");
           }
