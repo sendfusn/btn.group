@@ -13,19 +13,25 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
                   = render 'environment_switch'
-                  %p.mb-0 * Querying is live! Handling is in development...
                   %hr
                   %form{ name: 'secretNetworkSmartContractInterfaceForm' }
-                    .mb-3
+                    .form-group
+                      %label.control-label Interaction type
+                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#handle{ name: 'interactionType', type: 'radio', value: 'handle' } Handle
+                        %label.btn.btn-md.btn-light
+                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } Query
+                    .form-group
                       %label.form-label{ for: 'contract-address' } Contract address
                       %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
-                    .mb-3
+                    .form-group
                       .row
                         .col-md-6
                           %label.form-label{ for: 'function-name' } Function name
                           %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
                     #params-container
-                    .mb-3
+                    .form-group
                       .text-center
                         %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
                     %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }

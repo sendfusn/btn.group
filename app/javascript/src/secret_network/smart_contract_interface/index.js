@@ -19,12 +19,11 @@ $(document).ready(function(){
           try {
             // Set environment
             let environment = document.featureEnvironment();
-            let client =  document.secretNetworkClient(environment);
-
+            let chainId = document.secretNetworkChainId(environment)
+            let httpUrl = document.secretNetworkHttpUrl(environment)
             // Set params
             let contractAddress = document.secretNetworkSmartContractInterfaceForm.contractAddress.value;
             let functionName = document.secretNetworkSmartContractInterfaceForm.functionName.value;
-
             let params = {};
             let last_key;
             $('#params-container input, #params-container select').each(function(index){
@@ -46,12 +45,68 @@ $(document).ready(function(){
                 }
               }
             })
+            let msg = { [functionName]: params }
 
-            // Query smart contract
-            let result = await client.queryContractSmart(contractAddress, { [functionName]: params });
+            // Interact with smart contract
+            let result;
+            if(document.secretNetworkSmartContractInterfaceForm.interactionType.value == 'query') {
+              this.client =  document.secretNetworkClient(environment);
+              result = await this.client.queryContractSmart(contractAddress, msg);
+            } else {
+              const {
+                SigningCosmWasmClient,
+              } = require('secretjs');
+
+              if (!window.getOfflineSigner || !window.keplr) {
+                alert("Please install keplr extension");
+              } else {
+                if (window.keplr.experimentalSuggestChain) {
+                  try {
+                    // This method will ask the user whether or not to allow access if they haven't visited this website.
+                    // Also, it will request user to unlock the wallet if the wallet is locked.
+                    // If you don't request enabling before usage, there is no guarantee that other methods will work.
+                    await window.keplr.enable(chainId);
+
+                    // @ts-ignore
+                    const keplrOfflineSigner = window.getOfflineSigner(chainId);
+                    console.log(keplrOfflineSigner)
+                    const accounts = await keplrOfflineSigner.getAccounts();
+                    console.log(accounts)
+                    this.address = accounts[0].address;
+                    console.log(this.address)
+                    this.client = new SigningCosmWasmClient(
+                      httpUrl,
+                      this.address,
+                      keplrOfflineSigner,
+                      window.getEnigmaUtils(chainId),
+                      {
+                        init: {
+                          amount: [{ amount: '500000', denom: 'uscrt' }],
+                          gas: '500000',
+                        },
+                        exec: {
+                          amount: [{ amount: '500000', denom: 'uscrt' }],
+                          gas: '500000',
+                        },
+                      },
+                    );
+                    console.log(this.client)
+                    this.account = await this.client.getAccount(this.address);
+                    console.log(this.account)
+                  } catch (error) {
+                    console.error(error)
+                  }
+                } else {
+                  alert("Please use the recent version of keplr extension");
+                }
+              }
+
+              result = await this.client.execute(contractAddress, msg)
+            }
 
             // Display results
             $("#result-value").removeClass("d-none");
+            console.log(result)
             $("#result-value").html(document.prettyPrintJSON(result));
             $("#result-container").removeClass("d-none");
           }
