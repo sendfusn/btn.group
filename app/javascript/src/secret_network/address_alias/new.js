@@ -93,6 +93,7 @@ $(document).ready(function(){
             $("#delete-button").data('environment', environment)
             $("#delete-button").data('alias', alias)
             $("#result-container").removeClass("d-none");
+            $("#delete-button").removeClass("d-none")
           }
           catch(err) {
             let errorDisplayMessage = err;
