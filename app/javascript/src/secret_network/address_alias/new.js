@@ -62,12 +62,12 @@ $(document).ready(function(){
                     window.getEnigmaUtils(chainId),
                     {
                       init: {
-                        amount: [{ amount: '300000', denom: 'uscrt' }],
-                        gas: '300000',
+                        amount: [{ amount: '200000', denom: 'uscrt' }],
+                        gas: '200000',
                       },
                       exec: {
-                        amount: [{ amount: '300000', denom: 'uscrt' }],
-                        gas: '300000',
+                        amount: [{ amount: '200000', denom: 'uscrt' }],
+                        gas: '200000',
                       },
                     },
                   );
@@ -93,7 +93,6 @@ $(document).ready(function(){
             $("#delete-button").data('environment', environment)
             $("#delete-button").data('alias', alias)
             $("#result-container").removeClass("d-none");
-            $("#delete-button").removeClass("d-none")
           }
           catch(err) {
             let errorDisplayMessage = err;

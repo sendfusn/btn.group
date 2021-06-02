@@ -41,12 +41,12 @@ $(document).ready(function(){
                   window.getEnigmaUtils(chainId),
                   {
                     init: {
-                      amount: [{ amount: '300000', denom: 'uscrt' }],
-                      gas: '300000',
+                      amount: [{ amount: '200000', denom: 'uscrt' }],
+                      gas: '200000',
                     },
                     exec: {
-                      amount: [{ amount: '300000', denom: 'uscrt' }],
-                      gas: '300000',
+                      amount: [{ amount: '200000', denom: 'uscrt' }],
+                      gas: '200000',
                     },
                   },
                 );
