@@ -4,9 +4,6 @@ Rails.application.routes.draw do
   resources :features, only: :index
 
   namespace :secret_network do
-    # COMPOUNDER
-    # get 'farm-manager', to: 'farm_manager#home'
-
     # INVOICE
     # resources :invoices, only: %i[index new show edit]
     # resources :block_locker, only: %i[index new]
@@ -14,6 +11,7 @@ Rails.application.routes.draw do
     resources :address_alias, only: %i[index new]
     resources :smart_contract_interface, only: :index
     resources :transactions, only: :index
+    resources :yield_optimizer, only: :index
   end
 
   # === DATAHUB REVERSE PROXY ===

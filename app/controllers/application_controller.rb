@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
           address_alias: {
             name: 'Address alias',
             show_link: true,
-            status: 'Work in progress',
+            status: 'Live',
             contracts: {
               staging: 'secret1jyh69wsrq6ml8e7lp7jymupjqa2u736l3pnns0',
               production: 'secret1v2kg4uf4ffjyez3g50h3d0hze6858qgszlluzz'
@@ -51,6 +51,11 @@ class ApplicationController < ActionController::Base
             name: 'Transactions',
             show_link: true,
             status: 'Live'
+          },
+          yield_optimizer: {
+            name: 'TBA',
+            show_link: false,
+            status: 'Work in progress'
           }
         }
       }
