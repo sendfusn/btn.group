@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
             status: 'Live'
           },
           yield_optimizer: {
-            name: 'TBA',
+            name: 'Yield optimizer',
             show_link: false,
             status: 'Work in progress'
           }
