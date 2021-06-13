@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 
+gem 'airbrake'
 gem 'cloudinary'
 # Provides Haml generators for Rails 4 etc
 gem 'haml-rails', '~> 2.0'
