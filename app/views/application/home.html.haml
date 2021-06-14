@@ -5,21 +5,21 @@
         .container
           .row.align-items-center.justify-content-center.justify-content-lg-between.gutter-vr-60px
             .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
-              .pb-2.token-status.token-status-s3.round.bg-theme.tc-light
-                %h4.title-md.title-thin Big news coming!
+              .token-status.token-status-s3.round.bg-theme.tc-light
+                %h4.title-md.title-thin Buttcoin Round 1 Sale Is Live!
                 .token-info.token-info-s1
-                  %p.text-center Don’t miss out. Be the first to know.
-                  %form.nk-form-submit.validate#mc-embedded-subscribe-form{ action: 'https://group.us6.list-manage.com/subscribe/post?u=eb5f49c9e796d26b7737589fb&id=3ba7db12dc', method: 'post', target: '_blank', name: 'mc-embedded-subscribe-form' }
-                    .field-inline.field-inline-s2.d-block.bg-white.shadow-soft#mc_embed_signup_scroll
-                      .field-wrap
-                        %input.input-solid.input-line.required.email.text-center{ name: 'EMAIL', type: 'email', placeholder: 'Enter your email' }
-                      #anti-spam-container{ 'aria-hidden' => 'true' }
-                        %input{ name: 'b_eb5f49c9e796d26b7737589fb_3ba7db12dc', tabindex: '-1', type: 'text', value: '' }
-                      .submit-wrap
-                        %input.button.btn.btn-secondary.btn-md.w-100#mc-embedded-subscribe{ name: 'subscribe', type: 'submit', value: 'Subscribe' }
-                    .clear#mce-responses
-                      .response#mce-error-response
-                      .response#mce-success-response
+                  .token-info-item.token-info-item-s1
+                    .token-info-item-list
+                      %span Token Price:
+                      %h4 1 SEFI = 3 BUTT
+                    .token-info-item-list
+                      %span We Accept:
+                      %h4
+                        %em.fab.fa-sefi
+                          = cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                        SEFI
+                .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
+                  = link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-md btn-secondary w-100'
             .col-lg-6.col-xl-6.text-center.text-lg-left
               .banner-caption.tc-light
                 .cpn-head.mt-0
@@ -29,6 +29,7 @@
                 .cpn-btns
                   %ul.btn-grp
                     %li= link_to 'Features', features_path, class: 'btn btn-md btn-primary btn-outline'
+                    %li= link_to 'Buttcoin', secret_network_buttcoin_index_path, class: 'btn btn-md btn-primary btn-outline'
                 .cpn-social
                   %h4.title-xs CURRENTLY BUILDING ON
                   %ul.social

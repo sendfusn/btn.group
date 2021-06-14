@@ -37,11 +37,14 @@ class ApplicationController < ActionController::Base
           #   name: 'Block locker',
           #   status: 'Work in progress'
           # },
-          # buttcoin: {
-          #   name: 'Buttcoin (BUTT)',
-          #   show_link: true,
-          #   status: 'Work in progress'
-          # },
+          buttcoin: {
+            name: 'Buttcoin (BUTT)',
+            show_link: true,
+            status: 'Live',
+            contracts: {
+              production: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
+            }
+          },
           smart_contract_interface: {
             name: 'Smart contract interface',
             show_link: true,

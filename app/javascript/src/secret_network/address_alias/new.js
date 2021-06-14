@@ -22,7 +22,6 @@ $(document).ready(function(){
       evt.preventDefault();
     }, false);
 
-
     window.onload = async () => {
       document.aliasCreateForm.onsubmit = () => {
         (async () => {
@@ -109,7 +108,7 @@ $(document).ready(function(){
         })();
 
         return false;
-      };    
+      };
     };
   };
 });

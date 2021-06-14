@@ -1,51 +1,528 @@
-.header-banner.bg-theme-grad-s2
+.header-banner.bg-theme-grad-s2#secret-network-buttcoin-index
   .nk-banner
     .banner.banner-page
-      .mt-3.w-100
-        .container#secret-network-buttcoin
-          .row.mb-5
-            .col-12
-              .card
-                .card-body
-                  %h3
-                    = cl_image_tag('logos/buttcoin_q7ftzs.png', drp: 2, crop: :scale, height: 38, class: 'align-top', style: 'height: 38px;')
-                    = features[:secret_network][:features][:buttcoin][:name]
-                  %p
-                    Blockchain:
-                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                    = features[:secret_network][:name].to_s
-                    %hr
-                    %h5 What is it?
-                    %p Our native token.
-                    %h5 What's it for?
-                    %p Governance & utility.
-                    %h5 Why offer it?
-                    %p To incentivize users and raise revenue for expansion.
-                    %h5 Tokenomics
-                    %p 1 billion total supply to be distributed over the course of 4 years.
-                    .token-info
-                      %h4.title.title-md Percentage breakdown of total supply
-                      %table.table.table-token
-                        %tbody
-                          %tr
-                            %td.table-head Community
-                            %td.table-des 70% released over 4 years
-                          %tr
-                            %td.table-head Team
-                            %td.table-des 20% with 4 year vesting
-                          %tr
-                            %td.table-head Reserve
-                            %td.table-des 10%
-                    -# %h5.mt-3 How will it be distributed?
-                    -# %ol
-                    -#   %li Want to do an initial offering on the secret network. Thinking that it will be based on people exchanging their sSCRT-SEFI LP.
-                    -#   %li Want people to earn more of it by providing liquidity into SEFI and then staking the lp tokens.
-                    -#   %li Thinking some accounts should be public so that people can see how much was minted etc.
-                    -#   %li Want to distribute to people that provide liquidity but also want people to be able to earn it by learning and contributing.
-                    -#   %li Want to distribute to people and developers that have done a lot of work already.
+      .banner-wrap
+        .container
+          .row.align-items-center.justify-content-center.justify-content-lg-between.gutter-vr-60px
+            .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
+              .token-stage-title.round.bg-theme-light.tc-salvia
+                .token-info.token-info-s1.mb-0
+                  .token-info-item.token-info-item-s1.mb-0
+                    .token-info-item-list
+                      %span Swap Amount
+                      %h4 3,000,000 BUTT
+                    .token-info-item-list
+                      %span.tc-light-alt 1 SEFI = 3 BUTT
+                      .div
+                        %span.text-muted 1,000,000 SEFI
+                  .token-info-item.token-info-item-s1.mb-1
+                    .token-info-item-list
+                      %span Swap progress
+                  .progress-wrap.progress-wrap-point
+                    .progress-bar.progress-bar-xs
+                      .progress-percent.progress-percent-s2#swap-progress-percent{ 'data-percent' => '0', :style => 'width: 0%;' }
+                    %ul.progress-info.progress-info-s2
+                      %li
+                        %span.text-muted#percentage-swapped Loading...
+                      %li.text-right
+                        %span.text-muted#total-raised Loading.../3,000,000
+                .token-info.token-info-s1
+                  %form#connect-wallet-form{ name: 'connectWalletForm' }
+                    %button.btn.btn-md.btn-grad.w-100#connect-wallet-button{ type: 'submit' }
+                      .d-none#connect-wallet-button-loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      #connect-wallet-button-ready
+                        Connect
+                  %form.d-none#buttcoin-swap-form{ name: 'buttcoinSwapForm' }
+                    .form-group
+                      %input.input-solid.input-solid-md.bg-white#sefi-input{ placeholder: 'SEFI', type: 'number', min: 0.000001, max: 1_000_000, step: 0.000_001, required: true, style: 'border-radius: 6px;', name: 'sefi' }
+                      %span.text-muted{ style: 'font-size: 14px; font-size: 14px; font-weight: 500;' }
+                        Balance:
+                        %span#sefi-balance Loading...
+                        SEFI
+                    %button.btn.btn-md.btn-grad.w-100#swap-button{ type: 'submit' }
+                      .d-none#loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      #ready
+                        Swap
 
-                    %hr
-                    %h5 References
-                    %ul
-                      %li= link_to 'Smart contract', 'https://github.com/btn-group/buttcoin', target: '_blank', rel: 'noopener'
-                      %li= link_to 'SNIP-20', 'https://github.com/SecretFoundation/SNIPs/blob/master/SNIP-20.md', target: '_blank', rel: 'noopener'
+            .col-lg-6.col-xl-6.text-center.text-lg-left
+              .banner-caption.tc-light
+                .cpn-head.mt-0
+                  %h3.title.title-thin Buttcoin Round 1
+                %p.mb-0.tc-light-alt
+                  = link_to features[:secret_network][:features][:buttcoin][:contracts][:production], "https://secretnodes.com/secret/chains/secret-2/contracts/#{features[:secret_network][:features][:buttcoin][:contracts][:production]}", target: '_blank', rel: 'noopener'
+                %p.mb-0.tc-light-alt
+                  = link_to 'http://scrt.network', target: '_blank', rel: 'noopener' do
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+  .nk-ovm.shape-q
+  .particles-container.particles-bg#particles-bg{ 'data-pt-base' => '#00c0fa', 'data-pt-base-op' => '.3', 'data-pt-line' => '#2b56f5', 'data-pt-line-op' => '.5', 'data-pt-shape' => '#00c0fa', 'data-pt-shape-op' => '.2' }
+
+%main.nk-pages
+  %section.section.bg-light
+    .container
+      .row.justify-content-center
+        .col-lg-10
+          %ul.nav.tab-nav.tab-nav-line.tab-nav-center
+            %li
+              %a.active{ 'data-toggle' => 'tab', :href => '#tab-4-1' } Pool details
+            %li
+              %a{ 'data-toggle' => 'tab', :href => '#tab-4-2' } About Buttcoin
+            %li
+              %a{ 'data-toggle' => 'tab', :href => '#tab-4-3' } Distribution smart contracts
+          .tab-content
+            .tab-pane.show.active#tab-4-1
+              %h3.title.title-md Pool details
+              .row.justify-content-around
+                .col-lg-6.mgb-r
+                  %table.table.table-bordered
+                    %tbody
+                      %tr
+                        %td.table-head.text-muted{ "colspan": 2 } Pool information
+                      %tr
+                        %td.table-head Min. Allocation
+                        %td.table-des 0.000001 SEFI
+                      %tr
+                        %td.table-head Max. Allocation
+                        %td.table-des 1,000,000 SEFI
+                .col-lg-6
+                  %table.table.table-bordered
+                    %tbody
+                      %tr
+                        %td.table-head.text-muted{ "colspan": 2 } Token information
+                      %tr
+                        %td.table-head Name
+                        %td.table-des Buttcoin
+                      %tr
+                        %td.table-head Symbol
+                        %td.table-des BUTT
+                      %tr
+                        %td.table-head Decimals
+                        %td.table-des 6
+                      %tr
+                        %td.table-head Address
+                        %td.table-des= features[:secret_network][:features][:buttcoin][:contracts][:production]
+                      %tr
+                        %td.table-head Total supply
+                        %td.table-des 100,000,000
+            .tab-pane#tab-4-2
+              %h3.title.title-md About Buttcoin
+              %p
+              %h5 What is it?
+              %p Our native token.
+              %h5 What's it for?
+              %p Governance, profit sharing and utility.
+              %h5 Why offer it?
+              %p To incentivize users and raise funding for rapid growth.
+              %h5 Tokenomics
+              %p
+                100,000,000 total supply to be distributed over the course of 4 years.
+              .token-info
+                %h4.title.title-md Percentage breakdown of total supply
+                %table.table.table-token
+                  %tbody
+                    %tr
+                      %td.table-head Incentives for users
+                      %td.table-des 60% released over 4 years
+                    %tr
+                      %td.table-head Fund raising sales
+                      %td.table-des
+                        20% total
+                        %hr
+                        %b Round 1 (3%)
+                        %br
+                        1 SEFI = 3 BUTT
+                        %hr
+                        %b Round 2 (7%)
+                        %br
+                        TBA (1 SEFI <= 2 BUTT)
+                        %hr
+                        %b Round 3 (10%)
+                        %br
+                        TBA (1 SEFI <= 1 BUTT)
+                    %tr
+                      %td.table-head Team
+                      %td.table-des 20% released over 4 years
+            .tab-pane#tab-4-3
+              %h3.title.title-md Distribution smart contracts
+              %p
+                %b
+                  %i Don't trust. Verify.
+                %br
+                Query these contracts on our smart contract interface.
+                %br
+                Check the code in our Github.
+                %br
+                Reach out via email or Discord if you have any questions.
+              %h5 Tokes sales (20,000,000 => 20%)
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th To
+                    %th Amount
+                    %th Locked until
+                    %th Smart Contract
+                %tbody
+                  %tr#secret1j6fpcsxp2ts9d8rsh3uj9srvdh0vvg4ewe7tsa
+                    %td Sale 1
+                    %td 3,000,000
+                    %td -
+                    %td secret1j6fpcsxp2ts9d8rsh3uj9srvdh0vvg4ewe7tsa
+                  %tr
+                    %td Sale 2
+                    %td 7,000,000
+                    %td -
+                    %td TBA
+                  %tr
+                    %td Sale 3
+                    %td 10,000,000
+                    %td -
+                    %td TBA
+
+              %h5 User Incentives (60,000,000 => 60%)
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th To
+                    %th Amount
+                    %th Locked until
+                    %th Smart Contract
+                %tbody
+                  %tr#secret15trt6r28s8av6p680wrgvv8d0tg4dwwn23jeyv
+                    %td Users 1
+                    %td 2,000,000
+                    %td 12-Jun-2021
+                    %td secret15trt6r28s8av6p680wrgvv8d0tg4dwwn23jeyv
+                  %tr#secret1eeld26a6khwkq3gev7cqj3je5ka6sqq2dd6sjx
+                    %td Users 2
+                    %td 2,000,000
+                    %td 12-Jul-2021
+                    %td secret1eeld26a6khwkq3gev7cqj3je5ka6sqq2dd6sjx
+                  %tr#secret1u5k7vdwq3a6q04nm4dmqjzr95rzzvucmgjrw3v
+                    %td Users 3
+                    %td 2,000,000
+                    %td 12-Aug-2021
+                    %td secret1u5k7vdwq3a6q04nm4dmqjzr95rzzvucmgjrw3v
+                  %tr#secret17ww52ve6dwldrh6h3ndg4tfdn4dh07tr0wz4qd
+                    %td Users 4
+                    %td 2,000,000
+                    %td 12-Sep-2021
+                    %td secret17ww52ve6dwldrh6h3ndg4tfdn4dh07tr0wz4qd
+                  %tr#secret1nfqcyejd4c5x6q0dfcd75wv9lnpj5xkw4ps87x
+                    %td Users 5
+                    %td 2,000,000
+                    %td 12-Oct-2021
+                    %td secret1nfqcyejd4c5x6q0dfcd75wv9lnpj5xkw4ps87x
+                  %tr#secret1xz4nrezu7r8kardfw5f64kngvfzynnax64tdcw
+                    %td Users 6
+                    %td 2,000,000
+                    %td 12-Nov-2021
+                    %td secret1xz4nrezu7r8kardfw5f64kngvfzynnax64tdcw
+                  %tr#secret14yklgm926482cxalm9ll0gu75ypvjus7xd2pk2
+                    %td Users 7
+                    %td 2,000,000
+                    %td 12-Dec-2021
+                    %td secret14yklgm926482cxalm9ll0gu75ypvjus7xd2pk2
+                  %tr#secret1x4r8kcc4kdwaj9h2d4ymqag55waus9u0zhrdxq
+                    %td Users 8
+                    %td 2,000,000
+                    %td 12-Jan-2022
+                    %td secret1x4r8kcc4kdwaj9h2d4ymqag55waus9u0zhrdxq
+                  %tr#secret149tgs0ln4zvcc79vytg9pnslsgcqvh7vflr2e6
+                    %td Users 9
+                    %td 2,000,000
+                    %td 12-Feb-2022
+                    %td secret149tgs0ln4zvcc79vytg9pnslsgcqvh7vflr2e6
+                  %tr#secret1ecwp74fuc02ylhe2qk3djufd5k3aa3wz9fxfkp
+                    %td Users 10
+                    %td 2,000,000
+                    %td 12-Mar-2022
+                    %td secret1ecwp74fuc02ylhe2qk3djufd5k3aa3wz9fxfkp
+                  %tr#secret1hj9cy5rw5yvv02ekgz7zp3a9d5gujkezjnkfxc
+                    %td Users 11
+                    %td 2,000,000
+                    %td 12-Apr-2022
+                    %td secret1hj9cy5rw5yvv02ekgz7zp3a9d5gujkezjnkfxc
+                  %tr#secret1xj707kcndygjvdxast2srvmt2q67k5s2xqr8k2
+                    %td Users 12
+                    %td 9,000,000
+                    %td 12-May-2022
+                    %td secret1xj707kcndygjvdxast2srvmt2q67k5s2xqr8k2
+                  %tr#secret165s42ps0eg6vwzzr0ha8n5qpcezsdc32nwnn06
+                    %td Users 13
+                    %td 11,000,000
+                    %td 12-Dec-2022
+                    %td secret165s42ps0eg6vwzzr0ha8n5qpcezsdc32nwnn06
+                  %tr#secret1pheg8ny8wtyr9fq9ragahhshyu00zkfjtse2hr
+                    %td Users 14
+                    %td 6,000,000
+                    %td 12-Jun-2023
+                    %td secret1pheg8ny8wtyr9fq9ragahhshyu00zkfjtse2hr
+                  %tr#secret1q7k7pz7w4ur42ddknegr0fqwqt7v9ty3d8qxaf
+                    %td Users 15
+                    %td 6,000,000
+                    %td 12-Dec-2023
+                    %td secret1q7k7pz7w4ur42ddknegr0fqwqt7v9ty3d8qxaf
+                  %tr#secret1y2ggv54k75xu50zlc9m33tlnn37glhp7g5ra4l
+                    %td Users 16
+                    %td 3,000,000
+                    %td 12-Jun-2024
+                    %td secret1y2ggv54k75xu50zlc9m33tlnn37glhp7g5ra4l
+                  %tr#secret1whfmcnutxrxsxv99cgava37gu0634n25yymtzw
+                    %td Users 17
+                    %td 3,000,000
+                    %td 12-Dec-2024
+                    %td secret1whfmcnutxrxsxv99cgava37gu0634n25yymtzw
+
+              %h5 Team (20,000,000 => 20%)
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th To
+                    %th Amount
+                    %th Locked until
+                    %th Smart Contract
+                %tbody
+                  %tr#secret1gn0s9zf2gjpypa6krpz2thffjpfmq8lzsevp7p
+                    %td Team 1
+                    %td 666,666
+                    %td 12 June 2021
+                    %td secret1gn0s9zf2gjpypa6krpz2thffjpfmq8lzsevp7p
+                  %tr#secret19v7l4zhndxt65tfrv5pw9y55u8dv0cqfv2uzm9
+                    %td Team 2
+                    %td 666,666
+                    %td 12 July 2021
+                    %td secret19v7l4zhndxt65tfrv5pw9y55u8dv0cqfv2uzm9
+                  %tr#secret1dur9rvqp3ut533wqlzfyj3xfh7v74yfh58qgvk
+                    %td Team 3
+                    %td 666,674
+                    %td 12 August 2021
+                    %td secret1dur9rvqp3ut533wqlzfyj3xfh7v74yfh58qgvk
+                  %tr#secret1a727h3t2cydqkawg72a0s3cq5q58j26k9mqm6q
+                    %td Team 4
+                    %td 666,666
+                    %td 12 September 2021
+                    %td secret1a727h3t2cydqkawg72a0s3cq5q58j26k9mqm6q
+                  %tr#secret1rlpe32vnqqg97fkdkh2q7zndzrnc4h46v7ndv4
+                    %td Team 5
+                    %td 666,666
+                    %td 12 October 2021
+                    %td secret1rlpe32vnqqg97fkdkh2q7zndzrnc4h46v7ndv4
+                  %tr#secret1fe67mnrc8p3vmuk0zdym3ua54ta4p2cav49nqr
+                    %td Team 6
+                    %td 666,666
+                    %td 12 November 2021
+                    %td secret1fe67mnrc8p3vmuk0zdym3ua54ta4p2cav49nqr
+                  %tr#secret1wawkp7s27rwgh7flzaqv5xqjpma0s6fu4nf00f
+                    %td Team 7
+                    %td 666,666
+                    %td 12 December 2021
+                    %td secret1wawkp7s27rwgh7flzaqv5xqjpma0s6fu4nf00f
+                  %tr#secret1ca8gjjz2z75xecp5axgat4r3jemx6dlhepw2kf
+                    %td Team 8
+                    %td 666,666
+                    %td 12 January 2022
+                    %td secret1ca8gjjz2z75xecp5axgat4r3jemx6dlhepw2kf
+                  %tr#secret16ytcgjpzyr0dmsuhxnuxktf3sz4lg896garvak
+                    %td Team 9
+                    %td 666,666
+                    %td 12 February 2022
+                    %td secret16ytcgjpzyr0dmsuhxnuxktf3sz4lg896garvak
+                  %tr#secret1vcpf0ev6pw4gyjya4w29khnn25m62kqnf4d8ft
+                    %td Team 10
+                    %td 666,666
+                    %td 12 March 2022
+                    %td secret1vcpf0ev6pw4gyjya4w29khnn25m62kqnf4d8ft
+                  %tr#secret1yp30r8u34c6xf7s72vn7u8mxw6s0jq575wezu2
+                    %td Team 11
+                    %td 666,666
+                    %td 12 April 2022
+                    %td secret1yp30r8u34c6xf7s72vn7u8mxw6s0jq575wezu2
+                  %tr#secret17shxj8yfvv4pug2hxvlhupez25mm2v2c538ddk
+                    %td Team 12
+                    %td 666,666
+                    %td 12 May 2022
+                    %td secret17shxj8yfvv4pug2hxvlhupez25mm2v2c538ddk
+                  %tr#secret18lvp3wzz9v5hca6wpermsukuj89zpzwvvqsg9c
+                    %td Team 13
+                    %td 500,000
+                    %td 12 June 2022
+                    %td secret18lvp3wzz9v5hca6wpermsukuj89zpzwvvqsg9c
+                  %tr#secret12gszl2a2nar70qqj7z0xyvlwymfpcvs2u0d8th
+                    %td Team 14
+                    %td 500,000
+                    %td 12 July 2022
+                    %td secret12gszl2a2nar70qqj7z0xyvlwymfpcvs2u0d8th
+                  %tr#secret1qsclat3awyl3e5v02tqvqzlhjq6c8awfgtzfmz
+                    %td Team 15
+                    %td 500,000
+                    %td 12 August 2022
+                    %td secret1qsclat3awyl3e5v02tqvqzlhjq6c8awfgtzfmz
+                  %tr#secret1q24zdcvmjstc6zvcu7dd7l2lrs760tsj0nv34h
+                    %td Team 16
+                    %td 500,000
+                    %td 12 September 2022
+                    %td secret1q24zdcvmjstc6zvcu7dd7l2lrs760tsj0nv34h
+                  %tr#secret1zqd86xals504wtdxsqqehlf706qeddlvf79fju
+                    %td Team 17
+                    %td 500,000
+                    %td 12 October 2022
+                    %td secret1zqd86xals504wtdxsqqehlf706qeddlvf79fju
+                  %tr#secret1uv8r24dv58lmmsk6eg7m3pn6ejc0tz5jqrfs9j
+                    %td Team 18
+                    %td 500,000
+                    %td 12 November 2022
+                    %td secret1uv8r24dv58lmmsk6eg7m3pn6ejc0tz5jqrfs9j
+                  %tr#secret1qa4kt5es6vysz8ln42wjafkk8vr3vjnzqc9lu8
+                    %td Team 19
+                    %td 500,000
+                    %td 12 December 2022
+                    %td secret1qa4kt5es6vysz8ln42wjafkk8vr3vjnzqc9lu8
+                  %tr#secret1mhvnge37jqx574fnpzf47skacwmnl2sf3pkp9g
+                    %td Team 20
+                    %td 500,000
+                    %td 12 January 2023
+                    %td secret1mhvnge37jqx574fnpzf47skacwmnl2sf3pkp9g
+                  %tr#secret1cknpknewfmg7fg73wqeqe0hpypg56cytqnchpn
+                    %td Team 21
+                    %td 500,000
+                    %td 12 February 2023
+                    %td secret1cknpknewfmg7fg73wqeqe0hpypg56cytqnchpn
+                  %tr#secret1e7a5yvcdua30qv8fdx22q08dh8psjffl3cazsm
+                    %td Team 22
+                    %td 500,000
+                    %td 12 March 2023
+                    %td secret1e7a5yvcdua30qv8fdx22q08dh8psjffl3cazsm
+                  %tr#secret1cmedfxsvh4ucxqnjt4jecmawe0hwmdwpcuucv7
+                    %td Team 23
+                    %td 500,000
+                    %td 12 April 2023
+                    %td secret1cmedfxsvh4ucxqnjt4jecmawe0hwmdwpcuucv7
+                  %tr#secret1xtje07tp5esqs4wtaxe4jxepraewgjtyw9v2pw
+                    %td Team 24
+                    %td 500,000
+                    %td 12 May 2023
+                    %td secret1xtje07tp5esqs4wtaxe4jxepraewgjtyw9v2pw
+                  %tr#secret1q3pfas4m9z6k7s64uasgkdefkrdq22usxm4k7x
+                    %td Team 25
+                    %td 333,333
+                    %td 12 June 2023
+                    %td secret1q3pfas4m9z6k7s64uasgkdefkrdq22usxm4k7x
+                  %tr#secret1mvway6h0t2v9q0rdhhwvatxs0gm9zcu9rkfnp7
+                    %td Team 26
+                    %td 333,333
+                    %td 12 July 2023
+                    %td secret1mvway6h0t2v9q0rdhhwvatxs0gm9zcu9rkfnp7
+                  %tr#secret16mrmkzruk6d5slh2udae6l7k0kdle08xrwlr6l
+                    %td Team 27
+                    %td 333,337
+                    %td 12 August 2023
+                    %td secret16mrmkzruk6d5slh2udae6l7k0kdle08xrwlr6l
+                  %tr#secret1rk63d52l55h8mg3mnf22th7lfzyd7s6k8rzeq6
+                    %td Team 28
+                    %td 333,333
+                    %td 12 September 2023
+                    %td secret1rk63d52l55h8mg3mnf22th7lfzyd7s6k8rzeq6
+                  %tr#secret1na88akuk073k8d44wxj8408uw3nyzt8m4vd7h4
+                    %td Team 29
+                    %td 333,333
+                    %td 12 October 2023
+                    %td secret1na88akuk073k8d44wxj8408uw3nyzt8m4vd7h4
+                  %tr#secret1drz4zkyn0jwf5xuw3lrf57fztf9wf3v6zjjlwt
+                    %td Team 30
+                    %td 333,333
+                    %td 12 November 2023
+                    %td secret1drz4zkyn0jwf5xuw3lrf57fztf9wf3v6zjjlwt
+                  %tr#secret1jglwxttpkftnzt0uav2wxpcjzjxjqxzckzt46q
+                    %td Team 31
+                    %td 333,333
+                    %td 12 December 2023
+                    %td secret1jglwxttpkftnzt0uav2wxpcjzjxjqxzckzt46q
+                  %tr#secret1t9fw44jluhvm4lkf8ndv9e9r08fx5vpsjkpf4p
+                    %td Team 32
+                    %td 333,333
+                    %td 12 January 2024
+                    %td secret1t9fw44jluhvm4lkf8ndv9e9r08fx5vpsjkpf4p
+                  %tr#secret1l7ews3cmlwxtvkek7zxu05j8ncqrm4p2gsm9a3
+                    %td Team 33
+                    %td 333,333
+                    %td 12 February 2024
+                    %td secret1l7ews3cmlwxtvkek7zxu05j8ncqrm4p2gsm9a3
+                  %tr#secret1ap3f5kcx8y8kqamxqlh95vj0vx56dcc6sy7y4l
+                    %td Team 34
+                    %td 333,333
+                    %td 12 March 2024
+                    %td secret1ap3f5kcx8y8kqamxqlh95vj0vx56dcc6sy7y4l
+                  %tr#secret1c9pcm5d0t2cgw6gwdhrz2k7qvgqq3lseyjw2ss
+                    %td Team 35
+                    %td 333,333
+                    %td 12 April 2024
+                    %td secret1c9pcm5d0t2cgw6gwdhrz2k7qvgqq3lseyjw2ss
+                  %tr#secret1qsmumfz7hz0n5jf570mnhd3jwnyc0l5nsjeukp
+                    %td Team 36
+                    %td 333,333
+                    %td 12 May 2024
+                    %td secret1qsmumfz7hz0n5jf570mnhd3jwnyc0l5nsjeukp
+                  %tr#secret1jj7easxuqtpq3q2slv5xccxryn6270rvxk0z0l
+                    %td Team 37
+                    %td 166,666
+                    %td 12 June 2024
+                    %td secret1jj7easxuqtpq3q2slv5xccxryn6270rvxk0z0l
+                  %tr#secret140czkcmp6ce0e88twhm24ugmh84s8hxkpgpw4w
+                    %td Team 38
+                    %td 166,666
+                    %td 12 July 2024
+                    %td secret140czkcmp6ce0e88twhm24ugmh84s8hxkpgpw4w
+                  %tr#secret1ppcvanlr6r6vx4npfe4pqr6kzt3tdguwe8g2ef
+                    %td Team 39
+                    %td 166,666
+                    %td 12 August 2024
+                    %td secret1ppcvanlr6r6vx4npfe4pqr6kzt3tdguwe8g2ef
+                  %tr#secret1w0spmpa3lamehd3rr6jzqw6dfr3d6234dungsr
+                    %td Team 40
+                    %td 166,674
+                    %td 12 September 2024
+                    %td secret1w0spmpa3lamehd3rr6jzqw6dfr3d6234dungsr
+                  %tr#secret1xnjjep3c357ynjr3hesvkfht5agpwm85jytmtd
+                    %td Team 41
+                    %td 166,666
+                    %td 12 October 2024
+                    %td secret1xnjjep3c357ynjr3hesvkfht5agpwm85jytmtd
+                  %tr#secret1zhpvxw397sfxe7aqvt6l8wlz9n59vwvajnw4pz
+                    %td Team 42
+                    %td 166,666
+                    %td 12 November 2024
+                    %td secret1zhpvxw397sfxe7aqvt6l8wlz9n59vwvajnw4pz
+                  %tr#secret1c8m53x00lepmxrj0e3eyr3luhm47rltezvxfu0
+                    %td Team 43
+                    %td 166,666
+                    %td 12 December 2024
+                    %td secret1c8m53x00lepmxrj0e3eyr3luhm47rltezvxfu0
+                  %tr#secret1rcmu2datsv69p45vqsse6cjffmxksww7lm6fhm
+                    %td Team 44
+                    %td 166,666
+                    %td 12 January 2025
+                    %td secret1rcmu2datsv69p45vqsse6cjffmxksww7lm6fhm
+                  %tr#secret13r899ps9jtkkc8u5a2axqsv8zh7msh5e8jjtlv
+                    %td Team 45
+                    %td 166,666
+                    %td 12 February 2025
+                    %td secret13r899ps9jtkkc8u5a2axqsv8zh7msh5e8jjtlv
+                  %tr#secret1fw549cq5dcs6dghjzuwzlu36jampdrhsjx8fp9
+                    %td Team 46
+                    %td 166,666
+                    %td 12 March 2025
+                    %td secret1fw549cq5dcs6dghjzuwzlu36jampdrhsjx8fp9
+                  %tr#secret19plpy5shtmks2vtq3pvpdygwrmtt9xf0t07jt7
+                    %td Team 47
+                    %td 166,666
+                    %td 12 April 2025
+                    %td secret19plpy5shtmks2vtq3pvpdygwrmtt9xf0t07jt7
+                  %tr#secret1mvy2hy0ml4ek87vphmq4de03ujw4qggtwtpkaw
+                    %td Team 48
+                    %td 166,666
+                    %td 12 May 2025
+                    %td secret1mvy2hy0ml4ek87vphmq4de03ujw4qggtwtpkaw
