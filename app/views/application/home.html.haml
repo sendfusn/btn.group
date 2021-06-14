@@ -1,4 +1,4 @@
-.header-banner.bg-theme-grad-s2
+.header-banner.bg-theme-grad-s2#home
   .nk-banner
     .banner.banner-fs.banner-single.banner-s1.banner-s1-overlay
       .banner-wrap
@@ -18,8 +18,17 @@
                         %em.fab.fa-sefi
                           = cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                         SEFI
-                .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
-                  = link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-md btn-secondary w-100'
+                .token-info.token-info-s1.mb-0
+                  .progress-wrap.progress-wrap-point.mb-0
+                    .progress-bar.progress-bar-xs
+                      .progress-percent.progress-percent-s2#swap-progress-percent{ 'data-percent' => '0', :style => 'width: 0%;' }
+                    %ul.progress-info.progress-info-s2
+                      %li
+                        %span.tc-theme#percentage-swapped{ style: 'font-weight: 400;' } Loading...
+                      %li.text-right
+                        %span.tc-theme#total-raised{ style: 'font-weight: 400;' } Loading.../3,000,000
+                .token-action.token-action-s2.flex-wrap.flex-sm-nowrap.border-top-0
+                  = link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-md btn-grad w-100'
             .col-lg-6.col-xl-6.text-center.text-lg-left
               .banner-caption.tc-light
                 .cpn-head.mt-0
