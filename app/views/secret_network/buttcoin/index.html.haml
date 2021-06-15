@@ -37,15 +37,38 @@
                   %form.d-none#buttcoin-swap-form{ name: 'buttcoinSwapForm' }
                     .form-group
                       %input.input-solid.input-solid-md.bg-white#sefi-input{ placeholder: 'SEFI', type: 'number', min: 0.000001, max: 1_000_000, step: 0.000_001, required: true, style: 'border-radius: 6px;', name: 'sefi' }
-                      %span.text-muted{ style: 'font-size: 14px; font-size: 14px; font-weight: 500;' }
-                        Balance:
-                        %span#sefi-balance Loading...
-                        SEFI
+                      .my-2
+                        %span.text-muted{ style: 'font-size: 14px; font-size: 14px; font-weight: 500;' }
+                          Your SEFI balance:
+                          %span#sefi-balance-loading
+                            Loading...
+                          = link_to '#', class: 'd-none', id: 'sefi-balance-link' do
+                            %span.d-none#sefi-balance
+                            %button.btn.btn-light.btn-sm.ml-2.border#sefi-balance-view-button{ type: 'button' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready
+                                .fas.fa-search.mr-1
+                                View
+                      .block
+                        %span.text-muted{ style: 'font-size: 14px; font-size: 14px; font-weight: 500;' }
+                          Your BUTT balance:
+                          %span#butt-balance-loading
+                            Loading...
+                          %span.d-none#butt-balance
+                          %button.btn.btn-light.btn-sm.ml-2.border.d-none#butt-balance-view-button{ type: 'button' }
+                            .d-none.loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .ready
+                              .fas.fa-search.mr-1
+                              View
                     %button.btn.btn-md.btn-grad.w-100#swap-button{ type: 'submit' }
-                      .d-none#loading
+                      .d-none.loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
-                      #ready
+                      .ready
                         Swap
 
             .col-lg-6.col-xl-6.text-center.text-lg-left

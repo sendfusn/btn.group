@@ -5,19 +5,61 @@ $(document).ready(function(){
     } = require('secretjs');
 
     window.onload = async () => {
-      // Events
-      $sefiBalance = $('#sefi-balance')
-      $sefiBalance.click(function(e) {
-        $('#sefi-input').val($sefiBalance.text())
-      })
-
       // Contracts
-      this.buttcoinContractAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
+      this.buttContractAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.sefiContractAddress = 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt';
       this.tokenSaleContractAddress = 'secret1j6fpcsxp2ts9d8rsh3uj9srvdh0vvg4ewe7tsa';
       this.environment = 'production'
       this.chainId = document.secretNetworkChainId(this.environment)
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
+      this.$sefiBalance = $('#sefi-balance')
+      this.$buttBalanceViewButton = $('#butt-balance-view-button')
+      this.$sefiBalanceViewButton = $('#sefi-balance-view-button')
+
+      // Listeners
+      document.querySelector('#sefi-balance').addEventListener('click', (evt) => {
+        $('#sefi-input').val(this.$sefiBalance.text())
+      })
+      document.querySelector('#butt-balance-view-button').addEventListener('click', async (evt) => {
+        let $target = $('#butt-balance-view-button')
+        $target.prop("disabled", true);
+        $target.find('.loading').removeClass('d-none')
+        $target.find('.ready').addClass('d-none')
+        try {
+          await window.keplr.suggestToken(this.chainId, this.buttContractAddress);
+          this.updateUserBalances();
+          $("#butt-balance-loading").removeClass('d-none')
+          $target.addClass('d-none')
+        } catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)          
+        } finally {
+          // Show ready ui
+          $target.prop("disabled", false);
+          $target.find('.loading').addClass('d-none')
+          $target.find('.ready').removeClass('d-none')
+        }
+      })
+      document.querySelector('#sefi-balance-view-button').addEventListener('click', async (evt) => {
+        let $target = $('#sefi-balance-view-button')
+        $target.prop("disabled", true);
+        $target.find('.loading').removeClass('d-none')
+        $target.find('.ready').addClass('d-none')
+        try {
+          await window.keplr.suggestToken(this.chainId, this.sefiContractAddress);
+          this.updateUserBalances();
+          $("#sefi-balance-loading").removeClass('d-none')
+          $target.addClass('d-none')
+        } catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)          
+        } finally {
+          // Show ready ui
+          $target.prop("disabled", false);
+          $target.find('.loading').addClass('d-none')
+          $target.find('.ready').removeClass('d-none')
+        }
+      })
 
       document.buttcoinSwapForm.onsubmit = async (e) => {
         e.preventDefault()
@@ -63,9 +105,6 @@ $(document).ready(function(){
               // If you don't request enabling before usage, there is no guarantee that other methods will work.
               await window.keplr.enable(this.chainId);
 
-              // Suggest to add Buttcoin to Keplr wallet
-              await window.keplr.suggestToken(this.chainId, this.buttcoinContractAddress);
-
               // @ts-ignore
               const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
               const accounts = await keplrOfflineSigner.getAccounts();
@@ -83,6 +122,7 @@ $(document).ready(function(){
                 },
               );
               this.account = await this.client.getAccount(this.address);
+              this.updateUserBalances()
             } else {
               throw "Please use the recent version of keplr extension";
             }
@@ -101,9 +141,49 @@ $(document).ready(function(){
         }
       };
 
-      this.updateUserInterface = async () => {
+      this.updateUserBalances = async () => {
+        let client =  document.secretNetworkClient(this.environment);
+
+        // Check if user has a viewing key for SEFI
         try {
-          let client =  document.secretNetworkClient(this.environment);
+          let sefiViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.sefiContractAddress)
+          // If they have the sefiViewingKey, replace the button with the balance
+          let sefiBalance = await client.queryContractSmart(this.sefiContractAddress, { balance: { address: this.address, key: sefiViewingKey } })
+          this.$sefiBalance.text((sefiBalance['balance']['amount'] / 1_000_000))
+          this.$sefiBalance.removeClass('d-none')
+          this.$sefiBalanceViewButton.addClass('d-none')
+        } catch(err) {
+          console.log(err)
+          // If they don't have a viewing key, show the view balance button and hide the balance
+          this.$sefiBalance.addClass('d-none')
+          this.$sefiBalanceViewButton.removeClass('d-none')
+        } finally {
+          $('#sefi-balance-loading').addClass('d-none')
+          $('#sefi-balance-link').removeClass('d-none')
+        }
+
+        // Check if user has a viewing key for BUTT
+        try {
+          let buttViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttContractAddress)
+          // If they have the buttViewingKey, replace the button with the balance
+          let buttBalance = await client.queryContractSmart(this.buttContractAddress, { balance: { address: this.address, key: buttViewingKey } })
+          $('#butt-balance').text((buttBalance['balance']['amount'] / 1_000_000))
+          $('#butt-balance').removeClass('d-none')
+          this.$buttBalanceViewButton.addClass('d-none')
+        } catch(err) {
+          console.log(err)
+          // If they don't have a viewing key, show the view balance button and hide the balance
+          $('#butt-balance').addClass('d-none')
+          this.$buttBalanceViewButton.removeClass('d-none')
+        } finally {
+          $('#butt-balance-loading').addClass('d-none')
+        }
+      }
+
+      this.updateUserInterface = async () => {
+        let client =  document.secretNetworkClient(this.environment);
+
+        try {
           let tokenSaleContractConfig = await client.queryContractSmart(this.tokenSaleContractAddress, { config: {} })
           let totalRaised = parseFloat(tokenSaleContractConfig['total_raised']) / 1000000
           $('#total-raised').text(totalRaised.toLocaleString() + '/3,000,000')
@@ -111,10 +191,6 @@ $(document).ready(function(){
           $('#percentage-swapped').text(percentageSwapped + '%')
           $('#swap-progress-percent').attr("data-percent", percentageSwapped);
           $('#swap-progress-percent').attr("style", 'width: ' + percentageSwapped + '%;');
-          // Get and set SEFI balance
-          let sefiViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.sefiContractAddress)
-          let sefiBalance = await client.queryContractSmart(this.sefiContractAddress, { balance: { address: this.address, key: sefiViewingKey } })
-          $('#sefi-balance').text((sefiBalance['balance']['amount'] / 1_000_000))
         } catch(err) {
           let errorDisplayMessage = err;
           document.showAlertDanger(errorDisplayMessage)     
