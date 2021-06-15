@@ -73,6 +73,7 @@ $(document).ready(function(){
           document.showAlertSuccess("Swap successful");
           document.buttcoinSwapForm.sefi.value = ''
           this.updateUserInterface()
+          this.updateUserBalances()
         }
         catch(err) {
           let errorDisplayMessage = err;
