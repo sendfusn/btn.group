@@ -186,7 +186,7 @@ $(document).ready(function(){
 
         try {
           let tokenSaleContractConfig = await client.queryContractSmart(this.tokenSaleContractAddress, { config: {} })
-          let totalRaised = parseFloat(tokenSaleContractConfig['total_raised']) / 1000000
+          let totalRaised = parseFloat(tokenSaleContractConfig['total_raised']) * 3 / 1000000
           $('#total-raised').text(totalRaised.toLocaleString() + '/3,000,000')
           let percentageSwapped = Math.round(totalRaised / 3_000_000 * 100)
           $('#percentage-swapped').text(percentageSwapped + '%')
