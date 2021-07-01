@@ -45,6 +45,11 @@ class ApplicationController < ActionController::Base
               production: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
             }
           },
+          profit_distributor: {
+            name: 'Profit distributor',
+            show_link: false,
+            status: 'Work in progress'
+          },
           smart_contract_interface: {
             name: 'Smart contract interface',
             show_link: true,

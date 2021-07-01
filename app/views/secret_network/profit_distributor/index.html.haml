@@ -1,0 +1,77 @@
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .mt-3.w-100
+        .container#secret-network-profit-distributor-index
+          .row.mb-3
+            .col-12
+              .card
+                .card-body
+                  %h3= features[:secret_network][:features][:profit_distributor][:name]
+                  %p.mb-0
+                    %b Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+                  %hr
+                  .row
+                    .col-sm-4
+                      1234.1234
+                      BUTT Deposited
+                    .col-sm-4
+                      Wallet: 0
+                    .col-sm-4
+                      Deposited: 0
+          .row.mb-3
+            .col-12
+              .card
+                .card-body
+                  .row
+                    .col-sm-6
+                      %h5 Total rewards
+                      %table
+                        %tbody
+                          %tr
+                            %td
+                              BUTT
+                            %td
+                              123,456,789
+                          %tr
+                            %td
+                              SEFI
+                            %td
+                              123,456,789
+                          %tr
+                            %td
+                              SIENNA
+                            %td
+                              123,456,789
+                    .col-sm-6
+                      %h5 Your claimable rewards
+                      %table
+                        %tbody
+                          %tr
+                            %td
+                              BUTT
+                            %td
+                              123
+                          %tr
+                            %td
+                              SEFI
+                            %td
+                              456
+                          %tr
+                            %td
+                              SIENNA
+                            %td
+                              789
+          .row.mb-3
+            .col-12
+              .card
+                .card-body
+                  .row
+                    .col-sm-4
+                      .btn.btn-primary Deposit
+                    .col-sm-4
+                      .btn.btn-primary Withdraw
+                    .col-sm-4
+                      .btn.btn-primary Claim rewards
