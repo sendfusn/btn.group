@@ -12,53 +12,48 @@
                     %b Blockchain:
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
-                  %hr
-                  %table.table.table-striped.table-bordered#yield-optimizer-table
-                    %thead
-                      %th
-                        Token
-                        %br
-                        Farm
-                        %br
-                        TVL
-                      %th
-                        APY
-                        %br
-                        Daily APR
-                        %br
-                        AUTO APR
-                      %th
-                        Balance
-                        %br
-                        Deposit
-                        %br
-                        Rewards
-                      %th
-                    %tbody
-                      %td
-                        %img{ src: 'https://app.secretswap.io/static/tokens/sefi.png', style: 'width: 18px;' }
-                        SEFI
-                        %br
-                        = link_to 'SECRETSWAP', 'https://app.secretswap.io/earn', target: '_blank', rel: 'noopener'
-                        %br
-                        TVL #{rand(1000).to_f / 10}M
-                      %td
-                        #{rand(1000).to_f / 10}%
-                        %br
-                        #{rand(1000).to_f / 10}%
-                        %br
-                        #{rand(1000).to_f / 10}%
-                      %td
-                        = (rand(1000).to_f / 100).to_s
-                        %br
-                        = (rand(1000).to_f / 100).to_s
-                        %br
-                        = (rand(1000).to_f / 100).to_s
-                      %td.text-center
-                        .btn.btn-primary.btn-sm
-                          Deposit
-                        .btn.btn-primary.btn-sm.mt-1
-                          Withdraw
-                        .btn.btn-primary.btn-sm.mt-1
-                          Claim
+          .row.mb-5
+            .col-12
+              .card
+                .card-body
+                  .row
+                    .col-sm-3
+                      %img{ src: 'https://app.secretswap.io/static/tokens/sefi.png', style: 'width: 18px;' }
+                      SEFI
+                      %br
+                      = link_to 'SECRETSWAP', 'https://app.secretswap.io/earn', target: '_blank', rel: 'noopener'
+                    .col-sm-3
+                      Wallet: 0
+                      %br
+                      Deposited: 0
+                    .col-sm-2
+                      APY: #{rand(1000).to_f / 10}%
+                      %br
+                      Daily: #{rand(1000).to_f / 10}%
+                    .col-sm-2
+                      TVL: $#{rand(1000).to_f / 10}M
+                    .col-sm-2
+                      %h3= link_to '>', '#collapseExample', 'data-toggle' => 'collapse'
+                  .row.collapse#collapseExample
+                    .col-12
+                      %hr
+                    .col-sm-6
+                      Balance: 0 SEFI
+                      .form-group
+                        %input.form-control
+                      .btn.btn-primary Deposit
+                    .col-sm-6
+                      Withdraw: 0 SEFI
+                      .form-group
+                        %input.form-control
+                      .btn.btn-primary Withdraw
+                    .col-12
+                      %hr
+                      Fees:
+                      %br
+                      \- 0% deposit fees
+                      %br
+                      \- 0% withdrawal fees
+                      %br
+                      \- 5% of yield sent to profit distributor (smart contract)
   .nk-ovm.shape-q
