@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_041749) do
+ActiveRecord::Schema.define(version: 2021_07_13_082641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,13 +44,24 @@ ActiveRecord::Schema.define(version: 2021_07_13_041749) do
     t.bigint "protocol_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "smart_contract_id"
     t.index ["protocol_id"], name: "index_pools_on_protocol_id"
+    t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id"
   end
 
   create_table "protocols", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "smart_contracts", force: :cascade do |t|
+    t.bigint "blockchain_id"
+    t.string "address"
+    t.string "hash"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["blockchain_id"], name: "index_smart_contracts_on_blockchain_id"
   end
 
 end
