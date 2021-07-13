@@ -126,12 +126,14 @@ document.secretNetworkHttpUrl = function(environment) {
 }
 
 document.showAlertDanger = function(text) {
-  toastr.options.tapToDismiss = false
-  toastr.options.closeDuration = 0;
-  toastr.options.timeOut = 0;
-  toastr.options.extendedTimeOut = 0;
-  toastr.options.closeButton = true;
-  toastr.error(text);
+  if (text != "Error: Request rejected") {
+    toastr.options.tapToDismiss = false
+    toastr.options.closeDuration = 0;
+    toastr.options.timeOut = 0;
+    toastr.options.extendedTimeOut = 0;
+    toastr.options.closeButton = true;
+    toastr.error(text);
+  }
 }
 
 document.showAlertSuccess = function(text) {
