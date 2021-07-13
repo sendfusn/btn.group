@@ -1,3 +1,5 @@
 # frozen_string_literal: true
 
-class SecretNetwork::InvoicesController < ApplicationController; end
+module SecretNetwork
+  class InvoicesController < ApplicationController; end
+end

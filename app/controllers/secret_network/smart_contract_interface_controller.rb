@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-class SecretNetwork::SmartContractInterfaceController < ApplicationController
-  def index; end
+module SecretNetwork
+  class SmartContractInterfaceController < ApplicationController
+    def index; end
+  end
 end

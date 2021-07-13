@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class SecretNetwork::BlockLockerController < ApplicationController
-  def index; end
+module SecretNetwork
+  class BlockLockerController < ApplicationController
+    def index; end
 
-  def new; end
+    def new; end
+  end
 end

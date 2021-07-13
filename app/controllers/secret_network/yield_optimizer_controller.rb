@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-class SecretNetwork::YieldOptimizerController < ApplicationController
-  def index; end
+module SecretNetwork
+  class YieldOptimizerController < ApplicationController
+    def index; end
+  end
 end

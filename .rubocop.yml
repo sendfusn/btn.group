@@ -5,7 +5,7 @@ require:
   - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.7.2
+  TargetRubyVersion: 3.0.1
   DisplayCopNames: true
   DisplayStyleGuide: true
   Exclude:
@@ -16,42 +16,15 @@ AllCops:
     - 'node_modules/**/*'
     - vendor/bundle/**/*
 
-Rails:
-  Enabled: true
-
-Layout/HeredocIndentation:
-  Enabled: false
-
-Layout/ParameterAlignment:
-  Enabled: false
-
-Layout/CommentIndentation:
-  Enabled: false
-
 Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
 
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
-  Enabled: false
-
-Layout/IndentationWidth:
-  Enabled: false
-
-Layout/LineLength:
-  Max: 160
-  Exclude:
-    - 'Gemfile'
-
-Layout/IndentationStyle:
-  Enabled: false
 
 Lint/RescueException:
   Exclude:
     - 'config/application.rb'
-
-Layout/TrailingEmptyLines:
-  Enabled: true
 
 # Fix this when you get more time
 Metrics/MethodLength:
@@ -69,60 +42,12 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'app/admin/*'
 
-Metrics/AbcSize:
-  Max: 50
-
-Metrics/CyclomaticComplexity:
-  Max: 10
-
-Metrics/PerceivedComplexity:
-  Max: 10
-
-Performance/Casecmp:
-  Enabled: false
-
-Rails/ApplicationJob:
-  Enabled: false
-
-Rails/ApplicationRecord:
-  Enabled: false
-
-Rails/HasAndBelongsToMany:
-  Enabled: false
-
-# Warnings at application launch (Rails.logger not defined yet)
-Rails/Output:
-  Enabled: false
-
-# Need to keep this false for shoulda-matchers
-RSpec/ImplicitExpect:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
 Style/Documentation:
   Enabled: false
-
-Style/GuardClause:
-  Enabled: true
-
-Style/IfUnlessModifier: 
-  Enabled: true
 
 Style/Lambda:
   EnforcedStyle: lambda
 
-Style/MixinUsage:
-  Exclude:
-    - 'db/seeds.rb'
-
 Style/RegexpLiteral:
   EnforcedStyle: mixed
   AllowInnerSlashes: true
-
-Style/RedundantPercentQ:
-  Enabled: true
-
-Style/SymbolProc:
-  Enabled: false

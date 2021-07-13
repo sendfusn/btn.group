@@ -17,7 +17,8 @@ Rails.application.routes.draw do
 
   # === DATAHUB REVERSE PROXY ===
   match 'datahub/*path' => 'datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }
-  match 'datahub_staging/*path' => 'datahub#index_staging', via: %i[get post put patch delete], defaults: { format: 'json' }
+  match 'datahub_staging/*path' => 'datahub#index_staging', via: %i[get post put patch delete],
+        defaults: { format: 'json' }
 
   # SITE PAGES
   get 'roadmap' => 'application#roadmap'

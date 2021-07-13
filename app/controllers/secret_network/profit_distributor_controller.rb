@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-class SecretNetwork::ProfitDistributorController < ApplicationController
-  def index; end
+module SecretNetwork
+  class ProfitDistributorController < ApplicationController
+    def index; end
+  end
 end

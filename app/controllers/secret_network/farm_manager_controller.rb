@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-class SecretNetwork::FarmManagerController < ApplicationController
-  def index; end
+module SecretNetwork
+  class FarmManagerController < ApplicationController
+    def index; end
+  end
 end

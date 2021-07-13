@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-class SecretNetwork::TransactionsController < ApplicationController
-  def index; end
+module SecretNetwork
+  class TransactionsController < ApplicationController
+    def index; end
+  end
 end
