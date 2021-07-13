@@ -37,10 +37,12 @@ Metrics/ClassLength:
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*.rb'
-    - 'app/**/concerns/*.rb'
-    - 'config/routes.rb'
-    - 'app/admin/*'
+    - 'Guardfile'
+    # - 'spec/**/*.rb'
+    # - 'app/**/concerns/*.rb'
+    # - 'config/routes.rb'
+    # - 'app/admin/*'
+
 
 RSpec/ImplicitExpect:
   EnforcedStyle: should
