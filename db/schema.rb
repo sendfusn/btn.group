@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_030139) do
+ActiveRecord::Schema.define(version: 2021_07_13_041749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "blockchains", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "cryptocurrencies", force: :cascade do |t|
     t.string "address"
@@ -22,6 +28,23 @@ ActiveRecord::Schema.define(version: 2021_07_13_030139) do
     t.string "symbol", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "cryptocurrencies_pools", force: :cascade do |t|
+    t.integer "cryptocurrency_role", null: false
+    t.bigint "cryptocurrency_id"
+    t.bigint "pool_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cryptocurrency_id"], name: "index_cryptocurrencies_pools_on_cryptocurrency_id"
+    t.index ["pool_id"], name: "index_cryptocurrencies_pools_on_pool_id"
+  end
+
+  create_table "pools", force: :cascade do |t|
+    t.bigint "protocol_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["protocol_id"], name: "index_pools_on_protocol_id"
   end
 
   create_table "protocols", force: :cascade do |t|
