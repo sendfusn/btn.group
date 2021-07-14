@@ -18,6 +18,8 @@ gem 'rails', '~> 6.1.1'
 gem 'rails-reverse-proxy'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
+# Simple, efficient background processing for Ruby
+gem 'sidekiq', '~> 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
