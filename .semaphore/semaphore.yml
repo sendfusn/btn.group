@@ -23,12 +23,12 @@ blocks:
     task:
       prologue:
         commands:
-            - sem-version ruby 3.0.0
-            - sem-version node 14.5.0
-            - checkout
-            - cache restore
-            - bundle install
-            - cache store
+          - sem-version ruby 3.0.0
+          - sem-version node 14.5.0
+          - checkout
+          - cache restore
+          - bundle install
+          - cache store
       jobs:
         - name: rubocop
           commands:
@@ -45,12 +45,15 @@ blocks:
     task:
       prologue:
         commands:
-            - sem-version ruby 3.0.0
-            - sem-version node 14.5.0
-            - checkout
-            - cache restore
-            - bundle install
-            - cache store
+          - sem-version ruby 3.0.0
+          - sem-version node 14.5.0
+          - checkout
+          - cache restore
+          - bundle install
+          - cache store
+          - sem-service start redis
+          - sem-service start postgres
+          - 'bundle exec rake db:setup'
       jobs:
         - name: rspec
           commands:
