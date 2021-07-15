@@ -17,7 +17,7 @@ module PayMeCrypto
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-
+    config.active_job.queue_adapter = :sidekiq
     config.after_initialize do
       SecretFinanceStakingPoolsJob.perform_now if initialized_server? && Rails.env.production?
     end
