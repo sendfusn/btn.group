@@ -7,6 +7,6 @@ class CryptocurrencyPool < ApplicationRecord
   belongs_to :cryptocurrency
   belongs_to :pool
 
-  # === ENUMS ==
+  # === ENUMS ===
   enum cryptocurrency_role: { deposit: 0, reward: 1 }
 end

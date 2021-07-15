@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_222838) do
+ActiveRecord::Schema.define(version: 2021_07_15_054114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_07_14_222838) do
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "price", precision: 8, scale: 6
     t.bigint "smart_contract_id"
-    t.index ["smart_contract_id"], name: "index_cryptocurrencies_on_smart_contract_id"
+    t.index ["smart_contract_id"], name: "index_cryptocurrencies_on_smart_contract_id", unique: true
   end
 
   create_table "cryptocurrencies_pools", force: :cascade do |t|
@@ -63,10 +63,16 @@ ActiveRecord::Schema.define(version: 2021_07_14_222838) do
   create_table "smart_contracts", force: :cascade do |t|
     t.bigint "blockchain_id"
     t.string "address"
-    t.string "hash"
+    t.string "data_hash"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["address"], name: "index_smart_contracts_on_address", unique: true
     t.index ["blockchain_id"], name: "index_smart_contracts_on_blockchain_id"
   end
 
+  add_foreign_key "cryptocurrencies_pools", "cryptocurrencies", name: "cryptocurrencies_pools_cryptocurrency_id_fk"
+  add_foreign_key "cryptocurrencies_pools", "pools", name: "cryptocurrencies_pools_pool_id_fk"
+  add_foreign_key "pools", "protocols", name: "pools_protocol_id_fk"
+  add_foreign_key "pools", "smart_contracts", name: "pools_smart_contract_id_fk"
+  add_foreign_key "smart_contracts", "blockchains", name: "smart_contracts_blockchain_id_fk"
 end

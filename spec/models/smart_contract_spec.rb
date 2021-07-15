@@ -3,5 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe SmartContract, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:smart_contract) { build(:smart_contract) }
+
+  describe 'ASSOCIATIONS' do
+    it { should belong_to(:blockchain) }
+  end
 end
