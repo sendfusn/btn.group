@@ -2,6 +2,7 @@
 
 class Pool < ApplicationRecord
   # === ASSOCIATIONS ===
-  belongs_to :smart_contract, optional: true
+  belongs_to :protocol
+  belongs_to :smart_contract
   has_many :cryptocurrency_pools, dependent: :destroy
 end

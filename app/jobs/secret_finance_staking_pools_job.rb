@@ -29,14 +29,20 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
   def process_pool_json(pool_json)
     pool_smart_contract = SmartContract.find_or_initialize_by(address: pool_json['pool_address'])
     unless pool_smart_contract.persisted?
+      secret_network_blockchain = Blockchain.find_or_create_by(name: 'secret network')
+      smart_contract.update(blockchain: secret_network_blockchain)
+    end
+    protocol = Protocol.where('lower(name) = ?', 'secret finance').first
+    pool = Pool.find_or_initialize_by(protocol: protocol, smart_contract: pool_smart_contract)
+    unless pool.persisted?
       incentivized_token_cryptocurrency = process_token_json(pool_json['inc_token'])
       reward_token_cryptocurrency = process_token_json(pool_json['rewards_token'])
-      pool_smart_contract.cryptocurrency_pools.create(cryptocurrency: incentivized_token_cryptocurrency, role: :deposit)
-      pool_smart_contract.cryptocurrency_pools.create(cryptocurrency: reward_token_cryptocurrency, role: :reward)
+      pool.cryptocurrency_pools.create(cryptocurrency: incentivized_token_cryptocurrency, role: :deposit)
+      pool.cryptocurrency_pools.create(cryptocurrency: reward_token_cryptocurrency, role: :reward)
     end
-    pool_smart_contract.update(deadline: pool_json['deadline'].to_i,
-                               total_locked: pool_json['total_locked'].to_i,
-                               pending_rewards: pool_json['pending_rewards'].to_i)
+    pool.update(deadline: pool_json['deadline'].to_i,
+                pending_rewards: pool_json['pending_rewards'].to_i,
+                total_locked: pool_json['total_locked'].to_i)
   end
 
   def process_token_json(token_json)
