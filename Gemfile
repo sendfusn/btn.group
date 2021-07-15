@@ -11,6 +11,8 @@ gem 'bootsnap', '>= 1.4.6', require: false
 gem 'cloudinary'
 # Provides Haml generators for Rails 4 etc
 gem 'haml-rails', '~> 2.0'
+# Foreign key migration generator for Rails (Using in Semaphore also)
+gem 'immigrant'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 gem 'pg'
@@ -45,8 +47,6 @@ end
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'haml_lint', require: false
-  # Foreign key migration generator for Rails (Using in Semaphore also)
-  gem 'immigrant'
   # Behaviour Driven Development for Ruby
   gem 'rspec-rails'
   # A Ruby static code analyzer and formatter, based on the community Ruby style guide.
