@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_15_054114) do
+ActiveRecord::Schema.define(version: 2021_07_15_090806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_054114) do
     t.string "symbol", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "price", precision: 8, scale: 6
+    t.decimal "price", precision: 15, scale: 10
     t.bigint "smart_contract_id"
     t.index ["smart_contract_id"], name: "index_cryptocurrencies_on_smart_contract_id", unique: true
   end
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(version: 2021_07_15_054114) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "smart_contract_id"
-    t.bigint "deadline"
-    t.bigint "pending_rewards"
-    t.bigint "total_locked"
+    t.decimal "deadline", precision: 40
+    t.decimal "pending_rewards", precision: 40
+    t.decimal "total_locked", precision: 40
     t.index ["protocol_id"], name: "index_pools_on_protocol_id"
     t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id"
   end

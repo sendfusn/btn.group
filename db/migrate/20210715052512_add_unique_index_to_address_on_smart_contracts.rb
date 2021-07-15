@@ -1,5 +1,7 @@
 class AddUniqueIndexToAddressOnSmartContracts < ActiveRecord::Migration[6.1]
   def change
-    add_index :smart_contracts, :address, unique: true
+    change_column(:pools, :deadline , :decimal, precision: 40, scale: 0)
+    change_column(:pools, :pending, :decimal, precision: 40, scale: 0)
+    change_column(:pools, :total_locked, :decimal, precision: 40, scale: 0)
   end
 end
