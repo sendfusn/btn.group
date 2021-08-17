@@ -4,7 +4,7 @@ $(document).ready(function(){
       let param_count = 0;
       $('#add-new-param').click(function(event){
         event.preventDefault();
-        $('#params-container').append('<hr><div class="row"><div class="col-8 mb-3"><label class="form-label" for="param-' + param_count + '-key">Key</label><input autocomplete="off" class="form-control" id="param-' + param_count + '-key"></div><div class="col-8 mb-3"><label class="form-label" for="param-' + param_count + '-value">Value</label><input autocomplete="off" class="form-control" id="param-' + param_count + '-value"></div><div class="col-4 mb-3"><label class="form-label" for="param-' + param_count + '-type">Type</label><select class="form-control" id="param-' + param_count + '-type"><option value="number">number</option><option selected value="string">text / string</option></select></div></div>');
+        $('#params-container').append('<hr><div class="row"><div class="col-8 mb-3"><label class="form-label" for="param-' + param_count + '-key">Key</label><input autocomplete="off" class="form-control" id="param-' + param_count + '-key"></div><div class="col-8 mb-3"><label class="form-label" for="param-' + param_count + '-value">Value</label><input autocomplete="off" class="form-control" id="param-' + param_count + '-value"></div><div class="col-4 mb-3"><label class="form-label" for="param-' + param_count + '-type">Type</label><select class="form-control" id="param-' + param_count + '-type"><option value="raw">raw</option><option selected value="string">text / string</option></select></div></div>');
         param_count++;
       });
 
@@ -36,10 +36,10 @@ $(document).ready(function(){
                   }
                 }
               } else {
-                if (this.value == 'number') {
+                if (this.value == 'raw') {
                   if (last_key.length) {
                     if (params[last_key].length) {
-                      params[last_key] = parseFloat(params[last_key])
+                      params[last_key] = JSON.parse(params[last_key])
                     }
                   }
                 }
