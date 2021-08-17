@@ -1,5 +1,5 @@
 {
-  "name": "pay-me-crypto",
+  "name": "btn.group",
   "private": true,
   "dependencies": {
     "@chainapsis/cosmosjs": "0.0.3-alpha.3",
