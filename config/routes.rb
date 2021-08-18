@@ -3,6 +3,10 @@
 Rails.application.routes.draw do
   resources :features, only: :index
 
+  namespace :near do
+    resources :smart_contract_interface, only: :index
+  end
+
   namespace :secret_network do
     # INVOICE
     # resources :invoices, only: %i[index new show edit]
