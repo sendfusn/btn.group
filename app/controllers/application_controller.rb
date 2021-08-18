@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
           },
           profit_distributor: {
             name: 'Profit distributor (WIP)',
-            show_link: true,
+            show_link: false,
             status: 'Work in progress'
           },
           smart_contract_interface: {
@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
           },
           yield_optimizer: {
             name: 'Yield optimizer (WIP)',
-            show_link: true,
+            show_link: false,
             status: 'Work in progress'
           }
         }
