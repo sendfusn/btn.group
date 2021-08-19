@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   end
 
   # === DATAHUB REVERSE PROXY ===
+  match 'near/datahub/*path' => 'near/datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }
+  match 'near/datahub_staging/*path' => 'near/datahub#index_staging', via: %i[get post put patch delete],
+        defaults: { format: 'json' }
   match 'datahub/*path' => 'datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }
   match 'datahub_staging/*path' => 'datahub#index_staging', via: %i[get post put patch delete],
         defaults: { format: 'json' }
