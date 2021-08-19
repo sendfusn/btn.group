@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Move this to secret_network namespace when you get the time. No hurry.
+
 class DatahubController < ApplicationController
   include ReverseProxy::Controller
 
