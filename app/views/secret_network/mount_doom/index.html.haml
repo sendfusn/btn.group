@@ -1,0 +1,22 @@
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .mt-3.w-100
+        .container#secret-network-mount-doom
+          .row
+            .col-12
+              .card
+                .card-body
+                  %h3= features[:secret_network][:features][:mount_doom][:name]
+                  %p.mb-0
+                    %b Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+                  = render 'environment_switch'
+                  = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:mount_doom][:contracts][:production], staging_contract: features[:secret_network][:features][:mount_doom][:contracts][:staging]
+                  %hr
+                  %p This is a smart contract for people to burn their tokens on the Secret Network. It has no admin functionality so it is completely decentralized.
+                  %h5 How to use
+                  %b 1. Send tokens you want to burn to contract.
+                  %br
+                  %b 2. Query the balance for smart contract by using viewing key - "DoTheRightThing."

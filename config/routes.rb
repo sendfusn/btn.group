@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   namespace :secret_network do
     # INVOICE
     # resources :invoices, only: %i[index new show edit]
-    # resources :block_locker, only: %i[index new]
-    resources :buttcoin, only: :index
     resources :address_alias, only: %i[index new]
+    resources :buttcoin, only: :index
+    resources :mount_doom, only: :index
     resources :profit_distributor, only: %i[index]
     resources :smart_contract_interface, only: :index
     resources :transactions, only: :index

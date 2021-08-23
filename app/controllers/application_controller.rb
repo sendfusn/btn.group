@@ -33,16 +33,21 @@ class ApplicationController < ActionController::Base
               production: 'secret1v2kg4uf4ffjyez3g50h3d0hze6858qgszlluzz'
             }
           },
-          # block_locker: {
-          #   name: 'Block locker',
-          #   status: 'Work in progress'
-          # },
           buttcoin: {
             name: 'Buttcoin (BUTT)',
             show_link: true,
             status: 'Live',
             contracts: {
               production: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
+            }
+          },
+          mount_doom: {
+            name: 'Mount Doom',
+            show_link: false,
+            status: 'Work in progress',
+            contracts: {
+              production: 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq',
+              staging: 'secret15nfjk7zfh54damy09d2jegkrw4rq33d3zug4a5'
             }
           },
           profit_distributor: {
