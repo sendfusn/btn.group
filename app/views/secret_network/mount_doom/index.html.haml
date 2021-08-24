@@ -19,4 +19,30 @@
                   %h5 How to use
                   %b 1. Send tokens you want to burn to contract.
                   %br
-                  %b 2. Query the balance for smart contract by using viewing key - "DoTheRightThing."
+                  %b 2. Set viewing key for token if required.
+                  %br
+                  %b 3. Query the balance for smart contract.
+                  %hr
+                  %form{ name: 'mountDoomForm' }
+                    .form-group
+                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#query{ name: 'functionType', type: 'radio', value: 'query', checked: true } Query balance
+                        %label.btn.btn-md.btn-light
+                          %input#set-viewing-key{ name: 'functionType', type: 'radio', value: 'set' } Set viewing key
+                    .form-group
+                      %label.control-label Token Address
+                      %input.form-control.w-100#address{ name: 'tokenAddress', required: true, autocomplete: 'off' }
+                    .form-group.d-none#contract-hash-input-group
+                      %label.control-label Contract hash
+                      %input.form-control.w-100#contract-hash{ name: 'contractHash', autocomplete: 'off' }
+                    %button.btn.btn-primary.btn-md#submit-button{ type: 'submit' }
+                      .d-none#loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      #ready
+                        Submit
+              .card.my-3.d-none#result-container
+                .card-body
+                  %h3 Result
+                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
