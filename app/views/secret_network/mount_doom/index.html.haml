@@ -27,9 +27,9 @@
                     .form-group
                       .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
                         %label.btn.btn-light.btn-md
-                          %input#query{ name: 'functionType', type: 'radio', value: 'query', checked: true } Query balance
+                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } Query balance
                         %label.btn.btn-md.btn-light
-                          %input#set-viewing-key{ name: 'functionType', type: 'radio', value: 'set' } Set viewing key
+                          %input#set-viewing-key{ name: 'interactionType', type: 'radio', value: 'set' } Set viewing key
                     .form-group
                       %label.control-label Token Address
                       %input.form-control.w-100#address{ name: 'tokenAddress', required: true, autocomplete: 'off' }
