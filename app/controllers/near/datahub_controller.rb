@@ -7,9 +7,8 @@ module Near
     skip_before_action :verify_authenticity_token
 
     def index
-      datahub_url = "https://near-mainnet--rpc--archive.datahub.figment.io/apikey/#{Rails.application.credentials.datahub.near_api_key}"
-      path = request.fullpath.split('datahub').second
-      reverse_proxy datahub_url, path: path, headers: { 'HOST' => nil } do |config|
+      datahub_url = "https://near-mainnet--rpc--archive.datahub.figment.io/apikey/#{Rails.application.credentials[:datahub][:near_api_key]}"
+      reverse_proxy datahub_url, headers: { 'HOST' => nil }, path: '/' do |config|
         # We got a 404!
         config.on_missing do |_code, _response|
           return redirect_to root_url
@@ -33,9 +32,8 @@ module Near
     end
 
     def index_staging
-      datahub_url = "https://near-testnet--rpc.datahub.figment.io/apikey/#{Rails.application.credentials.datahub.near_api_key}"
-      path = request.fullpath.split('datahub_staging').second
-      reverse_proxy datahub_url, path: path, headers: { 'HOST' => nil } do |config|
+      datahub_url = "https://near-testnet--rpc.datahub.figment.io/apikey/#{Rails.application.credentials[:datahub][:near_api_key]}"
+      reverse_proxy datahub_url, headers: { 'HOST' => nil }, path: '/' do |config|
         # We got a 404!
         config.on_missing do |_code, _response|
           return redirect_to root_url

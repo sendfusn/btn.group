@@ -19,6 +19,11 @@ import 'datatables.net-buttons/js/buttons.html5.js'
 import '../src/application/_environment_switch'
 import '../src/application/home'
 import '../src/features/index'
+
+// NEAR
+import '../src/near/smart_contract_interface/index'
+
+// SECRET NETWORK
 import '../src/secret_network/block_locker/new'
 import '../src/secret_network/block_locker/show'
 import '../src/secret_network/buttcoin/index'
@@ -100,6 +105,22 @@ document.prettyPrintJSON = function(json) {
     return '<span class="' + cls + '">' + match + '</span>';
   });
 };
+
+document.nearNetworkChainId = function(environment) {
+  let chainId = 'mainnet'
+  if (environment == 'staging') {
+    chainId = 'testnet'
+  };
+  return chainId
+}
+
+document.nearNetworkHttpUrl = function(environment) {
+  let http_url = 'datahub';
+  if (environment == 'staging') {
+    http_url = http_url + '_staging'
+  };
+  return http_url
+}
 
 // This is only for queries. See the SigningCosmWasmClient for handle actions.
 document.secretNetworkClient = function(environment) {

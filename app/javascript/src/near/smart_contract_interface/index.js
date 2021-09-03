@@ -19,8 +19,8 @@ $(document).ready(function(){
           try {
             // Set environment
             let environment = document.featureEnvironment();
-            let chainId = document.secretNetworkChainId(environment)
-            let httpUrl = document.secretNetworkHttpUrl(environment)
+            let chainId = document.nearNetworkChainId(environment)
+            let httpUrl = document.nearNetworkHttpUrl(environment)
             // Set params
             let contractAddress = document.nearSmartContractInterfaceForm.contractAddress.value;
             let functionName = document.nearSmartContractInterfaceForm.functionName.value;
@@ -45,58 +45,25 @@ $(document).ready(function(){
                 }
               }
             })
-            let msg = { [functionName]: params }
 
             // Interact with smart contract
             let result;
             if(document.nearSmartContractInterfaceForm.interactionType.value == 'query') {
-              this.client =  document.secretNetworkClient(environment);
-              result = await this.client.queryContractSmart(contractAddress, msg);
+              const {connect, keyStores} = require("near-api-js");
+              // account ID associated with the transaction
+              let config = {
+                networkId: chainId,
+                keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+                nodeUrl: httpUrl,
+              };
+              const near = await connect(config);
+              const account = await near.account("stevenchang.near");
+              result = await account.viewFunction(
+                contractAddress,
+                functionName,
+                params,
+              )
             } else {
-              const {
-                SigningCosmWasmClient,
-              } = require('secretjs');
-
-              if (!window.getOfflineSigner || !window.keplr) {
-                alert("Please install keplr extension");
-              } else {
-                if (window.keplr.experimentalSuggestChain) {
-                  try {
-                    // This method will ask the user whether or not to allow access if they haven't visited this website.
-                    // Also, it will request user to unlock the wallet if the wallet is locked.
-                    // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                    await window.keplr.enable(chainId);
-
-                    // @ts-ignore
-                    const keplrOfflineSigner = window.getOfflineSigner(chainId);
-                    const accounts = await keplrOfflineSigner.getAccounts();
-                    this.address = accounts[0].address;
-                    this.client = new SigningCosmWasmClient(
-                      httpUrl,
-                      this.address,
-                      keplrOfflineSigner,
-                      window.getEnigmaUtils(chainId),
-                      {
-                        init: {
-                          amount: [{ amount: '500000', denom: 'uscrt' }],
-                          gas: '500000',
-                        },
-                        exec: {
-                          amount: [{ amount: '500000', denom: 'uscrt' }],
-                          gas: '500000',
-                        },
-                      },
-                    );
-                    this.account = await this.client.getAccount(this.address);
-                  } catch (error) {
-                    console.error(error)
-                  }
-                } else {
-                  alert("Please use the recent version of keplr extension");
-                }
-              }
-
-              result = await this.client.execute(contractAddress, msg)
             }
 
             // Display results
@@ -107,8 +74,10 @@ $(document).ready(function(){
           catch(err) {
             console.error(err)
             let errorDisplayMessage = err.message;
-            if (err.message.includes('decoding bech32 failed')) {
+            if (err.message.includes('[-32000] Server error: account')) {
               errorDisplayMessage = 'Smart contract address is invalid.'
+            } else if (err.message.includes('MethodNotFound')) {
+              errorDisplayMessage = 'Function not found.'
             }
             document.showAlertDanger(errorDisplayMessage)
           }
