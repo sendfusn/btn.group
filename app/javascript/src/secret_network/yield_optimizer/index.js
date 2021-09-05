@@ -17,6 +17,8 @@ $(document).ready(function(){
       this.$buttWalletBalanceViewButton = $('.butt-wallet-balance-view-button');
       this.$sefiWalletBalanceViewButton = $('.sefi-wallet-balance-view-button');
       this.$profitDistributorTotalShares = $('.profit-distributor-total-shares');
+      this.$profitDistributorUserClaimableProfit = $('.profit-distributor-claimable-profit');
+      this.$profitDistributorUserShares = $('.profit-distributor-user-shares');
 
       // Listeners
       document.querySelector('.butt-wallet-balance-view-button').addEventListener('click', async (evt) => {
@@ -116,12 +118,12 @@ $(document).ready(function(){
       this.updateUserInterface = async () => {
         let client =  document.secretNetworkClient(this.environment);
 
-        // Check if user has a viewing key for SEFI
+        // User SEFI wallet balance
         try {
           let sefiViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.sefiContractAddress)
           // If they have the sefiViewingKey, replace the button with the balance
           let sefiBalance = await client.queryContractSmart(this.sefiContractAddress, { balance: { address: this.address, key: sefiViewingKey } })
-          this.$sefiWalletBalance.text((sefiBalance['balance']['amount'] / 1_000_000))
+          this.$sefiWalletBalance.text((sefiBalance['balance']['amount'] / 1_000_000) + ' SEFI')
           this.$sefiWalletBalance.removeClass('d-none')
           this.$sefiWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
@@ -134,13 +136,13 @@ $(document).ready(function(){
           $('.sefi-wallet-balance-link').removeClass('d-none')
         }
 
-        // Check if user has a viewing key for BUTT
+        // User BUTT wallet balance
         try {
           this.$profitDistributorTotalShares.text('Loading...')
           let buttViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttContractAddress)
           // If they have the buttViewingKey, replace the button with the balance
           let buttBalance = await client.queryContractSmart(this.buttContractAddress, { balance: { address: this.address, key: buttViewingKey } })
-          this.$buttWalletBalance.text((buttBalance['balance']['amount'] / 1_000_000))
+          this.$buttWalletBalance.text((buttBalance['balance']['amount'] / 1_000_000) + ' BUTT')
           this.$buttWalletBalance.removeClass('d-none')
           this.$buttWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
@@ -153,13 +155,33 @@ $(document).ready(function(){
           $('.butt-wallet-balance-link').removeClass('d-none')
         }
 
-        // Get total shares from profit distributor
+        // Total shares from profit distributor
         try {
           let config = await client.queryContractSmart(this.profitDistributorAddress, {config: {}})
           this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000) + ' BUTT')
         } catch(err) {
           console.log(err)
-        } 
+        }
+
+        // User details from profit distributor
+        try {
+          this.$profitDistributorUserShares.text('Loading...');
+          let user = await client.queryContractSmart(this.profitDistributorAddress, {user: { user_address: this.address}})
+          this.$profitDistributorUserShares.text((user['user']['shares'] / 1_000_000) + ' BUTT')
+        } catch(err) {
+          this.$profitDistributorUserShares.text('0 BUTT');
+          console.log(err)
+        }
+
+        // User claimable profit from profit distributor
+        try {
+          this.$profitDistributorUserClaimableProfit.text('Loading...');
+          let user = await client.queryContractSmart(this.profitDistributorAddress, {claimable_profit: { user_address: this.address}})
+          this.$profitDistributorUserClaimableProfit.text((user['user']['shares'] / 1_000_000) + ' SEFI')
+        } catch(err) {
+          this.$profitDistributorUserClaimableProfit.text('0 SEFI');
+          console.log(err)
+        }
       }
 
       // Query profit distributor
