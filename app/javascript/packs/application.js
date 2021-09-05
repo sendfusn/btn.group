@@ -25,7 +25,6 @@ import '../src/near/smart_contract_interface/index'
 
 // SECRET NETWORK
 import '../src/secret_network/buttcoin/index'
-import '../src/secret_network/invoices/edit'
 import '../src/secret_network/address_alias/_profile'
 import '../src/secret_network/address_alias/new'
 import '../src/secret_network/address_alias/index'

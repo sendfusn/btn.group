@@ -8,30 +8,5 @@
 
 linters:
   # Offense count: 20
-  ClassesBeforeIds:
-    exclude:
-      - "app/views/secret_network/invoices/edit.html.haml"
-      - "app/views/secret_network/invoices/index.html.haml"
-      - "app/views/secret_network/invoices/new.html.haml"
-      - "app/views/secret_network/invoices/show.html.haml"
-
-  # Offense count: 20
   InlineStyles:
     enabled: false
-
-  # Offense count: 184
-  RuboCop:
-    exclude:
-      - "app/views/secret_network/invoices/edit.html.haml"
-      - "app/views/secret_network/invoices/index.html.haml"
-      - "app/views/secret_network/invoices/new.html.haml"
-      - "app/views/secret_network/invoices/show.html.haml"
-
-  # Offense count: 97
-  SpaceInsideHashAttributes:
-    exclude:
-      - "app/views/secret_network/farm_manager/home.html.haml"
-      - "app/views/secret_network/invoices/edit.html.haml"
-      - "app/views/secret_network/invoices/index.html.haml"
-      - "app/views/secret_network/invoices/new.html.haml"
-      - "app/views/secret_network/invoices/show.html.haml"
