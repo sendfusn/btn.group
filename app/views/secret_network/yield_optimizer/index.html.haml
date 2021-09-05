@@ -34,11 +34,21 @@
                       %br
                       Profit distributor
                     .col-sm-3
-                      Wallet: 0
+                      Wallet:
+                      %span.butt-wallet-balance-loading Loading...
+                      %span.d-none.butt-wallet-balance-link
+                        %span.d-none.butt-wallet-balance
+                        %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
+                          .d-none
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
                       %br
                       Deposited: 0
                       %br
-                      SEFI: 0
+                      Claimable SEFI: 0
                     .col-sm-2
                       This contract receives the 5% fees from the yield optimizer contracts.
                     .col-sm-2
@@ -49,7 +59,17 @@
                     .col-12
                       %hr
                     .col-sm-6
-                      Balance: 0 BUTT
+                      Balance:
+                      %span.butt-wallet-balance-loading Loading...
+                      = link_to '#', class: 'd-none butt-wallet-balance-link' do
+                        %span.d-none.butt-wallet-balance
+                        %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
+                          .d-none
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
                       .form-group
                         %input.form-control
                       .btn.btn-primary Deposit
@@ -60,7 +80,7 @@
                       .btn.btn-primary Withdraw
                     .col-12
                       %hr
-                      No fees
+                      Fees: nil
               .card
                 .card-body
                   .row
@@ -70,7 +90,17 @@
                       %br
                       = link_to 'SECRETSWAP', 'https://app.secretswap.io/earn', target: '_blank', rel: 'noopener'
                     .col-sm-3
-                      Wallet: 0
+                      Wallet:
+                      %span.sefi-wallet-balance-loading Loading ...
+                      %span.d-none.sefi-wallet-balance-link
+                        %span.d-none.sefi-wallet-balance
+                        %button.btn.btn-light.btn-sm.ml-2.border.sefi-wallet-balance-view-button{ type: 'button' }
+                          .d-none
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
                       %br
                       Deposited: 0
                     .col-sm-2
@@ -85,7 +115,17 @@
                     .col-12
                       %hr
                     .col-sm-6
-                      Balance: 0 SEFI
+                      Balance:
+                      %span.sefi-wallet-balance-loading Loading ...
+                      = link_to '#', class: 'd-none sefi-wallet-balance-link' do
+                        %span.d-none.sefi-wallet-balance
+                        %button.btn.btn-light.btn-sm.ml-2.border.sefi-wallet-balance-view-button{ type: 'button' }
+                          .d-none.sefi-wallet-balance-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
                       .form-group
                         %input.form-control
                       .btn.btn-primary Deposit
@@ -96,11 +136,5 @@
                       .btn.btn-primary Withdraw
                     .col-12
                       %hr
-                      Fees:
-                      %br
-                      \- 0% deposit fees
-                      %br
-                      \- 0% withdrawal fees
-                      %br
-                      \- 5% of yield sent to profit distributor (smart contract)
+                      Fees: 5% of yield sent to profit distributor (smart contract)
   .nk-ovm.shape-q
