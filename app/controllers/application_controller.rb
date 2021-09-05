@@ -50,11 +50,6 @@ class ApplicationController < ActionController::Base
               staging: 'secret15nfjk7zfh54damy09d2jegkrw4rq33d3zug4a5'
             }
           },
-          profit_distributor: {
-            name: 'Profit distributor (WIP)',
-            show_link: false,
-            status: 'Work in progress'
-          },
           smart_contract_interface: {
             name: 'Smart contract interface',
             show_link: true,

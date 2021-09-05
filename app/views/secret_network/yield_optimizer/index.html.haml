@@ -18,11 +18,47 @@
                     = features[:secret_network][:name].to_s
           .row.mb-5
             .col-12
+              .card.mb-3
+                .card-body
+                  .row
+                    .col-sm-3
+                      = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-none d-sm-inline', style: 'height: 24px;')
+                      BUTT
+                      %br
+                      Profit distributor
+                    .col-sm-3
+                      Wallet: 0
+                      %br
+                      Deposited: 0
+                      %br
+                      SEFI: 0
+                    .col-sm-2
+                      This contract receives the 5% fees from the yield optimizer contracts.
+                    .col-sm-2
+                      TVL: #{rand(1000).to_f / 10} BUTT
+                    .col-sm-2
+                      %h3= link_to '>', '#profit-distributor-collapse', 'data-toggle' => 'collapse'
+                  .row.collapse#profit-distributor-collapse
+                    .col-12
+                      %hr
+                    .col-sm-6
+                      Balance: 0 BUTT
+                      .form-group
+                        %input.form-control
+                      .btn.btn-primary Deposit
+                    .col-sm-6
+                      Withdraw: 0 BUTT
+                      .form-group
+                        %input.form-control
+                      .btn.btn-primary Withdraw
+                    .col-12
+                      %hr
+                      No fees
               .card
                 .card-body
                   .row
                     .col-sm-3
-                      %img{ src: 'https://app.secretswap.io/static/tokens/sefi.png', style: 'width: 18px;' }
+                      = cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                       SEFI
                       %br
                       = link_to 'SECRETSWAP', 'https://app.secretswap.io/earn', target: '_blank', rel: 'noopener'
