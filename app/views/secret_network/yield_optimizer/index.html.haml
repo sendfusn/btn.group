@@ -7,7 +7,7 @@
             .col-12
               .alert.alert-danger
                 This page is under construction and is only visible for investors to see the work in progress.
-          .row.mb-5
+          .row.mb-3
             .col-12
               .card
                 .card-body
@@ -33,7 +33,7 @@
                       BUTT
                       %br
                       Profit distributor
-                    .col-sm-3
+                    .col-sm-4
                       Wallet:
                       %span.butt-wallet-balance-loading Loading...
                       %span.d-none.butt-wallet-balance-link
@@ -51,9 +51,7 @@
                       %br
                       Claimable SEFI:
                       %span.profit-distributor-claimable-profit Loading...
-                    .col-sm-2
-                      This contract receives the 5% fees from the yield optimizer contracts.
-                    .col-sm-2
+                    .col-sm-3
                       TVL:
                       %span.profit-distributor-total-shares Loading...
                     .col-sm-2
@@ -73,19 +71,26 @@
                           .ready
                             .fas.fa-search.mr-1
                             View
-                      .form-group
-                        %input.form-control
-                      .btn.btn-primary Deposit
+                      %form{ name: 'profitDistributorDepositForm' }
+                        .form-group
+                          %input.form-control#profit-distributor-deposit-input{ name: 'amount' }
+                        %button.btn.btn-primary.btn-rg#profit-distributor-deposit-button{ type: 'submit' }
+                          .d-none#profit-distributor-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          #profit-distributor-deposit-button-ready
+                            Deposit
                     .col-sm-6
                       Withdraw:
                       %span.profit-distributor-user-shares Loading...
                       .form-group
                         %input.form-control
-                      .btn.btn-primary Withdraw
+                      .btn.btn-primary.btn-rg Withdraw
                     .col-12
                       %hr
                       Fees: nil
-              .card
+              // SEFI yield optimizer
+              .card.d-none
                 .card-body
                   .row
                     .col-sm-3

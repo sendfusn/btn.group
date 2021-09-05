@@ -21,6 +21,9 @@ $(document).ready(function(){
       this.$profitDistributorUserShares = $('.profit-distributor-user-shares');
 
       // Listeners
+      document.querySelector('#profit-distributor-collapse .butt-wallet-balance').addEventListener('click', (evt) => {
+        $('#profit-distributor-deposit-input').val($('#profit-distributor-collapse .butt-wallet-balance').text().split(' ')[0])
+      })
       document.querySelector('.butt-wallet-balance-view-button').addEventListener('click', async (evt) => {
         this.$buttWalletBalanceViewButton.prop("disabled", true);
         this.$buttWalletBalanceViewButton.find('.loading').removeClass('d-none')
@@ -115,6 +118,30 @@ $(document).ready(function(){
         }
       };
 
+      document.profitDistributorDepositForm.onsubmit = async (e) => {
+        e.preventDefault()
+        $("#profit-distributor-deposit-button").prop("disabled", true);
+        $("#profit-distributor-deposit-button-loading").removeClass("d-none")
+        $("#profit-distributor-deposit-button-ready").addClass("d-none")
+        try {
+          let amount = document.profitDistributorDepositForm.amount.value;
+          let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.profitDistributorAddress, msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=' } }
+          let response = await this.client.execute(this.buttContractAddress, handleMsg)
+          document.showAlertSuccess("Deposit successful");
+          document.profitDistributorDepositForm.amount.value = ''
+          this.updateUserInterface()
+        }
+        catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)
+        }
+        finally {
+          $("#profit-distributor-deposit-button").prop("disabled", false);
+          $("#profit-distributor-deposit-button-loading").addClass("d-none")
+          $("#profit-distributor-deposit-button-ready").removeClass("d-none")
+        }
+      };
+
       this.updateUserInterface = async () => {
         let client =  document.secretNetworkClient(this.environment);
 
@@ -185,7 +212,6 @@ $(document).ready(function(){
       }
 
       // Query profit distributor
-      // result = await this.client.queryContractSmart(contractAddress, msg);
       $('#connect-wallet-form').submit()
     }
   };
