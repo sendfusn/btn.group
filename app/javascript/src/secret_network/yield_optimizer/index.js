@@ -16,6 +16,7 @@ $(document).ready(function(){
       this.$sefiWalletBalance = $('.sefi-wallet-balance');
       this.$buttWalletBalanceViewButton = $('.butt-wallet-balance-view-button');
       this.$sefiWalletBalanceViewButton = $('.sefi-wallet-balance-view-button');
+      this.$profitDistributorTotalShares = $('.profit-distributor-total-shares');
 
       // Listeners
       document.querySelector('.butt-wallet-balance-view-button').addEventListener('click', async (evt) => {
@@ -24,7 +25,7 @@ $(document).ready(function(){
         this.$buttWalletBalanceViewButton.find('.ready').addClass('d-none')
         try {
           await window.keplr.suggestToken(this.chainId, this.buttContractAddress);
-          this.updateUserBalances();
+          this.updateUserInterface();
           $(".butt-wallet-balance-loading").removeClass('d-none')
           this.$buttWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
@@ -43,7 +44,7 @@ $(document).ready(function(){
         this.$sefiWalletBalanceViewButton.find('.ready').addClass('d-none')
         try {
           await window.keplr.suggestToken(this.chainId, this.sefiContractAddress);
-          this.updateUserBalances();
+          this.updateUserInterface();
           $(".sefi-wallet-balance-loading").removeClass('d-none')
           this.$sefiWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
@@ -94,7 +95,7 @@ $(document).ready(function(){
                 },
               );
               this.account = await this.client.getAccount(this.address);
-              this.updateUserBalances()
+              this.updateUserInterface()
             } else {
               throw "Please use the recent version of keplr extension";
             }
@@ -112,7 +113,7 @@ $(document).ready(function(){
         }
       };
 
-      this.updateUserBalances = async () => {
+      this.updateUserInterface = async () => {
         let client =  document.secretNetworkClient(this.environment);
 
         // Check if user has a viewing key for SEFI
@@ -135,6 +136,7 @@ $(document).ready(function(){
 
         // Check if user has a viewing key for BUTT
         try {
+          this.$profitDistributorTotalShares.text('Loading...')
           let buttViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttContractAddress)
           // If they have the buttViewingKey, replace the button with the balance
           let buttBalance = await client.queryContractSmart(this.buttContractAddress, { balance: { address: this.address, key: buttViewingKey } })
@@ -150,6 +152,14 @@ $(document).ready(function(){
           $('.butt-wallet-balance-loading').addClass('d-none')
           $('.butt-wallet-balance-link').removeClass('d-none')
         }
+
+        // Get total shares from profit distributor
+        try {
+          let config = await client.queryContractSmart(this.profitDistributorAddress, {config: {}})
+          this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000) + ' BUTT')
+        } catch(err) {
+          console.log(err)
+        } 
       }
 
       // Query profit distributor
