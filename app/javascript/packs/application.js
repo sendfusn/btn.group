@@ -34,6 +34,7 @@ import '../src/secret_network/address_alias/index'
 import '../src/secret_network/mount_doom/index'
 import '../src/secret_network/smart_contract_interface/index'
 import '../src/secret_network/transactions/index'
+import '../src/secret_network/yield_optimizer/index'
 
 Rails.start()
 ActiveStorage.start()
