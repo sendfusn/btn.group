@@ -83,9 +83,24 @@
                     .col-sm-6
                       Withdraw:
                       %span.profit-distributor-user-shares Loading...
-                      .form-group
-                        %input.form-control
-                      .btn.btn-primary.btn-rg Withdraw
+                      = link_to '#', class: 'd-none butt-profit-distributor-balance-link' do
+                        %span.d-none.butt-wallet-balance
+                        %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
+                          .d-none
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'profitDistributorWithdrawForm' }
+                        .form-group
+                          %input.form-control#profit-distributor-withdraw-input{ name: 'amount' }
+                        %button.btn.btn-primary.btn-rg#profit-distributor-withdraw-button{ type: 'submit' }
+                          .d-none#profit-distributor-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          #profit-distributor-withdraw-button-ready
+                            Withdraw
                     .col-12
                       %hr
                       Fees: nil

@@ -142,6 +142,30 @@ $(document).ready(function(){
         }
       };
 
+      document.profitDistributorWithdrawForm.onsubmit = async (e) => {
+        e.preventDefault()
+        $("#profit-distributor-withdraw-button").prop("disabled", true);
+        $("#profit-distributor-withdraw-button-loading").removeClass("d-none")
+        $("#profit-distributor-withdraw-button-ready").addClass("d-none")
+        try {
+          let amount = document.profitDistributorWithdrawForm.amount.value;
+          let handleMsg = { withdraw: { amount: (amount * 1_000_000).toString() } }
+          let response = await this.client.execute(this.profitDistributorAddress, handleMsg)
+          document.showAlertSuccess("Withdraw successful");
+          document.profitDistributorWithdrawForm.amount.value = ''
+          this.updateUserInterface()
+        }
+        catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)
+        }
+        finally {
+          $("#profit-distributor-withdraw-button").prop("disabled", false);
+          $("#profit-distributor-withdraw-button-loading").addClass("d-none")
+          $("#profit-distributor-withdraw-button-ready").removeClass("d-none")
+        }
+      };
+
       this.updateUserInterface = async () => {
         let client =  document.secretNetworkClient(this.environment);
 
