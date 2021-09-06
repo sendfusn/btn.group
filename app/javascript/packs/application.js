@@ -21,9 +21,11 @@ import '../src/application/home'
 import '../src/features/index'
 
 // NEAR
+import '../src/near/helpers'
 import '../src/near/smart_contract_interface/index'
 
 // SECRET NETWORK
+import '../src/secret_network/helpers'
 import '../src/secret_network/buttcoin/index'
 import '../src/secret_network/address_alias/_profile'
 import '../src/secret_network/address_alias/new'
@@ -35,38 +37,6 @@ import '../src/secret_network/yield_optimizer/index'
 
 Rails.start()
 ActiveStorage.start()
-
-// This needs to be called within an es6 function e.g. onload = () => etc
-document.connectWallet = function(chainId) {
-  // Keplr extension injects the offline signer that is compatible with cosmJS.
-  // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
-  // And it also injects the helper function to `window.keplr`.
-  // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-  if (!window.getOfflineSigner || !window.keplr) {
-    alert("Please install keplr extension");
-  } else {
-    if (window.keplr.experimentalSuggestChain) {
-      (async () => {
-        try {
-          // This method will ask the user whether or not to allow access if they haven't visited this website.
-          // Also, it will request user to unlock the wallet if the wallet is locked.
-          // If you don't request enabling before usage, there is no guarantee that other methods will work.
-          await window.keplr.enable(chainId);
-
-          // @ts-ignore
-          const keplrOfflineSigner = window.getOfflineSigner(chainId);
-          const accounts = await keplrOfflineSigner.getAccounts();
-          this.address = accounts[0].address;
-          $('#address').val(this.address);
-        } catch (error) {
-          console.error(error)
-        }
-      })();
-    } else {
-      alert("Please use the recent version of keplr extension");
-    }
-  }
-}
 
 document.featureContractAddress = function(environment) {
   let contractAddress
@@ -103,47 +73,6 @@ document.prettyPrintJSON = function(json) {
     return '<span class="' + cls + '">' + match + '</span>';
   });
 };
-
-document.nearNetworkChainId = function(environment) {
-  let chainId = 'mainnet'
-  if (environment == 'staging') {
-    chainId = 'testnet'
-  };
-  return chainId
-}
-
-document.nearNetworkHttpUrl = function(environment) {
-  let http_url = 'datahub';
-  if (environment == 'staging') {
-    http_url = http_url + '_staging'
-  };
-  return http_url
-}
-
-// This is only for queries. See the SigningCosmWasmClient for handle actions.
-document.secretNetworkClient = function(environment) {
-  const {
-    CosmWasmClient,
-  } = require('secretjs');
-
-  return new CosmWasmClient(document.secretNetworkHttpUrl(environment))
-}
-
-document.secretNetworkChainId = function(environment) {
-  let chainId = 'secret-2'
-  if (environment == 'staging') {
-    chainId = 'holodeck-2'
-  };
-  return chainId
-}
-
-document.secretNetworkHttpUrl = function(environment) {
-  let http_url = '/datahub';
-  if (environment == 'staging') {
-    http_url = http_url + '_staging'
-  };
-  return http_url
-}
 
 document.showAlertDanger = function(text) {
   if (text != "Error: Request rejected") {
