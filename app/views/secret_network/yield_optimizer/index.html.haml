@@ -62,7 +62,7 @@
                     .col-sm-6
                       Deposit:
                       %span.butt-wallet-balance-loading Loading...
-                      = link_to '#', class: 'd-none butt-wallet-balance-link' do
+                      %span.d-none.butt-wallet-balance-link
                         %span.d-none.butt-wallet-balance
                         %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
                           .d-none
@@ -141,7 +141,7 @@
                     .col-sm-6
                       Balance:
                       %span.sefi-wallet-balance-loading Loading ...
-                      = link_to '#', class: 'd-none sefi-wallet-balance-link' do
+                      %span.d-none.sefi-wallet-balance-link
                         %span.d-none.sefi-wallet-balance
                         %button.btn.btn-light.btn-sm.ml-2.border.sefi-wallet-balance-view-button{ type: 'button' }
                           .d-none.sefi-wallet-balance-loading

@@ -21,9 +21,6 @@ $(document).ready(function(){
       this.$profitDistributorUserShares = $('.profit-distributor-user-shares');
 
       // Listeners
-      document.querySelector('#profit-distributor-collapse .butt-wallet-balance').addEventListener('click', (evt) => {
-        $('#profit-distributor-deposit-input').val($('#profit-distributor-collapse .butt-wallet-balance').text().split(' ')[0])
-      })
       document.querySelector('.butt-wallet-balance-view-button').addEventListener('click', async (evt) => {
         this.$buttWalletBalanceViewButton.prop("disabled", true);
         this.$buttWalletBalanceViewButton.find('.loading').removeClass('d-none')
@@ -166,26 +163,58 @@ $(document).ready(function(){
         }
       };
 
-      this.updateUserInterface = async () => {
-        let client =  document.secretNetworkClient(this.environment);
+      this.updateUserInterface = () => {
+        let client = document.secretNetworkClient(this.environment);
 
-        // User SEFI wallet balance
+        this.updateSefiWalletBalance();
+        this.updateButtWalletBalance();
+        this.updateProfitDistributorTotalShares();
+        this.updateProfitDistributorUserShares();
+        this.updateProfitDistributorUserClaimableProfit();
+      }
+
+      this.updateProfitDistributorUserClaimableProfit = async() => {
+        let client = document.secretNetworkClient(this.environment);
+        
+        // User claimable profit from profit distributor
         try {
-          let sefiViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.sefiContractAddress)
-          // If they have the sefiViewingKey, replace the button with the balance
-          let sefiBalance = await client.queryContractSmart(this.sefiContractAddress, { balance: { address: this.address, key: sefiViewingKey } })
-          this.$sefiWalletBalance.text((sefiBalance['balance']['amount'] / 1_000_000) + ' SEFI')
-          this.$sefiWalletBalance.removeClass('d-none')
-          this.$sefiWalletBalanceViewButton.addClass('d-none')
+          this.$profitDistributorUserClaimableProfit.text('Loading...');
+          let user = await client.queryContractSmart(this.profitDistributorAddress, {claimable_profit: { user_address: this.address}})
+          this.$profitDistributorUserClaimableProfit.text((user['user']['shares'] / 1_000_000) + ' SEFI')
+        } catch(err) {
+          this.$profitDistributorUserClaimableProfit.text('0 SEFI');
+          console.log(err)
+        }
+      }
+
+      this.updateProfitDistributorUserShares = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        // User details from profit distributor
+        try {
+          this.$profitDistributorUserShares.text('Loading...');
+          let user = await client.queryContractSmart(this.profitDistributorAddress, {user: { user_address: this.address}})
+          this.$profitDistributorUserShares.text((user['user']['shares'] / 1_000_000) + ' BUTT')
+        } catch(err) {
+          this.$profitDistributorUserShares.text('0 BUTT');
+          console.log(err)
+        }
+      }
+
+      this.updateProfitDistributorTotalShares = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        // Total shares from profit distributor
+        try {
+          let config = await client.queryContractSmart(this.profitDistributorAddress, {config: {}})
+          this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000) + ' BUTT')
         } catch(err) {
           console.log(err)
-          // If they don't have a viewing key, show the view balance button and hide the balance
-          this.$sefiWalletBalance.addClass('d-none')
-          this.$sefiWalletBalanceViewButton.removeClass('d-none')
-        } finally {
-          $('.sefi-wallet-balance-loading').addClass('d-none')
-          $('.sefi-wallet-balance-link').removeClass('d-none')
         }
+      }
+
+      this.updateButtWalletBalance = async() => {
+        let client = document.secretNetworkClient(this.environment);
 
         // User BUTT wallet balance
         try {
@@ -205,33 +234,27 @@ $(document).ready(function(){
           $('.butt-wallet-balance-loading').addClass('d-none')
           $('.butt-wallet-balance-link').removeClass('d-none')
         }
+      }
 
-        // Total shares from profit distributor
+      this.updateSefiWalletBalance = async () => {
+        let client = document.secretNetworkClient(this.environment);
+
+        // User SEFI wallet balance
         try {
-          let config = await client.queryContractSmart(this.profitDistributorAddress, {config: {}})
-          this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000) + ' BUTT')
+          let sefiViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.sefiContractAddress)
+          // If they have the sefiViewingKey, replace the button with the balance
+          let sefiBalance = await client.queryContractSmart(this.sefiContractAddress, { balance: { address: this.address, key: sefiViewingKey } })
+          this.$sefiWalletBalance.text((sefiBalance['balance']['amount'] / 1_000_000) + ' SEFI')
+          this.$sefiWalletBalance.removeClass('d-none')
+          this.$sefiWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
           console.log(err)
-        }
-
-        // User details from profit distributor
-        try {
-          this.$profitDistributorUserShares.text('Loading...');
-          let user = await client.queryContractSmart(this.profitDistributorAddress, {user: { user_address: this.address}})
-          this.$profitDistributorUserShares.text((user['user']['shares'] / 1_000_000) + ' BUTT')
-        } catch(err) {
-          this.$profitDistributorUserShares.text('0 BUTT');
-          console.log(err)
-        }
-
-        // User claimable profit from profit distributor
-        try {
-          this.$profitDistributorUserClaimableProfit.text('Loading...');
-          let user = await client.queryContractSmart(this.profitDistributorAddress, {claimable_profit: { user_address: this.address}})
-          this.$profitDistributorUserClaimableProfit.text((user['user']['shares'] / 1_000_000) + ' SEFI')
-        } catch(err) {
-          this.$profitDistributorUserClaimableProfit.text('0 SEFI');
-          console.log(err)
+          // If they don't have a viewing key, show the view balance button and hide the balance
+          this.$sefiWalletBalance.addClass('d-none')
+          this.$sefiWalletBalanceViewButton.removeClass('d-none')
+        } finally {
+          $('.sefi-wallet-balance-loading').addClass('d-none')
+          $('.sefi-wallet-balance-link').removeClass('d-none')
         }
       }
 
