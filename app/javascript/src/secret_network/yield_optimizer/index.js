@@ -213,6 +213,29 @@ $(document).ready(function(){
         }
       };
 
+      document.yieldOptimizerBWithdrawForm.onsubmit = async (e) => {
+        e.preventDefault()
+        $("#yield-optimizer-b-withdraw-button").prop("disabled", true);
+        $("#yield-optimizer-b-withdraw-button-loading").removeClass("d-none")
+        $("#yield-optimizer-b-withdraw-button-ready").addClass("d-none")
+        try {
+          let amount = document.yieldOptimizerBWithdrawForm.amount.value;
+          let handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toString() } }
+          let response = await this.client.execute(this.yieldOptimizerBAddress, handleMsg)
+          document.showAlertSuccess("Withdraw successful");
+          document.yieldOptimizerBWithdrawForm.amount.value = ''
+          this.updateUserInterface()
+        }
+        catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)
+        }
+        finally {
+          $("#yield-optimizer-b-withdraw-button").prop("disabled", false);
+          $("#yield-optimizer-b-withdraw-button-loading").addClass("d-none")
+          $("#yield-optimizer-b-withdraw-button-ready").removeClass("d-none")
+        }
+      };
 
       this.updateUserInterface = () => {
         let client = document.secretNetworkClient(this.environment);
