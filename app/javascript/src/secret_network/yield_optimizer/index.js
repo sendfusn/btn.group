@@ -10,17 +10,43 @@ $(document).ready(function(){
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.buttContractAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
+      this.buttSWBTCLPContractAddress = 'secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl';
       this.profitDistributorAddress = 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz';
       this.sefiContractAddress = 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt';
+      this.yieldOptimizerBAddress = 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku';
+      this.$buttSWBTCLPWalletBalance = $('.butt-swbtc-lp-wallet-balance');
       this.$buttWalletBalance = $('.butt-wallet-balance');
       this.$sefiWalletBalance = $('.sefi-wallet-balance');
+      this.$buttSWBTCLPWalletBalanceViewButton = $('.butt-swbtc-lp-wallet-balance-view-button');
       this.$buttWalletBalanceViewButton = $('.butt-wallet-balance-view-button');
       this.$sefiWalletBalanceViewButton = $('.sefi-wallet-balance-view-button');
       this.$profitDistributorTotalShares = $('.profit-distributor-total-shares');
       this.$profitDistributorUserClaimableProfit = $('.profit-distributor-claimable-profit');
       this.$profitDistributorUserShares = $('.profit-distributor-user-shares');
+      this.$yieldOptimizerBClaimableButt = $('.yield-optimizer-b-claimable-butt');
+      this.$yieldOptimizerBTotalShares = $('.yield-optimizer-b-total-shares');
+      this.$yieldOptimizerBUserShares = $('.yield-optimizer-b-user-shares');
 
       // Listeners
+      document.querySelector('.butt-swbtc-lp-wallet-balance-view-button').addEventListener('click', async (evt) => {
+        this.$buttSWBTCLPWalletBalanceViewButton.prop("disabled", true);
+        this.$buttSWBTCLPWalletBalanceViewButton.find('.loading').removeClass('d-none')
+        this.$buttSWBTCLPWalletBalanceViewButton.find('.ready').addClass('d-none')
+        try {
+          await window.keplr.suggestToken(this.chainId, this.buttSWBTCLPContractAddress);
+          this.updateUserInterface();
+          $(".butt-wallet-balance-loading").removeClass('d-none')
+          this.$buttSWBTCLPWalletBalanceViewButton.addClass('d-none')
+        } catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)          
+        } finally {
+          // Show ready ui
+          this.$buttSWBTCLPWalletBalanceViewButton.prop("disabled", false);
+          this.$buttSWBTCLPWalletBalanceViewButton.find('.loading').addClass('d-none')
+          this.$buttSWBTCLPWalletBalanceViewButton.find('.ready').removeClass('d-none')
+        }
+      })
       document.querySelector('.butt-wallet-balance-view-button').addEventListener('click', async (evt) => {
         this.$buttWalletBalanceViewButton.prop("disabled", true);
         this.$buttWalletBalanceViewButton.find('.loading').removeClass('d-none')
@@ -40,25 +66,25 @@ $(document).ready(function(){
           this.$buttWalletBalanceViewButton.find('.ready').removeClass('d-none')
         }
       })
-      document.querySelector('.sefi-wallet-balance-view-button').addEventListener('click', async (evt) => {
-        this.$sefiWalletBalanceViewButton.prop("disabled", true);
-        this.$sefiWalletBalanceViewButton.find('.loading').removeClass('d-none')
-        this.$sefiWalletBalanceViewButton.find('.ready').addClass('d-none')
-        try {
-          await window.keplr.suggestToken(this.chainId, this.sefiContractAddress);
-          this.updateUserInterface();
-          $(".sefi-wallet-balance-loading").removeClass('d-none')
-          this.$sefiWalletBalanceViewButton.addClass('d-none')
-        } catch(err) {
-          let errorDisplayMessage = err;
-          document.showAlertDanger(errorDisplayMessage)          
-        } finally {
-          // Show ready ui
-          this.$sefiWalletBalanceViewButton.prop("disabled", false);
-          this.$sefiWalletBalanceViewButton.find('.loading').addClass('d-none')
-          this.$sefiWalletBalanceViewButton.find('.ready').removeClass('d-none')
-        }
-      })
+      // document.querySelector('.sefi-wallet-balance-view-button').addEventListener('click', async (evt) => {
+      //   this.$sefiWalletBalanceViewButton.prop("disabled", true);
+      //   this.$sefiWalletBalanceViewButton.find('.loading').removeClass('d-none')
+      //   this.$sefiWalletBalanceViewButton.find('.ready').addClass('d-none')
+      //   try {
+      //     await window.keplr.suggestToken(this.chainId, this.sefiContractAddress);
+      //     this.updateUserInterface();
+      //     $(".sefi-wallet-balance-loading").removeClass('d-none')
+      //     this.$sefiWalletBalanceViewButton.addClass('d-none')
+      //   } catch(err) {
+      //     let errorDisplayMessage = err;
+      //     document.showAlertDanger(errorDisplayMessage)          
+      //   } finally {
+      //     // Show ready ui
+      //     this.$sefiWalletBalanceViewButton.prop("disabled", false);
+      //     this.$sefiWalletBalanceViewButton.find('.loading').addClass('d-none')
+      //     this.$sefiWalletBalanceViewButton.find('.ready').removeClass('d-none')
+      //   }
+      // })
 
       document.connectWalletForm.onsubmit = async (e) => {
         e.preventDefault()
@@ -168,9 +194,50 @@ $(document).ready(function(){
 
         this.updateSefiWalletBalance();
         this.updateButtWalletBalance();
+        this.updateBUTTSWBTCLPWalletBalance();
         this.updateProfitDistributorTotalShares();
         this.updateProfitDistributorUserShares();
         this.updateProfitDistributorUserClaimableProfit();
+        this.updateYieldOptimizerBUserShares();
+        this.updateYieldOptimizerBUserClaimableButt();
+        this.updateYieldOptimizerBTotalShares();
+      }
+
+      this.updateYieldOptimizerBUserClaimableButt = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        try {
+          this.$yieldOptimizerBClaimableButt.text('Loading...');
+          let response = await client.queryContractSmart(this.yieldOptimizerBAddress, {pending_buttcoin: { address: this.address, height: 9000000}})
+          this.$yieldOptimizerBClaimableButt.text((response['pending_buttcoin']['amount'] / 1_000_000) + ' BUTT')
+        } catch(err) {
+          this.$yieldOptimizerBClaimableButt.text('0 BUTT');
+          console.log(err)
+        }
+      }
+
+      this.updateYieldOptimizerBUserShares = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        try {
+          this.$yieldOptimizerBUserShares.text('Loading...');
+          let user = await client.queryContractSmart(this.yieldOptimizerBAddress, {user_info: { address: this.address}})
+          this.$yieldOptimizerBUserShares.text((user['user']['shares'] / 1_000_000) + ' BUTT-SWBTC LP')
+        } catch(err) {
+          this.$yieldOptimizerBUserShares.text('0 BUTT-SWBTC LP');
+          console.log(err)
+        }
+      }
+
+      this.updateYieldOptimizerBTotalShares = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        try {
+          let pool = await client.queryContractSmart(this.yieldOptimizerBAddress, {pool: {}})
+          this.$yieldOptimizerBTotalShares.text((pool['pool']['shares_total'] / 1_000_000) + ' BUTT-SWBTC LP')
+        } catch(err) {
+          console.log(err)
+        }
       }
 
       this.updateProfitDistributorUserClaimableProfit = async() => {
@@ -210,6 +277,28 @@ $(document).ready(function(){
           this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000) + ' BUTT')
         } catch(err) {
           console.log(err)
+        }
+      }
+
+      this.updateBUTTSWBTCLPWalletBalance = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        // User BUTT wallet balance
+        try {
+          let key = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttSWBTCLPContractAddress)
+          // If they have the key, replace the button with the balance
+          let balance = await client.queryContractSmart(this.buttSWBTCLPContractAddress, { balance: { address: this.address, key: key } })
+          this.$buttSWBTCLPWalletBalance.text((balance['balance']['amount'] / 1_000_000) + ' BUTT-SWBTC LP')
+          this.$buttSWBTCLPWalletBalance.removeClass('d-none')
+          this.$buttSWBTCLPWalletBalanceViewButton.addClass('d-none')
+        } catch(err) {
+          console.log(err)
+          // If they don't have a viewing key, show the view balance button and hide the balance
+          this.$buttSWBTCLPWalletBalance.addClass('d-none')
+          this.$buttSWBTCLPWalletBalanceViewButton.removeClass('d-none')
+        } finally {
+          $('.butt-swbtc-lp-wallet-balance-loading').addClass('d-none')
+          $('.butt-swbtc-lp-wallet-balance-link').removeClass('d-none')
         }
       }
 

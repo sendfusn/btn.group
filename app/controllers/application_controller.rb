@@ -61,9 +61,9 @@ class ApplicationController < ActionController::Base
             status: 'Live'
           },
           yield_optimizer: {
-            name: 'Yield optimizer (WIP)',
-            show_link: false,
-            status: 'Work in progress'
+            name: 'Yield optimizer',
+            show_link: true,
+            status: 'Live'
           }
         }
       }
