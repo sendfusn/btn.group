@@ -238,8 +238,6 @@ $(document).ready(function(){
       };
 
       this.updateUserInterface = () => {
-        let client = document.secretNetworkClient(this.environment);
-
         this.updateSefiWalletBalance();
         this.updateButtWalletBalance();
         this.updateBUTTSWBTCLPWalletBalance();
@@ -255,8 +253,9 @@ $(document).ready(function(){
         let client = document.secretNetworkClient(this.environment);
 
         try {
+          let height = await client.getHeight();
           this.$yieldOptimizerBClaimableButt.text('Loading...');
-          let response = await client.queryContractSmart(this.yieldOptimizerBAddress, {pending_buttcoin: { address: this.address, height: 9000000}})
+          let response = await client.queryContractSmart(this.yieldOptimizerBAddress, {pending_buttcoin: { address: this.address, height: height}})
           this.$yieldOptimizerBClaimableButt.text((response['pending_buttcoin']['amount'] / 1_000_000) + ' BUTT')
         } catch(err) {
           this.$yieldOptimizerBClaimableButt.text('0 BUTT');
