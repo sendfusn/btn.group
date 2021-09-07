@@ -189,6 +189,31 @@ $(document).ready(function(){
         }
       };
 
+      document.yieldOptimizerBDepositForm.onsubmit = async (e) => {
+        e.preventDefault()
+        $("#yield-optimizer-b-deposit-button").prop("disabled", true);
+        $("#yield-optimizer-b-deposit-button-loading").removeClass("d-none")
+        $("#yield-optimizer-b-deposit-button-ready").addClass("d-none")
+        try {
+          let amount = document.yieldOptimizerBDepositForm.amount.value;
+          let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerBAddress, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
+          let response = await this.client.execute(this.buttSWBTCLPContractAddress, handleMsg)
+          document.showAlertSuccess("Deposit successful");
+          document.yieldOptimizerBDepositForm.amount.value = ''
+          this.updateUserInterface()
+        }
+        catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)
+        }
+        finally {
+          $("#yield-optimizer-b-deposit-button").prop("disabled", false);
+          $("#yield-optimizer-b-deposit-button-loading").addClass("d-none")
+          $("#yield-optimizer-b-deposit-button-ready").removeClass("d-none")
+        }
+      };
+
+
       this.updateUserInterface = () => {
         let client = document.secretNetworkClient(this.environment);
 
@@ -221,8 +246,8 @@ $(document).ready(function(){
 
         try {
           this.$yieldOptimizerBUserShares.text('Loading...');
-          let user = await client.queryContractSmart(this.yieldOptimizerBAddress, {user_info: { address: this.address}})
-          this.$yieldOptimizerBUserShares.text((user['user']['shares'] / 1_000_000) + ' BUTT-SWBTC LP')
+          let response = await client.queryContractSmart(this.yieldOptimizerBAddress, {user_info: { address: this.address}})
+          this.$yieldOptimizerBUserShares.text((response['user_info']['shares'] / 1_000_000) + ' BUTT-SWBTC LP')
         } catch(err) {
           this.$yieldOptimizerBUserShares.text('0 BUTT-SWBTC LP');
           console.log(err)
