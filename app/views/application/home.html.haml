@@ -102,37 +102,3 @@
                 %p
                   = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                   = features[:secret_network][:name]
-  %section.section.bg-white#team
-    .container
-      .section-head.section-head-s7.text-center.wide-auto-sm
-        %h2.title.title-thin Team
-      .nk-block.nk-block-team-list
-        .row.justify-content-center
-          .col-lg-3.col-sm-6
-            .team
-              .team-photo.team-photo-s2
-                %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_277,q_auto,w_230/v1620523941/team/14280689_uuuoab' }
-              %h5.team-name.title.title-sm Steven Chang
-              .block Founder & CTO
-              .team-position Sydney, Australia
-          .col-lg-3.col-sm-6
-            .team
-              .team-photo.team-photo-s2
-                %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_277,q_auto,w_230/v1620884680/team/image000000-3_2_u1df0q' }
-              %h5.team-name.title.title-sm Chris Asnins
-              .block Creative / Marketing
-              .team-position Brisbane, Australia
-          .col-lg-3.col-sm-6
-            .team
-              .team-photo.team-photo-s2
-                %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_270,q_auto,w_230/v1620865143/team/IMG_1589_fbdtba' }
-              %h5.team-name.title.title-sm Ella Kabel
-              .block Data analyst
-              .block.team-position Brisbane, Australia
-          .col-lg-3.col-sm-6
-            .team
-              .team-photo.team-photo-s2
-                %img{ alt: 'team', src: 'https://res.cloudinary.com/hv5cxagki/image/upload/ar_1,c_fill,dpr_2,f_auto,h_270,q_auto,w_230/v1620865143/team/61590b32-91f7-43c4-99e8-1e5230f7f13f_xd1wrj' }
-              %h5.team-name.title.title-sm Fleur Templeton
-              .block Writer / Content
-              .block.team-position Brisbane, Australia
