@@ -96,6 +96,21 @@ $(document).ready(function(){
       //   }
       // })
 
+      this.setClient = (gas) => {
+        this.client = new SigningCosmWasmClient(
+          this.httpUrl,
+          this.address,
+          this.keplrOfflineSigner,
+          window.getEnigmaUtils(this.chainId),
+          {
+            exec: {
+              amount: [{ amount: gas, denom: 'uscrt' }],
+              gas: gas,
+            },
+          },
+        );
+      }
+
       document.connectWalletForm.onsubmit = async (e) => {
         e.preventDefault()
         $("#connect-wallet-button").prop("disabled", true);
@@ -117,21 +132,10 @@ $(document).ready(function(){
               await window.keplr.enable(this.chainId);
 
               // @ts-ignore
-              const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
-              const accounts = await keplrOfflineSigner.getAccounts();
+              this.keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+              const accounts = await this.keplrOfflineSigner.getAccounts();
               this.address = accounts[0].address;
-              this.client = new SigningCosmWasmClient(
-                this.httpUrl,
-                this.address,
-                keplrOfflineSigner,
-                window.getEnigmaUtils(this.chainId),
-                {
-                  exec: {
-                    amount: [{ amount: '350000', denom: 'uscrt' }],
-                    gas: '350000',
-                  },
-                },
-              );
+              this.setClient('350000');
               this.account = await this.client.getAccount(this.address);
               this.updateUserInterface()
             } else {
@@ -153,6 +157,7 @@ $(document).ready(function(){
 
       document.profitDistributorDepositForm.onsubmit = async (e) => {
         e.preventDefault()
+        this.setClient('300000');
         $("#profit-distributor-deposit-button").prop("disabled", true);
         $("#profit-distributor-deposit-button-loading").removeClass("d-none")
         $("#profit-distributor-deposit-button-ready").addClass("d-none")
@@ -177,6 +182,7 @@ $(document).ready(function(){
 
       document.profitDistributorWithdrawForm.onsubmit = async (e) => {
         e.preventDefault()
+        this.setClient('300000');
         $("#profit-distributor-withdraw-button").prop("disabled", true);
         $("#profit-distributor-withdraw-button-loading").removeClass("d-none")
         $("#profit-distributor-withdraw-button-ready").addClass("d-none")
@@ -201,6 +207,7 @@ $(document).ready(function(){
 
       document.yieldOptimizerBDepositForm.onsubmit = async (e) => {
         e.preventDefault()
+        this.setClient('600000');
         $("#yield-optimizer-b-deposit-button").prop("disabled", true);
         $("#yield-optimizer-b-deposit-button-loading").removeClass("d-none")
         $("#yield-optimizer-b-deposit-button-ready").addClass("d-none")
@@ -210,7 +217,10 @@ $(document).ready(function(){
           let response = await this.client.execute(this.buttSWBTCLPContractAddress, handleMsg)
           document.showAlertSuccess("Deposit successful");
           document.yieldOptimizerBDepositForm.amount.value = ''
-          this.updateUserInterface()
+          this.updateYieldOptimizerBUserShares();
+          this.updateYieldOptimizerBUserClaimableButt();
+          this.updateYieldOptimizerBTotalShares();
+          this.updateBUTTSWBTCLPWalletBalance()
         }
         catch(err) {
           let errorDisplayMessage = err;
@@ -225,6 +235,7 @@ $(document).ready(function(){
 
       document.yieldOptimizerBWithdrawForm.onsubmit = async (e) => {
         e.preventDefault()
+        this.setClient('600000');
         $("#yield-optimizer-b-withdraw-button").prop("disabled", true);
         $("#yield-optimizer-b-withdraw-button-loading").removeClass("d-none")
         $("#yield-optimizer-b-withdraw-button-ready").addClass("d-none")
@@ -234,7 +245,10 @@ $(document).ready(function(){
           let response = await this.client.execute(this.yieldOptimizerBAddress, handleMsg)
           document.showAlertSuccess("Withdraw successful");
           document.yieldOptimizerBWithdrawForm.amount.value = ''
-          this.updateUserInterface()
+          this.updateYieldOptimizerBUserShares();
+          this.updateYieldOptimizerBUserClaimableButt();
+          this.updateYieldOptimizerBTotalShares();
+          this.updateBUTTSWBTCLPWalletBalance()
         }
         catch(err) {
           let errorDisplayMessage = err;
@@ -266,7 +280,7 @@ $(document).ready(function(){
           let height = await client.getHeight();
           this.$yieldOptimizerBClaimableButt.text('Loading...');
           let response = await client.queryContractSmart(this.yieldOptimizerBAddress, {pending_buttcoin: { address: this.address, height: height}})
-          this.$yieldOptimizerBClaimableButt.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en'))
+          this.$yieldOptimizerBClaimableButt.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
         } catch(err) {
           this.$yieldOptimizerBClaimableButt.text('0');
           console.log(err)
@@ -279,7 +293,7 @@ $(document).ready(function(){
         try {
           this.$yieldOptimizerBUserShares.text('Loading...');
           let response = await client.queryContractSmart(this.yieldOptimizerBAddress, {user_info: { address: this.address}})
-          this.$yieldOptimizerBUserShares.text((response['user_info']['shares'] / 1_000_000).toLocaleString('en') + ' BUTT-SWBTC LP')
+          this.$yieldOptimizerBUserShares.text((response['user_info']['shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' BUTT-SWBTC LP')
         } catch(err) {
           this.$yieldOptimizerBUserShares.text('0 BUTT-SWBTC LP');
           console.log(err)
@@ -291,7 +305,7 @@ $(document).ready(function(){
 
         try {
           let pool = await client.queryContractSmart(this.yieldOptimizerBAddress, {pool: {}})
-          this.$yieldOptimizerBTotalShares.text((pool['pool']['shares_total'] / 1_000_000).toLocaleString('en') + ' BUTT-SWBTC LP')
+          this.$yieldOptimizerBTotalShares.text((pool['pool']['shares_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' BUTT-SWBTC LP')
         } catch(err) {
           console.log(err)
         }
@@ -304,7 +318,7 @@ $(document).ready(function(){
         try {
           this.$profitDistributorUserClaimableProfit.text('Loading...');
           let user = await client.queryContractSmart(this.profitDistributorAddress, {claimable_profit: { user_address: this.address}})
-          this.$profitDistributorUserClaimableProfit.text((user['user']['shares'] / 1_000_000).toLocaleString('en'))
+          this.$profitDistributorUserClaimableProfit.text((user['user']['shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
         } catch(err) {
           this.$profitDistributorUserClaimableProfit.text('0');
           console.log(err)
@@ -318,7 +332,7 @@ $(document).ready(function(){
         try {
           this.$profitDistributorUserShares.text('Loading...');
           let user = await client.queryContractSmart(this.profitDistributorAddress, {user: { user_address: this.address}})
-          this.$profitDistributorUserShares.text((user['user']['shares'] / 1_000_000).toLocaleString('en') + ' BUTT')
+          this.$profitDistributorUserShares.text((user['user']['shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' BUTT')
         } catch(err) {
           this.$profitDistributorUserShares.text('0 BUTT');
           console.log(err)
@@ -332,7 +346,7 @@ $(document).ready(function(){
         try {
           this.$profitDistributorTotalShares.text('Loading...')
           let config = await client.queryContractSmart(this.profitDistributorAddress, {config: {}})
-          this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000).toLocaleString('en') + ' BUTT')
+          this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' BUTT')
         } catch(err) {
           console.log(err)
         }
@@ -343,11 +357,12 @@ $(document).ready(function(){
 
         // User BUTT wallet balance
         try {
+          this.$buttSWBTCLPWalletBalance.addClass('d-none')
           this.$buttSWBTCLPWalletBalanceLoading.removeClass('d-none')
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttSWBTCLPContractAddress)
           // If they have the key, replace the button with the balance
           let balance = await client.queryContractSmart(this.buttSWBTCLPContractAddress, { balance: { address: this.address, key: key } })
-          this.$buttSWBTCLPWalletBalance.text((balance['balance']['amount'] / 1_000_000).toLocaleString('en') + ' BUTT-SWBTC LP')
+          this.$buttSWBTCLPWalletBalance.text((balance['balance']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' BUTT-SWBTC LP')
           this.$buttSWBTCLPWalletBalance.removeClass('d-none')
           this.$buttSWBTCLPWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
@@ -371,7 +386,7 @@ $(document).ready(function(){
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttContractAddress)
           // If they have the key, replace the button with the balance
           let buttBalance = await client.queryContractSmart(this.buttContractAddress, { balance: { address: this.address, key: key } })
-          this.$buttWalletBalance.text((buttBalance['balance']['amount'] / 1_000_000).toLocaleString('en') + ' BUTT')
+          this.$buttWalletBalance.text((buttBalance['balance']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' BUTT')
           this.$buttWalletBalance.removeClass('d-none')
           this.$buttWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
@@ -393,7 +408,7 @@ $(document).ready(function(){
           let sefiViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.sefiContractAddress)
           // If they have the sefiViewingKey, replace the button with the balance
           let sefiBalance = await client.queryContractSmart(this.sefiContractAddress, { balance: { address: this.address, key: sefiViewingKey } })
-          this.$sefiWalletBalance.text((sefiBalance['balance']['amount'] / 1_000_000).toLocaleString('en') + ' SEFI')
+          this.$sefiWalletBalance.text((sefiBalance['balance']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' SEFI')
           this.$sefiWalletBalance.removeClass('d-none')
           this.$sefiWalletBalanceViewButton.addClass('d-none')
         } catch(err) {
