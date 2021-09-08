@@ -28,18 +28,19 @@
               .card.mb-3
                 .card-body
                   .row
-                    .col-sm-3
+                    .col-sm-2
                       = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-none d-sm-inline', style: 'height: 24px;')
+                      %br
                       BUTT
                       %br
                       Profit distributor
-                    .col-sm-4
+                    .col-sm-5
                       Wallet:
                       %span.butt-wallet-balance-loading Loading...
                       %span.d-none.butt-wallet-balance-link
                         %span.d-none.butt-wallet-balance
                         %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
-                          .d-none
+                          .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .ready
@@ -51,10 +52,10 @@
                       %br
                       Claimable SEFI:
                       %span.profit-distributor-claimable-profit Loading...
-                    .col-sm-3
+                    .col-sm-4
                       TVL:
                       %span.profit-distributor-total-shares Loading...
-                    .col-sm-2
+                    .col-sm-1
                       %h3= link_to '>', '#profit-distributor-collapse', 'data-toggle' => 'collapse'
                   .row.collapse#profit-distributor-collapse
                     .col-12
@@ -65,7 +66,7 @@
                       %span.d-none.butt-wallet-balance-link
                         %span.d-none.butt-wallet-balance
                         %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
-                          .d-none
+                          .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .ready
@@ -101,16 +102,14 @@
                             %em Loading...
                           #profit-distributor-withdraw-button-ready
                             Withdraw
-                    .col-12
-                      %hr
-                      Fees: nil
               // Yield optimizer B
               .card
                 .card-body
                   .row
-                    .col-sm-3
+                    .col-sm-2
                       = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-0 d-none d-sm-inline', style: 'height: 24px;')
                       = cl_image_tag('logos/wbtc_ethereum_iwfxwu', crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-none d-sm-inline', style: 'height: 24px;')
+                      %br
                       BUTT-sWBTC LP
                       %br
                       Earn Buttcoin
@@ -120,7 +119,7 @@
                       %span.d-none.butt-swbtc-lp-wallet-balance-link
                         %span.d-none.butt-swbtc-lp-wallet-balance
                         %button.btn.btn-light.btn-sm.ml-2.border.butt-swbtc-lp-wallet-balance-view-button{ type: 'button' }
-                          .d-none
+                          .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .ready
@@ -132,27 +131,27 @@
                       %br
                       Claimable BUTT:
                       %span.yield-optimizer-b-claimable-butt Loading...
-                    .col-sm-2
+                    .col-sm-3
                       Buttcoin per block: 1.4
                       %br
                       Starting block: 5,060,000
                       %br
                       End block: 15,060,000
-                    .col-sm-2
+                    .col-sm-3
                       TVL:
                       %span.yield-optimizer-b-total-shares Loading...
-                    .col-sm-2
+                    .col-sm-1
                       %h3= link_to '>', '#yield-optimizer-b-collapse', 'data-toggle' => 'collapse'
                   .row.collapse#yield-optimizer-b-collapse
                     .col-12
                       %hr
                     .col-sm-6
-                      Balance:
+                      Deposit:
                       %span.butt-swbtc-lp-wallet-balance-loading Loading ...
                       %span.d-none.butt-swbtc-lp-wallet-balance-link
                         %span.d-none.butt-swbtc-lp-wallet-balance
                         %button.btn.btn-light.btn-sm.ml-2.border.butt-swbtc-lp-wallet-balance-view-button{ type: 'button' }
-                          .d-none.butt-swbtc-lp-wallet-balance-loading
+                          .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .ready
@@ -188,10 +187,6 @@
                             %em Loading...
                           #yield-optimizer-b-withdraw-button-ready
                             Withdraw
-                    .col-12
-                      %hr
-                      Fees: 0
-
               // SEFI yield optimizer
               -# .card.d-none
               -#   .card-body
@@ -227,7 +222,7 @@
               -#       .col-12
               -#         %hr
               -#       .col-sm-6
-              -#         Balance:
+              -#         Deposit:
               -#         %span.sefi-wallet-balance-loading Loading ...
               -#         %span.d-none.sefi-wallet-balance-link
               -#           %span.d-none.sefi-wallet-balance

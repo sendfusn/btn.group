@@ -9,62 +9,72 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
+      // Address
       this.buttContractAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.buttSWBTCLPContractAddress = 'secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl';
       this.profitDistributorAddress = 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz';
       this.sefiContractAddress = 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt';
       this.yieldOptimizerBAddress = 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku';
+
       this.$buttSWBTCLPWalletBalance = $('.butt-swbtc-lp-wallet-balance');
-      this.$buttWalletBalance = $('.butt-wallet-balance');
-      this.$sefiWalletBalance = $('.sefi-wallet-balance');
+      this.$buttSWBTCLPWalletBalanceLoading = $('.butt-swbtc-lp-wallet-balance-loading');
       this.$buttSWBTCLPWalletBalanceViewButton = $('.butt-swbtc-lp-wallet-balance-view-button');
+
+      this.$buttWalletBalance = $('.butt-wallet-balance');
+      this.$buttWalletBalanceLoading = $('.butt-wallet-balance-loading');
       this.$buttWalletBalanceViewButton = $('.butt-wallet-balance-view-button');
-      this.$sefiWalletBalanceViewButton = $('.sefi-wallet-balance-view-button');
+
       this.$profitDistributorTotalShares = $('.profit-distributor-total-shares');
       this.$profitDistributorUserClaimableProfit = $('.profit-distributor-claimable-profit');
       this.$profitDistributorUserShares = $('.profit-distributor-user-shares');
+
+      this.$sefiWalletBalance = $('.sefi-wallet-balance');
+      this.$sefiWalletBalanceViewButton = $('.sefi-wallet-balance-view-button');
+
       this.$yieldOptimizerBClaimableButt = $('.yield-optimizer-b-claimable-butt');
       this.$yieldOptimizerBTotalShares = $('.yield-optimizer-b-total-shares');
       this.$yieldOptimizerBUserShares = $('.yield-optimizer-b-user-shares');
 
       // Listeners
-      document.querySelector('.butt-swbtc-lp-wallet-balance-view-button').addEventListener('click', async (evt) => {
-        this.$buttSWBTCLPWalletBalanceViewButton.prop("disabled", true);
-        this.$buttSWBTCLPWalletBalanceViewButton.find('.loading').removeClass('d-none')
-        this.$buttSWBTCLPWalletBalanceViewButton.find('.ready').addClass('d-none')
-        try {
-          await window.keplr.suggestToken(this.chainId, this.buttSWBTCLPContractAddress);
-          this.updateUserInterface();
-          $(".butt-wallet-balance-loading").removeClass('d-none')
-          this.$buttSWBTCLPWalletBalanceViewButton.addClass('d-none')
-        } catch(err) {
-          let errorDisplayMessage = err;
-          document.showAlertDanger(errorDisplayMessage)          
-        } finally {
-          // Show ready ui
-          this.$buttSWBTCLPWalletBalanceViewButton.prop("disabled", false);
-          this.$buttSWBTCLPWalletBalanceViewButton.find('.loading').addClass('d-none')
-          this.$buttSWBTCLPWalletBalanceViewButton.find('.ready').removeClass('d-none')
-        }
+      document.querySelectorAll('.butt-swbtc-lp-wallet-balance-view-button').forEach(item => {
+        item.addEventListener('click', async(evt) => {
+          this.$buttSWBTCLPWalletBalanceViewButton.prop("disabled", true);
+          this.$buttSWBTCLPWalletBalanceViewButton.find('.loading').removeClass('d-none')
+          this.$buttSWBTCLPWalletBalanceViewButton.find('.ready').addClass('d-none')
+          try {
+            await window.keplr.suggestToken(this.chainId, this.buttSWBTCLPContractAddress);
+            this.updateBUTTSWBTCLPWalletBalance();
+            this.$buttSWBTCLPWalletBalanceViewButton.addClass('d-none')
+          } catch(err) {
+            let errorDisplayMessage = err;
+            document.showAlertDanger(errorDisplayMessage)          
+          } finally {
+            // Show ready ui
+            this.$buttSWBTCLPWalletBalanceViewButton.prop("disabled", false);
+            this.$buttSWBTCLPWalletBalanceViewButton.find('.loading').addClass('d-none')
+            this.$buttSWBTCLPWalletBalanceViewButton.find('.ready').removeClass('d-none')
+          }
+        })
       })
-      document.querySelector('.butt-wallet-balance-view-button').addEventListener('click', async (evt) => {
-        this.$buttWalletBalanceViewButton.prop("disabled", true);
-        this.$buttWalletBalanceViewButton.find('.loading').removeClass('d-none')
-        this.$buttWalletBalanceViewButton.find('.ready').addClass('d-none')
-        try {
-          await window.keplr.suggestToken(this.chainId, this.buttContractAddress);
-          this.updateUserInterface();
-          $(".butt-wallet-balance-loading").removeClass('d-none')
-          this.$buttWalletBalanceViewButton.addClass('d-none')
-        } catch(err) {
-          let errorDisplayMessage = err;
-          document.showAlertDanger(errorDisplayMessage)          
-        } finally {
-          // Show ready ui
-          this.$buttWalletBalanceViewButton.prop("disabled", false);
-          this.$buttWalletBalanceViewButton.find('.loading').addClass('d-none')
-          this.$buttWalletBalanceViewButton.find('.ready').removeClass('d-none')
-        }
+      document.querySelectorAll('.butt-wallet-balance-view-button').forEach(item => {
+        item.addEventListener('click', async (evt) => {
+          this.$buttWalletBalanceViewButton.prop("disabled", true);
+          this.$buttWalletBalanceViewButton.find('.loading').removeClass('d-none')
+          this.$buttWalletBalanceViewButton.find('.ready').addClass('d-none')
+          try {
+            await window.keplr.suggestToken(this.chainId, this.buttContractAddress);
+            this.updateButtWalletBalance();
+            this.$buttWalletBalanceViewButton.addClass('d-none')
+          } catch(err) {
+            let errorDisplayMessage = err;
+            document.showAlertDanger(errorDisplayMessage)          
+          } finally {
+            // Show ready ui
+            this.$buttWalletBalanceViewButton.prop("disabled", false);
+            this.$buttWalletBalanceViewButton.find('.loading').addClass('d-none')
+            this.$buttWalletBalanceViewButton.find('.ready').removeClass('d-none')
+          }
+        })
       })
       // document.querySelector('.sefi-wallet-balance-view-button').addEventListener('click', async (evt) => {
       //   this.$sefiWalletBalanceViewButton.prop("disabled", true);
@@ -117,8 +127,8 @@ $(document).ready(function(){
                 window.getEnigmaUtils(this.chainId),
                 {
                   exec: {
-                    amount: [{ amount: '270000', denom: 'uscrt' }],
-                    gas: '270000',
+                    amount: [{ amount: '350000', denom: 'uscrt' }],
+                    gas: '350000',
                   },
                 },
               );
@@ -320,6 +330,7 @@ $(document).ready(function(){
 
         // Total shares from profit distributor
         try {
+          this.$profitDistributorTotalShares.text('Loading...')
           let config = await client.queryContractSmart(this.profitDistributorAddress, {config: {}})
           this.$profitDistributorTotalShares.text((config['config']['total_shares'] / 1_000_000) + ' BUTT')
         } catch(err) {
@@ -332,6 +343,7 @@ $(document).ready(function(){
 
         // User BUTT wallet balance
         try {
+          this.$buttSWBTCLPWalletBalanceLoading.removeClass('d-none')
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttSWBTCLPContractAddress)
           // If they have the key, replace the button with the balance
           let balance = await client.queryContractSmart(this.buttSWBTCLPContractAddress, { balance: { address: this.address, key: key } })
@@ -344,7 +356,8 @@ $(document).ready(function(){
           this.$buttSWBTCLPWalletBalance.addClass('d-none')
           this.$buttSWBTCLPWalletBalanceViewButton.removeClass('d-none')
         } finally {
-          $('.butt-swbtc-lp-wallet-balance-loading').addClass('d-none')
+          this.$buttSWBTCLPWalletBalanceLoading.addClass('d-none')
+          this.$buttSWBTCLPWalletBalanceViewButton.find('.loading').addClass('d-none')
           $('.butt-swbtc-lp-wallet-balance-link').removeClass('d-none')
         }
       }
@@ -354,10 +367,10 @@ $(document).ready(function(){
 
         // User BUTT wallet balance
         try {
-          this.$profitDistributorTotalShares.text('Loading...')
-          let buttViewingKey = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttContractAddress)
-          // If they have the buttViewingKey, replace the button with the balance
-          let buttBalance = await client.queryContractSmart(this.buttContractAddress, { balance: { address: this.address, key: buttViewingKey } })
+          this.$buttWalletBalanceLoading.removeClass('d-none')
+          let key = await window.keplr.getSecret20ViewingKey(this.chainId, this.buttContractAddress)
+          // If they have the key, replace the button with the balance
+          let buttBalance = await client.queryContractSmart(this.buttContractAddress, { balance: { address: this.address, key: key } })
           this.$buttWalletBalance.text((buttBalance['balance']['amount'] / 1_000_000) + ' BUTT')
           this.$buttWalletBalance.removeClass('d-none')
           this.$buttWalletBalanceViewButton.addClass('d-none')
@@ -367,7 +380,7 @@ $(document).ready(function(){
           this.$buttWalletBalance.addClass('d-none')
           this.$buttWalletBalanceViewButton.removeClass('d-none')
         } finally {
-          $('.butt-wallet-balance-loading').addClass('d-none')
+          this.$buttWalletBalanceLoading.addClass('d-none')
           $('.butt-wallet-balance-link').removeClass('d-none')
         }
       }
