@@ -266,9 +266,9 @@ $(document).ready(function(){
           let height = await client.getHeight();
           this.$yieldOptimizerBClaimableButt.text('Loading...');
           let response = await client.queryContractSmart(this.yieldOptimizerBAddress, {pending_buttcoin: { address: this.address, height: height}})
-          this.$yieldOptimizerBClaimableButt.text((response['pending_buttcoin']['amount'] / 1_000_000) + ' BUTT')
+          this.$yieldOptimizerBClaimableButt.text(response['pending_buttcoin']['amount'] / 1_000_000)
         } catch(err) {
-          this.$yieldOptimizerBClaimableButt.text('0 BUTT');
+          this.$yieldOptimizerBClaimableButt.text('0');
           console.log(err)
         }
       }
@@ -304,9 +304,9 @@ $(document).ready(function(){
         try {
           this.$profitDistributorUserClaimableProfit.text('Loading...');
           let user = await client.queryContractSmart(this.profitDistributorAddress, {claimable_profit: { user_address: this.address}})
-          this.$profitDistributorUserClaimableProfit.text((user['user']['shares'] / 1_000_000) + ' SEFI')
+          this.$profitDistributorUserClaimableProfit.text(user['user']['shares'] / 1_000_000)
         } catch(err) {
-          this.$profitDistributorUserClaimableProfit.text('0 SEFI');
+          this.$profitDistributorUserClaimableProfit.text('0');
           console.log(err)
         }
       }

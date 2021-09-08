@@ -28,40 +28,23 @@
               .card.mb-3
                 .card-body
                   .row
-                    .col-sm-2
-                      = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-none d-sm-inline', style: 'height: 24px;')
+                    .col-sm-7
+                      %span.mr-2 Deposit BUTT
+                      %span= cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline', style: 'height: 24px;')
                       %br
-                      BUTT
-                      %br
-                      Profit distributor
+                      %span.mr-2 Earn SEFI
+                      %span= cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline')
                     .col-sm-5
-                      Wallet:
-                      %span.butt-wallet-balance-loading Loading...
-                      %span.d-none.butt-wallet-balance-link
-                        %span.d-none.butt-wallet-balance
-                        %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            .fas.fa-search.mr-1
-                            View
-                      %br
-                      Deposited:
-                      %span.profit-distributor-user-shares Loading...
+                      TVL:
+                      %span.profit-distributor-total-shares Loading...
                       %br
                       Claimable SEFI:
                       %span.profit-distributor-claimable-profit Loading...
-                    .col-sm-4
-                      TVL:
-                      %span.profit-distributor-total-shares Loading...
-                    .col-sm-1
-                      %h3= link_to '>', '#profit-distributor-collapse', 'data-toggle' => 'collapse'
-                  .row.collapse#profit-distributor-collapse
+                  .row
                     .col-12
                       %hr
                     .col-sm-6
-                      Deposit:
+                      Depositable:
                       %span.butt-wallet-balance-loading Loading...
                       %span.d-none.butt-wallet-balance-link
                         %span.d-none.butt-wallet-balance
@@ -82,7 +65,7 @@
                           #profit-distributor-deposit-button-ready
                             Deposit
                     .col-sm-6
-                      Withdraw:
+                      Withdrawable:
                       %span.profit-distributor-user-shares Loading...
                       = link_to '#', class: 'd-none butt-profit-distributor-balance-link' do
                         %span.d-none.butt-wallet-balance
@@ -106,47 +89,24 @@
               .card
                 .card-body
                   .row
-                    .col-sm-2
-                      = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-0 d-none d-sm-inline', style: 'height: 24px;')
-                      = cl_image_tag('logos/wbtc_ethereum_iwfxwu', crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-none d-sm-inline', style: 'height: 24px;')
+                    .col-sm-7
+                      %span.mr-2 Deposit BUTT-sWBTC LP
+                      %span= cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-0 d-sm-inline', style: 'height: 24px;')
+                      %span= cl_image_tag('logos/wbtc_ethereum_iwfxwu', crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-sm-inline', style: 'height: 24px;')
                       %br
-                      BUTT-sWBTC LP
-                      %br
-                      Earn Buttcoin
-                    .col-sm-3
-                      Wallet:
-                      %span.butt-swbtc-lp-wallet-balance-loading Loading ...
-                      %span.d-none.butt-swbtc-lp-wallet-balance-link
-                        %span.d-none.butt-swbtc-lp-wallet-balance
-                        %button.btn.btn-light.btn-sm.ml-2.border.butt-swbtc-lp-wallet-balance-view-button{ type: 'button' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            .fas.fa-search.mr-1
-                            View
-                      %br
-                      Deposited:
-                      %span.yield-optimizer-b-user-shares Loading...
+                      %span.mr-2 Earn BUTT
+                      = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline', style: 'height: 24px;')
+                    .col-sm-5
+                      TVL:
+                      %span.yield-optimizer-b-total-shares Loading...
                       %br
                       Claimable BUTT:
                       %span.yield-optimizer-b-claimable-butt Loading...
-                    .col-sm-3
-                      Buttcoin per block: 1.4
-                      %br
-                      Starting block: 5,060,000
-                      %br
-                      End block: 15,060,000
-                    .col-sm-3
-                      TVL:
-                      %span.yield-optimizer-b-total-shares Loading...
-                    .col-sm-1
-                      %h3= link_to '>', '#yield-optimizer-b-collapse', 'data-toggle' => 'collapse'
-                  .row.collapse#yield-optimizer-b-collapse
+                  .row
                     .col-12
                       %hr
                     .col-sm-6
-                      Deposit:
+                      Depositable:
                       %span.butt-swbtc-lp-wallet-balance-loading Loading ...
                       %span.d-none.butt-swbtc-lp-wallet-balance-link
                         %span.d-none.butt-swbtc-lp-wallet-balance
@@ -167,7 +127,7 @@
                           #yield-optimizer-b-deposit-button-ready
                             Deposit
                     .col-sm-6
-                      Withdraw:
+                      Withdrawable:
                       %span.yield-optimizer-b-user-shares Loading...
                       = link_to '#', class: 'd-none yield-optimizer-b-balance-link' do
                         %span.d-none.butt-wallet-balance
