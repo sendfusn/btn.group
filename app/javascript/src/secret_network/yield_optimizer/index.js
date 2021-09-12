@@ -167,6 +167,7 @@ $(document).ready(function(){
         $("#profit-distributor-deposit-button-ready").addClass("d-none")
         try {
           let amount = document.profitDistributorDepositForm.amount.value;
+          amount = amount.replace(/,/g, '');
           let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.profitDistributorAddress, msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=' } }
           let response = await this.client.execute(this.buttContractAddress, handleMsg)
           document.showAlertSuccess("Deposit successful");
@@ -192,6 +193,7 @@ $(document).ready(function(){
         $("#profit-distributor-withdraw-button-ready").addClass("d-none")
         try {
           let amount = document.profitDistributorWithdrawForm.amount.value;
+          amount = amount.replace(/,/g, '');
           let handleMsg = { withdraw: { amount: (amount * 1_000_000).toString() } }
           let response = await this.client.execute(this.profitDistributorAddress, handleMsg)
           document.showAlertSuccess("Withdraw successful");
@@ -217,6 +219,7 @@ $(document).ready(function(){
         $("#spy-sefi-v2-deposit-button-ready").addClass("d-none")
         try {
           let amount = document.spySEFIV2DepositForm.amount.value;
+          amount = amount.replace(/,/g, '');
           let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerSpySEFIV2Address, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
           let response = await this.client.execute(this.sefiContractAddress, handleMsg)
           document.showAlertSuccess("Deposit successful");
@@ -242,6 +245,7 @@ $(document).ready(function(){
         $("#spy-sefi-v2-withdraw-button-ready").addClass("d-none")
         try {
           let amount = document.spySEFIV2WithdrawForm.amount.value;
+          amount = amount.replace(/,/g, '');
           let handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toString() } }
           let response = await this.client.execute(this.yieldOptimizerSpySEFIV2Address, handleMsg)
           document.showAlertSuccess("Withdraw successful");
@@ -267,6 +271,7 @@ $(document).ready(function(){
         $("#yield-optimizer-b-deposit-button-ready").addClass("d-none")
         try {
           let amount = document.yieldOptimizerBDepositForm.amount.value;
+          amount = amount.replace(/,/g, '');
           let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerBAddress, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
           let response = await this.client.execute(this.buttSWBTCLPContractAddress, handleMsg)
           document.showAlertSuccess("Deposit successful");
@@ -295,6 +300,7 @@ $(document).ready(function(){
         $("#yield-optimizer-b-withdraw-button-ready").addClass("d-none")
         try {
           let amount = document.yieldOptimizerBWithdrawForm.amount.value;
+          amount = amount.replace(/,/g, '');
           let handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toString() } }
           let response = await this.client.execute(this.yieldOptimizerBAddress, handleMsg)
           document.showAlertSuccess("Withdraw successful");
