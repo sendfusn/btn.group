@@ -15,6 +15,7 @@ $(document).ready(function(){
       this.profitDistributorAddress = 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz';
       this.sefiContractAddress = 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt';
       this.yieldOptimizerBAddress = 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku';
+      this.yieldOptimizerSpySEFIV2Address = 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej';
 
       this.$buttSWBTCLPWalletBalance = $('.butt-swbtc-lp-wallet-balance');
       this.$buttSWBTCLPWalletBalanceLoading = $('.butt-swbtc-lp-wallet-balance-loading');
@@ -30,6 +31,9 @@ $(document).ready(function(){
 
       this.$sefiWalletBalance = $('.sefi-wallet-balance');
       this.$sefiWalletBalanceViewButton = $('.sefi-wallet-balance-view-button');
+
+      this.$yieldOptimizerSpySEFIV2Total = $('.yield-optimizer-spy-sefi-v2-total');
+      this.$yieldOptimizerSpySEFIV2UserWithdrawable = $('.yield-optimizer-spy-sefi-v2-user-withdrawable');
 
       this.$yieldOptimizerBClaimableButt = $('.yield-optimizer-b-claimable-butt');
       this.$yieldOptimizerBTotalShares = $('.yield-optimizer-b-total-shares');
@@ -63,7 +67,7 @@ $(document).ready(function(){
           this.$buttWalletBalanceViewButton.find('.ready').addClass('d-none')
           try {
             await window.keplr.suggestToken(this.chainId, this.buttContractAddress);
-            this.updateButtWalletBalance();
+            this.updateBUTTWalletBalance();
             this.$buttWalletBalanceViewButton.addClass('d-none')
           } catch(err) {
             let errorDisplayMessage = err;
@@ -76,25 +80,24 @@ $(document).ready(function(){
           }
         })
       })
-      // document.querySelector('.sefi-wallet-balance-view-button').addEventListener('click', async (evt) => {
-      //   this.$sefiWalletBalanceViewButton.prop("disabled", true);
-      //   this.$sefiWalletBalanceViewButton.find('.loading').removeClass('d-none')
-      //   this.$sefiWalletBalanceViewButton.find('.ready').addClass('d-none')
-      //   try {
-      //     await window.keplr.suggestToken(this.chainId, this.sefiContractAddress);
-      //     this.updateUserInterface();
-      //     $(".sefi-wallet-balance-loading").removeClass('d-none')
-      //     this.$sefiWalletBalanceViewButton.addClass('d-none')
-      //   } catch(err) {
-      //     let errorDisplayMessage = err;
-      //     document.showAlertDanger(errorDisplayMessage)          
-      //   } finally {
-      //     // Show ready ui
-      //     this.$sefiWalletBalanceViewButton.prop("disabled", false);
-      //     this.$sefiWalletBalanceViewButton.find('.loading').addClass('d-none')
-      //     this.$sefiWalletBalanceViewButton.find('.ready').removeClass('d-none')
-      //   }
-      // })
+      document.querySelector('.sefi-wallet-balance-view-button').addEventListener('click', async (evt) => {
+        this.$sefiWalletBalanceViewButton.prop("disabled", true);
+        this.$sefiWalletBalanceViewButton.find('.loading').removeClass('d-none')
+        this.$sefiWalletBalanceViewButton.find('.ready').addClass('d-none')
+        try {
+          await window.keplr.suggestToken(this.chainId, this.sefiContractAddress);
+          this.updateSEFIWalletBalance();
+          this.$sefiWalletBalanceViewButton.addClass('d-none')
+        } catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)          
+        } finally {
+          // Show ready ui
+          this.$sefiWalletBalanceViewButton.prop("disabled", false);
+          this.$sefiWalletBalanceViewButton.find('.loading').addClass('d-none')
+          this.$sefiWalletBalanceViewButton.find('.ready').removeClass('d-none')
+        }
+      })
 
       this.setClient = (gas) => {
         this.client = new SigningCosmWasmClient(
@@ -205,6 +208,56 @@ $(document).ready(function(){
         }
       };
 
+      document.spySEFIV2DepositForm.onsubmit = async (e) => {
+        e.preventDefault()
+        this.setClient('1100000');
+        $("#spy-sefi-v2-deposit-button").prop("disabled", true);
+        $("#spy-sefi-v2-deposit-button-loading").removeClass("d-none")
+        $("#spy-sefi-v2-deposit-button-ready").addClass("d-none")
+        try {
+          let amount = document.spySEFIV2DepositForm.amount.value;
+          let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerSpySEFIV2Address, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
+          let response = await this.client.execute(this.sefiContractAddress, handleMsg)
+          document.showAlertSuccess("Deposit successful");
+          document.spySEFIV2DepositForm.amount.value = ''
+          this.updateUserInterface()
+        }
+        catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)
+        }
+        finally {
+          $("#spy-sefi-v2-deposit-button").prop("disabled", false);
+          $("#spy-sefi-v2-deposit-button-loading").addClass("d-none")
+          $("#spy-sefi-v2-deposit-button-ready").removeClass("d-none")
+        }
+      };
+
+      document.spySEFIV2WithdrawForm.onsubmit = async (e) => {
+        e.preventDefault()
+        this.setClient('1300000');
+        $("#spy-sefi-v2-withdraw-button").prop("disabled", true);
+        $("#spy-sefi-v2-withdraw-button-loading").removeClass("d-none")
+        $("#spy-sefi-v2-withdraw-button-ready").addClass("d-none")
+        try {
+          let amount = document.spySEFIV2WithdrawForm.amount.value;
+          let handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toString() } }
+          let response = await this.client.execute(this.yieldOptimizerSpySEFIV2Address, handleMsg)
+          document.showAlertSuccess("Withdraw successful");
+          document.spySEFIV2WithdrawForm.amount.value = ''
+          this.updateUserInterface()
+        }
+        catch(err) {
+          let errorDisplayMessage = err;
+          document.showAlertDanger(errorDisplayMessage)
+        }
+        finally {
+          $("#spy-sefi-v2-withdraw-button").prop("disabled", false);
+          $("#spy-sefi-v2-withdraw-button-loading").addClass("d-none")
+          $("#spy-sefi-v2-withdraw-button-ready").removeClass("d-none")
+        }
+      };
+
       document.yieldOptimizerBDepositForm.onsubmit = async (e) => {
         e.preventDefault()
         this.setClient('600000');
@@ -262,15 +315,50 @@ $(document).ready(function(){
       };
 
       this.updateUserInterface = () => {
-        this.updateSefiWalletBalance();
-        this.updateButtWalletBalance();
+        this.updateSEFIWalletBalance();
+        this.updateBUTTWalletBalance();
         this.updateBUTTSWBTCLPWalletBalance();
         this.updateProfitDistributorTotalShares();
         this.updateProfitDistributorUserShares();
         this.updateProfitDistributorUserClaimableProfit();
+        this.updateYieldOptimizerSpySEFIV2Total();
+        this.updateYieldOptimizerSpySEFIV2UserWithdrawable();
         this.updateYieldOptimizerBUserShares();
         this.updateYieldOptimizerBUserClaimableButt();
         this.updateYieldOptimizerBTotalShares();
+      }
+
+      this.updateYieldOptimizerSpySEFIV2Total = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        try {
+          this.$yieldOptimizerSpySEFIV2Total.text('Loading...')
+          let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {pool: {}})
+          this.$yieldOptimizerSpySEFIV2Total.text((response['pool']['incentivized_token_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' SEFI')
+        } catch(err) {
+          console.log(err)
+        }
+      }
+
+      this.updateYieldOptimizerSpySEFIV2UserWithdrawable = async() => {
+        let client = document.secretNetworkClient(this.environment);
+
+        try {
+          this.$yieldOptimizerSpySEFIV2UserWithdrawable.text('Loading...');
+          let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {user_info: { address: this.address}})
+          let poolResponse = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {pool: {}})
+          let userShares = Number(response['user_info']['shares']);
+          let incentivizedTokenTotal = Number(poolResponse['pool']['incentivized_token_total']);
+          let sharesTotal = Number(poolResponse['pool']['shares_total']);
+          let userWithdrawable = 0;
+          if (sharesTotal > 0) {
+            userWithdrawable = userShares * incentivizedTokenTotal / sharesTotal;
+          };
+          this.$yieldOptimizerSpySEFIV2UserWithdrawable.text((userWithdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' SEFI')
+        } catch(err) {
+          this.$yieldOptimizerSpySEFIV2UserWithdrawable.text('0 SEFI');
+          console.log(err)
+        }
       }
 
       this.updateYieldOptimizerBUserClaimableButt = async() => {
@@ -377,7 +465,7 @@ $(document).ready(function(){
         }
       }
 
-      this.updateButtWalletBalance = async() => {
+      this.updateBUTTWalletBalance = async() => {
         let client = document.secretNetworkClient(this.environment);
 
         // User BUTT wallet balance
@@ -400,7 +488,7 @@ $(document).ready(function(){
         }
       }
 
-      this.updateSefiWalletBalance = async () => {
+      this.updateSEFIWalletBalance = async () => {
         let client = document.secretNetworkClient(this.environment);
 
         // User SEFI wallet balance

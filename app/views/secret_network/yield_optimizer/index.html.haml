@@ -7,6 +7,8 @@
             .col-12
               .alert.alert-warning-alt
                 Warning! These pools are not private.
+                %br
+                Using smart contracts, tokens, and crypto is always a risk. DYOR before investing.
           .row.mb-3
             .col-12
               .card
@@ -28,6 +30,8 @@
               .card.mb-3
                 .card-body
                   .row
+                    .col-12
+                      %h5 Profit distributor
                     .col-sm-7
                       %span.mr-2 Deposit BUTT
                       %span= cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline', style: 'height: 24px;')
@@ -67,15 +71,6 @@
                     .col-sm-6
                       Withdrawable:
                       %span.profit-distributor-user-shares Loading...
-                      = link_to '#', class: 'd-none butt-profit-distributor-balance-link' do
-                        %span.d-none.butt-wallet-balance
-                        %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
-                          .d-none
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            .fas.fa-search.mr-1
-                            View
                       %form{ name: 'profitDistributorWithdrawForm' }
                         .form-group
                           %input.form-control{ name: 'amount' }
@@ -86,9 +81,11 @@
                           #profit-distributor-withdraw-button-ready
                             Withdraw
               // Yield optimizer B
-              .card
+              .card.mb-3
                 .card-body
                   .row
+                    .col-12
+                      %h5 Earn Buttcoin
                     .col-sm-7
                       %span.mr-2 Deposit BUTT-sWBTC LP
                       %span= cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-0 d-sm-inline', style: 'height: 24px;')
@@ -129,15 +126,6 @@
                     .col-sm-6
                       Withdrawable:
                       %span.yield-optimizer-b-user-shares Loading...
-                      = link_to '#', class: 'd-none yield-optimizer-b-balance-link' do
-                        %span.d-none.butt-wallet-balance
-                        %button.btn.btn-light.btn-sm.ml-2.border.butt-wallet-balance-view-button{ type: 'button' }
-                          .d-none
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            .fas.fa-search.mr-1
-                            View
                       %form{ name: 'yieldOptimizerBWithdrawForm' }
                         .form-group
                           %input.form-control{ name: 'amount' }
@@ -148,60 +136,58 @@
                           #yield-optimizer-b-withdraw-button-ready
                             Withdraw
               // SEFI yield optimizer
-              -# .card.d-none
-              -#   .card-body
-              -#     .row
-              -#       .col-sm-3
-              -#         = cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-              -#         SEFI
-              -#         %br
-              -#         = link_to 'SECRETSWAP', 'https://app.secretswap.io/earn', target: '_blank', rel: 'noopener'
-              -#       .col-sm-3
-              -#         Wallet:
-              -#         %span.sefi-wallet-balance-loading Loading ...
-              -#         %span.d-none.sefi-wallet-balance-link
-              -#           %span.d-none.sefi-wallet-balance
-              -#           %button.btn.btn-light.btn-sm.ml-2.border.sefi-wallet-balance-view-button{ type: 'button' }
-              -#             .d-none
-              -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-              -#               %em Loading...
-              -#             .ready
-              -#               .fas.fa-search.mr-1
-              -#               View
-              -#         %br
-              -#         Deposited: 0
-              -#       .col-sm-2
-              -#         APY: #{rand(1000).to_f / 10}%
-              -#         %br
-              -#         Daily: #{rand(1000).to_f / 10}%
-              -#       .col-sm-2
-              -#         TVL: $#{rand(1000).to_f / 10}M
-              -#       .col-sm-2
-              -#         %h3= link_to '>', '#collapseExample', 'data-toggle' => 'collapse'
-              -#     .row.collapse#collapseExample
-              -#       .col-12
-              -#         %hr
-              -#       .col-sm-6
-              -#         Deposit:
-              -#         %span.sefi-wallet-balance-loading Loading ...
-              -#         %span.d-none.sefi-wallet-balance-link
-              -#           %span.d-none.sefi-wallet-balance
-              -#           %button.btn.btn-light.btn-sm.ml-2.border.sefi-wallet-balance-view-button{ type: 'button' }
-              -#             .d-none.sefi-wallet-balance-loading
-              -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-              -#               %em Loading...
-              -#             .ready
-              -#               .fas.fa-search.mr-1
-              -#               View
-              -#         .form-group
-              -#           %input.form-control
-              -#         .btn.btn-primary Deposit
-              -#       .col-sm-6
-              -#         Withdraw: 0 SEFI
-              -#         .form-group
-              -#           %input.form-control
-              -#         .btn.btn-primary Withdraw
-              -#       .col-12
-              -#         %hr
-              -#         Fees: 5% of yield sent to profit distributor (smart contract)
+              .card
+                .card-body
+                  .row
+                    .col-sm-7
+                      %span.mr-2 Deposit SEFI
+                      %span= cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                      %br
+                      %span.mr-2 Earn SEFI
+                      %span= cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline')
+                      %br
+                      %span via
+                      = link_to 'SECRETSWAP', 'https://app.secretswap.io/earn', target: '_blank', rel: 'noopener'
+                    .col-sm-5
+                      TVL:
+                      %span.yield-optimizer-spy-sefi-v2-total Loading...
+                  .row
+                    .col-12
+                      %hr
+                    .col-sm-6
+                      Deposit:
+                      %span.sefi-wallet-balance-loading Loading ...
+                      %span.d-none.sefi-wallet-balance-link
+                        %span.d-none.sefi-wallet-balance
+                        %button.btn.btn-light.btn-sm.ml-2.border.sefi-wallet-balance-view-button{ type: 'button' }
+                          .d-none.sefi-wallet-balance-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'spySEFIV2DepositForm' }
+                        .form-group
+                          %input.form-control{ name: 'amount' }
+                        %button.btn.btn-primary.btn-rg#spy-sefi-v2-deposit-button{ type: 'submit' }
+                          .d-none#spy-sefi-v2-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          #spy-sefi-v2-deposit-button-ready
+                            Deposit
+                    .col-sm-6
+                      Withdraw:
+                      %span.yield-optimizer-spy-sefi-v2-user-withdrawable Loading ...
+                      %form{ name: 'spySEFIV2WithdrawForm' }
+                        .form-group
+                          %input.form-control{ name: 'amount' }
+                        %button.btn.btn-primary.btn-rg#spy-sefi-v2-withdraw-button{ type: 'submit' }
+                          .d-none#spy-sefi-v2-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          #spy-sefi-v2-withdraw-button-ready
+                            Withdraw
+                    .col-12
+                      %hr
+                      Fees: 5% of yield sent to profit distributor (smart contract)
   .nk-ovm.shape-q
