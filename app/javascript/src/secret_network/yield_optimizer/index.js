@@ -16,6 +16,7 @@ $(document).ready(function(){
       this.sefiContractAddress = 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt';
       this.yieldOptimizerBAddress = 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku';
       this.yieldOptimizerSpySEFIV2Address = 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej';
+      this.spySEFIV2Address = 'secret1wuhypk53eukm9xvlzu2z30rtyqfh74qtqgvlvr';
 
       this.$buttSWBTCLPWalletBalance = $('.butt-swbtc-lp-wallet-balance');
       this.$buttSWBTCLPWalletBalanceLoading = $('.butt-swbtc-lp-wallet-balance-loading');
@@ -345,6 +346,9 @@ $(document).ready(function(){
 
         try {
           this.$yieldOptimizerSpySEFIV2UserWithdrawable.text('Loading...');
+          let height = await client.getHeight();
+          let rewardsResponse = await client.queryContractSmart(this.spySEFIV2Address, {rewards: { address: this.yieldOptimizerSpySEFIV2Address, key: 'DoTheRightThing.', height: height }});
+          let totalClaimableRewards = Number(rewardsResponse['rewards']['rewards']);
           let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {user_info: { address: this.address}})
           let poolResponse = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {pool: {}})
           let userShares = Number(response['user_info']['shares']);
@@ -352,9 +356,10 @@ $(document).ready(function(){
           let sharesTotal = Number(poolResponse['pool']['shares_total']);
           let userWithdrawable = 0;
           if (sharesTotal > 0) {
-            userWithdrawable = userShares * incentivizedTokenTotal / sharesTotal;
+            let userRewards = totalClaimableRewards * 9_500 / 10_000 * userShares / sharesTotal
+            userWithdrawable = userShares * incentivizedTokenTotal / sharesTotal + userRewards;
           };
-          this.$yieldOptimizerSpySEFIV2UserWithdrawable.text((userWithdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' SEFI')
+          this.$yieldOptimizerSpySEFIV2UserWithdrawable.text((userWithdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' SEFI')
         } catch(err) {
           this.$yieldOptimizerSpySEFIV2UserWithdrawable.text('0 SEFI');
           console.log(err)
