@@ -213,7 +213,7 @@ $(document).ready(function(){
 
       document.spySEFIV2DepositForm.onsubmit = async (e) => {
         e.preventDefault()
-        this.setClient('1100000');
+        this.setClient('1800000');
         $("#spy-sefi-v2-deposit-button").prop("disabled", true);
         $("#spy-sefi-v2-deposit-button-loading").removeClass("d-none")
         $("#spy-sefi-v2-deposit-button-ready").addClass("d-none")
@@ -416,8 +416,8 @@ $(document).ready(function(){
         // User claimable profit from profit distributor
         try {
           this.$profitDistributorUserClaimableProfit.text('Loading...');
-          let user = await client.queryContractSmart(this.profitDistributorAddress, {claimable_profit: { user_address: this.address}})
-          this.$profitDistributorUserClaimableProfit.text((user['user']['shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
+          let response = await client.queryContractSmart(this.profitDistributorAddress, {claimable_profit: { user_address: this.address}})
+          this.$profitDistributorUserClaimableProfit.text((response['claimable_profit']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
         } catch(err) {
           this.$profitDistributorUserClaimableProfit.text('0');
           console.log(err)
