@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  if($("#secret-network-mount-doom").length) {
+  if($("#secret-network-address-alias-index").length) {
     window.onload = async () => {
       document.aliasSearchForm.onsubmit = () => {
         $("#search-button").prop("disabled", true);
