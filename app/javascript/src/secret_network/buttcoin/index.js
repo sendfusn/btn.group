@@ -8,7 +8,7 @@ $(document).ready(function(){
       // Contracts
       this.buttContractAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.sefiContractAddress = 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt';
-      this.tokenSaleContractAddress = 'secret1j6fpcsxp2ts9d8rsh3uj9srvdh0vvg4ewe7tsa';
+      this.tokenSaleContractAddress = 'secret16jue55lf0kt7uz00kzg309ljzttjps2uy9zesc';
       this.environment = 'production'
       this.chainId = document.secretNetworkChainId(this.environment)
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
@@ -186,9 +186,9 @@ $(document).ready(function(){
 
         try {
           let tokenSaleContractConfig = await client.queryContractSmart(this.tokenSaleContractAddress, { config: {} })
-          let totalRaised = parseFloat(tokenSaleContractConfig['total_raised']) * 3 / 1000000
-          $('#total-raised').text(totalRaised.toLocaleString() + '/3,000,000')
-          let percentageSwapped = Math.round(totalRaised / 3_000_000 * 100)
+          let totalRaised = parseFloat(tokenSaleContractConfig['total_raised']) / 1000000
+          $('#total-raised').text(totalRaised.toLocaleString() + '/11,000,006')
+          let percentageSwapped = Math.round(totalRaised / 11_000_006 * 100)
           $('#percentage-swapped').text(percentageSwapped + '%')
           $('#swap-progress-percent').attr("data-percent", percentageSwapped);
           $('#swap-progress-percent').attr("style", 'width: ' + percentageSwapped + '%;');
