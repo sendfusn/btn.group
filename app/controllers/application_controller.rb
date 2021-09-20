@@ -43,8 +43,8 @@ class ApplicationController < ActionController::Base
           },
           mount_doom: {
             name: 'Mount Doom',
-            show_link: false,
-            status: 'Work in progress',
+            show_link: true,
+            status: 'Live',
             contracts: {
               production: 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq',
               staging: 'secret15nfjk7zfh54damy09d2jegkrw4rq33d3zug4a5'
