@@ -13,3 +13,11 @@ document.nearNetworkHttpUrl = function(environment) {
   };
   return http_url
 }
+
+document.nearNetworkWebWalletUrl = function(environment) {
+  let http_url = 'https://wallet.near.org/';
+  if (environment == 'staging') {
+    http_url = 'https://wallet.testnet.near.org/'
+  };
+  return http_url
+}

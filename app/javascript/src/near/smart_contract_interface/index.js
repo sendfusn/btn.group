@@ -56,6 +56,7 @@ $(document).ready(function(){
                 keyStore: new keyStores.BrowserLocalStorageKeyStore(),
                 nodeUrl: httpUrl,
               };
+              document.config = config;
               const near = await connect(config);
               const account = await near.account("stevenchang.near");
               result = await account.viewFunction(
@@ -64,6 +65,24 @@ $(document).ready(function(){
                 params,
               )
             } else {
+              const {connect, keyStores, WalletConnection} = require("near-api-js");
+              // account ID associated with the transaction
+              let config = {
+                networkId: chainId,
+                keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+                nodeUrl: httpUrl,
+                walletUrl: document.nearNetworkWebWalletUrl(environment),
+              };
+              const near = await connect(config);
+              const wallet = new WalletConnection(near);
+              if(!wallet.isSignedIn()) return wallet.requestSignIn({ contractId: contractAddress })
+              const optionsCall = {
+                  contractId: contractAddress,
+                  methodName: functionName,
+                  args: params
+              }
+              const account = await wallet.account()
+              result = await account.functionCall(optionsCall);
             }
 
             // Display results
