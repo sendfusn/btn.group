@@ -11,10 +11,12 @@ Rails.application.routes.draw do
     resources :address_alias, only: %i[index new]
     resources :buttcoin, only: :index
     resources :mount_doom, only: :index
-    resources :profit_distributor, only: %i[index]
+    resources :profit_distributor, only: :index
     resources :smart_contract_interface, only: :index
     resources :transactions, only: :index
     resources :yield_optimizer, only: :index
+
+    get 'why_some_of_our_contracts_are_not_private' => 'pages#why_some_of_our_contracts_are_not_private'
   end
 
   # === DATAHUB REVERSE PROXY ===
