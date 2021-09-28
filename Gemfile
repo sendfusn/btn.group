@@ -16,6 +16,7 @@ gem 'haml-rails', '~> 2.0'
 gem 'immigrant'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
+gem 'nokogiri', '>= 1.12.5'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma'
