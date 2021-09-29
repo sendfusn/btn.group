@@ -8,6 +8,14 @@
   }
 }
 
+.logo-avatar {
+  border-radius: 500rem;
+  box-shadow: inset 0px 6px 10px rgba(0, 0, 0, 0.08);
+  height: 24px;
+  vertical-align: top;
+  width: 24px;
+}
+
 //=== DATATABLES ===
 .dataTables_wrapper {
   .toolbar {

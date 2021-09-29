@@ -36,7 +36,7 @@
                       %h5 Profit distributor
                     .col-sm-7
                       %span.mr-2 Deposit BUTT
-                      %span= cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline', style: 'height: 24px;')
+                      %span= image_tag 'https://siasky.net/AAB1xbkxt91L2pStCCLRe-s2BG0N03K8OCugzeG8MSAP5g', class: 'logo-avatar'
                       %br
                       %span.mr-2 Earn SEFI
                       %span= cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline')
@@ -90,11 +90,11 @@
                       %h5 Earn Buttcoin
                     .col-sm-7
                       %span.mr-2 Deposit BUTT-sWBTC LP
-                      %span= cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-0 d-sm-inline', style: 'height: 24px;')
-                      %span= cl_image_tag('logos/wbtc_ethereum_iwfxwu', crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-sm-inline', style: 'height: 24px;')
+                      %span= image_tag 'https://siasky.net/AAB1xbkxt91L2pStCCLRe-s2BG0N03K8OCugzeG8MSAP5g', class: 'logo-avatar'
+                      %span= cl_image_tag('logos/wbtc_ethereum_iwfxwu', crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'align-top d-sm-inline', style: 'height: 24px;')
                       %br
                       %span.mr-2 Earn BUTT
-                      = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2, fetch_format: :auto, quality: :auto, class: 'mr-2 d-sm-inline', style: 'height: 24px;')
+                      = image_tag 'https://siasky.net/AAB1xbkxt91L2pStCCLRe-s2BG0N03K8OCugzeG8MSAP5g', class: 'logo-avatar'
                     .col-sm-5
                       TVL:
                       %span.yield-optimizer-b-total-shares Loading...
@@ -138,7 +138,7 @@
                           #yield-optimizer-b-withdraw-button-ready
                             Withdraw
               // SEFI yield optimizer
-              .card.d-none
+              .card
                 .card-body
                   .row
                     .col-sm-7
@@ -150,10 +150,15 @@
                       %br
                       %span via
                       = link_to 'SECRETSWAP', 'https://app.secretswap.io/earn', target: '_blank', rel: 'noopener'
-                    .col-sm-5
+                    .col-sm-5.d-none
                       TVL:
                       %span.yield-optimizer-spy-sefi-v2-total Loading...
                   .row
+                    .col-12
+                      %hr
+                    .col-12
+                      %h5 This will be live once Secret Swap initiates their new earn contracts.
+                  .row.d-none
                     .col-12
                       %hr
                     .col-sm-6

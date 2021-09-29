@@ -15,8 +15,8 @@ $(document).ready(function(){
       this.profitDistributorAddress = 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz';
       this.sefiContractAddress = 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt';
       this.yieldOptimizerBAddress = 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku';
-      this.yieldOptimizerSpySEFIV2Address = 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej';
-      this.spySEFIV2Address = 'secret1wuhypk53eukm9xvlzu2z30rtyqfh74qtqgvlvr';
+      this.yieldOptimizerSpySEFIAddress = 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej';
+      this.spySEFIAddress = 'secret1wuhypk53eukm9xvlzu2z30rtyqfh74qtqgvlvr';
 
       this.$buttSWBTCLPWalletBalance = $('.butt-swbtc-lp-wallet-balance');
       this.$buttSWBTCLPWalletBalanceLoading = $('.butt-swbtc-lp-wallet-balance-loading');
@@ -220,7 +220,7 @@ $(document).ready(function(){
         try {
           let amount = document.spySEFIV2DepositForm.amount.value;
           amount = amount.replace(/,/g, '');
-          let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerSpySEFIV2Address, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
+          let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerSpySEFIAddress, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
           let response = await this.client.execute(this.sefiContractAddress, handleMsg)
           document.showAlertSuccess("Deposit successful");
           document.spySEFIV2DepositForm.amount.value = ''
@@ -247,7 +247,7 @@ $(document).ready(function(){
           let amount = document.spySEFIV2WithdrawForm.amount.value;
           amount = amount.replace(/,/g, '');
           let handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toString() } }
-          let response = await this.client.execute(this.yieldOptimizerSpySEFIV2Address, handleMsg)
+          let response = await this.client.execute(this.yieldOptimizerSpySEFIAddress, handleMsg)
           document.showAlertSuccess("Withdraw successful");
           document.spySEFIV2WithdrawForm.amount.value = ''
           this.updateUserInterface()
@@ -340,7 +340,7 @@ $(document).ready(function(){
 
         try {
           this.$yieldOptimizerSpySEFIV2Total.text('Loading...')
-          let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {pool: {}})
+          let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIAddress, {pool: {}})
           this.$yieldOptimizerSpySEFIV2Total.text((response['pool']['incentivized_token_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' SEFI')
         } catch(err) {
           console.log(err)
@@ -353,10 +353,10 @@ $(document).ready(function(){
         try {
           this.$yieldOptimizerSpySEFIV2UserWithdrawable.text('Loading...');
           let height = await client.getHeight();
-          let rewardsResponse = await client.queryContractSmart(this.spySEFIV2Address, {rewards: { address: this.yieldOptimizerSpySEFIV2Address, key: 'DoTheRightThing.', height: height }});
+          let rewardsResponse = await client.queryContractSmart(this.spySEFIAddress, {rewards: { address: this.yieldOptimizerSpySEFIAddress, key: 'DoTheRightThing.', height: height }});
           let totalClaimableRewards = Number(rewardsResponse['rewards']['rewards']);
-          let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {user_info: { address: this.address}})
-          let poolResponse = await client.queryContractSmart(this.yieldOptimizerSpySEFIV2Address, {pool: {}})
+          let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIAddress, {user_info: { address: this.address}})
+          let poolResponse = await client.queryContractSmart(this.yieldOptimizerSpySEFIAddress, {pool: {}})
           let userShares = Number(response['user_info']['shares']);
           let incentivizedTokenTotal = Number(poolResponse['pool']['incentivized_token_total']);
           let sharesTotal = Number(poolResponse['pool']['shares_total']);
