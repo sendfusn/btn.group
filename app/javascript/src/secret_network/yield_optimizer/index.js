@@ -74,10 +74,20 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AABTb2I_YOOB4x-PZDltgjTiuP92_fFwo5Z0MMLADr_OWg',
           symbol: 'sLINK(ETH)'
         },
+        socean_eth: {
+          address: 'secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps',
+          logo: 'https://siasky.net/GAB8EwAVnvjYW8ynq6zCMyBJpRrpMyEBbOWrSanyGm2veA',
+          symbol: 'sOCEAN(ETH)'
+        },
         srsr_eth: {
           address: 'secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un',
           logo: 'https://siasky.net/AAC6eLf4brMjdRRTPePDbuq4QgxLn2HIN9Kd66DQHJGPvg',
           symbol: 'sRSR(ETH)'
+        },
+        srune_eth: {
+          address: 'secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24',
+          logo: 'https://siasky.net/AADMji-JPI3F-JuP4G4eMfnq4ilKyxWrVR1-2d5BCosk3g',
+          symbol: 'sRUNE(ETH)'
         },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
@@ -114,11 +124,23 @@ $(document).ready(function(){
           asset_two: 'slink_eth',
           symbol: 'sSCRT-sLINK(ETH)'
         },
+        sscrt_socean_eth_lp: {
+          address: 'secret13ns5mzms67jttq5cnv76j5lgtd0xf69sv4sdpq',
+          asset_one: 'sscrt',
+          asset_two: 'socean_eth',
+          symbol: 'sSCRT-sOCEAN(ETH)'
+        },
         sscrt_srsr_eth_lp: {
           address: 'secret1g97kxc857asparfgdudzkzyq5akd74xmup52uj',
           asset_one: 'sscrt',
           asset_two: 'srsr_eth',
           symbol: 'sSCRT-sRSR(ETH)'
+        },
+        sscrt_srune_eth_lp: {
+          address: 'secret1j8vs8v729vregluuzr5n4zr77ztaleqtqcw026',
+          asset_one: 'sscrt',
+          asset_two: 'srune_eth',
+          symbol: 'sSCRT-sRUNE(ETH)'
         },
         sscrt_susdt_eth_lp: {
           address: 'secret1gyct75dc2pf20vtj3l86k2jxg79mffyh9ljve3',
@@ -326,6 +348,26 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sscrt_srsr_eth_lp'],
           earn_token: cryptocurrencies['sscrt_srsr_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sOCEAN(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_socean_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_socean_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sRUNE(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_srune_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_srune_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
