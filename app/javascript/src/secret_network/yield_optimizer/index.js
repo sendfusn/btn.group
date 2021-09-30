@@ -25,6 +25,22 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AABeTmPkxJ8CuGzgqCQM7sR0Y-3rTPZHJo4Jc9KObuTyBQ',
           symbol: 'SEFI'
         },
+        seth_bsc: {
+          address: 'secret1m6a72200733a7jnm76xrznh9cpmt4kf5ql0a6t',
+          logo: 'https://siasky.net/AADSgvwvMSA3YjxpWGBtObf1zODXGCut10bt66Jr8DUhcw',
+          symbol: 'sETH(BSC)'
+        },
+        seth_eth: {
+          address: 'secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw',
+          logo: 'https://siasky.net/AAAyGsQVk6vF6wYWUUvFMqkVX4LlNpCg432ucBCAgw9Hyw',
+          symbol: 'sETH(ETH)'
+        },
+        seth_eth_seth_bsc_lp: {
+          address: 'secret1ry9s8al2w2my4z7jqhtve9fqkesqapn0mrjr3z',
+          asset_one: 'seth_eth',
+          asset_two: 'seth_bsc',
+          symbol: 'sETH(ETH)-sETH(BSC)'
+        },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
           logo: 'https://siasky.net/AADY8NK1wfSi7DUdrDRk9k9Gr80EeTWnLoq1mLIAbGg3_A',
@@ -83,12 +99,22 @@ $(document).ready(function(){
           protocol: protocols['secret_swap'],
           withdraw_gas: '1300000',
         },
-        // Secret swap sUSDC(ETH)-sUSDC(BSC)- UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        // Secret swap sUSDC(ETH)-sUSDC(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
           address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
           earn_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sETH(ETH)-sETH(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['seth_eth_seth_bsc_lp'],
+          earn_token: cryptocurrencies['seth_eth_seth_bsc_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
