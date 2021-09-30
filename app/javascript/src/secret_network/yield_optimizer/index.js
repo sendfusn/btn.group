@@ -69,6 +69,11 @@ $(document).ready(function(){
           asset_two: 'swbtc',
           symbol: 'sETH(ETH)-sWBTC(ETH)'
         },
+        slink_eth: {
+          address: 'secret1xcrf2vvxcz8dhtgzgsd0zmzlf9g320ea2rhdjw',
+          logo: 'https://siasky.net/AABTb2I_YOOB4x-PZDltgjTiuP92_fFwo5Z0MMLADr_OWg',
+          symbol: 'sLINK(ETH)'
+        },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
           logo: 'https://siasky.net/AACL5VVg8IZC4H_9cTiaPSzvD8hXmaJYXFc2t8piZgf5Ig',
@@ -97,6 +102,12 @@ $(document).ready(function(){
           asset_one: 'sscrt',
           asset_two: 'seth_eth',
           symbol: 'sSCRT-sETH(ETH)'
+        },
+        sscrt_slink_eth_lp: {
+          address: 'secret1x8244a7l2fr642axef0sl5z3jw2pn75rp36hxs',
+          asset_one: 'sscrt',
+          asset_two: 'slink_eth',
+          symbol: 'sSCRT-sLINK(ETH)'          
         },
         sscrt_susdt_eth_lp: {
           address: 'secret1gyct75dc2pf20vtj3l86k2jxg79mffyh9ljve3',
@@ -284,6 +295,16 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
           earn_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sLINK(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_slink_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_slink_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
