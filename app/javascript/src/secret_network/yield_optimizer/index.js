@@ -74,6 +74,11 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AABTb2I_YOOB4x-PZDltgjTiuP92_fFwo5Z0MMLADr_OWg',
           symbol: 'sLINK(ETH)'
         },
+        srsr_eth: {
+          address: 'secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un',
+          logo: 'https://siasky.net/AAC6eLf4brMjdRRTPePDbuq4QgxLn2HIN9Kd66DQHJGPvg',
+          symbol: 'sRSR(ETH)'
+        },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
           logo: 'https://siasky.net/AACL5VVg8IZC4H_9cTiaPSzvD8hXmaJYXFc2t8piZgf5Ig',
@@ -107,7 +112,13 @@ $(document).ready(function(){
           address: 'secret1x8244a7l2fr642axef0sl5z3jw2pn75rp36hxs',
           asset_one: 'sscrt',
           asset_two: 'slink_eth',
-          symbol: 'sSCRT-sLINK(ETH)'          
+          symbol: 'sSCRT-sLINK(ETH)'
+        },
+        sscrt_srsr_eth_lp: {
+          address: 'secret1g97kxc857asparfgdudzkzyq5akd74xmup52uj',
+          asset_one: 'sscrt',
+          asset_two: 'srsr_eth',
+          symbol: 'sSCRT-sRSR(ETH)'
         },
         sscrt_susdt_eth_lp: {
           address: 'secret1gyct75dc2pf20vtj3l86k2jxg79mffyh9ljve3',
@@ -305,6 +316,16 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sscrt_slink_eth_lp'],
           earn_token: cryptocurrencies['sscrt_slink_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sRSR(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_srsr_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_srsr_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
