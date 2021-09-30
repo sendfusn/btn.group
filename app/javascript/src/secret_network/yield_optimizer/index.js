@@ -219,7 +219,7 @@ $(document).ready(function(){
             try {
               let amount = document[value['address'] + 'DepositForm'].amount.value;
               amount = amount.replace(/,/g, '');
-              let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.profitDistributorAddress, msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=' } }
+              let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: value['address'], msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=' } }
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
