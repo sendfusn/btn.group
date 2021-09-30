@@ -20,10 +20,26 @@ $(document).ready(function(){
           asset_two: 'swbtc',
           symbol: 'BUTT-sWBTC LP'
         },
+        sbnb_bsc: {
+          address: 'secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5',
+          logo: 'https://siasky.net/AACF1KK4sIYJAvdd7DcxQUJdW_1n8lnb7l7k2k1TYZoeag',
+          symbol: 'sBNB(BSC)'
+        },
+        sdai_eth: {
+          address: 'secret1vnjck36ld45apf8u4fedxd5zy7f5l92y3w5qwq',
+          logo: 'https://siasky.net/CADFDvkEPwGfeBEJPJIV5ZjOzyAvLTs2Ib2HFkdSy2y9Ng',
+          symbol: 'sDAI'
+        },
         sefi: {
           address: 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt',
           logo: 'https://siasky.net/AABeTmPkxJ8CuGzgqCQM7sR0Y-3rTPZHJo4Jc9KObuTyBQ',
           symbol: 'SEFI'
+        },
+        sefi_susdc_eth_lp: {
+          address: 'secret14cxq26u8f9zpd09a72uznwz7kew9yc085d08hy',
+          asset_one: 'sefi',
+          asset_two: 'susdc_eth',
+          symbol: 'SEFI-sUSDC(ETH)'
         },
         sefi_sxmr_lp: {
           address: 'secret132zd4csn5xfellxa9xp94t7dl32jqk5lu4hump',
@@ -47,10 +63,28 @@ $(document).ready(function(){
           asset_two: 'seth_bsc',
           symbol: 'sETH(ETH)-sETH(BSC)'
         },
+        seth_eth_swbtc_eth_lp: {
+          address: 'secret1k2u3khzp59mp6wz2q4ulwhhy4rqpez63ln2fy6',
+          asset_one: 'seth_eth',
+          asset_two: 'swbtc',
+          symbol: 'sETH(ETH)-sWBTC(ETH)'
+        },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
           logo: 'https://siasky.net/AACL5VVg8IZC4H_9cTiaPSzvD8hXmaJYXFc2t8piZgf5Ig',
           symbol: 'sSCRT'
+        },
+        sscrt_sbnb_bsc_lp: {
+          address: 'secret1jr99mtjs87hsx6hs36ze2l5efgj2x0gqrmya0p',
+          asset_one: 'sscrt',
+          asset_two: 'sbnb_bsc',
+          symbol: 'sSCRT-sBNB(BSC)'
+        },
+        sscrt_sdai_eth_lp: {
+          address: 'secret1sj65pd9fqgwyj0a9ctl4cecp62y52z5nzpq60r',
+          asset_one: 'sscrt',
+          asset_two: 'sdai_eth',
+          symbol: 'sSCRT-sDAI(ETH)'
         },
         sscrt_sefi_lp: {
           address: 'secret1rgky3ns9ua09rt059049yl0zqf3xjqxne7ezhp',
@@ -210,6 +244,46 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sefi_sxmr_lp'],
           earn_token: cryptocurrencies['sefi_sxmr_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap SEFI-sUSDC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sefi_susdc_eth_lp'],
+          earn_token: cryptocurrencies['sefi_susdc_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sETH(ETH)-sWBTC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['seth_eth_swbtc_eth_lp'],
+          earn_token: cryptocurrencies['seth_eth_swbtc_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sDAI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_sdai_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_sdai_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sDAI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
+          earn_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
