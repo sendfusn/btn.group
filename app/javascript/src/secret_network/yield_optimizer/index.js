@@ -59,6 +59,7 @@ $(document).ready(function(){
           title: 'Profit distributor',
           address: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz',
           deposit_gas: '300000',
+          deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
           deposit_token: cryptocurrencies['butt'],
           earn_token: cryptocurrencies['sefi'],
           withdraw_gas: '300000',
@@ -67,6 +68,7 @@ $(document).ready(function(){
           title: 'Earn Buttcoin',
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
           deposit_gas: '600000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['butt_swbtc_lp'],
           earn_token: cryptocurrencies['butt'],
           withdraw_gas: '600000',
@@ -219,7 +221,7 @@ $(document).ready(function(){
             try {
               let amount = document[value['address'] + 'DepositForm'].amount.value;
               amount = amount.replace(/,/g, '');
-              let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: value['address'], msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=' } }
+              let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: value['address'], msg: value['deposit_msg'] } }
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
@@ -248,7 +250,12 @@ $(document).ready(function(){
             try {
               let amount = document[value['address'] + 'WithdrawForm'].amount.value;
               amount = amount.replace(/,/g, '');
-              let handleMsg = { withdraw: { amount: (amount * 1_000_000).toString() } }
+              let handleMsg;
+              if (value['address'] = 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
+                handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toString() } }
+              } else {
+                handleMsg = { withdraw: { amount: (amount * 1_000_000).toString() } }
+              }
               let response = await this.client.execute(value['address'], handleMsg)
               document.showAlertSuccess("Withdraw successful");
               document[value['address'] + 'WithdrawForm'].amount.value = ''
