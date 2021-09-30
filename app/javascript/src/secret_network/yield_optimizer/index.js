@@ -30,6 +30,11 @@ $(document).ready(function(){
           logo: 'https://siasky.net/CADFDvkEPwGfeBEJPJIV5ZjOzyAvLTs2Ib2HFkdSy2y9Ng',
           symbol: 'sDAI'
         },
+        sdot_bsc: {
+          address: 'secret1px5mtmjh072znpez4fjpmxqsv3hpevdpyu9l4v',
+          logo: 'https://siasky.net/AABoC4jQvXmvz_dwuegzpIW1wmiZpETMqZBj0lMH599SHw',
+          symbol: 'sDOT(BSC)'
+        },
         sefi: {
           address: 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt',
           logo: 'https://siasky.net/AABeTmPkxJ8CuGzgqCQM7sR0Y-3rTPZHJo4Jc9KObuTyBQ',
@@ -105,6 +110,12 @@ $(document).ready(function(){
           asset_one: 'sscrt',
           asset_two: 'sdai_eth',
           symbol: 'sSCRT-sDAI(ETH)'
+        },
+        sscrt_sdot_bsc_lp: {
+          address: 'secret1wrajc66xjst7mkjn383ymvtl54jaslalkhxt6e',
+          asset_one: 'sscrt',
+          asset_two: 'sdot_bsc',
+          symbol: 'sSCRT-sDOT(BSC)'
         },
         sscrt_sefi_lp: {
           address: 'secret1rgky3ns9ua09rt059049yl0zqf3xjqxne7ezhp',
@@ -389,6 +400,16 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sscrt_syfi_eth_lp'],
           earn_token: cryptocurrencies['sscrt_syfi_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sDOT(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
+          earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
