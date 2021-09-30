@@ -58,6 +58,12 @@ $(document).ready(function(){
           asset_two: 'susdt_eth',
           symbol: 'sSCRT-sUSDT(ETH)'
         },
+        sscrt_swbtc_eth_lp: {
+          address: 'secret10x0k62eaal4q3t9c200qvmgftahxjqvdawn69c',
+          asset_one: 'sscrt',
+          asset_two: 'swbtc',
+          symbol: 'sSCRT-sWBTC(ETH)'
+        },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
           logo: 'https://siasky.net/AADY8NK1wfSi7DUdrDRk9k9Gr80EeTWnLoq1mLIAbGg3_A',
@@ -157,6 +163,16 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sscrt_seth_eth_lp'],
           earn_token: cryptocurrencies['sscrt_seth_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sWBTC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret10x0k62eaal4q3t9c200qvmgftahxjqvdawn69c',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
