@@ -41,6 +41,17 @@ $(document).ready(function(){
           asset_two: 'seth_bsc',
           symbol: 'sETH(ETH)-sETH(BSC)'
         },
+        sscrt: {
+          address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
+          logo: 'https://siasky.net/AACL5VVg8IZC4H_9cTiaPSzvD8hXmaJYXFc2t8piZgf5Ig',
+          symbol: 'sSCRT'
+        },
+        sscrt_susdt_eth_lp: {
+          address: 'secret1gyct75dc2pf20vtj3l86k2jxg79mffyh9ljve3',
+          asset_one: 'sscrt',
+          asset_two: 'susdt_eth',
+          symbol: 'sSCRT-sUSDT(ETH)'
+        },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
           logo: 'https://siasky.net/AADY8NK1wfSi7DUdrDRk9k9Gr80EeTWnLoq1mLIAbGg3_A',
@@ -56,6 +67,11 @@ $(document).ready(function(){
           asset_one: 'susdc_eth',
           asset_two: 'susdc_bsc',
           symbol: 'sUSDC(ETH)-sUSDC(BSC) LP'
+        },
+        susdt_eth: {
+          address: 'secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f',
+          logo: 'https://siasky.net/AAAbmpaWIL-4kXFj0xxrXsby7kSN9AQeyV6hBD65m2o9mg',
+          symbol: 'sUSDT(ETH)'
         },
         swbtc: {
           address: 'secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a',
@@ -115,6 +131,16 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['seth_eth_seth_bsc_lp'],
           earn_token: cryptocurrencies['seth_eth_seth_bsc_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sUSDT(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_susdt_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_susdt_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
