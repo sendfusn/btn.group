@@ -79,6 +79,11 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AABTb2I_YOOB4x-PZDltgjTiuP92_fFwo5Z0MMLADr_OWg',
           symbol: 'sLINK(ETH)'
         },
+        smana_eth: {
+          address: 'secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega',
+          logo: 'https://siasky.net/AAARSocbMzqrBV1oATe-H4OXhS01c8OMNXcetLoVzTJ14w',
+          symbol: 'sMANA(ETH)'
+        },
         socean_eth: {
           address: 'secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps',
           logo: 'https://siasky.net/GAB8EwAVnvjYW8ynq6zCMyBJpRrpMyEBbOWrSanyGm2veA',
@@ -135,6 +140,12 @@ $(document).ready(function(){
           asset_two: 'slink_eth',
           symbol: 'sSCRT-sLINK(ETH)'
         },
+        sscrt_smana_eth_lp: {
+          address: 'secret1u9zfyh7d4mgf44f3y8fhz4e70dhjzd5e5df8hp',
+          asset_one: 'sscrt',
+          asset_two: 'smana_eth',
+          symbol: 'sSCRT-sMANA(ETH)'
+        },
         sscrt_socean_eth_lp: {
           address: 'secret13ns5mzms67jttq5cnv76j5lgtd0xf69sv4sdpq',
           asset_one: 'sscrt',
@@ -153,6 +164,12 @@ $(document).ready(function(){
           asset_two: 'srune_eth',
           symbol: 'sSCRT-sRUNE(ETH)'
         },
+        sscrt_suni_eth_lp: {
+          address: 'secret1pmt7ncuhau2g7h9snygx2tlkzqnks3uz5edgyc',
+          asset_one: 'sscrt',
+          asset_two: 'suni_eth',
+          symbol: 'sSCRT-sUNI(ETH)'
+        },
         sscrt_susdt_eth_lp: {
           address: 'secret1gyct75dc2pf20vtj3l86k2jxg79mffyh9ljve3',
           asset_one: 'sscrt',
@@ -170,6 +187,11 @@ $(document).ready(function(){
           asset_one: 'sscrt',
           asset_two: 'syfi_eth',
           symbol: 'sSCRT-sYFI(ETH) LP'
+        },
+        suni_eth: {
+          address: 'secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te',
+          logo: 'https://siasky.net/EAB_e9XgWK_CrqcZFUvD7LirQox_lakStwc8YKJCWfkf-A',
+          symbol: 'sUNI(ETH)'
         },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
@@ -410,6 +432,26 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
           earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sMANA(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_smana_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_smana_eth_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-sMANA(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sscrt_suni_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_suni_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
