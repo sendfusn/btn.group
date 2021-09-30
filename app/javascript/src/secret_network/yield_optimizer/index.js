@@ -446,7 +446,7 @@ $(document).ready(function(){
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
         },
-        // Secret swap sSCRT-sMANA(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        // Secret swap sSCRT-sUNI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
           address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
           deposit_gas: '300000',
