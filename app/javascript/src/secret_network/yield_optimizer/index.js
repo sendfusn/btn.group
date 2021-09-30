@@ -25,6 +25,12 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AABeTmPkxJ8CuGzgqCQM7sR0Y-3rTPZHJo4Jc9KObuTyBQ',
           symbol: 'SEFI'
         },
+        sefi_sxmr_lp: {
+          address: 'secret132zd4csn5xfellxa9xp94t7dl32jqk5lu4hump',
+          asset_one: 'sefi',
+          asset_two: 'sxmr',
+          symbol: 'SEFI-sXMR'
+        },
         seth_bsc: {
           address: 'secret1m6a72200733a7jnm76xrznh9cpmt4kf5ql0a6t',
           logo: 'https://siasky.net/AADSgvwvMSA3YjxpWGBtObf1zODXGCut10bt66Jr8DUhcw',
@@ -95,7 +101,12 @@ $(document).ready(function(){
           address: 'secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a',
           logo: 'https://siasky.net/CADR09K2Etst36IFvwVUdFwO4WhD91YiURrWNwzq_-7m1A',
           symbol: 'sWBTC'
-        }
+        },
+        sxmr: {
+          address: 'secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88',
+          logo: 'https://siasky.net/FABkpNmXiHbaXby3duNfzFZXjDeLPxxhH2TAmBddKoGZhQ',
+          symbol: 'sXMR'
+        },
       };
       let protocols = {
         secret_swap: {
@@ -189,6 +200,16 @@ $(document).ready(function(){
           deposit_gas: '300000',
           deposit_token: cryptocurrencies['sscrt_sefi_lp'],
           earn_token: cryptocurrencies['sscrt_sefi_lp'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '300000',
+        },
+        // Secret swap sSCRT-SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
+        {
+          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
+          deposit_gas: '300000',
+          deposit_token: cryptocurrencies['sefi_sxmr_lp'],
+          earn_token: cryptocurrencies['sefi_sxmr_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
