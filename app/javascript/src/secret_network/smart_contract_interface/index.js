@@ -1,11 +1,14 @@
 $(document).ready(function(){
   if($("#secret-network-smart-contract-interface").length) {
     window.onload = async () => {
-      let param_count = 0;
+      let paramCount = 0;
       $('#add-new-param').click(function(event){
         event.preventDefault();
-        $('#params-container').append('<hr><div class="row"><div class="col-8 mb-3"><label class="form-label" for="param-' + param_count + '-key">Key</label><input autocomplete="off" class="form-control" id="param-' + param_count + '-key"></div><div class="col-8 mb-3"><label class="form-label" for="param-' + param_count + '-value">Value</label><input autocomplete="off" class="form-control" id="param-' + param_count + '-value"></div><div class="col-4 mb-3"><label class="form-label" for="param-' + param_count + '-type">Type</label><select class="form-control" id="param-' + param_count + '-type"><option value="raw">raw</option><option selected value="string">text / string</option></select></div></div>');
-        param_count++;
+        $('#params-container').append('<div class="param-container"><hr><div class="row"><div class="col-8 mb-3"><label class="form-label" for="param-' + paramCount + '-key">Key</label><input autocomplete="off" class="form-control" id="param-' + paramCount + '-key"></div><div class="col-4 text-right"><a href="#" class="icon ti ti-close"></a></div><div class="col-8 mb-3"><label class="form-label" for="param-' + paramCount + '-value">Value</label><input autocomplete="off" class="form-control" id="param-' + paramCount + '-value"></div><div class="col-4 mb-3"><label class="form-label" for="param-' + paramCount + '-type">Type</label><select class="form-control" id="param-' + paramCount + '-type"><option value="raw">raw</option><option selected value="string">text / string</option></select></div></div></div>');
+        $(".param-container .ti-close").click(function(){
+          this.closest('.param-container').remove();
+        })
+        paramCount++;
       });
 
       document.secretNetworkSmartContractInterfaceForm.onsubmit = () => {
