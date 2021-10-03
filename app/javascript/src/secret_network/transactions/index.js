@@ -3,6 +3,7 @@ $(document).ready(function(){
     this.datatable = window.$('#transactions-table').DataTable({
       columns: [
           { title: "ID" },
+          { title: "Date" },
           { title: "Description" },
           { title: "Amount" },
       ],
@@ -16,7 +17,7 @@ $(document).ready(function(){
       this.datatable.clear().draw();
       // Disable form
       $("#balance").text('')
-      $($('th')[2]).text('Amount')
+      $($('th')[3]).text('Amount')
       $("#search-button").prop("disabled", true);
       $("#loading").removeClass("d-none")
       $("#ready").addClass("d-none")
@@ -52,6 +53,12 @@ $(document).ready(function(){
             // data
             let id = value['id']
             row.push(id);
+            if (value['block_time']) {
+              let options = { year: 'numeric', month: 'long', day: 'numeric' };
+              row.push(new Date(Number(value['block_time']) * 1000).toLocaleDateString(undefined, options))
+            } else {
+              row.push('n/a')
+            }
             let amount = value['coins']['amount']
             amount = applyDecimals(amount, token_decimals)
             let description
@@ -68,7 +75,7 @@ $(document).ready(function(){
           this.datatable.rows.add(transactions);
           this.datatable.draw();
           // Add token symbol next to amount header
-          $($('th')[2]).text('Amount' + '(' + token_symbol + ')')
+          $($('th')[3]).text('Amount' + '(' + token_symbol + ')')
 
           params = {
             balance: {
