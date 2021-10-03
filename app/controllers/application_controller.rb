@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
         features: {
           smart_contract_interface: {
             name: 'Smart contract interface',
-            show_link: false,
-            status: 'Work in progress'
+            show_link: true,
+            status: 'Live'
           }
         }
       },
