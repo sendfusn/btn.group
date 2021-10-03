@@ -100,6 +100,8 @@ $(document).ready(function(){
               errorDisplayMessage = 'Smart contract address is invalid.'
             } else if (err.message.includes('MethodNotFound')) {
               errorDisplayMessage = 'Function not found.'
+            } else if (err.message.includes('[-32000] Server error: The node does not track the shard ID 0')) {
+              errorDisplayMessage = 'Please submit again.'
             }
             document.showAlertDanger(errorDisplayMessage)
           }
