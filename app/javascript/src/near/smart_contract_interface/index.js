@@ -27,36 +27,37 @@ $(document).ready(function(){
         $("#loading").removeClass("d-none")
         $("#ready").addClass("d-none")
         document.hideAllAlerts();
-        (async () => {
-          try {
-            // Set environment
-            let environment = document.featureEnvironment();
-            let chainId = document.nearNetworkChainId(environment)
-            let httpUrl = document.nearNetworkHttpUrl(environment)
-            // Set params
-            let contractAddress = document.nearSmartContractInterfaceForm.contractAddress.value;
-            let functionName = document.nearSmartContractInterfaceForm.functionName.value;
-            let params = {};
-            let last_key;
-            $('#params-container input, #params-container select').each(function(index){
-              if (index % 3 == 0) {
-                last_key = this.value;
-              } else if (index % 3 == 1) {
-                if (last_key.length) {
-                  if (this.value.length) {
-                    params[last_key] = this.value;
-                  }
-                }
-              } else {
-                if (this.value == 'raw') {
-                  if (last_key.length) {
-                    if (params[last_key].length) {
-                      params[last_key] = JSON.parse(params[last_key])
-                    }
-                  }
+        let environment = document.featureEnvironment();
+        // Set params
+        let contractAddress = document.nearSmartContractInterfaceForm.contractAddress.value;
+        let functionName = document.nearSmartContractInterfaceForm.functionName.value;
+        let params = {};
+        let last_key;
+        $('#params-container input, #params-container select').each(function(index){
+          if (index % 3 == 0) {
+            last_key = this.value;
+          } else if (index % 3 == 1) {
+            if (last_key.length) {
+              if (this.value.length) {
+                params[last_key] = this.value;
+              }
+            }
+          } else {
+            if (this.value == 'raw') {
+              if (last_key.length) {
+                if (params[last_key].length) {
+                  params[last_key] = JSON.parse(params[last_key])
                 }
               }
-            })
+            }
+          }
+        })
+
+        this.submitToDatahub = async (environment, contractAddress, functionName, params) => {
+          try {
+            // Set environment
+            let chainId = document.nearNetworkChainId(environment)
+            let httpUrl = document.nearNetworkHttpUrl(environment)
 
             // Interact with smart contract
             let result;
@@ -112,9 +113,12 @@ $(document).ready(function(){
             } else if (err.message.includes('MethodNotFound')) {
               errorDisplayMessage = 'Function not found.'
             } else if (err.message.includes('[-32000] Server error: The node does not track the shard ID 0')) {
-              errorDisplayMessage = 'Please submit again.'
+              errorDisplayMessage = undefined
+              this.submitToDatahub(environment, contractAddress, functionName, params)
             }
-            document.showAlertDanger(errorDisplayMessage)
+            if (errorDisplayMessage) {
+              document.showAlertDanger(errorDisplayMessage)
+            }
           }
           finally {
             // Enable form
@@ -122,7 +126,8 @@ $(document).ready(function(){
             $("#loading").addClass("d-none")
             $("#ready").removeClass("d-none")
           }
-        })();
+        }
+        this.submitToDatahub(environment, contractAddress, functionName, params)
 
         return false;
       };
