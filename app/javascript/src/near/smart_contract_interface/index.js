@@ -17,7 +17,7 @@ $(document).ready(function(){
           vars[key] = value;
       });
       if (vars['transactionHashes'] && vars['account_id']) {
-        document.showAlertSuccess("Transaction with transaction hash " + vars['transactionHashes'] + " for " + vars['account_id'] + " successful.")
+        document.showAlertSuccess('Transaction with transaction hash ' + vars['transactionHashes'] + ' for ' + vars['account_id'] + ' successful.')
       }
 
       document.nearSmartContractInterfaceForm.onsubmit = () => {
@@ -68,9 +68,8 @@ $(document).ready(function(){
                 keyStore: new keyStores.BrowserLocalStorageKeyStore(),
                 nodeUrl: httpUrl,
               };
-              document.config = config;
               const near = await connect(config);
-              const account = await near.account("stevenchang.near");
+              const account = await near.account();
               result = await account.viewFunction(
                 contractAddress,
                 functionName,
