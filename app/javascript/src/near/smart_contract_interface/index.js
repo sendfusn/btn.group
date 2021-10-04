@@ -11,6 +11,15 @@ $(document).ready(function(){
         paramCount++;
       });
 
+      // This is for when a transaction goes through the web wallet authorize page
+      var vars = {};
+      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+          vars[key] = value;
+      });
+      if (vars['transactionHashes'] && vars['account_id']) {
+        document.showAlertSuccess("Transaction with transaction hash " + vars['transactionHashes'] + " for " + vars['account_id'] + " successful.")
+      }
+
       document.nearSmartContractInterfaceForm.onsubmit = () => {
         // Disable form
         $("#search-button").prop("disabled", true);
