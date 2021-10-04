@@ -46,15 +46,14 @@
                         Features
                       %ul.menu-sub.menu-drop{ style: 'right: 0; left: inherit;' }
                         - features.each do |blockchain_symbol, blockchain_object|
-                          - if blockchain_symbol == :secret_network
-                            - blockchain_object[:features].each do |feature_key, feature_value|
-                              - if feature_value[:show_link]
-                                %li.menu-item
-                                  = link_to "/#{blockchain_symbol}/#{feature_key}", class: 'menu-link nav-link' do
-                                    .d-block.mb-1= feature_value[:name]
-                                    .d-block
-                                      = cl_image_tag(features[blockchain_symbol][:cloudinary_public_id], width: 14, height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
-                                      = blockchain_object[:name]
+                          - blockchain_object[:features].each do |feature_key, feature_value|
+                            - if feature_value[:show_link]
+                              %li.menu-item
+                                = link_to "/#{blockchain_symbol}/#{feature_key}", class: 'menu-link nav-link' do
+                                  .d-block.mb-1= feature_value[:name]
+                                  .d-block
+                                    = cl_image_tag(features[blockchain_symbol][:cloudinary_public_id], width: 14, height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                                    = blockchain_object[:name]
                         %li.menu-item= link_to 'See all', features_path, class: 'menu-link nav-link'
                     %li.menu-item= link_to 'Roadmap', roadmap_path, class: 'menu-link nav-link'
         = yield
