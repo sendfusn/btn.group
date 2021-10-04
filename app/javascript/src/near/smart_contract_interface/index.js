@@ -100,6 +100,9 @@ $(document).ready(function(){
             $("#result-value").removeClass("d-none");
             $("#result-value").html(document.prettyPrintJSON(result));
             $("#result-container").removeClass("d-none");
+            $('html, body').animate({
+                scrollTop: $("#result-container").offset().top
+            }, 2000);
           }
           catch(err) {
             console.error(err)
