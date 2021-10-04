@@ -13,6 +13,78 @@
                     = cl_image_tag(features[:near][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:near][:name].to_s
                   = render 'environment_switch'
+                  %button.btn.btn-sm.btn-theme-dark.mt-1{ 'aria-controls' => 'exampleCollapseExample', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#exampleCollapseExample' }
+                    Instructions/Requirements
+                  .collapse.mt-2#exampleCollapseExample
+                    .card.card-default.bg-theme-light
+                      .card-block
+                        %h6 Requirements
+                        %p
+                          Near web wallet for
+                          = link_to 'mainnet', 'https://wallet.near.org/', target: '_blank', rel: 'noopener'
+                          and/or
+                          = link_to 'testnet', 'https://wallet.testnet.near.org/', target: '_blank', rel: 'noopener'
+                        %hr
+                        %h6 Example with smart contract crud.btngroup.testnet
+                        %p
+                          %b 1. Create or update a key, value combo.
+                          %br
+                          \=> Environment: Staging / Testnet
+                          %br
+                          \=> Interaction type: Handle
+                          %br
+                          \=> Contract address: crud.btngroup.testnet
+                          %br
+                          \=> Function name: create_update
+                          %br
+                          \=> Param 1 key: k
+                          %br
+                          \=> Param 1 value: key_1
+                          %br
+                          \=> Param 2 key: v
+                          %br
+                          \=> Param 2 value: value_1
+                          %br
+                          \=> Submit
+                          %br
+                          %b 2. Read the value for a key
+                          %br
+                          \=> Environment: Staging / Testnet
+                          %br
+                          \=> Interaction type: Query
+                          %br
+                          \=> Contract address: crud.btngroup.testnet
+                          %br
+                          \=> Function name: read
+                          %br
+                          \=> Param 1 key: k
+                          %br
+                          \=> Param 1 value: key_1
+                          %br
+                          \=> Submit
+                          %br
+                          %b 3. Delete the value for a key
+                          %br
+                          \=> Environment: Staging / Testnet
+                          %br
+                          \=> Interaction type: Handle
+                          %br
+                          \=> Contract address: crud.btngroup.testnet
+                          %br
+                          \=> Function name: delete
+                          %br
+                          \=> Param 1 key: k
+                          %br
+                          \=> Param 1 value: key_1
+                          %br
+                          \=> Submit
+                        %hr
+                        %h6 References
+                        1.
+                        = link_to 'code for smart contract', 'https://github.com/btn-group/near-crud', target: '_blank', rel: 'noopener'
+                        %br
+                        2.
+                        = link_to 'smart contract on testnet explorer', 'https://explorer.testnet.near.org/accounts/crud.btngroup.testnet', target: '_blank', rel: 'noopener'
                   %hr
                   %form{ name: 'nearSmartContractInterfaceForm' }
                     .form-group
