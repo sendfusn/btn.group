@@ -245,6 +245,7 @@ $(document).ready(function(){
           deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
           deposit_token: cryptocurrencies['butt'],
           earn_token: cryptocurrencies['sefi'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           withdraw_gas: '300000',
         },
         {
@@ -254,6 +255,7 @@ $(document).ready(function(){
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['butt_swbtc_lp'],
           earn_token: cryptocurrencies['butt'],
+          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           withdraw_gas: '600000',
         },
         // Secret swap SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
