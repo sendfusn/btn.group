@@ -258,13 +258,14 @@ $(document).ready(function(){
         },
         // Secret swap SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
-          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-          deposit_gas: '1800000',
+          address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
+          deposit_gas: '1600000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
           earn_token: cryptocurrencies['sefi'],
-          farm_contract_address: 'secret1wuhypk53eukm9xvlzu2z30rtyqfh74qtqgvlvr',
+          farm_contract_address: 'secret1knars62aly28xkqxe8xeqtf7ans8hqxgm6a05k',
           protocol: protocols['secret_swap'],
-          withdraw_gas: '1300000',
+          withdraw_gas: '1600000',
         },
         // Secret swap sUSDC(ETH)-sUSDC(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -275,6 +276,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sETH(ETH)-sETH(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -285,6 +287,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-sUSDT(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -295,6 +298,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-sETH(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -305,6 +309,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-sWBTC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -315,6 +320,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -325,6 +331,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -335,6 +342,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap SEFI-sUSDC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -345,6 +353,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sETH(ETH)-sWBTC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -355,6 +364,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-sDAI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -365,6 +375,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-sDAI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -375,6 +386,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-sLINK(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -385,6 +397,7 @@ $(document).ready(function(){
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
           withdraw_gas: '300000',
+          under_maintenance: true,
         },
         // Secret swap sSCRT-sRSR(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
@@ -394,6 +407,7 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_srsr_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
+          under_maintenance: true,
           withdraw_gas: '300000',
         },
         // Secret swap sSCRT-sOCEAN(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
@@ -404,6 +418,7 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_socean_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
+          under_maintenance: true,
           withdraw_gas: '300000',
         },
         // Secret swap sSCRT-sRUNE(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
@@ -414,6 +429,7 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_srune_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
+          under_maintenance: true,
           withdraw_gas: '300000',
         },
         // Secret swap sSCRT-sYFI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
@@ -424,6 +440,7 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_syfi_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
+          under_maintenance: true,
           withdraw_gas: '300000',
         },
         // Secret swap sSCRT-sDOT(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
@@ -434,6 +451,7 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
+          under_maintenance: true,
           withdraw_gas: '300000',
         },
         // Secret swap sSCRT-sMANA(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
@@ -444,6 +462,7 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_smana_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
+          under_maintenance: true,
           withdraw_gas: '300000',
         },
         // Secret swap sSCRT-sUNI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
@@ -454,6 +473,7 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_suni_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
+          under_maintenance: true,
           withdraw_gas: '300000',
         },
       ]
@@ -510,14 +530,17 @@ $(document).ready(function(){
           html += '</a>'
         }
         html += '</div>'
-        if (!value['farm_contract_address']) {
+        if (!value['under_maintenance']) {
           html += '<div class="col-sm-5">TVL: <span class="'
           html += value['address'] + '-total-shares"></span>'
-          html += '<br>Claimable ' + value['earn_token']['symbol'] + ': <span class="' + value['address'] + '-claimable"></span></div>'
+          if (!value['farm_contract_address']) {
+            html += '<br>Claimable ' + value['earn_token']['symbol'] + ': <span class="' + value['address'] + '-claimable"></span>'
+          }
+          html += '</div>'
         }
         html += '</div>'
-        if (value['farm_contract_address']) {
-          html += '<div class="row"><div class="col-12"><hr></div><div class="col-12"><h5>This will be live once Secret Swap initiates their new earn contracts.</h5></div></div>'
+        if (value['under_maintenance']) {
+          html += '<div class="row"><div class="col-12"><hr></div><div class="col-12"><h5>It\'s in the pipe 5 by 5</h5></div></div>'
         } else {
           html += '<div class="row"><div class="col-12"><hr></div><div class="col-sm-6">Depositable: <span class="'
           html += value['deposit_token']['address'] + '-balance-loading d-none">Loading...</span><span class="'
@@ -574,7 +597,7 @@ $(document).ready(function(){
         let $depositButton = $('.' + value['address'] + '-deposit-button')
         let $depositButtonLoading = $('.' + value['address'] + '-deposit-button-loading')
         let $depositButtonReady = $('.' + value['address'] + '-deposit-button-ready')
-        if(!value['farm_contract_address']) {
+        if(!value['under_maintenance']) {
           document[value['address'] + 'DepositForm'].onsubmit = async (e) => {
             e.preventDefault()
             this.setClient(value['deposit_gas']);
@@ -616,6 +639,8 @@ $(document).ready(function(){
               let handleMsg;
               if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
                 handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toString() } }
+              } else if (value['address'] == 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf') {
+                handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toString() } }
               } else {
                 handleMsg = { withdraw: { amount: (amount * 1_000_000).toString() } }
               }
@@ -724,12 +749,17 @@ $(document).ready(function(){
               // Factor in rewards when you get the chance
               let poolResponse = await client.queryContractSmart(pool.address, {pool: {}})
               let incentivizedTokenTotal = Number(poolResponse['pool']['incentivized_token_total']);
-              withdrawable = withdrawable * incentivizedTokenTotal / Number(poolResponse['pool']['shares_total'])
+              if (Number(poolResponse['pool']['shares_total'] > 0)) {
+                withdrawable = withdrawable * incentivizedTokenTotal / Number(poolResponse['pool']['shares_total'])
+              } else {
+                withdrawable = 0
+              }
+              
             }
           }
           $userShares.text((withdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
         } catch(err) {
-          $userShares.text('0 ' + depositTokenSymbol);
+          $userShares.text('0');
           console.log(err)
         }
       }
