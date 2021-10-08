@@ -241,11 +241,11 @@ $(document).ready(function(){
         {
           title: 'Profit distributor',
           address: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz',
-          deposit_gas: '300000',
+          deposit_gas: '400000',
           deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
           deposit_token: cryptocurrencies['butt'],
           earn_token: cryptocurrencies['sefi'],
-          withdraw_gas: '300000',
+          withdraw_gas: '400000',
         },
         {
           title: 'Earn Buttcoin',
