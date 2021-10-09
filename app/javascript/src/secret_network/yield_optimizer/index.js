@@ -259,6 +259,7 @@ $(document).ready(function(){
         // Secret swap SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
+          apy: '1750',
           deposit_gas: '1600000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
@@ -533,6 +534,9 @@ $(document).ready(function(){
         if (!value['under_maintenance']) {
           html += '<div class="col-sm-5">TVL: <span class="'
           html += value['address'] + '-total-shares"></span>'
+          if (value['apy']) {
+            html += '<br>APY: ~' + value['apy'] + '%'
+          }
           if (!value['farm_contract_address']) {
             html += '<br>Claimable ' + value['earn_token']['symbol'] + ': <span class="' + value['address'] + '-claimable"></span>'
           }
@@ -757,7 +761,7 @@ $(document).ready(function(){
               
             }
           }
-          $userShares.text((withdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
+          $userShares.text((withdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
         } catch(err) {
           $userShares.text('0');
           console.log(err)
@@ -773,11 +777,11 @@ $(document).ready(function(){
             let message;
             if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
               let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
-              $poolClaimable.text((response['claimable_profit']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
+              $poolClaimable.text((response['claimable_profit']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
             } else {
               let height = await client.getHeight();
               let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: height }})
-              $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
+              $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
             }
           } catch(err) {
             $poolClaimable.text('0');
@@ -795,13 +799,13 @@ $(document).ready(function(){
           $(totalSharesSelector).text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
             let config = await client.queryContractSmart(poolAddress, {config: {}})
-            $(totalSharesSelector).text((config['config']['total_shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((config['config']['total_shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' ' + depositTokenSymbol)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
             let response = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((response['pool']['shares_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((response['pool']['shares_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' ' + depositTokenSymbol)
           } else {
             let responseTwo = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((responseTwo['pool']['incentivized_token_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((responseTwo['pool']['incentivized_token_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' ' + depositTokenSymbol)
           }
         } catch(err) {
           console.log(err)
@@ -821,7 +825,7 @@ $(document).ready(function(){
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, address)
           // If they have the key, replace the button with the balance
           let balance = await client.queryContractSmart(address, { balance: { address: this.address, key: key } })
-          $walletBalance.text((balance['balance']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 18}))
+          $walletBalance.text((balance['balance']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
           $walletBalance.removeClass('d-none')
           $walletBalanceViewButton.addClass('d-none')
         } catch(err) {
