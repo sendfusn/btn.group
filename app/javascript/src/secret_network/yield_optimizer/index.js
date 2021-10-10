@@ -537,7 +537,9 @@ $(document).ready(function(){
           if (value['apy']) {
             html += '<br>APY: ~' + value['apy'] + '%'
           }
-          if (!value['farm_contract_address']) {
+          if (value['farm_contract_address']) {
+            html += '<br>Rewards to process: <span class="' + value['address'] + '-rewards-to-process"></span><span> ' + value['earn_token']['symbol'] + '</span>'
+          } else {
             html += '<br>Claimable ' + value['earn_token']['symbol'] + ': <span class="' + value['address'] + '-claimable"></span>'
           }
           html += '</div>'
@@ -567,7 +569,8 @@ $(document).ready(function(){
           html += value['address'] + '-withdraw-button-loading"><em aria-hidden="true" class="spinner-grow spinner-grow-sm" role="status"></em><em>Loading...</em></div><div class="'
           html += value['address'] + '-withdraw-button-ready">Withdraw</div></button></form></div></div></div>'
           if (value['farm_contract_address']) {
-            html += '<div class="col-12"><hr/>Fees: 5% of yield sent to profit distributor (smart contract)</div>'
+            html += '<div class="col-12"><hr/>* Fees: 5% of yield sent to profit distributor (smart contract)'
+            html += '<br>* Rewards are reinvested every time a user deposits or withdraws</div>'
           }
           html += '</div>'
         }
@@ -769,12 +772,25 @@ $(document).ready(function(){
       }
 
       this.updateClaimable = async(pool) => {
-        if (!pool.farm_contract_address) {
-          let client = document.secretNetworkClient(this.environment);
+        let client = document.secretNetworkClient(this.environment);
+        if (pool.farm_contract_address) {
+          if (!pool.under_maintenance) {
+            let $poolRewardsToProcess = $('.' + pool.address + '-rewards-to-process')
+            try {
+              $poolRewardsToProcess.text('Loading...');
+              let height = await client.getHeight();
+              let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }})
+              console.log(response['rewards'])
+              $poolRewardsToProcess.text((response['rewards']['rewards'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
+            } catch(err) {
+              $poolRewardsToProcess.text('0');
+              console.log(err)
+            }
+          }
+        } else {
           let $poolClaimable = $('.' + pool.address + '-claimable')
           try {
             $poolClaimable.text('Loading...');
-            let message;
             if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
               let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
               $poolClaimable.text((response['claimable_profit']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
