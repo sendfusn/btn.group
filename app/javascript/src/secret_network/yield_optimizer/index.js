@@ -611,7 +611,7 @@ $(document).ready(function(){
             try {
               let amount = document[value['address'] + 'DepositForm'].amount.value;
               amount = amount.replace(/,/g, '');
-              let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: value['address'], msg: value['deposit_msg'] } }
+              let handleMsg = { send: { amount: (amount * 1_000_000).toFixed(0), recipient: value['address'], msg: value['deposit_msg'] } }
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
@@ -642,11 +642,11 @@ $(document).ready(function(){
               amount = amount.replace(/,/g, '');
               let handleMsg;
               if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
-                handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toString() } }
+                handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toFixed(0) } }
               } else if (value['address'] == 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf') {
-                handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toString() } }
+                handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toFixed(0) } }
               } else {
-                handleMsg = { withdraw: { amount: (amount * 1_000_000).toString() } }
+                handleMsg = { withdraw: { amount: (amount * 1_000_000).toFixed(0) } }
               }
               let response = await this.client.execute(value['address'], handleMsg)
               document.showAlertSuccess("Withdraw successful");
