@@ -259,7 +259,7 @@ $(document).ready(function(){
         // Secret swap SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
-          apy: '1750',
+          apy: '1,609',
           deposit_gas: '1600000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
