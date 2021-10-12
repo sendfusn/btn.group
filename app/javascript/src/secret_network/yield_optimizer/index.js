@@ -123,7 +123,7 @@ $(document).ready(function(){
           symbol: 'sSCRT-sDOT(BSC)'
         },
         sscrt_sefi_lp: {
-          address: 'secret1rgky3ns9ua09rt059049yl0zqf3xjqxne7ezhp',
+          address: 'secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025',
           asset_one: 'sscrt',
           asset_two: 'sefi',
           symbol: 'sSCRT-SEFI'
@@ -256,227 +256,56 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['butt'],
           withdraw_gas: '600000',
         },
-        // Secret swap SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
-          apy: '1,609',
+          apy: '1,465',
           deposit_gas: '1600000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
           earn_token: cryptocurrencies['sefi'],
           farm_contract_address: 'secret1knars62aly28xkqxe8xeqtf7ans8hqxgm6a05k',
           protocol: protocols['secret_swap'],
+          reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '1600000',
         },
-        // Secret swap sUSDC(ETH)-sUSDC(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
-        //   earn_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sETH(ETH)-sETH(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['seth_eth_seth_bsc_lp'],
-        //   earn_token: cryptocurrencies['seth_eth_seth_bsc_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-sUSDT(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_susdt_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_susdt_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-sETH(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_seth_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_seth_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-sWBTC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-SEFI - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
-          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-          deposit_gas: '300000',
+          address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v',
+          apy: '3,100',
+          deposit_gas: '2800000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sefi_lp'],
           earn_token: cryptocurrencies['sscrt_sefi_lp'],
-          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          farm_contract_address: 'secret1twjquxp06j9ppyg4v6dr496fnmfcvzpx8weddm',
           protocol: protocols['secret_swap'],
-          withdraw_gas: '300000',
-          under_maintenance: true,
+          reward_token: cryptocurrencies['sefi'],
+          withdraw_gas: '2800000',
         },
         // Secret swap SEFI-sXMR - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
           address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-          deposit_gas: '300000',
+          deposit_gas: '1600000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sxmr_lp'],
           earn_token: cryptocurrencies['sefi_sxmr_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
-          withdraw_gas: '300000',
+          withdraw_gas: '1600000',
+          reward_token: cryptocurrencies['sefi'],
           under_maintenance: true,
         },
         // Secret swap SEFI-sUSDC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
           address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-          deposit_gas: '300000',
+          deposit_gas: '1600000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_susdc_eth_lp'],
           earn_token: cryptocurrencies['sefi_susdc_eth_lp'],
           farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
           protocol: protocols['secret_swap'],
-          withdraw_gas: '300000',
+          withdraw_gas: '1600000',
+          reward_token: cryptocurrencies['sefi'],
           under_maintenance: true,
         },
-        // Secret swap sETH(ETH)-sWBTC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['seth_eth_swbtc_eth_lp'],
-        //   earn_token: cryptocurrencies['seth_eth_swbtc_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-sDAI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_sdai_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_sdai_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-sDAI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
-        //   earn_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-sLINK(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_slink_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_slink_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   withdraw_gas: '300000',
-        //   under_maintenance: true,
-        // },
-        // Secret swap sSCRT-sRSR(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_srsr_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_srsr_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '300000',
-        // },
-        // Secret swap sSCRT-sOCEAN(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_socean_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_socean_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '300000',
-        // },
-        // Secret swap sSCRT-sRUNE(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_srune_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_srune_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '300000',
-        // },
-        // Secret swap sSCRT-sYFI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_syfi_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_syfi_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '300000',
-        // },
-        // Secret swap sSCRT-sDOT(BSC) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
-        //   earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '300000',
-        // },
-        // Secret swap sSCRT-sMANA(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_smana_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_smana_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '300000',
-        // },
-        // Secret swap sSCRT-sUNI(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
-        // {
-        //   address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-        //   deposit_gas: '300000',
-        //   deposit_token: cryptocurrencies['sscrt_suni_eth_lp'],
-        //   earn_token: cryptocurrencies['sscrt_suni_eth_lp'],
-        //   farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
-        //   protocol: protocols['secret_swap'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '300000',
-        // },
       ]
       $.each(this.pools, function(index, value) {
         let html = '<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12">'
@@ -538,7 +367,7 @@ $(document).ready(function(){
             html += '<br>APY: ~' + value['apy'] + '%'
           }
           if (value['farm_contract_address']) {
-            html += '<br>Rewards to process: <span class="' + value['address'] + '-rewards-to-process"></span><span> ' + value['earn_token']['symbol'] + '</span>'
+            html += '<br>Rewards to process: <span class="' + value['address'] + '-rewards-to-process"></span><span> ' + value['reward_token']['symbol'] + '</span>'
           } else {
             html += '<br>Claimable ' + value['earn_token']['symbol'] + ': <span class="' + value['address'] + '-claimable"></span>'
           }
@@ -621,8 +450,26 @@ $(document).ready(function(){
               this.updateUserInterface()
             }
             catch(err) {
-              let errorDisplayMessage = err;
-              document.showAlertDanger(errorDisplayMessage)
+              // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
+              // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
+              if (err.message.includes('HTTP 502')) {
+                // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
+                let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
+                let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                this.updateUserInterface()
+                let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
+                let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
+                  document.showAlertSuccess("Deposit successful");
+                  document[value['address'] + 'DepositForm'].amount.value = ''
+                } else {
+                  let errorDisplayMessage = "Out of gas. Please set a higher gas amount and try again.";
+                  document.showAlertDanger(errorDisplayMessage)
+                }
+              } else {
+                let errorDisplayMessage = err;
+                document.showAlertDanger(errorDisplayMessage)
+              }
             }
             finally {
               $depositButton.prop("disabled", false);
@@ -646,10 +493,10 @@ $(document).ready(function(){
               let handleMsg;
               if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
                 handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toFixed(0) } }
-              } else if (value['address'] == 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf') {
-                handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toFixed(0) } }
-              } else {
+              } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
                 handleMsg = { withdraw: { amount: (amount * 1_000_000).toFixed(0) } }
+              } else {
+                handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toFixed(0) } }
               }
               let response = await this.client.execute(value['address'], handleMsg)
               document.showAlertSuccess("Withdraw successful");
@@ -657,8 +504,26 @@ $(document).ready(function(){
               this.updateUserInterface()
             }
             catch(err) {
-              let errorDisplayMessage = err;
-              document.showAlertDanger(errorDisplayMessage)
+              // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
+              // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
+              if (err.message.includes('HTTP 502')) {
+                // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
+                let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
+                let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                this.updateUserInterface()
+                let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
+                let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
+                  document.showAlertSuccess("Withdraw successful");
+                  document[value['address'] + 'WithdrawForm'].amount.value = ''
+                } else {
+                  let errorDisplayMessage = "Out of gas. Please set a higher gas amount and try again.";
+                  document.showAlertDanger(errorDisplayMessage)
+                }
+              } else {
+                let errorDisplayMessage = err;
+                document.showAlertDanger(errorDisplayMessage)
+              }
             }
             finally {
               $withdrawButton.prop("disabled", false);
@@ -780,7 +645,6 @@ $(document).ready(function(){
               $poolRewardsToProcess.text('Loading...');
               let height = await client.getHeight();
               let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }})
-              console.log(response['rewards'])
               $poolRewardsToProcess.text((response['rewards']['rewards'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
             } catch(err) {
               $poolRewardsToProcess.text('0');
