@@ -382,7 +382,7 @@ $(document).ready(function(){
           html += value['deposit_token']['address'] + '-balance-link"><span class="'
           html += value['deposit_token']['address'] + '-balance"></span><button class="btn btn-light btn-sm ml-2 border '
           html += value['deposit_token']['address'] + '-balance-view-button d-none" type="button"><div class="d-none loading"><em aria-hidden="true" class="spinner-grow spinner-grow-sm" role="status"></em><em>Loading...</em></div><div class="ready"><div class="fas fa-search mr-1"></div>View</div></button></span><form name="'
-          html += value['address'] + 'DepositForm"><div class="input-group mb-3"><input class="form-control" name="amount">'
+          html += value['address'] + 'DepositForm"><div class="input-group mb-3"><input class="form-control" name="amount" autocomplete="off">'
           html += '<div class="input-group-append"><span class="input-group-text">'
           html += value['deposit_token']['symbol']
           html += '</span></div></div><button class="btn btn-primary btn-rg '
@@ -390,7 +390,7 @@ $(document).ready(function(){
           html += value['address'] + '-deposit-button-loading"><em aria-hidden="true" class="spinner-grow spinner-grow-sm" role="status"></em><em>Loading...</em></div><div class="'
           html += value['address'] + '-deposit-button-ready">Deposit</div></button></form></div><div class="col-sm-6">Withdrawable: <span class="'
           html += value['address'] + '-user-shares"></span><form name="'
-          html += value['address'] + 'WithdrawForm"><div class="input-group mb-3"><input class="form-control" name="amount">'
+          html += value['address'] + 'WithdrawForm"><div class="input-group mb-3"><input class="form-control" name="amount" autocomplete="off">'
           html += '<div class="input-group-append"><span class="input-group-text">'
           html += value['deposit_token']['symbol']
           html += '</span></div></div><button class="btn btn-primary btn-rg '
@@ -447,7 +447,11 @@ $(document).ready(function(){
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
-              this.updateUserInterface()
+              this.updateWalletBalance(value['reward_token'] || value['earn_token'])
+              this.updateWalletBalance(value['deposit_token'])
+              this.updateClaimable(value)
+              this.updateTotalShares(value)
+              this.updateUserWithdrawable(value)
             }
             catch(err) {
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
@@ -456,7 +460,11 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateUserInterface()
+                this.updateWalletBalance(value['reward_token'] || value['earn_token'])
+                this.updateWalletBalance(value['deposit_token'])
+                this.updateClaimable(value)
+                this.updateTotalShares(value)
+                this.updateUserWithdrawable(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
@@ -501,7 +509,11 @@ $(document).ready(function(){
               let response = await this.client.execute(value['address'], handleMsg)
               document.showAlertSuccess("Withdraw successful");
               document[value['address'] + 'WithdrawForm'].amount.value = ''
-              this.updateUserInterface()
+              this.updateWalletBalance(value['reward_token'] || value['earn_token'])
+              this.updateWalletBalance(value['deposit_token'])
+              this.updateClaimable(value)
+              this.updateTotalShares(value)
+              this.updateUserWithdrawable(value)
             }
             catch(err) {
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
@@ -510,7 +522,11 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateUserInterface()
+                this.updateWalletBalance(value['reward_token'] || value['earn_token'])
+                this.updateWalletBalance(value['deposit_token'])
+                this.updateClaimable(value)
+                this.updateTotalShares(value)
+                this.updateUserWithdrawable(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
@@ -719,141 +735,6 @@ $(document).ready(function(){
           $walletBalanceLink.removeClass('d-none')
         }
       }
-
-      // document.spySEFIV2DepositForm.onsubmit = async (e) => {
-      //   e.preventDefault()
-      //   this.setClient('1800000');
-      //   $("#spy-sefi-v2-deposit-button").prop("disabled", true);
-      //   $("#spy-sefi-v2-deposit-button-loading").removeClass("d-none")
-      //   $("#spy-sefi-v2-deposit-button-ready").addClass("d-none")
-      //   try {
-      //     let amount = document.spySEFIV2DepositForm.amount.value;
-      //     amount = amount.replace(/,/g, '');
-      //     let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerSpySEFIAddress, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
-      //     let response = await this.client.execute(this.SEFIAddress, handleMsg)
-      //     document.showAlertSuccess("Deposit successful");
-      //     document.spySEFIV2DepositForm.amount.value = ''
-      //     this.updateUserInterface()
-      //   }
-      //   catch(err) {
-      //     let errorDisplayMessage = err;
-      //     document.showAlertDanger(errorDisplayMessage)
-      //   }
-      //   finally {
-      //     $("#spy-sefi-v2-deposit-button").prop("disabled", false);
-      //     $("#spy-sefi-v2-deposit-button-loading").addClass("d-none")
-      //     $("#spy-sefi-v2-deposit-button-ready").removeClass("d-none")
-      //   }
-      // };
-
-      // document.spySEFIV2WithdrawForm.onsubmit = async (e) => {
-      //   e.preventDefault()
-      //   this.setClient('1300000');
-      //   $("#spy-sefi-v2-withdraw-button").prop("disabled", true);
-      //   $("#spy-sefi-v2-withdraw-button-loading").removeClass("d-none")
-      //   $("#spy-sefi-v2-withdraw-button-ready").addClass("d-none")
-      //   try {
-      //     let amount = document.spySEFIV2WithdrawForm.amount.value;
-      //     amount = amount.replace(/,/g, '');
-      //     let handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toString() } }
-      //     let response = await this.client.execute(this.yieldOptimizerSpySEFIAddress, handleMsg)
-      //     document.showAlertSuccess("Withdraw successful");
-      //     document.spySEFIV2WithdrawForm.amount.value = ''
-      //     this.updateUserInterface()
-      //   }
-      //   catch(err) {
-      //     let errorDisplayMessage = err;
-      //     document.showAlertDanger(errorDisplayMessage)
-      //   }
-      //   finally {
-      //     $("#spy-sefi-v2-withdraw-button").prop("disabled", false);
-      //     $("#spy-sefi-v2-withdraw-button-loading").addClass("d-none")
-      //     $("#spy-sefi-v2-withdraw-button-ready").removeClass("d-none")
-      //   }
-      // };
-
-      // document.yieldOptimizerBDepositForm.onsubmit = async (e) => {
-      //   e.preventDefault()
-      //   this.setClient('600000');
-      //   $("#yield-optimizer-b-deposit-button").prop("disabled", true);
-      //   $("#yield-optimizer-b-deposit-button-loading").removeClass("d-none")
-      //   $("#yield-optimizer-b-deposit-button-ready").addClass("d-none")
-      //   try {
-      //     let amount = document.yieldOptimizerBDepositForm.amount.value;
-      //     amount = amount.replace(/,/g, '');
-      //     let handleMsg = { send: { amount: (amount * 1_000_000).toString(), recipient: this.yieldOptimizerBAddress, msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9' } }
-      //     let response = await this.client.execute(this.buttSWBTCLPContractAddress, handleMsg)
-      //     document.showAlertSuccess("Deposit successful");
-      //     document.yieldOptimizerBDepositForm.amount.value = ''
-      //     this.updateYieldOptimizerBUserShares();
-      //     this.updateYieldOptimizerBUserClaimableButt();
-      //     this.updateYieldOptimizerBTotalShares();
-      //     this.updateBUTTSWBTCLPWalletBalance()
-      //   }
-      //   catch(err) {
-      //     let errorDisplayMessage = err;
-      //     document.showAlertDanger(errorDisplayMessage)
-      //   }
-      //   finally {
-      //     $("#yield-optimizer-b-deposit-button").prop("disabled", false);
-      //     $("#yield-optimizer-b-deposit-button-loading").addClass("d-none")
-      //     $("#yield-optimizer-b-deposit-button-ready").removeClass("d-none")
-      //   }
-      // };
-
-      // document.yieldOptimizerBWithdrawForm.onsubmit = async (e) => {
-      //   e.preventDefault()
-      //   this.setClient('600000');
-      //   $("#yield-optimizer-b-withdraw-button").prop("disabled", true);
-      //   $("#yield-optimizer-b-withdraw-button-loading").removeClass("d-none")
-      //   $("#yield-optimizer-b-withdraw-button-ready").addClass("d-none")
-      //   try {
-      //     let amount = document.yieldOptimizerBWithdrawForm.amount.value;
-      //     amount = amount.replace(/,/g, '');
-      //     let handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toString() } }
-      //     let response = await this.client.execute(this.yieldOptimizerBAddress, handleMsg)
-      //     document.showAlertSuccess("Withdraw successful");
-      //     document.yieldOptimizerBWithdrawForm.amount.value = ''
-      //     this.updateYieldOptimizerBUserShares();
-      //     this.updateYieldOptimizerBUserClaimableButt();
-      //     this.updateYieldOptimizerBTotalShares();
-      //     this.updateBUTTSWBTCLPWalletBalance()
-      //   }
-      //   catch(err) {
-      //     let errorDisplayMessage = err;
-      //     document.showAlertDanger(errorDisplayMessage)
-      //   }
-      //   finally {
-      //     $("#yield-optimizer-b-withdraw-button").prop("disabled", false);
-      //     $("#yield-optimizer-b-withdraw-button-loading").addClass("d-none")
-      //     $("#yield-optimizer-b-withdraw-button-ready").removeClass("d-none")
-      //   }
-      // };
-
-      // this.updateYieldOptimizerSpySEFIV2UserWithdrawable = async() => {
-      //   let client = document.secretNetworkClient(this.environment);
-
-      //   try {
-      //     this.$yieldOptimizerSpySEFIV2UserWithdrawable.text('Loading...');
-      //     let height = await client.getHeight();
-      //     let rewardsResponse = await client.queryContractSmart(this.spySEFIAddress, {rewards: { address: this.yieldOptimizerSpySEFIAddress, key: 'DoTheRightThing.', height: height }});
-      //     let totalClaimableRewards = Number(rewardsResponse['rewards']['rewards']);
-      //     let response = await client.queryContractSmart(this.yieldOptimizerSpySEFIAddress, {user_info: { address: this.address}})
-      //     let poolResponse = await client.queryContractSmart(this.yieldOptimizerSpySEFIAddress, {pool: {}})
-      //     let userShares = Number(response['user_info']['shares']);
-      //     let incentivizedTokenTotal = Number(poolResponse['pool']['incentivized_token_total']);
-      //     let sharesTotal = Number(poolResponse['pool']['shares_total']);
-      //     let userWithdrawable = 0;
-      //     if (sharesTotal > 0) {
-      //       let userRewards = totalClaimableRewards * 9_500 / 10_000 * userShares / sharesTotal
-      //       userWithdrawable = userShares * incentivizedTokenTotal / sharesTotal + userRewards;
-      //     };
-      //     this.$yieldOptimizerSpySEFIV2UserWithdrawable.text((userWithdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' SEFI')
-      //   } catch(err) {
-      //     this.$yieldOptimizerSpySEFIV2UserWithdrawable.text('0 SEFI');
-      //     console.log(err)
-      //   }
-      // }
 
       // Query profit distributor
       $('#connect-wallet-form').submit()

@@ -93,12 +93,12 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
           .col-lg-4.col-md-6
-            .card.card-lg-y.feature.feature-center
-              .feature-icon.feature-icon-bg-grd.feature-icon-s5-3.p-3
-                = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', crop: :lpad, dpr: 2, fetch_format: :auto, height: 246, width: 230
-              .feature-text
-                %h4.title.title-md.title-dark.mb-1 Yield optimizer
-                %p.mb-1 (Coming soon)
-                %p
-                  = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
-                  = features[:secret_network][:name]
+            = link_to secret_network_yield_optimizer_index_path do
+              .card.card-lg-y.feature.feature-center
+                .feature-icon.feature-icon-bg-grd.feature-icon-s5-3.p-3
+                  = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', crop: :lpad, dpr: 2, fetch_format: :auto, height: 246, width: 230
+                .feature-text
+                  %h4.title.title-md.title-dark.mb-1 Yield optimizer
+                  %p
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                    = features[:secret_network][:name]
