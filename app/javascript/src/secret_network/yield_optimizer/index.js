@@ -47,7 +47,7 @@ $(document).ready(function(){
           symbol: 'SEFI-sUSDC(ETH)'
         },
         sefi_sxmr_lp: {
-          address: 'secret132zd4csn5xfellxa9xp94t7dl32jqk5lu4hump',
+          address: 'secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2',
           asset_one: 'sefi',
           asset_two: 'sxmr',
           symbol: 'SEFI-sXMR'
@@ -281,18 +281,17 @@ $(document).ready(function(){
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '2800000',
         },
-        // Secret swap SEFI-sXMR - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
-          address: 'secret184tcgt7auytx786yylnf8cvtn22utvn2zaw7ej',
-          deposit_gas: '1600000',
+          address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj',
+          apy: '11,475',
+          deposit_gas: '2800000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sxmr_lp'],
           earn_token: cryptocurrencies['sefi_sxmr_lp'],
-          farm_contract_address: 'secret1t7xqjaqx4jr68w0xwlqvwzwks2e2l0q24wjajf',
+          farm_contract_address: 'secret1pqvny7lp32z939vtd08jhe66cxl0qp3quxyls5',
           protocol: protocols['secret_swap'],
-          withdraw_gas: '1600000',
+          withdraw_gas: '2800000',
           reward_token: cryptocurrencies['sefi'],
-          under_maintenance: true,
         },
         // Secret swap SEFI-sUSDC(ETH) - UPDATE CONTRACT ADDRESSES WHEN AVAILABLE
         {
