@@ -230,6 +230,7 @@ $(document).ready(function(){
           symbol: 'sYFI(ETH)'
         }
       };
+      this.height = undefined;
       let protocols = {
         secret_swap: {
           name: 'Secret Swap',
@@ -307,6 +308,7 @@ $(document).ready(function(){
           under_maintenance: true,
         },
       ]
+      this.retryCount = 0;
       $.each(this.pools, function(index, value) {
         let html = '<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12">'
         if (value['title']) {
@@ -414,9 +416,7 @@ $(document).ready(function(){
             $balanceViewButton.find('.ready').addClass('d-none')
             try {
               await window.keplr.suggestToken(this.chainId, value['deposit_token']['address']);
-              
-
-        this.updateWalletBalance(value['deposit_token']);
+              this.updateWalletBalance(value['deposit_token']);
               $balanceViewButton.addClass('d-none')
             } catch(err) {
               let errorDisplayMessage = err;
@@ -436,6 +436,8 @@ $(document).ready(function(){
         if(!value['under_maintenance']) {
           document[value['address'] + 'DepositForm'].onsubmit = async (e) => {
             e.preventDefault()
+            this.height = undefined;
+            this.retryCount = 0;
             this.setClient(value['deposit_gas']);
             $depositButton.prop("disabled", true);
             $depositButtonLoading.removeClass("d-none")
@@ -447,11 +449,7 @@ $(document).ready(function(){
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
-              this.updateWalletBalance(value['reward_token'] || value['earn_token'])
-              this.updateWalletBalance(value['deposit_token'])
-              this.updateClaimable(value)
-              this.updateTotalShares(value)
-              this.updateUserWithdrawable(value)
+              this.updatePoolInterface(value, true)
             }
             catch(err) {
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
@@ -460,14 +458,12 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateWalletBalance(value['reward_token'] || value['earn_token'])
-                this.updateWalletBalance(value['deposit_token'])
                 this.updateClaimable(value)
                 this.updateTotalShares(value)
-                this.updateUserWithdrawable(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
+                  this.updatePoolInterface(value, true)
                   document.showAlertSuccess("Deposit successful");
                   document[value['address'] + 'DepositForm'].amount.value = ''
                 } else {
@@ -491,6 +487,8 @@ $(document).ready(function(){
           let $withdrawButtonReady = $('.' + value['address'] + '-withdraw-button-ready')
           document[value['address'] + 'WithdrawForm'].onsubmit = async (e) => {
             e.preventDefault()
+            this.height = undefined;
+            this.retryCount = 0;
             this.setClient(value['withdraw_gas']);
             $withdrawButton.prop("disabled", true);
             $withdrawButtonLoading.removeClass("d-none")
@@ -509,11 +507,7 @@ $(document).ready(function(){
               let response = await this.client.execute(value['address'], handleMsg)
               document.showAlertSuccess("Withdraw successful");
               document[value['address'] + 'WithdrawForm'].amount.value = ''
-              this.updateWalletBalance(value['reward_token'] || value['earn_token'])
-              this.updateWalletBalance(value['deposit_token'])
-              this.updateClaimable(value)
-              this.updateTotalShares(value)
-              this.updateUserWithdrawable(value)
+              this.updatePoolInterface(value, true)
             }
             catch(err) {
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
@@ -522,14 +516,12 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateWalletBalance(value['reward_token'] || value['earn_token'])
-                this.updateWalletBalance(value['deposit_token'])
                 this.updateClaimable(value)
                 this.updateTotalShares(value)
-                this.updateUserWithdrawable(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
+                  this.updatePoolInterface(value, true)
                   document.showAlertSuccess("Withdraw successful");
                   document[value['address'] + 'WithdrawForm'].amount.value = ''
                 } else {
@@ -609,12 +601,19 @@ $(document).ready(function(){
         }
       };
 
+      this.updatePoolInterface = (pool, afterTransaction = false) => {
+          this.updateWalletBalance(pool['deposit_token'])
+          this.updateClaimable(pool)
+          this.updateTotalShares(pool)
+          this.updateUserWithdrawable(pool)
+          if (afterTransaction) {
+            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'])
+          }
+      }
+
       this.updateUserInterface = () => {
-        this.pools.forEach(function(value, index) {
-          this.updateWalletBalance(value['deposit_token'])
-          this.updateClaimable(value)
-          this.updateTotalShares(value)
-          this.updateUserWithdrawable(value)
+        this.pools.forEach(function(pool, index) {
+          this.updatePoolInterface(pool)
         }.bind(this));
       }
 
@@ -659,12 +658,19 @@ $(document).ready(function(){
             let $poolRewardsToProcess = $('.' + pool.address + '-rewards-to-process')
             try {
               $poolRewardsToProcess.text('Loading...');
-              let height = await client.getHeight();
-              let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }})
+              if (!this.height) {
+                this.height = await client.getHeight();
+              }
+              let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: this.height, key: "DoTheRightThing." }})
               $poolRewardsToProcess.text((response['rewards']['rewards'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
             } catch(err) {
-              $poolRewardsToProcess.text('0');
               console.log(err)
+              console.log(this.height)
+              console.log(pool)
+              if (this.retryCount < 5) {
+                this.retryCount += 1
+                this.updateClaimable(pool)
+              }
             }
           }
         } else {
@@ -675,13 +681,18 @@ $(document).ready(function(){
               let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
               $poolClaimable.text((response['claimable_profit']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
             } else {
-              let height = await client.getHeight();
-              let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: height }})
+              if (!this.height) {
+                this.height = await client.getHeight();
+              }
+              let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: this.height }})
               $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
             }
           } catch(err) {
-            $poolClaimable.text('0');
             console.log(err)
+            if (this.retryCount < 5) {
+              this.retryCount += 1
+              this.updateClaimable(pool)
+            }
           }
         }
       }
