@@ -259,7 +259,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
-          apy: '1,565',
+          apy: '230',
           deposit_gas: '1700000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
@@ -271,7 +271,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v',
-          apy: '3,210',
+          apy: '330',
           deposit_gas: '2900000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sefi_lp'],
@@ -283,7 +283,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj',
-          apy: '5,845',
+          apy: '535',
           deposit_gas: '2900000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sxmr_lp'],
@@ -295,7 +295,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn',
-          apy: '11,595',
+          apy: '590',
           deposit_gas: '2900000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_susdc_eth_lp'],
@@ -314,7 +314,7 @@ $(document).ready(function(){
         }
         html += '</div><div class="col-sm-7">'
         if (value['deposit_token'] == value['earn_token']) {
-          html += '<div>Depoit & Earn</div>'
+          html += '<div>Deposit & Earn</div>'
           html += '<span class="mr-2">'
           html += value['deposit_token']['symbol']
           if (value['deposit_token']['logo']) {
