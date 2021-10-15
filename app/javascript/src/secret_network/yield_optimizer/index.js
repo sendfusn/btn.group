@@ -74,6 +74,11 @@ $(document).ready(function(){
         //   asset_two: 'swbtc',
         //   symbol: 'sETH(ETH)-sWBTC(ETH)'
         // },
+        sienna: {
+          address: 'secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4',
+          logo: 'https://siasky.net/AADF3iN20PtbAY-7r4VrFlFqkNpS0FbGtPu07AbqgkiXbg',
+          symbol: 'SIENNA'
+        },
         slink_eth: {
           address: 'secret1xcrf2vvxcz8dhtgzgsd0zmzlf9g320ea2rhdjw',
           logo: 'https://siasky.net/AABTb2I_YOOB4x-PZDltgjTiuP92_fFwo5Z0MMLADr_OWg',
@@ -235,17 +240,31 @@ $(document).ready(function(){
         secret_swap: {
           name: 'Secret Swap',
           url: 'https://app.secretswap.io/earn'
+        },
+        sienna: {
+          name: 'Sienna',
+          url: 'https://app.sienna.network/swap/earn'
         }
       }
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.pools = [
         {
-          title: 'Profit distributor',
+          title: 'Profit distributor SEFI',
           address: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz',
           deposit_gas: '500000',
           deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
           deposit_token: cryptocurrencies['butt'],
           earn_token: cryptocurrencies['sefi'],
+          withdraw_gas: '500000',
+        },
+        {
+          title: 'Profit distributor SIENNA',
+          address: 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2',
+          deposit_gas: '500000',
+          deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
+          deposit_token: cryptocurrencies['butt'],
+          earn_token: cryptocurrencies['sienna'],
+          under_maintenance: true,
           withdraw_gas: '500000',
         },
         {
@@ -497,7 +516,7 @@ $(document).ready(function(){
               let handleMsg;
               if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
                 handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toFixed(0) } }
-              } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
+              } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || value['address'] == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
                 handleMsg = { withdraw: { amount: (amount * 1_000_000).toFixed(0) } }
               } else {
                 handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toFixed(0) } }
@@ -624,7 +643,7 @@ $(document).ready(function(){
           $userShares.text('Loading...');
           let userResponse;
           let withdrawable = 0;
-          if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
+          if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
             userResponse = await client.queryContractSmart(pool.address, {user: {user_address: this.address}})
             withdrawable = userResponse['user']['shares']
           } else {
@@ -675,7 +694,7 @@ $(document).ready(function(){
           let $poolClaimable = $('.' + pool.address + '-claimable')
           try {
             $poolClaimable.text('Loading...');
-            if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
+            if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
               let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
               $poolClaimable.text((response['claimable_profit']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
             } else {
@@ -702,7 +721,7 @@ $(document).ready(function(){
           let totalSharesSelector = '.' + poolAddress + '-total-shares'
           let client = document.secretNetworkClient(this.environment);
           $(totalSharesSelector).text('Loading...')
-          if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
+          if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
             let config = await client.queryContractSmart(poolAddress, {config: {}})
             $(totalSharesSelector).text((config['config']['total_shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' ' + depositTokenSymbol)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
