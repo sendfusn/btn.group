@@ -411,7 +411,7 @@ $(document).ready(function(){
           html += '<div class="row"><div class="col-12"><hr></div><div class="col-sm-6">Depositable: <span class="'
           html += value['deposit_token']['address'] + '-balance-loading d-none">Loading...</span><span class="'
           html += value['deposit_token']['address'] + '-balance-link"><span class="'
-          html += value['deposit_token']['address'] + '-balance"></span><button class="btn btn-light btn-sm ml-2 border '
+          html += value['deposit_token']['address'] + '-balance"></span><button class="btn btn-light btn-sm ml-2 mb-1 border '
           html += value['deposit_token']['address'] + '-balance-view-button d-none" type="button"><div class="d-none loading"><em aria-hidden="true" class="spinner-grow spinner-grow-sm" role="status"></em><em>Loading...</em></div><div class="ready"><div class="fas fa-search mr-1"></div>View</div></button></span><form name="'
           html += value['address'] + 'DepositForm"><div class="input-group mb-3"><input class="form-control" name="amount" autocomplete="off">'
           html += '<div class="input-group-append"><span class="input-group-text">'
@@ -696,9 +696,11 @@ $(document).ready(function(){
               console.log(err)
               console.log(this.height)
               console.log(pool)
-              if (this.retryCount < 5) {
-                this.retryCount += 1
-                this.updateClaimable(pool)
+              if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+                if (this.retryCount < 5) {
+                  this.retryCount += 1
+                  this.updateClaimable(pool)
+                }
               }
             }
           }
@@ -718,9 +720,11 @@ $(document).ready(function(){
             }
           } catch(err) {
             console.log(err)
-            if (this.retryCount < 5) {
-              this.retryCount += 1
-              this.updateClaimable(pool)
+            if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+              if (this.retryCount < 5) {
+                this.retryCount += 1
+                this.updateClaimable(pool)
+              }
             }
           }
         }
