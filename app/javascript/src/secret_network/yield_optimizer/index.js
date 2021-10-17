@@ -234,12 +234,13 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AABXRSQbMXk8PLV3CkBPSl4NW2WsSQvyOkZZRfsZeaW4Ww',
           symbol: 'sUSDC(ETH)'
         },
-        // susdc_eth_susdc_bsc_lp: {
-        //   address: 'secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg',
-        //   asset_one: 'susdc_eth',
-        //   asset_two: 'susdc_bsc',
-        //   symbol: 'sUSDC(ETH)-sUSDC(BSC) LP'
-        // },
+        susdc_eth_susdc_bsc_lp: {
+          address: 'secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg',
+          asset_one: 'susdc_eth',
+          asset_two: 'susdc_bsc',
+          decimals: 6,
+          symbol: 'sUSDC(ETH)-sUSDC(BSC) LP'
+        },
         susdt_eth: {
           address: 'secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f',
           decimals: 6,
@@ -416,6 +417,19 @@ $(document).ready(function(){
           deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
           earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
           farm_contract_address: 'secret1geklww0t0kwehc2w9llwce2wkg40pp4ljfpa8m',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '3400000',
+          reward_token: cryptocurrencies['sefi'],
+        },
+        // sUSDC-sUSDC(BSC)
+        {
+          address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql',
+          apy: '30.98',
+          deposit_gas: '3400000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
+          earn_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
+          farm_contract_address: 'secret1rcvjaua8dfhjlh0kwhrsj54l4aj46mu5evgqwq',
           protocol: protocols['secret_swap'],
           withdraw_gas: '3400000',
           reward_token: cryptocurrencies['sefi'],
@@ -717,7 +731,7 @@ $(document).ready(function(){
 
       this.updatePoolInterface = (pool, afterTransaction = false) => {
           this.updateWalletBalance(pool['deposit_token'], pool)
-          this.updateClaimable(pool)
+          this.updateClaimable(pool, afterTransaction)
           this.updateTotalShares(pool)
           this.updateUserWithdrawable(pool)
           if (afterTransaction) {
@@ -765,50 +779,58 @@ $(document).ready(function(){
         }
       }
 
-      this.updateClaimable = async(pool) => {
+      this.updateClaimable = async(pool, afterTransaction = false) => {
         let client = document.secretNetworkClient(this.environment);
         if (pool.farm_contract_address) {
           if (!pool.under_maintenance) {
             let $poolRewardsToProcess = $('.' + pool.address + '-rewards-to-process')
-            try {
-              $poolRewardsToProcess.text('Loading...');
-              if (!this.height) {
-                this.height = await client.getHeight();
-              }
-              let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: this.height, key: "DoTheRightThing." }})
-              $poolRewardsToProcess.text((response['rewards']['rewards'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
-            } catch(err) {
-              console.log(err)
-              console.log(this.height)
-              console.log(pool)
-              if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
-                if (this.retryCount < 5) {
-                  this.retryCount += 1
-                  this.updateClaimable(pool)
+            if (afterTransaction) {
+              $poolRewardsToProcess.text('0');
+            } else {
+              try {
+                $poolRewardsToProcess.text('Loading...');
+                if (!this.height) {
+                  this.height = await client.getHeight();
+                }
+                let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: this.height, key: "DoTheRightThing." }})
+                $poolRewardsToProcess.text((response['rewards']['rewards'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
+              } catch(err) {
+                console.log(err)
+                console.log(this.height)
+                console.log(pool)
+                if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+                  if (this.retryCount < 5) {
+                    this.retryCount += 1
+                    this.updateClaimable(pool)
+                  }
                 }
               }
             }
           }
         } else {
           let $poolClaimable = $('.' + pool.address + '-claimable')
-          try {
-            $poolClaimable.text('Loading...');
-            if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
-              let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
-              $poolClaimable.text((response['claimable_profit']['amount'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
-            } else {
-              if (!this.height) {
-                this.height = await client.getHeight();
+          if (afterTransaction) {
+            $poolClaimable.text('0');
+          } else {
+            try {
+              $poolClaimable.text('Loading...');
+              if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
+                let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
+                $poolClaimable.text((response['claimable_profit']['amount'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
+              } else {
+                if (!this.height) {
+                  this.height = await client.getHeight();
+                }
+                let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: this.height }})
+                $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
               }
-              let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: this.height }})
-              $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
-            }
-          } catch(err) {
-            console.log(err)
-            if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
-              if (this.retryCount < 5) {
-                this.retryCount += 1
-                this.updateClaimable(pool)
+            } catch(err) {
+              console.log(err)
+              if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+                if (this.retryCount < 5) {
+                  this.retryCount += 1
+                  this.updateClaimable(pool)
+                }
               }
             }
           }
