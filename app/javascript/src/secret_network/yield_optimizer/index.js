@@ -848,8 +848,9 @@ $(document).ready(function(){
           $walletBalanceLoading.removeClass('d-none')
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, address)
           // If they have the key, replace the button with the balance
-          let balance = await client.queryContractSmart(address, { balance: { address: this.address, key: key } })
-          $walletBalance.text(balance['balance']['amount'] / Math.pow(10, cryptocurrency['decimals'])).toLocaleString('en', {maximumFractionDigits: cryptocurrency['decimals']})
+          let balanceResponse = await client.queryContractSmart(address, { balance: { address: this.address, key: key } })
+          let balanceFormatted = (balanceResponse['balance']['amount'] / Math.pow(10, cryptocurrency['decimals'])).toLocaleString('en', {maximumFractionDigits: cryptocurrency['decimals']})
+          $walletBalance.text(balanceFormatted)
           $walletBalance.removeClass('d-none')
           $walletBalanceViewButton.addClass('d-none')
         } catch(err) {
