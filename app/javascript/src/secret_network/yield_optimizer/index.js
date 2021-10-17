@@ -497,7 +497,7 @@ $(document).ready(function(){
           html += value['deposit_token']['address'] + '-balance-link"><span class="'
           html += value['deposit_token']['address'] + '-balance"></span><button class="btn btn-light btn-sm ml-2 mb-1 border '
           html += value['deposit_token']['address'] + '-balance-view-button d-none" type="button"><div class="d-none loading"><em aria-hidden="true" class="spinner-grow spinner-grow-sm" role="status"></em><em>Loading...</em></div><div class="ready"><div class="fas fa-search mr-1"></div>View</div></button></span><form name="'
-          html += value['address'] + 'DepositForm"><div class="input-group mb-3"><input class="form-control" value="0" name="amount" autocomplete="off">'
+          html += value['address'] + 'DepositForm"><div class="input-group mb-3"><input class="form-control" name="amount" autocomplete="off">'
           html += '<div class="input-group-append"><span class="input-group-text">'
           html += value['deposit_token']['symbol']
           html += '</span></div></div><button class="btn btn-primary btn-rg '
@@ -505,7 +505,7 @@ $(document).ready(function(){
           html += value['address'] + '-deposit-button-loading"><em aria-hidden="true" class="spinner-grow spinner-grow-sm" role="status"></em><em>Loading...</em></div><div class="'
           html += value['address'] + '-deposit-button-ready">Deposit</div></button></form></div><div class="col-sm-6">Withdrawable: <span class="'
           html += value['address'] + '-user-shares"></span><form name="'
-          html += value['address'] + 'WithdrawForm"><div class="input-group mb-3"><input class="form-control" value="0" name="amount" autocomplete="off">'
+          html += value['address'] + 'WithdrawForm"><div class="input-group mb-3"><input class="form-control" name="amount" autocomplete="off">'
           html += '<div class="input-group-append"><span class="input-group-text">'
           html += value['deposit_token']['symbol']
           html += '</span></div></div><button class="btn btn-primary btn-rg '
