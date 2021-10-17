@@ -126,12 +126,13 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AACL5VVg8IZC4H_9cTiaPSzvD8hXmaJYXFc2t8piZgf5Ig',
           symbol: 'sSCRT'
         },
-        // sscrt_sbnb_bsc_lp: {
-        //   address: 'secret1jr99mtjs87hsx6hs36ze2l5efgj2x0gqrmya0p',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'sbnb_bsc',
-        //   symbol: 'sSCRT-sBNB(BSC)'
-        // },
+        sscrt_sbnb_bsc_lp: {
+          address: 'secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe',
+          asset_one: 'sscrt',
+          asset_two: 'sbnb_bsc',
+          decimals: 6,
+          symbol: 'sSCRT-sBNB(BSC)'
+        },
         // sscrt_sdai_eth_lp: {
         //   address: 'secret1sj65pd9fqgwyj0a9ctl4cecp62y52z5nzpq60r',
         //   asset_one: 'sscrt',
@@ -388,6 +389,19 @@ $(document).ready(function(){
           deposit_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
           earn_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
           farm_contract_address: 'secret1enpte7ll3r4zrs70najmf7g83hdzy33wmdx7nk',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '3400000',
+          reward_token: cryptocurrencies['sefi'],
+        },
+        // sscrt-sbnb(bsc)
+        {
+          address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp',
+          apy: '83.95',
+          deposit_gas: '3400000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
+          earn_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
+          farm_contract_address: 'secret16pqkssv08hjfmamrcz9gruhxxsuvc25n4gq0s2',
           protocol: protocols['secret_swap'],
           withdraw_gas: '3400000',
           reward_token: cryptocurrencies['sefi'],
