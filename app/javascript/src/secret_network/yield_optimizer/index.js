@@ -11,6 +11,7 @@ $(document).ready(function(){
       let cryptocurrencies = {
         butt: {
           address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
+          decimals: 6,
           logo: 'https://siasky.net/AAB1xbkxt91L2pStCCLRe-s2BG0N03K8OCugzeG8MSAP5g',
           symbol: 'BUTT'
         },
@@ -18,25 +19,30 @@ $(document).ready(function(){
           address: 'secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl',
           asset_one: 'butt',
           asset_two: 'swbtc',
+          decimals: 6,
           symbol: 'BUTT-sWBTC LP'
         },
         sbnb_bsc: {
           address: 'secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5',
+          decimals: 18,
           logo: 'https://siasky.net/AACF1KK4sIYJAvdd7DcxQUJdW_1n8lnb7l7k2k1TYZoeag',
           symbol: 'sBNB(BSC)'
         },
         sdai_eth: {
           address: 'secret1vnjck36ld45apf8u4fedxd5zy7f5l92y3w5qwq',
+          decimals: 18,
           logo: 'https://siasky.net/CADFDvkEPwGfeBEJPJIV5ZjOzyAvLTs2Ib2HFkdSy2y9Ng',
           symbol: 'sDAI'
         },
         sdot_bsc: {
           address: 'secret1px5mtmjh072znpez4fjpmxqsv3hpevdpyu9l4v',
+          decimals: 18,
           logo: 'https://siasky.net/AABoC4jQvXmvz_dwuegzpIW1wmiZpETMqZBj0lMH599SHw',
           symbol: 'sDOT(BSC)'
         },
         sefi: {
           address: 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt',
+          decimals: 6,
           logo: 'https://siasky.net/AABeTmPkxJ8CuGzgqCQM7sR0Y-3rTPZHJo4Jc9KObuTyBQ',
           symbol: 'SEFI'
         },
@@ -44,21 +50,25 @@ $(document).ready(function(){
           address: 'secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr',
           asset_one: 'sefi',
           asset_two: 'susdc_eth',
+          decimals: 6,
           symbol: 'SEFI-sUSDC(ETH)'
         },
         sefi_sxmr_lp: {
           address: 'secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2',
           asset_one: 'sefi',
           asset_two: 'sxmr',
+          decimals: 6,
           symbol: 'SEFI-sXMR'
         },
         seth_bsc: {
           address: 'secret1m6a72200733a7jnm76xrznh9cpmt4kf5ql0a6t',
+          decimals: 18,
           logo: 'https://siasky.net/AADSgvwvMSA3YjxpWGBtObf1zODXGCut10bt66Jr8DUhcw',
           symbol: 'sETH(BSC)'
         },
         seth_eth: {
           address: 'secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw',
+          decimals: 18,
           logo: 'https://siasky.net/AAAyGsQVk6vF6wYWUUvFMqkVX4LlNpCg432ucBCAgw9Hyw',
           symbol: 'sETH(ETH)'
         },
@@ -76,36 +86,43 @@ $(document).ready(function(){
         // },
         sienna: {
           address: 'secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4',
+          decimals: 18,
           logo: 'https://siasky.net/AADF3iN20PtbAY-7r4VrFlFqkNpS0FbGtPu07AbqgkiXbg',
           symbol: 'SIENNA'
         },
         slink_eth: {
           address: 'secret1xcrf2vvxcz8dhtgzgsd0zmzlf9g320ea2rhdjw',
+          decimals: 18,
           logo: 'https://siasky.net/AABTb2I_YOOB4x-PZDltgjTiuP92_fFwo5Z0MMLADr_OWg',
           symbol: 'sLINK(ETH)'
         },
         smana_eth: {
           address: 'secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega',
+          decimals: 18,
           logo: 'https://siasky.net/AAARSocbMzqrBV1oATe-H4OXhS01c8OMNXcetLoVzTJ14w',
           symbol: 'sMANA(ETH)'
         },
         socean_eth: {
           address: 'secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps',
+          decimals: 18,
           logo: 'https://siasky.net/GAB8EwAVnvjYW8ynq6zCMyBJpRrpMyEBbOWrSanyGm2veA',
           symbol: 'sOCEAN(ETH)'
         },
         srsr_eth: {
           address: 'secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un',
+          decimals: 18,
           logo: 'https://siasky.net/AAC6eLf4brMjdRRTPePDbuq4QgxLn2HIN9Kd66DQHJGPvg',
           symbol: 'sRSR(ETH)'
         },
         srune_eth: {
           address: 'secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24',
+          decimals: 18,
           logo: 'https://siasky.net/AADMji-JPI3F-JuP4G4eMfnq4ilKyxWrVR1-2d5BCosk3g',
           symbol: 'sRUNE(ETH)'
         },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
+          decimals: 6,
           logo: 'https://siasky.net/AACL5VVg8IZC4H_9cTiaPSzvD8hXmaJYXFc2t8piZgf5Ig',
           symbol: 'sSCRT'
         },
@@ -131,12 +148,14 @@ $(document).ready(function(){
           address: 'secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025',
           asset_one: 'sscrt',
           asset_two: 'sefi',
+          decimals: 6,
           symbol: 'sSCRT-SEFI'
         },
         sscrt_seth_eth_lp: {
           address: 'secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54',
           asset_one: 'sscrt',
           asset_two: 'seth_eth',
+          decimals: 6,
           symbol: 'sSCRT-sETH(ETH)'
         },
         // sscrt_slink_eth_lp: {
@@ -179,12 +198,14 @@ $(document).ready(function(){
           address: 'secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx',
           asset_one: 'sscrt',
           asset_two: 'susdt_eth',
+          decimals: 6,
           symbol: 'sSCRT-sUSDT(ETH)'
         },
         sscrt_swbtc_eth_lp: {
           address: 'secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv',
           asset_one: 'sscrt',
           asset_two: 'swbtc',
+          decimals: 6,
           symbol: 'sSCRT-sWBTC(ETH)'
         },
         // sscrt_syfi_eth_lp: {
@@ -195,16 +216,19 @@ $(document).ready(function(){
         // },
         suni_eth: {
           address: 'secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te',
+          decimals: 18,
           logo: 'https://siasky.net/EAB_e9XgWK_CrqcZFUvD7LirQox_lakStwc8YKJCWfkf-A',
           symbol: 'sUNI(ETH)'
         },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
+          decimals: 18,
           logo: 'https://siasky.net/AADY8NK1wfSi7DUdrDRk9k9Gr80EeTWnLoq1mLIAbGg3_A',
           symbol: 'sUSDC(BSC)'
         },
         susdc_eth: {
           address: 'secret1h6z05y90gwm4sqxzhz4pkyp36cna9xtp7q0urv',
+          decimals: 6,
           logo: 'https://siasky.net/AABXRSQbMXk8PLV3CkBPSl4NW2WsSQvyOkZZRfsZeaW4Ww',
           symbol: 'sUSDC(ETH)'
         },
@@ -216,21 +240,25 @@ $(document).ready(function(){
         // },
         susdt_eth: {
           address: 'secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f',
+          decimals: 6,
           logo: 'https://siasky.net/AAAbmpaWIL-4kXFj0xxrXsby7kSN9AQeyV6hBD65m2o9mg',
           symbol: 'sUSDT(ETH)'
         },
         swbtc: {
           address: 'secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a',
+          decimals: 8,
           logo: 'https://siasky.net/CADR09K2Etst36IFvwVUdFwO4WhD91YiURrWNwzq_-7m1A',
           symbol: 'sWBTC'
         },
         sxmr: {
           address: 'secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88',
+          decimals: 12,
           logo: 'https://siasky.net/FABkpNmXiHbaXby3duNfzFZXjDeLPxxhH2TAmBddKoGZhQ',
           symbol: 'sXMR'
         },
         syfi_eth: {
           address: 'secret15grq8y54tvc24j8hf8chunsdcr84fd3d30fvqv',
+          decimals: 18,
           logo: 'https://siasky.net/AAAPBQ2YpF1e6u3yrC1bL0UnzGYh2YVjWBeYODi4BsWIvg',
           symbol: 'sYFI(ETH)'
         }
@@ -255,6 +283,7 @@ $(document).ready(function(){
           deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
           deposit_token: cryptocurrencies['butt'],
           earn_token: cryptocurrencies['sefi'],
+          reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '500000',
         },
         // {
@@ -274,6 +303,7 @@ $(document).ready(function(){
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['butt_swbtc_lp'],
           earn_token: cryptocurrencies['butt'],
+          reward_token: cryptocurrencies['butt'],
           withdraw_gas: '700000',
         },
         {
@@ -500,7 +530,7 @@ $(document).ready(function(){
             try {
               let amount = document[value['address'] + 'DepositForm'].amount.value;
               amount = amount.replace(/,/g, '');
-              let handleMsg = { send: { amount: (amount * 1_000_000).toFixed(0), recipient: value['address'], msg: value['deposit_msg'] } }
+              let handleMsg = { send: { amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0), recipient: value['address'], msg: value['deposit_msg'] } }
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
@@ -553,11 +583,11 @@ $(document).ready(function(){
               amount = amount.replace(/,/g, '');
               let handleMsg;
               if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
-                handleMsg = { withdraw: { shares_amount: (amount * 1_000_000).toFixed(0) } }
+                handleMsg = { withdraw: { shares_amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
               } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || value['address'] == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
-                handleMsg = { withdraw: { amount: (amount * 1_000_000).toFixed(0) } }
+                handleMsg = { withdraw: { amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
               } else {
-                handleMsg = { withdraw: { incentivized_token_amount: (amount * 1_000_000).toFixed(0) } }
+                handleMsg = { withdraw: { incentivized_token_amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
               }
               let response = await this.client.execute(value['address'], handleMsg)
               document.showAlertSuccess("Withdraw successful");
@@ -699,7 +729,7 @@ $(document).ready(function(){
               
             }
           }
-          $userShares.text((withdrawable / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
+          $userShares.text((withdrawable / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}))
         } catch(err) {
           $userShares.text('0');
           console.log(err)
@@ -717,7 +747,7 @@ $(document).ready(function(){
                 this.height = await client.getHeight();
               }
               let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: this.height, key: "DoTheRightThing." }})
-              $poolRewardsToProcess.text((response['rewards']['rewards'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
+              $poolRewardsToProcess.text((response['rewards']['rewards'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
             } catch(err) {
               console.log(err)
               console.log(this.height)
@@ -736,7 +766,7 @@ $(document).ready(function(){
             $poolClaimable.text('Loading...');
             if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
               let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
-              $poolClaimable.text((response['claimable_profit']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
+              $poolClaimable.text((response['claimable_profit']['amount'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
             } else {
               if (!this.height) {
                 this.height = await client.getHeight();
@@ -765,13 +795,13 @@ $(document).ready(function(){
           $(totalSharesSelector).text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
             let config = await client.queryContractSmart(poolAddress, {config: {}})
-            $(totalSharesSelector).text((config['config']['total_shares'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((config['config']['total_shares'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}) + ' ' + depositTokenSymbol)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
             let response = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((response['pool']['shares_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((response['pool']['shares_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}) + ' ' + depositTokenSymbol)
           } else {
             let responseTwo = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((responseTwo['pool']['incentivized_token_total'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((responseTwo['pool']['incentivized_token_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}) + ' ' + depositTokenSymbol)
           }
         } catch(err) {
           console.log(err)
@@ -779,6 +809,7 @@ $(document).ready(function(){
       }
 
       this.updateWalletBalance = async(cryptocurrency) => {
+        console.log(cryptocurrency)
         let address = cryptocurrency['address']
         let client = document.secretNetworkClient(this.environment);
         let $walletBalance = $('.' + address + '-balance')
@@ -791,7 +822,7 @@ $(document).ready(function(){
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, address)
           // If they have the key, replace the button with the balance
           let balance = await client.queryContractSmart(address, { balance: { address: this.address, key: key } })
-          $walletBalance.text((balance['balance']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
+          $walletBalance.text(balance['balance']['amount'] / Math.pow(10, cryptocurrency['decimals'])).toLocaleString('en', {maximumFractionDigits: cryptocurrency['decimals']})
           $walletBalance.removeClass('d-none')
           $walletBalanceViewButton.addClass('d-none')
         } catch(err) {
