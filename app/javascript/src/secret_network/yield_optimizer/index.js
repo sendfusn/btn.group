@@ -512,9 +512,10 @@ $(document).ready(function(){
           html += value['address'] + '-withdraw-button" type="submit"><div class="d-none '
           html += value['address'] + '-withdraw-button-loading"><em aria-hidden="true" class="spinner-grow spinner-grow-sm" role="status"></em><em>Loading...</em></div><div class="'
           html += value['address'] + '-withdraw-button-ready">Withdraw</div></button></form></div></div></div>'
+          html += '<div class="col-12"><hr/>* Please use the gas recommended for deposits and withdrawals.'
           if (value['farm_contract_address']) {
-            html += '<div class="col-12"><hr/>* Fees: 5% of yield sent to profit distributor (smart contract)'
-            html += '<br>* Rewards are reinvested every time a user deposits or withdraws</div>'
+            html += '<br>* 5% of yield sent to profit distributor, see contract above.'
+            html += '<br>* Rewards are reinvested every time a user deposits or withdraws.</div>'
           }
           html += '</div>'
         }
