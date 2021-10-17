@@ -530,7 +530,7 @@ $(document).ready(function(){
             $balanceViewButton.find('.ready').addClass('d-none')
             try {
               await window.keplr.suggestToken(this.chainId, value['deposit_token']['address']);
-              this.updateWalletBalance(value['deposit_token']);
+              this.updateWalletBalance(value['deposit_token'], value);
               $balanceViewButton.addClass('d-none')
             } catch(err) {
               let errorDisplayMessage = err;
@@ -716,12 +716,12 @@ $(document).ready(function(){
       };
 
       this.updatePoolInterface = (pool, afterTransaction = false) => {
-          this.updateWalletBalance(pool['deposit_token'])
+          this.updateWalletBalance(pool['deposit_token'], pool)
           this.updateClaimable(pool)
           this.updateTotalShares(pool)
           this.updateUserWithdrawable(pool)
           if (afterTransaction) {
-            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'])
+            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
           }
       }
 
@@ -837,7 +837,7 @@ $(document).ready(function(){
         }
       }
 
-      this.updateWalletBalance = async(cryptocurrency) => {
+      this.updateWalletBalance = async(cryptocurrency, pool) => {
         let address = cryptocurrency['address']
         let client = document.secretNetworkClient(this.environment);
         let $walletBalance = $('.' + address + '-balance')
@@ -856,9 +856,16 @@ $(document).ready(function(){
           $walletBalanceViewButton.addClass('d-none')
         } catch(err) {
           console.log(err)
-          // If they don't have a viewing key, show the view balance button and hide the balance
-          $walletBalance.addClass('d-none')
-          $walletBalanceViewButton.removeClass('d-none')
+          if (err.message.includes('502')) {
+            if (this.retryCount < 5) {
+              this.retryCount += 1
+              this.updatePoolInterface(pool, true)
+            }
+          } else {
+            // If they don't have a viewing key, show the view balance button and hide the balance
+            $walletBalance.addClass('d-none')
+            $walletBalanceViewButton.removeClass('d-none')
+          }
         } finally {
           $walletBalanceLoading.addClass('d-none')
           $walletBalanceViewButton.find('.loading').addClass('d-none')
