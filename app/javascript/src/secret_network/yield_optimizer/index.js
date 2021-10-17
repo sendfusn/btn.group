@@ -133,12 +133,12 @@ $(document).ready(function(){
           asset_two: 'sefi',
           symbol: 'sSCRT-SEFI'
         },
-        // sscrt_seth_eth_lp: {
-        //   address: 'secret14zv2fdsfwqzxqt7s2ushp4c4jr56ysyld5zcdf',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'seth_eth',
-        //   symbol: 'sSCRT-sETH(ETH)'
-        // },
+        sscrt_seth_eth_lp: {
+          address: 'secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54',
+          asset_one: 'sscrt',
+          asset_two: 'seth_eth',
+          symbol: 'sSCRT-sETH(ETH)'
+        },
         // sscrt_slink_eth_lp: {
         //   address: 'secret1x8244a7l2fr642axef0sl5z3jw2pn75rp36hxs',
         //   asset_one: 'sscrt',
@@ -332,6 +332,19 @@ $(document).ready(function(){
           deposit_token: cryptocurrencies['sscrt_susdt_eth_lp'],
           earn_token: cryptocurrencies['sscrt_susdt_eth_lp'],
           farm_contract_address: 'secret1ny8nvnya5q4zcxpyldvdhts0uvh26heny8ynuj',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '3400000',
+          reward_token: cryptocurrencies['sefi'],
+        },
+        // sscrt-seth
+        {
+          address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku',
+          apy: '46.2',
+          deposit_gas: '3400000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['sscrt_seth_eth_lp'],
+          earn_token: cryptocurrencies['sscrt_seth_eth_lp'],
+          farm_contract_address: 'secret17r72nj7yhc0fnm3ay8j8tluqqd2twj60lvwr3w',
           protocol: protocols['secret_swap'],
           withdraw_gas: '3400000',
           reward_token: cryptocurrencies['sefi'],
