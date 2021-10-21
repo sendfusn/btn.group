@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   namespace :secret_network do
     resources :address_alias, only: %i[index new]
+    resources :block_locker, only: :index
     resources :buttcoin, only: :index
     resources :mount_doom, only: :index
     resources :profit_distributor, only: :index

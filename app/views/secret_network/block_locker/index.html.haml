@@ -1,0 +1,44 @@
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .mt-3.w-100
+        .container#secret-network-block-locker
+          .row
+            .col-12
+              .card
+                .card-body
+                  %h3= features[:secret_network][:features][:block_locker][:name]
+                  %p.mb-0
+                    %b Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+                  %hr
+                  %p Immutable, private, restorable. Store your keys safely.
+                  %h5 How to use
+                  %b 1. Store the text and addresses you want to be able to access the text.
+                  %br
+                  %b 2. Retrieve the contents of the locker.
+                  %br
+                  %form{ name: 'blockLockerForm' }
+                    .form-group
+                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } View locker
+                        %label.btn.btn-md.btn-light
+                          %input#set-viewing-key{ name: 'interactionType', type: 'radio', value: 'set' } Create or update locker
+                    .form-group
+                      %label.control-label Wallet address
+                      %input.form-control.w-100#address{ name: 'walletAddress', required: true, autocomplete: 'off' }
+                    .form-group.d-none#content-input-group
+                      %label.control-label Content
+                      %input.form-control.w-100#content{ name: 'content', autocomplete: 'off' }
+                    %button.btn.btn-primary.btn-md#submit-button{ type: 'submit' }
+                      .d-none#loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      #ready
+                        Submit
+              .card.my-3.d-none#result-container
+                .card-body
+                  %h3 Result
+                  %pre.p-1.m-1.alert.alert-success.d-none#result-value

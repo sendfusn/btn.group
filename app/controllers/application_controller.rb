@@ -33,6 +33,14 @@ class ApplicationController < ActionController::Base
               production: 'secret1v2kg4uf4ffjyez3g50h3d0hze6858qgszlluzz'
             }
           },
+          block_locker: {
+            name: 'Block locker',
+            show_link: false,
+            status: 'WIP',
+            contracts: {
+              production: 'secret14uff69y9l93dhh3wldu80nvv97ulq44rqj7dtr'
+            }
+          },
           buttcoin: {
             name: 'Buttcoin (BUTT)',
             show_link: true,
