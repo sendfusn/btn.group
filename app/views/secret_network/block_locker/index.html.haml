@@ -22,17 +22,33 @@
                   %form{ name: 'blockLockerForm' }
                     .form-group
                       .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light.btn-md
-                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } View locker
                         %label.btn.btn-md.btn-light
-                          %input#set-viewing-key{ name: 'interactionType', type: 'radio', value: 'set' } Create or update locker
-                    .form-group
+                          %input#handle-create-or-update{ name: 'function', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update locker
+                        %label.btn.btn-md.btn-light
+                          %input#handle-unlock{ name: 'function', type: 'radio', value: 'handleUnlock' } Unlock locker
+                        %label.btn.btn-light.btn-md
+                          %input#handle-view{ name: 'function', type: 'radio', value: 'handleViewLocker' } View locker (when locked)
+                        %label.btn.btn-light.btn-md
+                          %input#query-view{ name: 'function', type: 'radio', value: 'handleViewLocker' } View locker (when locked)
+                    .form-group#content-form-group
+                      %label.control-label{ for: 'content' } Content
+                      %textarea.form-control.w-100#content{ name: 'content', autocomplete: 'off', rows: 5 }
+                    .form-group#passphrase-form-group
+                      %label.control-label{ for: 'passphrase' } Passphrase
+                      %input.form-control.w-100#passphrase{ name: 'passphrase', autocomplete: 'off' }
+                    .form-group#whitelisted-address-1-form-group
+                      %label.control-label{ for: 'whitelisted-address-1' } Whitelisted address 1
+                      %input.form-control.w-100#whitelisted-address-1{ name: 'whitelistedAddress1', autocomplete: 'off' }
+                    .form-group#whitelisted-address-2-form-group
+                      %label.control-label{ for: 'whitelisted-address-2' } Whitelisted address 2
+                      %input.form-control.w-100#whitelisted-address-2{ name: 'whitelistedAddress2', autocomplete: 'off' }
+                    .form-group#whitelisted-address-3-form-group
+                      %label.control-label{ for: 'whitelisted-address-3' } Whitelisted address 3
+                      %input.form-control.w-100#whitelisted-address-3{ name: 'whitelistedAddress3', autocomplete: 'off' }
+                    .form-group.d-none
                       %label.control-label Wallet address
                       %input.form-control.w-100#address{ name: 'walletAddress', required: true, autocomplete: 'off' }
-                    .form-group.d-none#content-input-group
-                      %label.control-label Content
-                      %input.form-control.w-100#content{ name: 'content', autocomplete: 'off' }
-                    %button.btn.btn-primary.btn-md#submit-button{ type: 'submit' }
+                    %button.btn.btn-primary.btn-md.mt-3#submit-button{ type: 'submit' }
                       .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
