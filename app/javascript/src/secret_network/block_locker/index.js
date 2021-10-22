@@ -3,16 +3,76 @@ $(document).ready(function(){
       // Listeners
       $('input[type=radio][name=interactionType]').on('change', function() {
         var radVal = $(this).val();
-        if (radVal == 'query') {
-          $('#contract-hash-input-group').addClass('d-none')
-          $('#contract-hash').prop('required', false)
-        } else if (radVal == 'set') {
-          $('#contract-hash-input-group').removeClass('d-none')
-          $('#contract-hash').prop('required', true)
+        if (radVal == 'handleCreateOrUpdate') {
+          $('#content-form-group').removeClass('d-none')
+          $('#content').prop('required', true)
+          $('#passphrase-form-group').removeClass('d-none')
+          $('#passphrase').prop('required', true)
+          $('#whitelisted-address-1-form-group').removeClass('d-none')
+          $('#whitelisted-address-1').prop('required', true)
+          $('#whitelisted-address-2-form-group').removeClass('d-none')
+          $('#whitelisted-address-2').prop('required', true)
+          $('#whitelisted-address-3-form-group').removeClass('d-none')
+          $('#whitelisted-address-3').prop('required', true)
+
+          // Wallet address form group
+          $('#wallet-address-form-group').addClass('d-none')
+          $('#wallet-address').prop('required', false)
+        } else if (radVal == 'handleUnlock') {
+          $('#content-form-group').addClass('d-none')
+          $('#content').prop('required', false)
+          $('#passphrase-form-group').addClass('d-none')
+          $('#passphrase').prop('required', false)
+          $('#whitelisted-address-1-form-group').addClass('d-none')
+          $('#whitelisted-address-1').prop('required', false)
+          $('#whitelisted-address-2-form-group').addClass('d-none')
+          $('#whitelisted-address-2').prop('required', false)
+          $('#whitelisted-address-3-form-group').addClass('d-none')
+          $('#whitelisted-address-3').prop('required', false)
+
+          // Wallet address form group
+          $('#wallet-address-form-group').removeClass('d-none')
+          $('#wallet-address').prop('required', true)
+        } else if (radVal == 'handleViewLocker') {
+          $('#content-form-group').addClass('d-none')
+          $('#content').prop('required', false)
+          $('#passphrase-form-group').addClass('d-none')
+          $('#passphrase').prop('required', false)
+          $('#whitelisted-address-1-form-group').addClass('d-none')
+          $('#whitelisted-address-1').prop('required', false)
+          $('#whitelisted-address-2-form-group').addClass('d-none')
+          $('#whitelisted-address-2').prop('required', false)
+          $('#whitelisted-address-3-form-group').addClass('d-none')
+          $('#whitelisted-address-3').prop('required', false)
+
+          // Wallet address form group
+          $('#wallet-address-form-group').removeClass('d-none')
+          $('#wallet-address').prop('required', false)
+          $('#wallet-address').prop('disabled', true)
+          $('#wallet-address').val(this.address)
+        } else if (radVal == 'queryViewLocker') {
+          $('#content-form-group').addClass('d-none')
+          $('#content').prop('required', false)
+          $('#passphrase-form-group').removeClass('d-none')
+          $('#passphrase').prop('required', true)
+          $('#whitelisted-address-1-form-group').addClass('d-none')
+          $('#whitelisted-address-1').prop('required', false)
+          $('#whitelisted-address-2-form-group').addClass('d-none')
+          $('#whitelisted-address-2').prop('required', false)
+          $('#whitelisted-address-3-form-group').addClass('d-none')
+          $('#whitelisted-address-3').prop('required', false)
+
+          // Wallet address form group
+          $('#wallet-address-form-group').removeClass('d-none')
+          $('#wallet-address').prop('required', true)
+          $('#wallet-address').prop('disabled', false)
+          $('#wallet-address').val("")
         }
       })
 
     window.onload = async () => {
+      this.address;
+
       document.blockLockerForm.onsubmit = () => {
         $("#submit-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
