@@ -122,8 +122,8 @@ $(document).ready(function(){
                 window.getEnigmaUtils(this.chainId),
                 {
                   exec: {
-                    amount: [{ amount: '400000', denom: 'uscrt' }],
-                    gas: '400000',
+                    amount: [{ amount: '500000', denom: 'uscrt' }],
+                    gas: '500000',
                   },
                 },
               );
@@ -153,8 +153,8 @@ $(document).ready(function(){
                 window.getEnigmaUtils(this.chainId),
                 {
                   exec: {
-                    amount: [{ amount: '100000', denom: 'uscrt' }],
-                    gas: '100000',
+                    amount: [{ amount: '150000', denom: 'uscrt' }],
+                    gas: '150000',
                   },
                 },
               );
