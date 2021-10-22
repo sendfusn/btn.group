@@ -93,6 +93,7 @@ $(document).ready(function(){
             let contractAddressToExecute = this.buttcoinAddress;
             let content = undefined;
             let passphrase = undefined;
+            let resultText = "";
             let whitelistedAddresses = undefined;
             if (document.blockLockerForm.interactionType.value == 'handleCreateOrUpdate') {
               if (document.blockLockerForm.content.value.length > 0) {
@@ -135,11 +136,12 @@ $(document).ready(function(){
                 window.getEnigmaUtils(this.chainId),
                 {
                   exec: {
-                    amount: [{ amount: '150000', denom: 'uscrt' }],
-                    gas: '150000',
+                    amount: [{ amount: '400000', denom: 'uscrt' }],
+                    gas: '400000',
                   },
                 },
               );
+              resultText = "If the locker exists and you are allowed to unlock it, it will be unlocked."
             } else if (document.blockLockerForm.interactionType.value == 'handleViewLocker') {
               contractAddressToExecute = this.contractAddress;
               handleMsg = { get_user_locker: {} };
@@ -157,9 +159,13 @@ $(document).ready(function(){
               );
             }
             result = await this.client.execute(contractAddressToExecute, handleMsg)
-            let resultText = ""
-            result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
-            result = JSON.parse(resultText)
+            if (resultText.length > 0) {
+              result = resultText
+            } else {
+              result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
+              result = JSON.parse(resultText)
+            }
+
           }
           // Display results
           $("#result-value").removeClass("d-none");
