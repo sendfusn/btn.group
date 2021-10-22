@@ -72,6 +72,9 @@ $(document).ready(function(){
 
     window.onload = async () => {
       this.address;
+      this.environment = 'production';
+      this.chainId = document.secretNetworkChainId(this.environment);
+      this.client = document.secretNetworkClient(this.environment);
 
       document.blockLockerForm.onsubmit = () => {
         $("#submit-button").prop("disabled", true);
@@ -154,10 +157,6 @@ $(document).ready(function(){
 
         return false;
       };
-    }
-
-    function applyDecimals(amount, decimals) {
-      return amount / parseFloat("1" + '0'.repeat(decimals))
     }
   };
 });
