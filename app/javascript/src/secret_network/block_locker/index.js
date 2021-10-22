@@ -11,9 +11,9 @@ $(document).ready(function(){
           $('#whitelisted-address-1-form-group').removeClass('d-none')
           $('#whitelisted-address-1').prop('required', true)
           $('#whitelisted-address-2-form-group').removeClass('d-none')
-          $('#whitelisted-address-2').prop('required', true)
+          $('#whitelisted-address-2').prop('required', false)
           $('#whitelisted-address-3-form-group').removeClass('d-none')
-          $('#whitelisted-address-3').prop('required', true)
+          $('#whitelisted-address-3').prop('required', false)
 
           // Wallet address form group
           $('#wallet-address-form-group').addClass('d-none')
@@ -32,7 +32,9 @@ $(document).ready(function(){
 
           // Wallet address form group
           $('#wallet-address-form-group').removeClass('d-none')
+          $('#wallet-address').prop('disabled', false)
           $('#wallet-address').prop('required', true)
+          $('#wallet-address').val("")
         } else if (radVal == 'handleViewLocker') {
           $('#content-form-group').addClass('d-none')
           $('#content').prop('required', false)
@@ -49,7 +51,7 @@ $(document).ready(function(){
           $('#wallet-address-form-group').removeClass('d-none')
           $('#wallet-address').prop('required', false)
           $('#wallet-address').prop('disabled', true)
-          $('#wallet-address').val(this.address)
+          $('#wallet-address').val("The wallet you request this from.")
         } else if (radVal == 'queryViewLocker') {
           $('#content-form-group').addClass('d-none')
           $('#content').prop('required', false)
@@ -75,6 +77,8 @@ $(document).ready(function(){
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
+      this.contractAddress = document.featureContractAddress(environment);
+      this.httpUrl = document.secretNetworkHttpUrl(this.environment)
 
       document.blockLockerForm.onsubmit = () => {
         $("#submit-button").prop("disabled", true);
@@ -85,16 +89,10 @@ $(document).ready(function(){
 
         (async () => {
           try {
-            // Set environment
-            let environment = document.featureEnvironment();
-            let chainId = document.secretNetworkChainId(environment)
-            let client =  document.secretNetworkClient(environment);
-            let contractAddress = document.featureContractAddress(environment);
-            let httpUrl = document.secretNetworkHttpUrl(environment)
             let tokenAddress = document.blockLockerForm.tokenAddress.value;
             if(document.blockLockerForm.interactionType.value == 'query') {
-              let msg = { balance:{ address: contractAddress, key: "DoTheRightThing." } };
-              let balance_response = await client.queryContractSmart(tokenAddress, msg)
+              let msg = { balance:{ address: this.contractAddress, key: "DoTheRightThing." } };
+              let balance_response = await this.client.queryContractSmart(tokenAddress, msg)
               if (balance_response["viewing_key_error"]) {
                 throw balance_response["viewing_key_error"]["msg"]
               }
@@ -113,17 +111,17 @@ $(document).ready(function(){
                     // This method will ask the user whether or not to allow access if they haven't visited this website.
                     // Also, it will request user to unlock the wallet if the wallet is locked.
                     // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                    await window.keplr.enable(chainId);
+                    await window.keplr.enable(this.chainId);
 
                     // @ts-ignore
-                    const keplrOfflineSigner = window.getOfflineSigner(chainId);
+                    const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                     const accounts = await keplrOfflineSigner.getAccounts();
                     this.address = accounts[0].address;
                     this.client = new SigningCosmWasmClient(
-                      httpUrl,
+                      this.httpUrl,
                       this.address,
                       keplrOfflineSigner,
-                      window.getEnigmaUtils(chainId),
+                      window.getEnigmaUtils(this.chainId),
                       {
                         exec: {
                           amount: [{ amount: '300000', denom: 'uscrt' }],
@@ -140,8 +138,8 @@ $(document).ready(function(){
                 }
               }
 
-              result = await this.client.execute(contractAddress, msg)
-              document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
+              var result = await this.client.execute(this.contractAddress, msg)
+              // document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
             }
           }
           catch(err) {
