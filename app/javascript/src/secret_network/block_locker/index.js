@@ -74,86 +74,83 @@ $(document).ready(function(){
 
     window.onload = async () => {
       this.address;
+      this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
-      this.contractAddress = document.featureContractAddress(environment);
+      this.contractAddress = document.featureContractAddress(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
 
-      document.blockLockerForm.onsubmit = () => {
+      document.blockLockerForm.onsubmit = async (e) => {
+        e.preventDefault()
         $("#submit-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
         $("#loading").removeClass("d-none")
         $("#ready").addClass("d-none")
+        let result;
         document.hideAllAlerts();
+        try {
+          if(document.blockLockerForm.interactionType.value == 'queryViewLocker') {
+            let msg = { user_locker: { address: document.blockLockerForm.walletAddress.value, passphrase: document.blockLockerForm.passphrase.value } };
+            result = await this.client.queryContractSmart(this.contractAddress, msg)
+          } else {
+          //   const {
+          //     SigningCosmWasmClient,
+          //   } = require('secretjs');
+          //   let contractHash = document.blockLockerForm.contractHash.value;
+          //   let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
+          //   if (!window.getOfflineSigner || !window.keplr) {
+          //     alert("Please install keplr extension");
+          //   } else {
+          //     if (window.keplr.experimentalSuggestChain) {
+          //       try {
+          //         // This method will ask the user whether or not to allow access if they haven't visited this website.
+          //         // Also, it will request user to unlock the wallet if the wallet is locked.
+          //         // If you don't request enabling before usage, there is no guarantee that other methods will work.
+          //         await window.keplr.enable(this.chainId);
 
-        (async () => {
-          try {
-            let tokenAddress = document.blockLockerForm.tokenAddress.value;
-            if(document.blockLockerForm.interactionType.value == 'query') {
-              let msg = { balance:{ address: this.contractAddress, key: "DoTheRightThing." } };
-              let balance_response = await this.client.queryContractSmart(tokenAddress, msg)
-              if (balance_response["viewing_key_error"]) {
-                throw balance_response["viewing_key_error"]["msg"]
-              }
-              document.showAlertSuccess(balance_response["balance"]["amount"]);
-            } else {
-              const {
-                SigningCosmWasmClient,
-              } = require('secretjs');
-              let contractHash = document.blockLockerForm.contractHash.value;
-              let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
-              if (!window.getOfflineSigner || !window.keplr) {
-                alert("Please install keplr extension");
-              } else {
-                if (window.keplr.experimentalSuggestChain) {
-                  try {
-                    // This method will ask the user whether or not to allow access if they haven't visited this website.
-                    // Also, it will request user to unlock the wallet if the wallet is locked.
-                    // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                    await window.keplr.enable(this.chainId);
+          //         // @ts-ignore
+          //         const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+          //         const accounts = await keplrOfflineSigner.getAccounts();
+          //         this.address = accounts[0].address;
+          //         this.client = new SigningCosmWasmClient(
+          //           this.httpUrl,
+          //           this.address,
+          //           keplrOfflineSigner,
+          //           window.getEnigmaUtils(this.chainId),
+          //           {
+          //             exec: {
+          //               amount: [{ amount: '300000', denom: 'uscrt' }],
+          //               gas: '300000',
+          //             },
+          //           },
+          //         );
+          //         this.account = await this.client.getAccount(this.address);
+          //       } catch (error) {
+          //         console.error(error)
+          //       }
+          //     } else {
+          //       alert("Please use the recent version of keplr extension");
+          //     }
+          //   }
 
-                    // @ts-ignore
-                    const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
-                    const accounts = await keplrOfflineSigner.getAccounts();
-                    this.address = accounts[0].address;
-                    this.client = new SigningCosmWasmClient(
-                      this.httpUrl,
-                      this.address,
-                      keplrOfflineSigner,
-                      window.getEnigmaUtils(this.chainId),
-                      {
-                        exec: {
-                          amount: [{ amount: '300000', denom: 'uscrt' }],
-                          gas: '300000',
-                        },
-                      },
-                    );
-                    this.account = await this.client.getAccount(this.address);
-                  } catch (error) {
-                    console.error(error)
-                  }
-                } else {
-                  alert("Please use the recent version of keplr extension");
-                }
-              }
-
-              var result = await this.client.execute(this.contractAddress, msg)
-              // document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
-            }
+          //   result = await this.client.execute(this.contractAddress, msg)
+          //   // document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
           }
-          catch(err) {
-            document.showAlertDanger(err)
-          }
-          finally {
-            // Enable form
-            $("#submit-button").prop("disabled", false);
-            $("#loading").addClass("d-none")
-            $("#ready").removeClass("d-none")
-          }
-        })();
-
-        return false;
+          // Display results
+          $("#result-value").removeClass("d-none");
+          $("#result-value").html(document.prettyPrintJSON(result));
+          $("#result-container").removeClass("d-none");
+        }
+        catch(err) {
+          document.showAlertDanger(err)
+        }
+        finally {
+          // Enable form
+          $("#submit-button").prop("disabled", false);
+          $("#loading").addClass("d-none")
+          $("#ready").removeClass("d-none")
+        }
       };
     }
   };
