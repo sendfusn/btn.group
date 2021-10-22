@@ -33,7 +33,7 @@
                           %input#query-view{ name: 'interactionType', type: 'radio', value: 'queryViewLocker' } View (when unlocked)
                     .form-group.d-none#wallet-address-form-group
                       %label.control-label Wallet address
-                      %input.form-control.w-100#wallet-address{ name: 'walletAddress', required: true, autocomplete: 'off' }
+                      %input.form-control.w-100#wallet-address{ name: 'walletAddress', autocomplete: 'off' }
                     .form-group#content-form-group
                       %label.control-label{ for: 'content' } Content
                       %textarea.form-control.w-100#content{ name: 'content', autocomplete: 'off', rows: 5, required: true }

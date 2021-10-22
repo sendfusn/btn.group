@@ -80,6 +80,7 @@ $(document).ready(function(){
       this.client = document.secretNetworkClient(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
+      this.keplrOfflineSigner;
 
       document.blockLockerForm.onsubmit = async (e) => {
         e.preventDefault()
@@ -87,55 +88,102 @@ $(document).ready(function(){
         $("#result-container").addClass("d-none");
         $("#loading").removeClass("d-none")
         $("#ready").addClass("d-none")
+        let handleMsg;
         let result;
         document.hideAllAlerts();
         try {
-          if(document.blockLockerForm.interactionType.value == 'queryViewLocker') {
-            let msg = { user_locker: { address: document.blockLockerForm.walletAddress.value, passphrase: document.blockLockerForm.passphrase.value } };
-            result = await this.client.queryContractSmart(this.contractAddress, msg)
+          if (document.blockLockerForm.interactionType.value == 'queryViewLocker') {
+            handleMsg = { user_locker: { address: document.blockLockerForm.walletAddress.value, passphrase: document.blockLockerForm.passphrase.value } };
+            result = await this.client.queryContractSmart(this.contractAddress, handleMsg)
           } else {
-          //   const {
-          //     SigningCosmWasmClient,
-          //   } = require('secretjs');
-          //   let contractHash = document.blockLockerForm.contractHash.value;
-          //   let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
-          //   if (!window.getOfflineSigner || !window.keplr) {
-          //     alert("Please install keplr extension");
-          //   } else {
-          //     if (window.keplr.experimentalSuggestChain) {
-          //       try {
-          //         // This method will ask the user whether or not to allow access if they haven't visited this website.
-          //         // Also, it will request user to unlock the wallet if the wallet is locked.
-          //         // If you don't request enabling before usage, there is no guarantee that other methods will work.
-          //         await window.keplr.enable(this.chainId);
-
-          //         // @ts-ignore
-          //         const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
-          //         const accounts = await keplrOfflineSigner.getAccounts();
-          //         this.address = accounts[0].address;
-          //         this.client = new SigningCosmWasmClient(
-          //           this.httpUrl,
-          //           this.address,
-          //           keplrOfflineSigner,
-          //           window.getEnigmaUtils(this.chainId),
-          //           {
-          //             exec: {
-          //               amount: [{ amount: '300000', denom: 'uscrt' }],
-          //               gas: '300000',
-          //             },
-          //           },
-          //         );
-          //         this.account = await this.client.getAccount(this.address);
-          //       } catch (error) {
-          //         console.error(error)
-          //       }
-          //     } else {
-          //       alert("Please use the recent version of keplr extension");
-          //     }
-          //   }
-
-          //   result = await this.client.execute(this.contractAddress, msg)
-          //   // document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
+            const {
+              SigningCosmWasmClient,
+            } = require('secretjs');
+            if (!window.getOfflineSigner || !window.keplr) {
+              throw("Please install keplr extension")
+            } else {
+              if (window.keplr.experimentalSuggestChain) {
+                // This method will ask the user whether or not to allow access if they haven't visited this website.
+                // Also, it will request user to unlock the wallet if the wallet is locked.
+                // If you don't request enabling before usage, there is no guarantee that other methods will work.
+                await window.keplr.enable(this.chainId);
+                this.keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const accounts = await this.keplrOfflineSigner.getAccounts();
+                this.address = accounts[0].address;
+              } else {
+                throw("Please use the recent version of keplr extension")
+              }
+            }
+            let contractAddressToExecute = this.buttcoinAddress;
+            let content = undefined;
+            let passphrase = undefined;
+            let whitelistedAddresses = undefined;
+            if (document.blockLockerForm.interactionType.value == 'handleCreateOrUpdate') {
+              if (document.blockLockerForm.content.value.length > 0) {
+                content = document.blockLockerForm.content.value
+              }
+              if (document.blockLockerForm.passphrase.value.length > 0) {
+                passphrase = document.blockLockerForm.passphrase.value
+              }
+              if (document.blockLockerForm.whitelistedAddress1.value.length > 0 || document.blockLockerForm.whitelistedAddress2.value.length > 0 || document.blockLockerForm.whitelistedAddress3.value.length > 0) {
+                whitelistedAddresses = []
+                if (document.blockLockerForm.whitelistedAddress1.value.length) {
+                  whitelistedAddresses.push(document.blockLockerForm.whitelistedAddress1.value)
+                }
+                if (document.blockLockerForm.whitelistedAddress2.value.length) {
+                  whitelistedAddresses.push(document.blockLockerForm.whitelistedAddress2.value)
+                }
+                if (document.blockLockerForm.whitelistedAddress3.value.length) {
+                  whitelistedAddresses.push(document.blockLockerForm.whitelistedAddress3.value)
+                }
+              }
+              handleMsg = { send: { amount: "1000000", recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create_or_update_locker: { content: content, passphrase: passphrase, whitelisted_addresses: whitelistedAddresses } })).toString('base64') } };
+              this.client = new SigningCosmWasmClient(
+                this.httpUrl,
+                this.address,
+                this.keplrOfflineSigner,
+                window.getEnigmaUtils(this.chainId),
+                {
+                  exec: {
+                    amount: [{ amount: '400000', denom: 'uscrt' }],
+                    gas: '400000',
+                  },
+                },
+              );
+            } else if (document.blockLockerForm.interactionType.value == 'handleUnlock') {
+              handleMsg = { send: { amount: "1000000", recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerForm.walletAddress.value } })).toString('base64') } };
+              this.client = new SigningCosmWasmClient(
+                this.httpUrl,
+                this.address,
+                this.keplrOfflineSigner,
+                window.getEnigmaUtils(this.chainId),
+                {
+                  exec: {
+                    amount: [{ amount: '150000', denom: 'uscrt' }],
+                    gas: '150000',
+                  },
+                },
+              );
+            } else if (document.blockLockerForm.interactionType.value == 'handleViewLocker') {
+              contractAddressToExecute = this.contractAddress;
+              handleMsg = { get_user_locker: {} };
+              this.client = new SigningCosmWasmClient(
+                this.httpUrl,
+                this.address,
+                this.keplrOfflineSigner,
+                window.getEnigmaUtils(this.chainId),
+                {
+                  exec: {
+                    amount: [{ amount: '100000', denom: 'uscrt' }],
+                    gas: '100000',
+                  },
+                },
+              );
+            }
+            result = await this.client.execute(contractAddressToExecute, handleMsg)
+            let resultText = ""
+            result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
+            result = JSON.parse(resultText)
           }
           // Display results
           $("#result-value").removeClass("d-none");
