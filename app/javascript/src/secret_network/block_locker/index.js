@@ -128,6 +128,7 @@ $(document).ready(function(){
                 },
               );
             } else if (document.blockLockerForm.interactionType.value == 'handleUnlock') {
+              confirm("Are you sure you want to unlock? Once unlocked, the current contents of the locker can be accessed with only the passphrase forever.")
               handleMsg = { send: { amount: "1000000", recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerForm.walletAddress.value } })).toString('base64') } };
               this.client = new SigningCosmWasmClient(
                 this.httpUrl,

@@ -14,22 +14,26 @@
                     = features[:secret_network][:name].to_s
                   = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:block_locker][:contracts][:production], staging_contract: nil
                   %hr
-                  %p Immutable, private, restorable. Store your keys safely.
-                  %h5 How to use
-                  %b 1. Store the text and addresses you want to be able to access the text.
-                  %br
-                  %b 2. Retrieve the contents of the locker.
-                  %br
+                  -# %p Immutable, private, restorable. Store your keys safely.
+                  -# %h5 How to use
+                  -# %b 1. Store your keys, a passphrase to retrieve the keys when the locker is unlocked, and up to 3 addresses that can unlock your locker.
+                  -# %br
+                  -# %b 2. Check the contents of your locker via "VIEW (WHEN LOCKED)".
+                  -# %br
+                  -# %b 3. When required, ask an owner of address that you specified in step 1 to unlock your locker.
+                  -# %br
+                  -# %b 4. When unlocked, get the contents of your locker via "VIEW (WHEN UNLOCKED)".
+                  -# %br
                   %form{ name: 'blockLockerForm' }
                     .form-group
                       .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-md.btn-light
+                        %label.btn.btn-light
                           %input#handle-create-or-update{ name: 'interactionType', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update
-                        %label.btn.btn-md.btn-light
+                        %label.btn.btn-light
                           %input#handle-unlock{ name: 'interactionType', type: 'radio', value: 'handleUnlock' } Unlock
-                        %label.btn.btn-light.btn-md
+                        %label.btn.btn-light
                           %input#handle-view{ name: 'interactionType', type: 'radio', value: 'handleViewLocker' } View (when locked)
-                        %label.btn.btn-light.btn-md
+                        %label.btn.btn-light
                           %input#query-view{ name: 'interactionType', type: 'radio', value: 'queryViewLocker' } View (when unlocked)
                     .form-group.d-none#wallet-address-form-group
                       %label.control-label Wallet address
