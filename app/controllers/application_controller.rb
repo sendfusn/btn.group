@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
             show_link: false,
             status: 'WIP',
             contracts: {
-              production: 'secret14uff69y9l93dhh3wldu80nvv97ulq44rqj7dtr'
+              production: 'secret1dww8fs5xlj6es5vwyp7ccgm4xclkmhxajxfaqa'
             }
           },
           buttcoin: {
