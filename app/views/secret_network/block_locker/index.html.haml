@@ -12,6 +12,7 @@
                     %b Blockchain:
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
+                  = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:mount_doom][:contracts][:production], staging_contract: nil
                   %hr
                   %p Immutable, private, restorable. Store your keys safely.
                   %h5 How to use
@@ -23,13 +24,13 @@
                     .form-group
                       .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
                         %label.btn.btn-md.btn-light
-                          %input#handle-create-or-update{ name: 'function', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update locker
+                          %input#handle-create-or-update{ name: 'function', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update
                         %label.btn.btn-md.btn-light
-                          %input#handle-unlock{ name: 'function', type: 'radio', value: 'handleUnlock' } Unlock locker
+                          %input#handle-unlock{ name: 'function', type: 'radio', value: 'handleUnlock' } Unlock
                         %label.btn.btn-light.btn-md
-                          %input#handle-view{ name: 'function', type: 'radio', value: 'handleViewLocker' } View locker (when locked)
+                          %input#handle-view{ name: 'function', type: 'radio', value: 'handleViewLocker' } View (when locked)
                         %label.btn.btn-light.btn-md
-                          %input#query-view{ name: 'function', type: 'radio', value: 'handleViewLocker' } View locker (when locked)
+                          %input#query-view{ name: 'function', type: 'radio', value: 'queryViewLocker' } View (when unlocked)
                     .form-group#content-form-group
                       %label.control-label{ for: 'content' } Content
                       %textarea.form-control.w-100#content{ name: 'content', autocomplete: 'off', rows: 5 }
