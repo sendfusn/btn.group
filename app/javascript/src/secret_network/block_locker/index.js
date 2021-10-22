@@ -5,68 +5,44 @@ $(document).ready(function(){
         var radVal = $(this).val();
         if (radVal == 'handleCreateOrUpdate') {
           $('#content-form-group').removeClass('d-none')
-          $('#content').prop('required', true)
           $('#passphrase-form-group').removeClass('d-none')
-          $('#passphrase').prop('required', true)
           $('#whitelisted-address-1-form-group').removeClass('d-none')
-          $('#whitelisted-address-1').prop('required', true)
           $('#whitelisted-address-2-form-group').removeClass('d-none')
-          $('#whitelisted-address-2').prop('required', false)
           $('#whitelisted-address-3-form-group').removeClass('d-none')
-          $('#whitelisted-address-3').prop('required', false)
 
           // Wallet address form group
           $('#wallet-address-form-group').addClass('d-none')
-          $('#wallet-address').prop('required', false)
         } else if (radVal == 'handleUnlock') {
           $('#content-form-group').addClass('d-none')
-          $('#content').prop('required', false)
           $('#passphrase-form-group').addClass('d-none')
-          $('#passphrase').prop('required', false)
           $('#whitelisted-address-1-form-group').addClass('d-none')
-          $('#whitelisted-address-1').prop('required', false)
           $('#whitelisted-address-2-form-group').addClass('d-none')
-          $('#whitelisted-address-2').prop('required', false)
           $('#whitelisted-address-3-form-group').addClass('d-none')
-          $('#whitelisted-address-3').prop('required', false)
 
           // Wallet address form group
           $('#wallet-address-form-group').removeClass('d-none')
           $('#wallet-address').prop('disabled', false)
-          $('#wallet-address').prop('required', true)
           $('#wallet-address').val("")
         } else if (radVal == 'handleViewLocker') {
           $('#content-form-group').addClass('d-none')
-          $('#content').prop('required', false)
           $('#passphrase-form-group').addClass('d-none')
-          $('#passphrase').prop('required', false)
           $('#whitelisted-address-1-form-group').addClass('d-none')
-          $('#whitelisted-address-1').prop('required', false)
           $('#whitelisted-address-2-form-group').addClass('d-none')
-          $('#whitelisted-address-2').prop('required', false)
           $('#whitelisted-address-3-form-group').addClass('d-none')
-          $('#whitelisted-address-3').prop('required', false)
 
           // Wallet address form group
           $('#wallet-address-form-group').removeClass('d-none')
-          $('#wallet-address').prop('required', false)
           $('#wallet-address').prop('disabled', true)
           $('#wallet-address').val("The wallet you request this from.")
         } else if (radVal == 'queryViewLocker') {
           $('#content-form-group').addClass('d-none')
-          $('#content').prop('required', false)
           $('#passphrase-form-group').removeClass('d-none')
-          $('#passphrase').prop('required', true)
           $('#whitelisted-address-1-form-group').addClass('d-none')
-          $('#whitelisted-address-1').prop('required', false)
           $('#whitelisted-address-2-form-group').addClass('d-none')
-          $('#whitelisted-address-2').prop('required', false)
           $('#whitelisted-address-3-form-group').addClass('d-none')
-          $('#whitelisted-address-3').prop('required', false)
 
           // Wallet address form group
           $('#wallet-address-form-group').removeClass('d-none')
-          $('#wallet-address').prop('required', true)
           $('#wallet-address').prop('disabled', false)
           $('#wallet-address').val("")
         }
