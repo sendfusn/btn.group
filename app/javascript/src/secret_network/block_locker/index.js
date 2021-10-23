@@ -71,6 +71,10 @@ $(document).ready(function(){
           if (document.blockLockerForm.interactionType.value == 'queryViewLocker') {
             handleMsg = { user_locker: { address: document.blockLockerForm.walletAddress.value, passphrase: document.blockLockerForm.passphrase.value } };
             result = await this.client.queryContractSmart(this.contractAddress, handleMsg)
+            // Display results
+            $("#result-value").removeClass("d-none");
+            $("#result-value").html(document.prettyPrintJSON(result));
+            $("#result-container").removeClass("d-none");
           } else {
             const {
               SigningCosmWasmClient,
@@ -127,6 +131,7 @@ $(document).ready(function(){
                   },
                 },
               );
+              resultText = "Locked updated."
             } else if (document.blockLockerForm.interactionType.value == 'handleUnlock') {
               confirm("Are you sure you want to unlock? Once unlocked, the current contents of the locker can be accessed with only the passphrase forever.")
               handleMsg = { send: { amount: "1000000", recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerForm.walletAddress.value } })).toString('base64') } };
@@ -142,7 +147,7 @@ $(document).ready(function(){
                   },
                 },
               );
-              resultText = "If the locker exists and you are allowed to unlock it, it will be unlocked."
+              resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
             } else if (document.blockLockerForm.interactionType.value == 'handleViewLocker') {
               contractAddressToExecute = this.contractAddress;
               handleMsg = { get_user_locker: {} };
@@ -161,17 +166,16 @@ $(document).ready(function(){
             }
             result = await this.client.execute(contractAddressToExecute, handleMsg)
             if (resultText.length > 0) {
-              result = resultText
+              document.showAlertSuccess(resultText)
             } else {
               result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
               result = JSON.parse(resultText)
+              // Display results
+              $("#result-value").removeClass("d-none");
+              $("#result-value").html(document.prettyPrintJSON(result));
+              $("#result-container").removeClass("d-none");
             }
-
           }
-          // Display results
-          $("#result-value").removeClass("d-none");
-          $("#result-value").html(document.prettyPrintJSON(result));
-          $("#result-container").removeClass("d-none");
         }
         catch(err) {
           document.showAlertDanger(err)
