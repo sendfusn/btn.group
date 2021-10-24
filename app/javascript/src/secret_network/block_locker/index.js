@@ -1,7 +1,17 @@
 $(document).ready(function(){
   if($("#secret-network-block-locker").length) {
       // Listeners
+      function resetInputs() {
+        document.blockLockerForm.content.value = ""
+        document.blockLockerForm.passphrase.value = ""
+        document.blockLockerForm.walletAddress.value = ""
+        document.blockLockerForm.whitelistedAddress1.value = ""
+        document.blockLockerForm.whitelistedAddress2.value = ""
+        document.blockLockerForm.whitelistedAddress3.value = ""
+      }
+
       $('input[type=radio][name=interactionType]').on('change', function() {
+        resetInputs();
         var radVal = $(this).val();
         if (radVal == 'handleCreateOrUpdate') {
           $('#content-form-group').removeClass('d-none')
