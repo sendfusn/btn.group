@@ -13,17 +13,50 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
                     = features[:secret_network][:name].to_s
                   = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:block_locker][:contracts][:production], staging_contract: nil
+                  %button.btn.btn-sm.btn-theme-dark.mt-1{ 'aria-controls' => 'exampleCollapseExample', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#exampleCollapseExample' }
+                    Instructions / Requirements
+                  .collapse.mt-2#exampleCollapseExample
+                    .card.card-default.bg-theme-light
+                      .card-block
+                        %h6 Requirements
+                        %p
+                          1.
+                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                          %br
+                          2. SCRT for gas
+                          %br
+                          3. BUTT for creating, updating and unlocking a locker.
+                        %h6 Why it was created
+                        %p A friend of ours bought some SCRT, transferred it to her Keplr wallet and wrote the mnemonic phrase in her notebook. Her hard drive died and she accidentally threw her notebook in the trash when she moved houses. There are countless stories like this where people have lost life changing fortunes in the trash.
+
+                        %h6 btn.group's solution: Block locker
+                        %p Our solution is to leverage blockchain, specifically the Secret network, to provide a way for users to store private important data like this, in an encrypted format that can be accessed anywhere, and can’t be lost. This can be achieved at the fraction of a cost of physical solutions, which can be lost or stolen anyways.
+
+                        %h6 Instructions
+                        %p
+                          1. Store your important data, a passphrase and up to 3 addresses that can unlock your locker.
+                          %br
+                          2. Double check the contents of your locker via "VIEW (WHEN LOCKED)".
+                          %br
+                          3. When required, ask an owner of address that you specified in step 1, to unlock your locker.
+                          %br
+                          4. When unlocked, get the contents of your locker via "VIEW (WHEN UNLOCKED)".
+
+                        %h6 Extra notes
+                        %p
+                          1. Every 555th BUTT sent into the contract will send 555 BUTT to the user.
+                          %br
+                          2. Creating, updating and unlocking can't be confirmed on chain. It will just look like a user has interacted with the BUTT contract.
+                          %br
+                          3. Viewing a locker, when locked, can be confirmed on chain.
+                        %h6 References
+                        %p
+                          1.
+                          = link_to 'github - block-locker', 'https://github.com/btn-group/block-locker', target: '_blank', rel: 'noopener'
+                          %br
+                          2.
+                          = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
                   %hr
-                  -# %p Immutable, private, restorable. Store your keys safely.
-                  -# %h5 How to use
-                  -# %b 1. Store your keys, a passphrase to retrieve the keys when the locker is unlocked, and up to 3 addresses that can unlock your locker.
-                  -# %br
-                  -# %b 2. Check the contents of your locker via "VIEW (WHEN LOCKED)".
-                  -# %br
-                  -# %b 3. When required, ask an owner of address that you specified in step 1 to unlock your locker.
-                  -# %br
-                  -# %b 4. When unlocked, get the contents of your locker via "VIEW (WHEN UNLOCKED)".
-                  -# %br
                   %form{ name: 'blockLockerForm' }
                     .form-group
                       .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
