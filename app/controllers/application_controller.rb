@@ -35,8 +35,8 @@ class ApplicationController < ActionController::Base
           },
           block_locker: {
             name: 'Block locker',
-            show_link: false,
-            status: 'WIP',
+            show_link: true,
+            status: 'Live',
             contracts: {
               production: 'secret1dww8fs5xlj6es5vwyp7ccgm4xclkmhxajxfaqa'
             }
