@@ -5,9 +5,7 @@ require 'rest-client'
 class SecretNetworkGetSmartContractsJob < ApplicationJob
   after_perform do |_job|
     run_time = Date.tomorrow.midnight.advance(hours: 12)
-    unless SecretNetworkGetSmartContractsJob.scheduled?
-      SecretNetworkGetSmartContractsJob.set(wait_until: run_time).perform_later
-    end
+    SecretNetworkGetSmartContractsJob.set(wait_until: run_time).perform_later unless SecretNetworkGetSmartContractsJob.scheduled?
   end
 
   def perform
