@@ -6,7 +6,7 @@ class SecretNetworkGetSmartContractsByCodeIdJob < ApplicationJob
   def perform(code_id, data_hash)
     contracts_for_code_id_response = RestClient.get "https://api.secretapi.io/wasm/code/#{code_id}/contracts"
     contracts_for_code_id = JSON.parse(contracts_for_code_id_response)['result']
-    contracts_for_code_id.each do |contract|
+    contracts_for_code_id&.each do |contract|
       SmartContract.find_or_create_by(address: contract['address'],
                                       blockchain_id: 1,
                                       code_id: code_id,
