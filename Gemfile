@@ -19,7 +19,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'nokogiri', '>= 1.12.5'
 gem 'pg'
 # Use Puma as the app server
-gem 'puma'
+gem 'puma', '>= 5.5.1'
 gem 'rack-cors'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.4'
