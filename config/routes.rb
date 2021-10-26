@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   resources :features, only: :index
+  resources :smart_contracts, only: :index, defaults: { format: 'json' }
 
   namespace :near do
     resources :smart_contract_interface, only: :index

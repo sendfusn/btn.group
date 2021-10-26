@@ -1,5 +1,19 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
+    document.smartContracts = {}
+    var request = new XMLHttpRequest()
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', '/smart_contracts?blockchain_id=1', true)
+    request.onload = function () {
+      // Begin accessing JSON data here
+      var data = JSON.parse(this.response)
+      data.forEach((smartContract) => {
+        document.smartContracts[smartContract["address"]] = smartContract;
+      })
+    }
+    // Send request
+    request.send()
+
     this.datatable = window.$('#transactions-table').DataTable({
       columns: [
           { title: "ID" },
