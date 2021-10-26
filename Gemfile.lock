@@ -220,6 +220,7 @@ GEM
     rails-reverse-proxy (0.10.1)
       actionpack
       addressable
+    rails_autoscale_agent (0.10.2)
     railties (6.1.4.1)
       actionpack (= 6.1.4.1)
       activesupport (= 6.1.4.1)
@@ -372,6 +373,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4)
   rails-reverse-proxy
+  rails_autoscale_agent
   redis
   rspec-rails
   rubocop

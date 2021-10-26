@@ -23,6 +23,7 @@ gem 'puma', '>= 5.5.1'
 gem 'rack-cors'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.4'
+gem 'rails_autoscale_agent'
 gem 'rails-reverse-proxy'
 # Use Redis adapter to run Action Cable in production
 gem 'redis'
