@@ -14,7 +14,7 @@ $(document).ready(function(){
     // Send request
     request.send()
 
-    window.onload = async () => {
+    window.onload = () => {
       // Listeners
       document.querySelector('#load-address-from-keplr-wallet-button').addEventListener('click', (evt) => {
         let environment = document.featureEnvironment();
@@ -40,6 +40,45 @@ $(document).ready(function(){
                 let accounts = await this.keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
                 document.secretNetworkTransactionsForm.address.value = this.address
+              } else {
+                throw("Please use the recent version of keplr extension")
+              }
+            }
+          } catch(err) {
+            let errorDisplayMessage = err;
+            document.showAlertDanger(errorDisplayMessage)
+          } finally {
+            // Show ready ui
+            $target.prop("disabled", false);
+            $target.find('.loading').addClass('d-none')
+            $target.find('.ready').removeClass('d-none')
+          }
+        })();
+      })
+
+      document.querySelector('#load-viewing-key-from-keplr-button').addEventListener('click', (evt) => {
+        let environment = document.featureEnvironment();
+        this.chainId = document.secretNetworkChainId(this.environment);
+        (async () => {
+          let $target = $('#load-viewing-key-from-keplr-button')
+          $target.prop("disabled", true);
+          $target.find('.loading').removeClass('d-none')
+          $target.find('.ready').addClass('d-none')
+          try {
+            const {
+              SigningCosmWasmClient,
+            } = require('secretjs');
+            if (!window.getOfflineSigner || !window.keplr) {
+              throw("Please install keplr extension")
+            } else {
+              if (window.keplr.experimentalSuggestChain) {
+                // This method will ask the user whether or not to allow access if they haven't visited this website.
+                // Also, it will request user to unlock the wallet if the wallet is locked.
+                // If you don't request enabling before usage, there is no guarantee that other methods will work.
+                await window.keplr.enable(this.chainId);
+                this.keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                let key = await window.keplr.getSecret20ViewingKey(this.chainId, document.secretNetworkTransactionsForm.contractAddress.value)
+                document.secretNetworkTransactionsForm.viewingKey.value = key
               } else {
                 throw("Please use the recent version of keplr extension")
               }

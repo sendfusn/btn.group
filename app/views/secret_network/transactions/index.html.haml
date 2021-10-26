@@ -38,6 +38,14 @@
                       .col-lg-6
                         .form-group#viewing-key-container
                           %label.form-label{ for: 'viewing-key' } Viewing key
+                          %span.load-viewing-key-link
+                            %span.load-viewing-key.d-none
+                            %button.btn.btn-light.btn-sm.ml-2.mb-1.border#load-viewing-key-from-keplr-button{ type: 'button' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready
+                                Load from Keplr
                           .input-group
                             %input.form-control.border-right-0#viewing-key-input{ type: 'password', required: true, spellcheck: false, autocorrect: 'off', autocapitalize: 'off', autocomplete: 'off', name: 'viewingKey' }
                             .input-group-append
