@@ -164,6 +164,9 @@ $(document).ready(function(){
             } else {
               description = value['from']
             }
+            if (document.smartContracts[description]) {
+              description = document.smartContracts[description]['label']
+            }
             row.push(description)
             row.push(parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }))
             transactions.push(row)
