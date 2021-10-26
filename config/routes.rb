@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     resources :block_locker, only: :index
     resources :buttcoin, only: :index
     resources :mount_doom, only: :index
-    resources :profit_distributor, only: :index
     resources :smart_contract_interface, only: :index
     resources :transactions, only: :index
     resources :yield_optimizer, only: :index
