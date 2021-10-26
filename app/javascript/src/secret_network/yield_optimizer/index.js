@@ -783,7 +783,9 @@ $(document).ready(function(){
           $userShares.text((withdrawable / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}))
         } catch(err) {
           $userShares.text('0');
-          console.log(err)
+          if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+            console.log(err)
+          }
         }
       }
 
@@ -833,8 +835,10 @@ $(document).ready(function(){
                 $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
               }
             } catch(err) {
-              console.log(err)
-              if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+              if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+                $poolClaimable.text('0');
+              } else {
+                console.log(err)
                 if (this.retryCount < 5) {
                   this.retryCount += 1
                   this.updateClaimable(pool)
