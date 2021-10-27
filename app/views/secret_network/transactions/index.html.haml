@@ -15,9 +15,7 @@
                     = features[:secret_network][:name].to_s
                   = render 'environment_switch'
                   %p
-                    * Viewing SNIP-20 transactions is live.
-                    %br
-                    Regular transactions and improved ui/ux in development.
+                    * Viewing SNIP-20 transactions is live. Regular transactions and improved ui/ux in development.
                   %hr
                   %form{ name: 'secretNetworkTransactionsForm' }
                     .form-group
@@ -56,6 +54,7 @@
                         .form-group
                           %label.form-label{ for: 'page-size' } Show
                           %select.form-control#page-size{ name: 'pageSize' }
+                            %option{ value: 10 } 10
                             %option{ value: 50, selected: true } 50
                             %option{ value: 100 } 100
                             %option{ value: 1000 } 1000

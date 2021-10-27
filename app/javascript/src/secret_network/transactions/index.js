@@ -4,112 +4,139 @@ $(document).ready(function(){
     getAndSetSmartContracts(1)
     getAndSetCryptocurrencies(1)
 
-    document.secretNetworkTransactionsForm.onsubmit = () => {
-      $transactionsTableBody = $('#transactions-table-body');
+    document.secretNetworkTransactionsForm.onsubmit = async (e) => {
+      e.preventDefault()
+      this.environment = document.featureEnvironment();
+      this.chainId = document.secretNetworkChainId(this.environment);
+      this.client =  document.secretNetworkClient(this.environment);
+      let address = document.secretNetworkTransactionsForm.address.value;
+      let buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
+      let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
+      let premiumAccess = false;
       let transactions = [];
+      let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
+
+      // Reset transactions table and balance      
+      $transactionsTableBody = $('#transactions-table-body');
       $transactionsTableBody.html('')
       $("#balance").text('')
       $($('th')[2]).text('Amount')
+
+      // Button to loading
       $("#search-button").prop("disabled", true);
       $("#loading").removeClass("d-none")
       $("#ready").addClass("d-none")
+
+      // Hide alerts
       document.hideAllAlerts();
-      (async () => {
-        try {
-          // Set environment
-          let environment = document.featureEnvironment();
-          let client =  document.secretNetworkClient(environment);
-          let address = document.secretNetworkTransactionsForm.address.value;
-          let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
-          let chainId = document.secretNetworkChainId(environment);
-          let token_info_response = await client.queryContractSmart(contractAddress, { token_info: {} });
-          let token_decimals = token_info_response["token_info"]["decimals"]
-          let token_symbol = token_info_response["token_info"]["symbol"]
-          let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
-          let pageSize = document.secretNetworkTransactionsForm.pageSize.value;
-          let page = document.secretNetworkTransactionsForm.page.value;
-          let params = {
-            transfer_history: {
-              address: address,
-              key: viewingKey,
-              page: parseFloat(page - 1),
-              page_size: parseFloat(pageSize)
-            }
-          }
-          let transactions_response = await client.queryContractSmart(contractAddress, params);
-          if (transactions_response['viewing_key_error']) {
-            throw(transactions_response['viewing_key_error']['msg'])
-          }
-          let transactionsTableBodyContent = '';
-          _.each(transactions_response["transfer_history"]["txs"], function(value){
-            // ID & Date
-            transactionsTableBodyContent += '<tr><td>'
-            if (value['block_time']) {
-              let options = { year: 'numeric', month: 'short', day: 'numeric' };
-              let dateAsString = new Date(Number(value['block_time']) * 1000).toLocaleDateString(undefined, options);
-              transactionsTableBodyContent += dateAsString + '<hr>'
-            }
-            transactionsTableBodyContent += 'id: #' + value['id'] + '</td><td>'
 
-            // Description & Amount
-            let amount = value['coins']['amount']
-            amount = applyDecimals(amount, token_decimals)
-            let description = '<a href="'
-            let descriptionAddress;
-            if (address != value['receiver']) {
-              amount *= -1
-              descriptionAddress = value['receiver']
-            } else {
-              descriptionAddress = value['from']
-            }
-            if (document.smartContracts[descriptionAddress]) {
-              description += 'https://secretnodes.com/secret/chains/secret-3/contracts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
-              description += '<hr>Contract label: ' + document.smartContracts[descriptionAddress]['label']
-            } else {
-              description += 'https://secretnodes.com/secret/chains/secret-3/accounts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
-            }
-            transactionsTableBodyContent += description + '</td><td>'
-            transactionsTableBodyContent += parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }) + '</td></tr>'
-          })
-          transactionsTableBodyContent += '</tr>'
-          $transactionsTableBody.html(transactionsTableBodyContent)
-
-          // Add token symbol next to amount header
-          $($('th')[2]).text('Amount' + ' (' + token_symbol + ')')
-
-          params = {
-            balance: {
-              address: address,
-              key: viewingKey
-            }
+      // First we need to find out if the user has premium access
+      try {
+        let params = {
+          balance: {
+            address: address,
+            key: await window.keplr.getSecret20ViewingKey(this.chainId, buttcoinContractAddress)
           }
-          let balance_response = await client.queryContractSmart(contractAddress, params);
-          // Display results
-          $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
         }
-        catch(err) {
-          console.error(err)
-          let errorDisplayMessage = err
-          if (err.message) {
-            errorDisplayMessage = err.message;
-          }
-          if (errorDisplayMessage.includes('decoding bech32 failed')) {
-            errorDisplayMessage = 'Token contract address is invalid.'
-          }
-          if (errorDisplayMessage.includes('{"generic_err":{"msg":"canonicalize_address errored: invalid checksum"}')) {
-            errorDisplayMessage = 'Wallet address is invalid.'
-          }
-          document.showAlertDanger(errorDisplayMessage)
-        }
-        finally {
-          // Enable form
-          $("#search-button").prop("disabled", false);
-          $("#loading").addClass("d-none")
-          $("#ready").removeClass("d-none")
-        }
-      })();
+        let balance_response = await this.client.queryContractSmart(contractAddress, params);
+        premiumAccess = balance_response["balance"]["amount"] >= 555_000_000
+        console.log(premiumAccess)
+      } catch {
+        // Nothing
+      }
 
-      return false;
+      try {
+        console.log(premiumAccess)
+        if (!premiumAccess) {
+          document.secretNetworkTransactionsForm.page.value = 1
+          document.secretNetworkTransactionsForm.pageSize.value = '10'
+        }
+
+        // Get the token info
+        let token_info_response = await this.client.queryContractSmart(contractAddress, { token_info: {} });
+        let token_decimals = token_info_response["token_info"]["decimals"]
+        let token_symbol = token_info_response["token_info"]["symbol"]
+        let params = {
+          transfer_history: {
+            address: address,
+            key: viewingKey,
+            page: parseFloat(document.secretNetworkTransactionsForm.page.value - 1),
+            page_size: parseFloat(document.secretNetworkTransactionsForm.pageSize.value)
+          }
+        }
+
+        // Get the transactions for that token
+        let transactions_response = await this.client.queryContractSmart(contractAddress, params);
+        if (transactions_response['viewing_key_error']) {
+          throw(transactions_response['viewing_key_error']['msg'])
+        }
+        let transactionsTableBodyContent = '';
+        _.each(transactions_response["transfer_history"]["txs"], function(value){
+          // ID & Date
+          transactionsTableBodyContent += '<tr><td>'
+          if (value['block_time']) {
+            let options = { year: 'numeric', month: 'short', day: 'numeric' };
+            let dateAsString = new Date(Number(value['block_time']) * 1000).toLocaleDateString(undefined, options);
+            transactionsTableBodyContent += dateAsString + '<hr>'
+          }
+          transactionsTableBodyContent += 'id: #' + value['id'] + '</td><td>'
+
+          // Description & Amount
+          let amount = value['coins']['amount']
+          amount = applyDecimals(amount, token_decimals)
+          let description = '<a href="'
+          let descriptionAddress;
+          if (address != value['receiver']) {
+            amount *= -1
+            descriptionAddress = value['receiver']
+          } else {
+            descriptionAddress = value['from']
+          }
+          if (document.smartContracts[descriptionAddress]) {
+            description += 'https://secretnodes.com/secret/chains/secret-3/contracts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
+            description += '<hr>Contract label: ' + document.smartContracts[descriptionAddress]['label']
+          } else {
+            description += 'https://secretnodes.com/secret/chains/secret-3/accounts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
+          }
+          transactionsTableBodyContent += description + '</td><td>'
+          transactionsTableBodyContent += parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }) + '</td></tr>'
+        })
+        transactionsTableBodyContent += '</tr>'
+        $transactionsTableBody.html(transactionsTableBodyContent)
+        // Add token symbol next to amount header
+        $($('th')[2]).text('Amount' + ' (' + token_symbol + ')')
+
+        // Get the balance for the token
+        params = {
+          balance: {
+            address: address,
+            key: viewingKey
+          }
+        }
+        let balance_response = await this.client.queryContractSmart(contractAddress, params);
+        // Display results
+        $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
+      }
+      catch(err) {
+        console.error(err)
+        let errorDisplayMessage = err
+        if (err.message) {
+          errorDisplayMessage = err.message;
+        }
+        if (errorDisplayMessage.includes('decoding bech32 failed')) {
+          errorDisplayMessage = 'Token contract address is invalid.'
+        }
+        if (errorDisplayMessage.includes('{"generic_err":{"msg":"canonicalize_address errored: invalid checksum"}')) {
+          errorDisplayMessage = 'Wallet address is invalid.'
+        }
+        document.showAlertDanger(errorDisplayMessage)
+      }
+      finally {
+        // Enable form
+        $("#search-button").prop("disabled", false);
+        $("#loading").addClass("d-none")
+        $("#ready").removeClass("d-none")
+      }
     }
 
     function applyDecimals(amount, decimals) {
