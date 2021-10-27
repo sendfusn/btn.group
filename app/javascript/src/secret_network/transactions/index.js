@@ -48,7 +48,7 @@ $(document).ready(function(){
               let dateAsString = new Date(Number(value['block_time']) * 1000).toLocaleDateString(undefined, options);
               transactionsTableBodyContent += dateAsString + '<hr>'
             }
-            transactionsTableBodyContent += value['id'] + '</td><td>'
+            transactionsTableBodyContent += '#' + value['id'] + '</td><td>'
 
             // Description & Amount
             let amount = value['coins']['amount']
