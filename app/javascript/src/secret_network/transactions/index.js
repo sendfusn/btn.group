@@ -84,9 +84,15 @@ $(document).ready(function(){
         }
         catch(err) {
           console.error(err)
-          let errorDisplayMessage = err.message;
-          if (err.message.includes('decoding bech32 failed')) {
-            errorDisplayMessage = 'Smart contract or wallet address is invalid.'
+          let errorDisplayMessage = err
+          if (err.message) {
+            errorDisplayMessage = err.message;
+          }
+          if (errorDisplayMessage.includes('decoding bech32 failed')) {
+            errorDisplayMessage = 'Token contract address is invalid.'
+          }
+          if (errorDisplayMessage.includes('{"generic_err":{"msg":"canonicalize_address errored: invalid checksum"}')) {
+            errorDisplayMessage = 'Wallet address is invalid.'
           }
           document.showAlertDanger(errorDisplayMessage)
         }
