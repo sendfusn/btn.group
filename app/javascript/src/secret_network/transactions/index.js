@@ -6,11 +6,11 @@ $(document).ready(function(){
 
     document.secretNetworkTransactionsForm.onsubmit = async (e) => {
       e.preventDefault()
+      this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       this.environment = document.featureEnvironment();
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client =  document.secretNetworkClient(this.environment);
       let address = document.secretNetworkTransactionsForm.address.value;
-      let buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
       let premiumAccess = false;
       let transactions = [];
@@ -35,12 +35,11 @@ $(document).ready(function(){
         let params = {
           balance: {
             address: address,
-            key: await window.keplr.getSecret20ViewingKey(this.chainId, buttcoinContractAddress)
+            key: await window.keplr.getSecret20ViewingKey('secret-3', this.buttcoinContractAddress)
           }
         }
         let balance_response = await this.client.queryContractSmart(contractAddress, params);
         premiumAccess = balance_response["balance"]["amount"] >= 555_000_000
-        console.log(premiumAccess)
       } catch {
         // Nothing
       }
