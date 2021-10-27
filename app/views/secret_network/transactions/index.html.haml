@@ -73,6 +73,14 @@
                   %h6
                     Balance:
                     %span#balance
-                  %table.table.table-striped.table-bordered#transactions-table
+                  .table-responsive
+                    %table.table.table-striped.table-bordered
+                      %thead
+                        %tr
+                          %th{ style: 'width: 135px;' }
+                          %th Description
+                          %th Amount
+                      %tbody#transactions-table-body
+
                   %p * Minting transactions are not included (e.g. receiving tokens via the bridge etc)
   .nk-ovm.shape-q
