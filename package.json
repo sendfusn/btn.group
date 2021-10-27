@@ -18,7 +18,6 @@
     "jquery": "^3.6.0",
     "near-api-js": "^0.42.0",
     "secretjs": "0.10.3",
-    "selectize": "^0.12.6",
     "tar": "6.1.9",
     "trim-newlines": "3.0.1"
   },

@@ -33,7 +33,7 @@
                       %input.form-control#address{ name: 'address' }
                     .form-group
                       %label.form-label{ for: 'contract-address' } Token contract address
-                      %input.form-control#contract-address{ name: 'contractAddress' }
+                      = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.all.order(:name), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
                     .row
                       .col-lg-6
                         .form-group#viewing-key-container
