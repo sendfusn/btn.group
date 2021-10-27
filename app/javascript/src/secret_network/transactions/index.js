@@ -2,6 +2,7 @@ $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     initListeners()
     getAndSetSmartContracts(1)
+    getAndSetCryptocurrencies(1)
 
     document.secretNetworkTransactionsForm.onsubmit = () => {
       $transactionsTableBody = $('#transactions-table-body');
@@ -113,6 +114,22 @@ $(document).ready(function(){
 
     function applyDecimals(amount, decimals) {
       return amount / parseFloat("1" + '0'.repeat(decimals))
+    }
+
+    function getAndSetCryptocurrencies(blockchainId) {
+      document.cryptocurrencies = {}
+      var request = new XMLHttpRequest()
+      // Open a new connection, using the GET request on the URL endpoint
+      request.open('GET', '/cryptocurrencies?blockchain_id=' + blockchainId, true)
+      request.onload = function () {
+        // Begin accessing JSON data here
+        var data = JSON.parse(this.response)
+        data.forEach((cryptocurrency) => {
+          document.cryptocurrencies[cryptocurrency["symbol"]] = cryptocurrency;
+        })
+      }
+      // Send request
+      request.send()
     }
 
     function getAndSetSmartContracts(blockchainId) {

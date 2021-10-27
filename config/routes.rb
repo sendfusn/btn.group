@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :cryptocurrencies, only: :index, defaults: { format: 'json' }
   resources :features, only: :index
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
 
