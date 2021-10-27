@@ -303,6 +303,7 @@ $(document).ready(function(){
         {
           title: 'Earn Buttcoin',
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
+          apr: '438',
           deposit_gas: '700000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['butt_swbtc_lp'],
@@ -500,6 +501,9 @@ $(document).ready(function(){
         if (!value['under_maintenance']) {
           html += '<div class="col-sm-5">TVL: <span class="'
           html += value['address'] + '-total-shares"></span>'
+          if (value['apr']) {
+            html += '<br>APR: ~' + value['apr'] + '%'
+          }
           if (value['apy']) {
             html += '<br>APY: ~' + value['apy'] + '%'
           }
