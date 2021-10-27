@@ -48,7 +48,7 @@ $(document).ready(function(){
               let dateAsString = new Date(Number(value['block_time']) * 1000).toLocaleDateString(undefined, options);
               transactionsTableBodyContent += dateAsString + '<hr>'
             }
-            transactionsTableBodyContent += '#' + value['id'] + '</td><td>'
+            transactionsTableBodyContent += 'id: #' + value['id'] + '</td><td>'
 
             // Description & Amount
             let amount = value['coins']['amount']
@@ -63,7 +63,7 @@ $(document).ready(function(){
             }
             if (document.smartContracts[descriptionAddress]) {
               description += 'https://secretnodes.com/secret/chains/secret-3/contracts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
-              description += '<hr>' + document.smartContracts[descriptionAddress]['label']
+              description += '<hr>Contract label: ' + document.smartContracts[descriptionAddress]['label']
             } else {
               description += 'https://secretnodes.com/secret/chains/secret-3/accounts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
             }
