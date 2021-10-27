@@ -53,15 +53,19 @@ $(document).ready(function(){
             // Description & Amount
             let amount = value['coins']['amount']
             amount = applyDecimals(amount, token_decimals)
-            let description
+            let description = '<a href="'
+            let descriptionAddress;
             if (address != value['receiver']) {
               amount *= -1
-              description = value['receiver']
+              descriptionAddress = value['receiver']
             } else {
-              description = value['from']
+              descriptionAddress = value['from']
             }
-            if (document.smartContracts[description]) {
-              description = document.smartContracts[description]['label']
+            if (document.smartContracts[descriptionAddress]) {
+              description += 'https://secretnodes.com/secret/chains/secret-3/contracts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
+              description += '<hr>' + document.smartContracts[descriptionAddress]['label']
+            } else {
+              description += 'https://secretnodes.com/secret/chains/secret-3/accounts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
             }
             transactionsTableBodyContent += description + '</td><td>'
             transactionsTableBodyContent += parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }) + '</td></tr>'
