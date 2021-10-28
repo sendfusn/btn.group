@@ -272,6 +272,9 @@ $(document).ready(function(){
             }
           } catch(err) {
             let errorDisplayMessage = err;
+            if (err['message'].includes('There is no matched secret20')) {
+              errorDisplayMessage = 'No viewing key for this token in your Keplr wallet.';
+            }
             document.showAlertDanger(errorDisplayMessage)
           } finally {
             // Show ready ui
