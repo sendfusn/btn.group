@@ -39,7 +39,7 @@
                     .form-group
                       %label.form-label{ for: 'contract-address' } Token contract address
                       = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.all.order('LOWER(name)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
-                    %hr
+                    %hr{ style: 'border-style: dashed;' }
                     .form-group
                       .load-wallet-link
                         %span.load-wallet.d-none
@@ -81,14 +81,20 @@
                         .form-group
                           %label.form-label{ for: 'page' } Page
                           %input.form-control#page{ type: 'number', name: 'page', value: '1', min: 1 }
-                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
+                    %button.btn.btn-primary.btn-md.mt-2#search-button{ type: 'submit' }
                       .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
                       #ready
                         Search
-                    .mb-5
-                  %h6
+                    .d-none.my-4#pay-wall
+                      .card.card-default.bg-theme-light
+                        .card-block
+                          %p
+                            %h6 You do not have full access.
+                            Only your 10 most recent transactions will be displayed.
+                            %br To get full access, please hold at least 555 Buttcoin (BUTT) in the wallet address you are querying.
+                  %h6.mt-4
                     Balance:
                     %span#balance
                   .table-responsive

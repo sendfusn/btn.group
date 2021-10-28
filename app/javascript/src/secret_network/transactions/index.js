@@ -16,10 +16,11 @@ $(document).ready(function(){
       let transactions = [];
       let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
 
-      // Reset transactions table and balance      
+      // Reset transactions table and balance
       $transactionsTableBody = $('#transactions-table-body');
       $transactionsTableBody.html('')
       $("#balance").text('')
+      $('#pay-wall').addClass('d-none')
       $($('th')[2]).text('Amount')
 
       // Button to loading
@@ -40,6 +41,9 @@ $(document).ready(function(){
         }
         let balance_response = await this.client.queryContractSmart(contractAddress, params);
         premiumAccess = balance_response["balance"]["amount"] >= 555_000_000
+        if (!premiumAccess) {
+          $('#pay-wall').removeClass('d-none')
+        }
       } catch {
         // Nothing
       }
