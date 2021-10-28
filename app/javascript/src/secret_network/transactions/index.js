@@ -183,16 +183,27 @@ $(document).ready(function(){
         }
       })
 
-      // $('#contract-address').change(function(){
-      //   $('#viewing-key-input').val('')
-      //   let environment = document.featureEnvironment();
-      //   let client =  document.secretNetworkClient(environment);
-      //   let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
-      //   let chainId = document.secretNetworkChainId(environment);
-      //   window.keplr.getSecret20ViewingKey(chainId, contractAddress).then(function(result){
-      //     $('#viewing-key-input').val(result) 
-      //   });
-      // })
+      $('#address').change(function(){
+        $('#viewing-key-input').val('')
+        // let environment = document.featureEnvironment();
+        // let client =  document.secretNetworkClient(environment);
+        // let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
+        // let chainId = document.secretNetworkChainId(environment);
+        // window.keplr.getSecret20ViewingKey(chainId, contractAddress).then(function(result){
+        //   $('#viewing-key-input').val(result)
+        // });
+      })
+
+      $('#contract-address').change(function(){
+        $('#viewing-key-input').val('')
+        // let environment = document.featureEnvironment();
+        // let client =  document.secretNetworkClient(environment);
+        // let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
+        // let chainId = document.secretNetworkChainId(environment);
+        // window.keplr.getSecret20ViewingKey(chainId, contractAddress).then(function(result){
+        //   $('#viewing-key-input').val(result)
+        // });
+      })
 
       document.querySelector('#load-address-from-keplr-wallet-button').addEventListener('click', (evt) => {
         let environment = document.featureEnvironment();
