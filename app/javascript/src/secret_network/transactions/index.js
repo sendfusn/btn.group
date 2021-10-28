@@ -7,8 +7,8 @@ $(document).ready(function(){
     document.secretNetworkTransactionsForm.onsubmit = async (e) => {
       e.preventDefault()
       this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
-      this.environment = document.featureEnvironment();
-      this.chainId = document.secretNetworkChainId(this.environment);
+      this.environment = 'production';
+      this.chainId = 'secret-3';
       this.client =  document.secretNetworkClient(this.environment);
       let address = document.secretNetworkTransactionsForm.address.value;
       let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
@@ -35,7 +35,7 @@ $(document).ready(function(){
         let params = {
           balance: {
             address: address,
-            key: await window.keplr.getSecret20ViewingKey('secret-3', this.buttcoinContractAddress)
+            key: await window.keplr.getSecret20ViewingKey(this.chainId, this.buttcoinContractAddress)
           }
         }
         let balance_response = await this.client.queryContractSmart(contractAddress, params);
@@ -206,7 +206,6 @@ $(document).ready(function(){
       })
 
       document.querySelector('#load-address-from-keplr-wallet-button').addEventListener('click', (evt) => {
-        let environment = document.featureEnvironment();
         this.chainId = document.secretNetworkChainId(this.environment);
         (async () => {
           let $target = $('#load-address-from-keplr-wallet-button')
@@ -246,7 +245,6 @@ $(document).ready(function(){
       })
 
       document.querySelector('#load-viewing-key-from-keplr-button').addEventListener('click', (evt) => {
-        let environment = document.featureEnvironment();
         this.chainId = document.secretNetworkChainId(this.environment);
         (async () => {
           let $target = $('#load-viewing-key-from-keplr-button')
