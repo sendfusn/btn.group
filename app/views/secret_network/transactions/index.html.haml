@@ -39,29 +39,30 @@
                     .form-group
                       %label.form-label{ for: 'contract-address' } Token contract address
                       = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.all.order('LOWER(name)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
+                    %hr
                     .form-group
-                      %label.form-label{ for: 'address' } Wallet address
-                      %span.load-wallet-link
+                      .load-wallet-link
                         %span.load-wallet.d-none
-                        %button.btn.btn-light.btn-sm.ml-2.mb-1.border#load-address-from-keplr-wallet-button{ type: 'button' }
+                        %button.btn.btn-light.btn-md.mb-3.border.w-100#load-address-from-keplr-wallet-button{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .ready
                             Load from Keplr
+                      %label.form-label{ for: 'address' } Wallet address
                       %input.form-control#address{ name: 'address' }
                     .row
                       .col-lg-6
                         .form-group#viewing-key-container
                           %label.form-label{ for: 'viewing-key' } Viewing key
-                          %span.load-viewing-key-link
+                          %span.load-viewing-key-link.d-none
                             %span.load-viewing-key.d-none
                             %button.btn.btn-light.btn-sm.ml-2.mb-1.border#load-viewing-key-from-keplr-button{ type: 'button' }
                               .d-none.loading
                                 %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                                 %em Loading...
                               .ready
-                                Load from Keplr
+                                Create
                           .input-group
                             %input.form-control.border-right-0#viewing-key-input{ type: 'password', required: true, spellcheck: false, autocorrect: 'off', autocapitalize: 'off', autocomplete: 'off', name: 'viewingKey' }
                             .input-group-append
