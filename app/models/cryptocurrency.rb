@@ -13,6 +13,6 @@ class Cryptocurrency < ApplicationRecord
   validates :smart_contract_id, uniqueness: { allow_nil: true }
 
   def label_formatted
-    "#{name} (#{symbol}) - #{address}"
+    "#{symbol} / #{name} / #{address}"
   end
 end
