@@ -16,6 +16,25 @@
                   = render 'environment_switch'
                   %p
                     * Viewing SNIP-20 transactions is live. Regular transactions and improved ui/ux in development.
+                  %button.btn.btn-sm.btn-theme-dark.mt-1{ 'aria-controls' => 'exampleCollapseExample', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#exampleCollapseExample' }
+                    Instructions / Requirements
+                  .collapse.mt-2#exampleCollapseExample
+                    .card.card-default.bg-theme-light
+                      .card-block
+                        %h6 Requirements
+                        %p
+                          1.
+                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                          if you would like to use the convenience buttons provided.
+                          %br
+                          2. At least 555 BUTT, held in the account you are querying, if you want to see more than the latest 10 transactions.
+                        %h6 References
+                        %p
+                          1.
+                          = link_to 'https://github.com/SecretFoundation/SNIPs/blob/master/SNIP-20.md', target: '_blank', rel: 'noopener'
+                          %br
+                          2.
+                          = link_to 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
                   %hr
                   %form{ name: 'secretNetworkTransactionsForm' }
                     .form-group
