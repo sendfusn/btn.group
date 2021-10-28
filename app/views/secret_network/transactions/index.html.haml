@@ -37,6 +37,9 @@
                   %hr
                   %form{ name: 'secretNetworkTransactionsForm' }
                     .form-group
+                      %label.form-label{ for: 'contract-address' } Token contract address
+                      = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.all.order('LOWER(name)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
+                    .form-group
                       %label.form-label{ for: 'address' } Wallet address
                       %span.load-wallet-link
                         %span.load-wallet.d-none
@@ -47,9 +50,6 @@
                           .ready
                             Load from Keplr
                       %input.form-control#address{ name: 'address' }
-                    .form-group
-                      %label.form-label{ for: 'contract-address' } Token contract address
-                      = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.all.order('LOWER(name)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
                     .row
                       .col-lg-6
                         .form-group#viewing-key-container
