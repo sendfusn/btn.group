@@ -39,13 +39,13 @@ $(document).ready(function(){
             key: await window.keplr.getSecret20ViewingKey(this.chainId, this.buttcoinContractAddress)
           }
         }
-        let balance_response = await this.client.queryContractSmart(contractAddress, params);
+        let balance_response = await this.client.queryContractSmart(this.buttcoinContractAddress, params);
         premiumAccess = balance_response["balance"]["amount"] >= 555_000_000
         if (!premiumAccess) {
           $('#pay-wall').removeClass('d-none')
         }
-      } catch {
-        // Nothing
+      } catch(err) {
+        console.error(err)
       }
 
       try {
