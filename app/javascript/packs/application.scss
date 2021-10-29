@@ -75,3 +75,14 @@
     font-weight: 400;
   }
 }
+
+// === HOME ===
+#home {
+  .feature-center {
+    padding-bottom: 130px;
+
+    .feature-text {
+      height: 0;
+    }
+  }
+}

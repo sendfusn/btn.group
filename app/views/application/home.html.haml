@@ -83,13 +83,16 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
           .col-lg-4.col-md-6
-            = link_to secret_network_smart_contract_interface_index_path do
+            = link_to features_path do
               .card.card-lg-y.feature.feature-center
                 .feature-icon.feature-icon-bg-grd.feature-icon-s5-2.p-3
                   = cl_image_tag 'secret_network/smart_contract_interface/contract_rough_MG_tw1vei', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
                 .feature-text
                   %h4.title.title-md.title-dark.mb-1 Smart contract interface
                   %p
+                    = cl_image_tag(features[:near][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                    = features[:near][:name]
+                    %br
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
           .col-lg-4.col-md-6
