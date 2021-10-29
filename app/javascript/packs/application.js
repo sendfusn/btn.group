@@ -10,15 +10,10 @@ import "channels"
 // BOOTSTRAP & jquery IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
 
 import 'lodash'
-// DATATABLES
-import 'datatables.net-bs4'
-import 'datatables.net-buttons-bs4'
-import 'datatables.net-buttons/js/buttons.html5.js'
 
 // APP
 import '../src/application/_environment_switch'
 import '../src/application/home'
-import '../src/features/index'
 
 // NEAR
 import '../src/near/helpers'
