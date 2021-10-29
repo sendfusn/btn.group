@@ -303,7 +303,7 @@ $(document).ready(function(){
         {
           title: 'Earn Buttcoin',
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
-          apr: '438',
+          apr: '363',
           deposit_gas: '700000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['butt_swbtc_lp'],
@@ -313,7 +313,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
-          apy: '40.47',
+          apy: '39.08',
           deposit_gas: '1700000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
@@ -325,7 +325,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v',
-          apy: '58.36',
+          apy: '59.95',
           deposit_gas: '2900000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sefi_lp'],
@@ -361,7 +361,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z',
-          apy: '120.15',
+          apy: '109.44',
           deposit_gas: '3400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_susdt_eth_lp'],
@@ -373,7 +373,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku',
-          apy: '59.95',
+          apy: '82.12',
           deposit_gas: '3400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_seth_eth_lp'],
@@ -385,7 +385,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v',
-          apy: '107.36',
+          apy: '113.66',
           deposit_gas: '3400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
@@ -397,7 +397,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp',
-          apy: '155.69',
+          apy: '158.25',
           deposit_gas: '3400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
@@ -409,7 +409,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c',
-          apy: '41.88',
+          apy: '44.75',
           deposit_gas: '3400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
@@ -421,7 +421,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql',
-          apy: '47.67',
+          apy: '50.65',
           deposit_gas: '3400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
@@ -433,7 +433,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1gtcvrqffjng9avt6djwesrfk322ccmqad43t7r',
-          apy: '63.18',
+          apy: '69.83',
           deposit_gas: '3400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_slink_eth_lp'],
