@@ -9,4 +9,7 @@ class SmartContract < ApplicationRecord
 
   # === VALIDATIONS ===
   validates :address, uniqueness: { case_sensitive: false }
+  validates :address,
+            :label,
+            presence: true
 end
