@@ -6,10 +6,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 gem 'actionpack', '>= 6.1.4.1'
+gem 'activeadmin'
 gem 'airbrake'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.6', require: false
 gem 'cloudinary'
+gem 'devise'
 # Provides Haml generators for Rails 4 etc
 gem 'haml-rails', '~> 2.0'
 # Foreign key migration generator for Rails (Using in Semaphore also)

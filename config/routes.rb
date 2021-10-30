@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+Sidekiq::Web.set :session_secret, Rails.application.credentials[:secret_key_base]
+
 Rails.application.routes.draw do
+  authenticate :admin_user do
+    mount Sidekiq::Web, at: '/sidekiq', as: 'sidekiq'
+  end
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
   resources :cryptocurrencies, only: :index, defaults: { format: 'json' }
   resources :features, only: :index
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
