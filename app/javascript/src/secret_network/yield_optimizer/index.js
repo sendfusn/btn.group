@@ -309,14 +309,14 @@ $(document).ready(function(){
         },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
-          deposit_gas: '1700000',
+          deposit_gas: '2000000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
           earn_token: cryptocurrencies['sefi'],
           farm_contract_address: 'secret1knars62aly28xkqxe8xeqtf7ans8hqxgm6a05k',
           protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
-          withdraw_gas: '1700000',
+          withdraw_gas: '2000000',
         },
         {
           address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v',
