@@ -281,7 +281,6 @@ $(document).ready(function(){
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.pools = [
         {
-          title: 'Profit distributor SEFI',
           address: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz',
           deposit_gas: '500000',
           deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
@@ -291,7 +290,6 @@ $(document).ready(function(){
           withdraw_gas: '500000',
         },
         // {
-        //   title: 'Profit distributor SIENNA',
         //   address: 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2',
         //   deposit_gas: '500000',
         //   deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
@@ -301,7 +299,6 @@ $(document).ready(function(){
         //   withdraw_gas: '500000',
         // },
         {
-          title: 'Earn Buttcoin',
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
           deposit_gas: '700000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
