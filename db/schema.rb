@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_30_042936) do
+ActiveRecord::Schema.define(version: 2021_11_01_002855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 2021_10_30_042936) do
     t.decimal "deadline", precision: 40
     t.decimal "pending_rewards", precision: 40
     t.decimal "total_locked", precision: 40
+    t.decimal "apr", precision: 8, scale: 6
+    t.decimal "apy", precision: 8, scale: 6
     t.index ["protocol_id"], name: "index_pools_on_protocol_id"
     t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id"
   end
