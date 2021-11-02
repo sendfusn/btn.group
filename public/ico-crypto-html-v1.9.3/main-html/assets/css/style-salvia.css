@@ -3804,15 +3804,6 @@ ul.progress-info { display: flex; justify-content: space-between; }
 
 .card-s3 { box-shadow: 0px 5px 18px rgba(65, 80, 118, 0.2); }
 
-@media (min-width: 576px) { .card { padding: 30px; }
-  .card.card-s3 { padding: 30px; }
-  .card-md { padding: 40px 30px; }
-  .card-lg { padding: 45px 40px; }
-  .card.feature-s8 { padding: 45px 30px; }
-  .card-s2 { padding: 55px 30px 110px; }
-  .card-lg-y { padding: 70px 30px; }
-  .card-lg-xy { padding: 70px 55px; } }
-
 /** 04.05 Banner */
 .nk-banner { display: block; width: 100%; z-index: 5; position: relative; }
 
