@@ -51,3 +51,16 @@
     }
   }
 }
+
+// === TABLE ===
+.table {
+  hr {
+    border-style: dashed;
+    margin-bottom: .5rem !important;
+    margin-top: .5rem !important;
+  }
+
+  td, th {
+    padding: .5rem !important;
+  }
+}
