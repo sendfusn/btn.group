@@ -12,4 +12,9 @@ class SmartContract < ApplicationRecord
   validates :address,
             :label,
             presence: true
+
+  # === INSTANCE METHODS ===
+  def label_formatted
+    "#{label} - #{address}"
+  end
 end
