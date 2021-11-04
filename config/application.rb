@@ -20,7 +20,10 @@ module PayMeCrypto
     config.active_job.queue_adapter = :sidekiq
     config.after_initialize do
       # SecretFinanceStakingPoolsJob.perform_now if initialized_server? && Rails.env.production?
-      SecretNetworkGetSmartContractsJob.perform_now if initialized_server? && Rails.env.production?
+      if initialized_server? && Rails.env.production?
+        CalculateAprForYieldOptimizerBJob.perform_now
+        SecretNetworkGetSmartContractsJob.perform_now
+      end
     end
   end
 end
