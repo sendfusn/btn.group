@@ -36,7 +36,7 @@
                   .row
                     .col-12
                       %h5 Profit distributor SEFI
-                    .col-sm-7
+                    .col-md-6
                       %span.mr-1 Deposit BUTT
                       %span
                         %img.logo-avatar{ src: 'https://siasky.net/AAB1xbkxt91L2pStCCLRe-s2BG0N03K8OCugzeG8MSAP5g' }
@@ -44,16 +44,21 @@
                       %span.mr-1 Earn SEFI
                       %span
                         %img.logo-avatar{ src: 'https://siasky.net/AABeTmPkxJ8CuGzgqCQM7sR0Y-3rTPZHJo4Jc9KObuTyBQ' }
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-total-shares Loading...
                       %br
                       Claimable SEFI:
-                      %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Loading...
+                      %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-play-icon-s2#claim-sefi{ type: 'button' }
+                        .d-none.loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        .ready
+                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Loading...
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-loading.d-none Loading...
                       %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-link
@@ -75,7 +80,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Loading...
                       %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszWithdrawForm' }
@@ -91,12 +96,14 @@
                 .col-12
                   %hr
                   * Please use the gas recommended for deposits and withdrawals.
+                  %br
+                  * Rewards are claimed every time you deposit or withdraw.
               .card.mb-3
                 .card-body
                   .row
                     .col-12
                       %h5 Earn Buttcoin
-                    .col-sm-7
+                    .col-md-6
                       %span.mr-1
                         Deposit
                         = link_to 'BUTT-sWBTC LP', 'https://app.secretswap.io/pool#Provide', target: '_blank', rel: 'noopener'
@@ -108,7 +115,7 @@
                       %span.mr-1 Earn BUTT
                       %span
                         %img.logo-avatar{ src: 'https://siasky.net/AAB1xbkxt91L2pStCCLRe-s2BG0N03K8OCugzeG8MSAP5g' }
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-total-shares Loading...
                       %br
@@ -119,7 +126,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-loading.d-none Loading...
                       %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-link
@@ -141,7 +148,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Loading...
                       %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuWithdrawForm' }
@@ -157,11 +164,13 @@
                 .col-12
                   %hr
                   * Please use the gas recommended for deposits and withdrawals.
+                  %br
+                  * Rewards are claimed every time you deposit or withdraw.
               .card.mb-3
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 SEFI
                       %span
@@ -169,7 +178,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-total-shares Loading...
                       %br
@@ -181,7 +190,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-loading.d-none Loading...
                       %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-link
@@ -203,7 +212,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-user-shares Loading...
                       %form{ name: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvfWithdrawForm' }
@@ -227,7 +236,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-SEFI
                       %span
@@ -237,7 +246,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-total-shares Loading...
                       %br
@@ -249,7 +258,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-loading.d-none Loading...
                       %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-link
@@ -271,7 +280,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-user-shares Loading...
                       %form{ name: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0vWithdrawForm' }
@@ -295,7 +304,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sXMR
                       %span
@@ -305,7 +314,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-total-shares Loading...
                       %br
@@ -317,7 +326,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-loading.d-none Loading...
                       %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-link
@@ -339,7 +348,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-user-shares Loading...
                       %form{ name: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmjWithdrawForm' }
@@ -363,7 +372,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sUSDC(ETH)
                       %span
@@ -373,7 +382,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-total-shares Loading...
                       %br
@@ -385,7 +394,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-loading.d-none Loading...
                       %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-link
@@ -407,7 +416,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-user-shares Loading...
                       %form{ name: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jnWithdrawForm' }
@@ -431,7 +440,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sUSDT(ETH)
                       %span
@@ -441,7 +450,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-total-shares Loading...
                       %br
@@ -453,7 +462,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-loading.d-none Loading...
                       %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-link
@@ -475,7 +484,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-user-shares Loading...
                       %form{ name: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5zWithdrawForm' }
@@ -499,7 +508,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sETH(ETH)
                       %span
@@ -509,7 +518,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-total-shares Loading...
                       %br
@@ -521,7 +530,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-loading.d-none Loading...
                       %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-link
@@ -543,7 +552,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-user-shares Loading...
                       %form{ name: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzkuWithdrawForm' }
@@ -567,7 +576,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sWBTC(ETH)
                       %span
@@ -577,7 +586,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-total-shares Loading...
                       %br
@@ -589,7 +598,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-loading.d-none Loading...
                       %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-link
@@ -611,7 +620,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-user-shares Loading...
                       %form{ name: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79vWithdrawForm' }
@@ -635,7 +644,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sBNB(BSC)
                       %span
@@ -657,7 +666,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-loading.d-none Loading...
                       %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-link
@@ -679,7 +688,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-user-shares Loading...
                       %form{ name: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxpWithdrawForm' }
@@ -703,7 +712,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sDOT(BSC)
                       %span
@@ -725,7 +734,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-loading.d-none Loading...
                       %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-link
@@ -747,7 +756,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-user-shares Loading...
                       %form{ name: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242cWithdrawForm' }
@@ -771,7 +780,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sUSDC(ETH)-sUSDC(BSC) LP
                       %span
@@ -781,7 +790,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-total-shares Loading...
                       %br
@@ -793,7 +802,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-loading.d-none Loading...
                       %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-link
@@ -815,7 +824,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-user-shares Loading...
                       %form{ name: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravqlWithdrawForm' }
@@ -839,7 +848,7 @@
                 .card-body
                   .row
                     .col-12
-                    .col-sm-7
+                    .col-md-6
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sLINK(ETH)
                       %span
@@ -849,7 +858,7 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6
                       TVL:
                       %span.secret1gtcvrqffjng9avt6djwesrfk322ccmqad43t7r-total-shares Loading...
                       %br
@@ -861,7 +870,7 @@
                   .row
                     .col-12
                       %hr
-                    .col-sm-6
+                    .col-md-6.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1rldr66767a4gz3adkq2vgndwgnxlfqqae4fgen-balance-loading.d-none Loading...
                       %span.secret1rldr66767a4gz3adkq2vgndwgnxlfqqae4fgen-balance-link
@@ -883,7 +892,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1gtcvrqffjng9avt6djwesrfk322ccmqad43t7r-deposit-button-ready Deposit
-                    .col-sm-6
+                    .col-md-6
                       Withdrawable:
                       %span.secret1gtcvrqffjng9avt6djwesrfk322ccmqad43t7r-user-shares Loading...
                       %form{ name: 'secret1gtcvrqffjng9avt6djwesrfk322ccmqad43t7rWithdrawForm' }

@@ -795,6 +795,30 @@ $(document).ready(function(){
         }
       }
 
+      document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
+        if (this.pools[0]['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
+          let $claimSEFI = $('#claim-sefi')
+          this.setClient(this.pools[0]['deposit_gas']);
+          $claimSEFI.prop("disabled", true);
+          $claimSEFI.find('.loading').removeClass("d-none")
+          $claimSEFI.find('.ready').addClass("d-none")
+          try {
+            let handleMsg = { send: { amount: '0', recipient: this.pools[0]['address'], msg: this.pools[0]['deposit_msg'] } }
+            let response = await this.client.execute(this.pools[0]['deposit_token']['address'], handleMsg)
+            document.showAlertSuccess("Claim successful");
+            $claimSEFI.find('.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable').text('0')
+          }
+          catch(err) {
+            document.showAlertDanger(err)
+          }
+          finally {
+            $claimSEFI.prop("disabled", false);
+            $claimSEFI.find('.loading').addClass("d-none")
+            $claimSEFI.find('.ready').removeClass("d-none")
+          }
+        }
+      })
+
       // Query profit distributor
       $('#connect-wallet-form').submit()
     }
