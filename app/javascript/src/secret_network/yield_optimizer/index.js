@@ -795,6 +795,30 @@ $(document).ready(function(){
         }
       }
 
+      document.querySelector('#claim-butt').addEventListener('click', async(evt) => {
+        if (this.pools[1]['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
+          let $claimBUTT = $('#claim-butt')
+          this.setClient(this.pools[1]['deposit_gas']);
+          $claimBUTT.prop("disabled", true);
+          $claimBUTT.find('.loading').removeClass("d-none")
+          $claimBUTT.find('.ready').addClass("d-none")
+          try {
+            let handleMsg = { send: { amount: '0', recipient: this.pools[1]['address'], msg: this.pools[1]['deposit_msg'] } }
+            let response = await this.client.execute(this.pools[1]['deposit_token']['address'], handleMsg)
+            document.showAlertSuccess("Claim successful");
+            $claimBUTT.find('.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable').text('0')
+          }
+          catch(err) {
+            document.showAlertDanger(err)
+          }
+          finally {
+            $claimBUTT.prop("disabled", false);
+            $claimBUTT.find('.loading').addClass("d-none")
+            $claimBUTT.find('.ready').removeClass("d-none")
+          }
+        }
+      })
+
       document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
         if (this.pools[0]['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
           let $claimSEFI = $('#claim-sefi')

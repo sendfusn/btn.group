@@ -122,7 +122,12 @@
                       APR: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id).apr}%
                       %br
                       Claimable BUTT:
-                      %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Loading...
+                      %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-play-icon-s2#claim-butt{ type: 'button' }
+                        .d-none.loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        .ready
+                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Loading...
                   .row
                     .col-12
                       %hr
