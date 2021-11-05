@@ -72,29 +72,11 @@ $(document).ready(function(){
           logo: 'https://siasky.net/AAAyGsQVk6vF6wYWUUvFMqkVX4LlNpCg432ucBCAgw9Hyw',
           symbol: 'sETH(ETH)'
         },
-        // seth_eth_seth_bsc_lp: {
-        //   address: 'secret1ry9s8al2w2my4z7jqhtve9fqkesqapn0mrjr3z',
-        //   asset_one: 'seth_eth',
-        //   asset_two: 'seth_bsc',
-        //   symbol: 'sETH(ETH)-sETH(BSC)'
-        // },
-        // seth_eth_swbtc_eth_lp: {
-        //   address: 'secret1k2u3khzp59mp6wz2q4ulwhhy4rqpez63ln2fy6',
-        //   asset_one: 'seth_eth',
-        //   asset_two: 'swbtc',
-        //   symbol: 'sETH(ETH)-sWBTC(ETH)'
-        // },
         sienna: {
           address: 'secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4',
           decimals: 18,
           logo: 'https://siasky.net/AADF3iN20PtbAY-7r4VrFlFqkNpS0FbGtPu07AbqgkiXbg',
           symbol: 'SIENNA'
-        },
-        slink_eth: {
-          address: 'secret1xcrf2vvxcz8dhtgzgsd0zmzlf9g320ea2rhdjw',
-          decimals: 18,
-          logo: 'https://siasky.net/AABTb2I_YOOB4x-PZDltgjTiuP92_fFwo5Z0MMLADr_OWg',
-          symbol: 'sLINK(ETH)'
         },
         smana_eth: {
           address: 'secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega',
@@ -133,12 +115,6 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'sSCRT-sBNB(BSC)'
         },
-        // sscrt_sdai_eth_lp: {
-        //   address: 'secret1sj65pd9fqgwyj0a9ctl4cecp62y52z5nzpq60r',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'sdai_eth',
-        //   symbol: 'sSCRT-sDAI(ETH)'
-        // },
         sscrt_sdot_bsc_lp: {
           address: 'secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw',
           asset_one: 'sscrt',
@@ -167,36 +143,6 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'sSCRT-sLINK(ETH)'
         },
-        // sscrt_smana_eth_lp: {
-        //   address: 'secret1u9zfyh7d4mgf44f3y8fhz4e70dhjzd5e5df8hp',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'smana_eth',
-        //   symbol: 'sSCRT-sMANA(ETH)'
-        // },
-        // sscrt_socean_eth_lp: {
-        //   address: 'secret13ns5mzms67jttq5cnv76j5lgtd0xf69sv4sdpq',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'socean_eth',
-        //   symbol: 'sSCRT-sOCEAN(ETH)'
-        // },
-        // sscrt_srsr_eth_lp: {
-        //   address: 'secret1g97kxc857asparfgdudzkzyq5akd74xmup52uj',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'srsr_eth',
-        //   symbol: 'sSCRT-sRSR(ETH)'
-        // },
-        // sscrt_srune_eth_lp: {
-        //   address: 'secret1j8vs8v729vregluuzr5n4zr77ztaleqtqcw026',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'srune_eth',
-        //   symbol: 'sSCRT-sRUNE(ETH)'
-        // },
-        // sscrt_suni_eth_lp: {
-        //   address: 'secret1pmt7ncuhau2g7h9snygx2tlkzqnks3uz5edgyc',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'suni_eth',
-        //   symbol: 'sSCRT-sUNI(ETH)'
-        // },
         sscrt_susdt_eth_lp: {
           address: 'secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx',
           asset_one: 'sscrt',
@@ -211,12 +157,6 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'sSCRT-sWBTC(ETH)'
         },
-        // sscrt_syfi_eth_lp: {
-        //   address: 'secret1zra95h6nf4kc49x59x66t7crxxl79hr5nph882',
-        //   asset_one: 'sscrt',
-        //   asset_two: 'syfi_eth',
-        //   symbol: 'sSCRT-sYFI(ETH) LP'
-        // },
         suni_eth: {
           address: 'secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te',
           decimals: 18,
@@ -289,15 +229,6 @@ $(document).ready(function(){
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '500000',
         },
-        // {
-        //   address: 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2',
-        //   deposit_gas: '500000',
-        //   deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
-        //   deposit_token: cryptocurrencies['butt'],
-        //   earn_token: cryptocurrencies['sienna'],
-        //   under_maintenance: true,
-        //   withdraw_gas: '500000',
-        // },
         {
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
           deposit_gas: '700000',
@@ -413,17 +344,6 @@ $(document).ready(function(){
           deposit_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
           earn_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
           farm_contract_address: 'secret1rcvjaua8dfhjlh0kwhrsj54l4aj46mu5evgqwq',
-          protocol: protocols['secret_swap'],
-          withdraw_gas: '3400000',
-          reward_token: cryptocurrencies['sefi'],
-        },
-        {
-          address: 'secret1gtcvrqffjng9avt6djwesrfk322ccmqad43t7r',
-          deposit_gas: '3400000',
-          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
-          deposit_token: cryptocurrencies['sscrt_slink_eth_lp'],
-          earn_token: cryptocurrencies['sscrt_slink_eth_lp'],
-          farm_contract_address: 'secret1umzq0nm4vd7mjdu9c263hx4y0h6hvgnxdlnpkj',
           protocol: protocols['secret_swap'],
           withdraw_gas: '3400000',
           reward_token: cryptocurrencies['sefi'],
