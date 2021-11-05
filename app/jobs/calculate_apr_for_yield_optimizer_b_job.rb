@@ -4,7 +4,7 @@ require 'rest-client'
 
 class CalculateAprForYieldOptimizerBJob < ApplicationJob
   after_perform do |_job|
-    run_time = Time.zone.now + 5.hours
+    run_time = Time.zone.now + 1.hour
     CalculateAprForYieldOptimizerBJob.set(wait_until: run_time).perform_later unless CalculateAprForYieldOptimizerBJob.scheduled?
   end
 
