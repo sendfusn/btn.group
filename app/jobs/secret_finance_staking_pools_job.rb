@@ -4,7 +4,7 @@ require 'rest-client'
 
 class SecretFinanceStakingPoolsJob < ApplicationJob
   after_perform do |_job|
-    run_time = Date.tomorrow.midnight.advance(hours: 4)
+    run_time = Time.zone.now + 1.hour
     SecretFinanceStakingPoolsJob.set(wait_until: run_time).perform_later unless SecretFinanceStakingPoolsJob.scheduled?
   end
 
@@ -40,15 +40,12 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
   end
 
   def process_pool_json(pool_json)
-    pool_smart_contract = SmartContract.find_or_initialize_by(address: pool_json['pool_address'])
-    unless pool_smart_contract.persisted?
-      secret_network_blockchain = Blockchain.find_or_create_by(name: 'secret network')
-      pool_smart_contract.update(blockchain: secret_network_blockchain)
-    end
-    protocol = Protocol.where('lower(name) = ?', 'secret finance').first
-    pool = Pool.find_or_initialize_by(protocol: protocol, smart_contract: pool_smart_contract)
+    return unless (pool_smart_contract = SmartContract.find_by(address: pool_json['pool_address']))
+
+    pool = Pool.find_or_initialize_by(smart_contract_id: pool_smart_contract.id)
     pool.update!(deadline: pool_json['deadline'].to_i,
                  pending_rewards: pool_json['pending_rewards'].to_i,
+                 protocol: Protocol.find_by(identifier: :secret_swap),
                  total_locked: pool_json['total_locked'].to_i)
     return if pool.cryptocurrency_pools.present?
 
@@ -59,11 +56,9 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
   end
 
   def process_token_json(token_json)
-    smart_contract = SmartContract.find_or_initialize_by(address: token_json['address'].downcase)
-    unless smart_contract.persisted?
-      secret_network_blockchain = Blockchain.find_or_create_by(name: 'secret network')
-      smart_contract.update(blockchain: secret_network_blockchain)
-    end
+    smart_contract = SmartContract.find_by(address: token_json['address'].downcase)
+    return unless smart_contract
+
     cryptocurrency = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
     unless cryptocurrency.persisted?
       cryptocurrency.update(decimals: token_json['decimals'], name: token_json['name'], symbol: token_json['symbol'],
