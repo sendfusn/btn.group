@@ -2,6 +2,7 @@ Layout/LineLength:
   Enabled: false
 
 Metrics/AbcSize:
+  Enabled: false
   Max: 50
 
 Metrics/BlockLength:

@@ -47,6 +47,21 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
                  pending_rewards: pool_json['pending_rewards'].to_i,
                  protocol: Protocol.find_by(identifier: :secret_swap),
                  total_locked: pool_json['total_locked'].to_i)
+    # EthereumBridgeFrontend/blob/master/src/components/Earn/EarnRow/index.tsx
+    time_remaining_in_seconds = (pool.deadline - 128_730) * 6.22 + 1_632_380_505 - Time.zone.now.to_i
+    price_of_rewards = pool_json['rewards_token']['price'].to_f
+    pending_rewards_in_usd = pool.pending_rewards * price_of_rewards / 1_000_000
+    locked_amount_in_usd = pool.total_locked * pool_json['inc_token']['price'].to_f / 10**pool_json['inc_token']['decimals']
+    if locked_amount_in_usd.positive?
+      apr = pending_rewards_in_usd * 100 * 31_540_000 / locked_amount_in_usd / time_remaining_in_seconds
+      if apr.positive?
+        pool.update(apr: apr.round(2))
+        pool.pool&.update(apy: ((((1 + apr / 100 / 365)**365) - 1) * 100).round(2))
+      else
+        pool.update(apr: 0)
+        pool.pool&.update(apy: 0)
+      end
+    end
     return if pool.cryptocurrency_pools.present?
 
     incentivized_token_cryptocurrency = process_token_json(pool_json['inc_token'])
