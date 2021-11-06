@@ -3,5 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Protocol, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'ENUMS' do
+    it { should define_enum_for(:identifier).with_values(btn_group: 0, secret_swap: 1) }
+  end
 end
