@@ -95,10 +95,10 @@ $(document).ready(function(){
             descriptionAddress = value['from']
           }
           if (document.smartContracts[descriptionAddress]) {
-            description += 'https://secretnodes.com/secret/chains/secret-3/contracts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
+            description += 'https://secretnodes.com/secret/chains/secret-3/contracts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
             description += '<hr>Contract label: ' + document.smartContracts[descriptionAddress]['label']
           } else {
-            description += 'https://secretnodes.com/secret/chains/secret-3/accounts/' + descriptionAddress + ' target="_blank">' + descriptionAddress + '</a>'
+            description += 'https://secretnodes.com/secret/chains/secret-3/accounts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
           }
           transactionsTableBodyContent += description + '</td><td>'
           transactionsTableBodyContent += parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }) + '</td></tr>'
