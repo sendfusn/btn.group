@@ -3,145 +3,117 @@
     .banner.banner-page
       .banner-wrap
         .container
-          .row.align-items-center.justify-content-center.justify-content-lg-between.gutter-vr-60px
-            .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
-              = image_tag 'https://siasky.net/PAAeBVodEAXJN6Nc9pS7hSSauuL43fQbireUUH8QSjpTww'
-            .col-lg-6.col-xl-6.text-center.text-lg-left
-              .banner-caption.tc-light
-                .cpn-head.mt-0
-                  %h3.title.title-thin Buttcoin Round 2
-                %p.mb-0.tc-light-alt
-                  = link_to features[:secret_network][:features][:buttcoin][:contracts][:production], "https://secretnodes.com/secret/chains/secret-3/contracts/#{features[:secret_network][:features][:buttcoin][:contracts][:production]}", target: '_blank', rel: 'noopener'
-                %p.mb-0.tc-light-alt
-                  = link_to 'http://scrt.network', target: '_blank', rel: 'noopener' do
-                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                    = features[:secret_network][:name].to_s
+          .row.justify-content-center
+            .col-xl-6.col-lg-9
+              .banner-caption.cpn.tc-light.text-center
+                .cpn-head
+                  %h3.title.title-thin
+                    = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 36, dpr: 2, fetch_format: :auto, quality: :auto, class: 'mr-1 d-inline', style: 'height: 36px; vertical-align: middle;')
+                    Buttcoin (BUTT)
+                  %p.mb-0.tc-light-alt
+                    = link_to features[:secret_network][:features][:buttcoin][:contracts][:production], "https://secretnodes.com/secret/chains/secret-3/contracts/#{features[:secret_network][:features][:buttcoin][:contracts][:production]}", target: '_blank', rel: 'noopener'
+                  %p.mb-0.tc-light-alt
+                    = link_to 'http://scrt.network', target: '_blank', rel: 'noopener' do
+                      = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                      = features[:secret_network][:name].to_s
   .nk-ovm.shape-q
-  .particles-container.particles-bg#particles-bg{ 'data-pt-base' => '#00c0fa', 'data-pt-base-op' => '.3', 'data-pt-line' => '#2b56f5', 'data-pt-line-op' => '.5', 'data-pt-shape' => '#00c0fa', 'data-pt-shape-op' => '.2' }
 
 %main.nk-pages
-  %section.section.bg-light
+  %section.section.section-sm.bg-white
     .container
       .row.justify-content-center
         .col-lg-10
+          %p
+            %b
+              %i Don't trust. Verify.
+            %br
+            Query these contracts on our Secret network smart contract interface.
+            %br
+            Check the code in our Github.
+            %br
+            Reach out via Email/Discord/Telegram/Twitter if you have any questions.
           %ul.nav.tab-nav.tab-nav-line.tab-nav-center
             %li
-              %a.active{ 'data-toggle' => 'tab', :href => '#tab-4-1' } Pool details
+              %a.active{ 'data-toggle' => 'tab', :href => '#tab-4-1' } About
+            -# %li
+            -#   %a{ 'data-toggle' => 'tab', :href => '#tab-4-2' } How to buy
             %li
-              %a{ 'data-toggle' => 'tab', :href => '#tab-4-2' } About Buttcoin
-            %li
-              %a{ 'data-toggle' => 'tab', :href => '#tab-4-3' } Distribution smart contracts
+              %a{ 'data-toggle' => 'tab', :href => '#tab-4-3' } Smart contracts
           .tab-content
             .tab-pane.show.active#tab-4-1
-              %h3.title.title-md Round 2 sale details
-              .row.justify-content-around
-                .col-lg-6.mgb-r
-                  %table.table.table-bordered
-                    %tbody
-                      %tr
-                        %td.table-head.text-muted{ "colspan": 2 } Pool information
-                      %tr
-                        %td.table-head Min. Allocation
-                        %td.table-des 0.000001 SEFI
-                      %tr
-                        %td.table-head Max. Allocation
-                        %td.table-des 11,000,006 SEFI
-                .col-lg-6
-                  %table.table.table-bordered
-                    %tbody
-                      %tr
-                        %td.table-head.text-muted{ "colspan": 2 } Token information
-                      %tr
-                        %td.table-head Name
-                        %td.table-des Buttcoin
-                      %tr
-                        %td.table-head Symbol
-                        %td.table-des BUTT
-                      %tr
-                        %td.table-head Decimals
-                        %td.table-des 6
-                      %tr
-                        %td.table-head Address
-                        %td.table-des= features[:secret_network][:features][:buttcoin][:contracts][:production]
-                      %tr
-                        %td.table-head Total supply
-                        %td.table-des 100,000,000 (71,999,994 have now been taken out of circulation!)
-            .tab-pane#tab-4-2
-              %h3.title.title-md About Buttcoin
-              %p
               %h5 What is it?
               %p Our native token.
               %h5 What's it for?
               %p
+                Utility/Profit distribution.
+                %br
                 So far BUTT is used:
                 %br
-                1. to distribute the fees received from SEFI yield optimizers.
+                \- to distribute the fees received from the
+                = link_to 'SEFI yield optimizers', secret_network_yield_optimizer_index_path
                 %br
-                2. to provide full acess to the transactions page.
+                \- to provide full acess to our Secret network
+                = link_to 'transactions page', secret_network_transactions_path
                 %br
-                3. as payment to use some of the features of block locker.
-              %h5 Why offer it?
-              %p To incentivize users and raise funding for rapid growth.
+                \- as payment to use some of the features of
+                = link_to 'Block locker', secret_network_block_locker_index_path
               %h5 Tokenomics
-              %p
-                28,000,006 total supply to be distributed over the course of 2 years. Initially 100,000,000 was minted but 71,999,994 tokens were taken out of circulation.
-              .token-info
-                %h4.title.title-md Breakdown of total supply
-                %table.table.table-token
-                  %tbody
-                    %tr
-                      %td.table-head Incentives for users
-                      %td.table-des 14,000,000 released over 2 years
-                    %tr
-                      %td.table-head Fund raising sales
-                      %td.table-des
-                        14,000,006 total
-                        %hr
-                        %b Round 1 (3,000,000)
-                        %br
-                        1 SEFI = 3 BUTT
-                        %hr
-                        %b Round 2 (11,000,006)
-                        %br
-                        1 SEFI = 1 BUTT
-                    %tr
-                      %td.table-head Team
-                      %td.table-des 0
+              %p 28,000,006 total supply. Initially 100,000,000 was minted but 71,999,994 tokens were burnt. These tokens were burnt because once the Covaids lockdowns went into full swing, we stopped work for a while as we had more pressing matters to tend to. As time went on, understandably, investors requested that we get back to work as soon as possible. As an apology and a thank you to our initial investors, we decided to burn all tokens allocated to the team and a good chunk of the other tokens.
+              %table.table.table-bordered
+                %tbody
+                  %tr
+                    %td.table-head Incentives for liquidity providers
+                    %td.table-des 21,122,824.8 (1.4 BUTT released per block until block 15,060,000, ~Jul 2024)
+                  %tr
+                    %td.table-head Round 1 sale
+                    %td.table-des 3,000,000 (1 SEFI = 3 BUTT)
+                  %tr
+                    %td.table-head Round 2 sale
+                    %td.table-des 3,877,181.2 (1 SEFI = 1 BUTT)
+                  %tr
+                    %td.table-head Team
+                    %td.table-des 0
+                  %tr
+                    %td.table-head Burnt
+                    %td.table-des 71,999,994
+                  %tr
+                    %td
+                    %td.table-des.font-weight-bold 100,000,000
+            .tab-pane#tab-4-2
             .tab-pane#tab-4-3
-              %h3.title.title-md Distribution smart contracts
-              %p
-                %b
-                  %i Don't trust. Verify.
-                %br
-                Query these contracts on our smart contract interface.
-                %br
-                Check the code in our Github.
-                %br
-                Reach out via email or Discord if you have any questions.
-              %h5 Tokes sales
-              %table.table.table-striped.table-bordered
+              %h5 Buttcoin distributor contract
+              %table.table.table-striped.table-bordered.mb-4
                 %thead
                   %tr
-                    %th To
+                    %th
                     %th Amount
-                    %th{ style: 'min-width: 105px;' } Locked until
                     %th Smart Contract
                 %tbody
-                  %tr#secret1j6fpcsxp2ts9d8rsh3uj9srvdh0vvg4ewe7tsa
+                  %tr
+                    %td Buttcoin distributor
+                    %td 21,122,824.8
+                    %td secret12f4s3atdafl55juvgtnpqs2n32km5h7q8y42cu
+              %h5 Tokes sale contracts
+              %table.table.table-striped.table-bordered.mb-4
+                %thead
+                  %tr
+                    %th
+                    %th Amount
+                    %th Smart Contract
+                %tbody
+                  %tr
                     %td Sale 1
                     %td 3,000,000
-                    %td -
                     %td secret1j6fpcsxp2ts9d8rsh3uj9srvdh0vvg4ewe7tsa
                   %tr
                     %td Sale 2
                     %td 11,000,006
-                    %td -
                     %td secret16jue55lf0kt7uz00kzg309ljzttjps2uy9zesc
-              %h5 User Incentives
-              %table.table.table-striped.table-bordered
+              %h5 Time lock contracts (Incentives for liquidity providers)
+              %table.table.table-striped.table-bordered.mb-4
                 %thead
                   %tr
-                    %th To
+                    %th
                     %th Amount
                     %th{ style: 'min-width: 105px;' } Locked until
                     %th Smart Contract
@@ -232,11 +204,11 @@
                     %td 12-Dec-2024
                     %td secret1whfmcnutxrxsxv99cgava37gu0634n25yymtzw - This has been made unreachable by making the admin the burn address secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq.
 
-              %h5 Team
+              %h5 Time lock contracts (Team)
               %table.table.table-striped.table-bordered
                 %thead
                   %tr
-                    %th To
+                    %th
                     %th Amount
                     %th{ style: 'min-width: 105px;' } Locked until
                     %th Smart Contract
