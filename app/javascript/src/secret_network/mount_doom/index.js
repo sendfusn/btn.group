@@ -1,16 +1,16 @@
 $(document).ready(function(){
   if($("#secret-network-mount-doom").length) {
-      // Listeners
-      $('input[type=radio][name=interactionType]').on('change', function() {
-        var radVal = $(this).val();
-        if (radVal == 'query') {
-          $('#contract-hash-input-group').addClass('d-none')
-          $('#contract-hash').prop('required', false)
-        } else if (radVal == 'set') {
-          $('#contract-hash-input-group').removeClass('d-none')
-          $('#contract-hash').prop('required', true)
-        }
-      })
+    // Listeners
+    $('input[type=radio][name=interactionType]').on('change', function() {
+      var radVal = $(this).val();
+      if (radVal == 'query') {
+        $('#contract-hash-input-group').addClass('d-none')
+        $('#contract-hash').prop('required', false)
+      } else if (radVal == 'set') {
+        $('#contract-hash-input-group').removeClass('d-none')
+        $('#contract-hash').prop('required', true)
+      }
+    })
 
     window.onload = async () => {
       document.mountDoomForm.onsubmit = () => {

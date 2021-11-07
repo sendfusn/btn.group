@@ -32,6 +32,19 @@ import '../src/secret_network/yield_optimizer/index'
 Rails.start()
 ActiveStorage.start()
 
+// === LISTENERS ===
+window.addEventListener("keplr_keystorechange", () => {
+  if($("#secret-network-yield-optimizer").length ||
+    $("#secret-network-transactions").length ||
+    $("#secret-network-smart-contract-interface").length ||
+    $("#secret-network-mount-doom").length ||
+    $("#secret-network-block-locker").length ||
+    $("#secret-network-address-alias-index").length) {
+    console.log("Key store in Keplr is changed. You may need to refetch the account info.")
+    window.location.reload()
+  }
+})
+
 document.featureContractAddress = function(environment) {
   let contractAddress
   if (environment == 'staging') {

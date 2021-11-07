@@ -1,62 +1,53 @@
 $(document).ready(function(){
   if($("#secret-network-block-locker").length) {
-      // Listeners
-      function resetInputs() {
-        document.blockLockerForm.content.value = ""
-        document.blockLockerForm.passphrase.value = ""
-        document.blockLockerForm.walletAddress.value = ""
-        document.blockLockerForm.whitelistedAddress1.value = ""
-        document.blockLockerForm.whitelistedAddress2.value = ""
-        document.blockLockerForm.whitelistedAddress3.value = ""
+    // Listeners
+    $('input[type=radio][name=interactionType]').on('change', function() {
+      resetInputs();
+      var radVal = $(this).val();
+      if (radVal == 'handleCreateOrUpdate') {
+        $('#content-form-group').removeClass('d-none')
+        $('#passphrase-form-group').removeClass('d-none')
+        $('#whitelisted-address-1-form-group').removeClass('d-none')
+        $('#whitelisted-address-2-form-group').removeClass('d-none')
+        $('#whitelisted-address-3-form-group').removeClass('d-none')
+
+        // Wallet address form group
+        $('#wallet-address-form-group').addClass('d-none')
+      } else if (radVal == 'handleUnlock') {
+        $('#content-form-group').addClass('d-none')
+        $('#passphrase-form-group').addClass('d-none')
+        $('#whitelisted-address-1-form-group').addClass('d-none')
+        $('#whitelisted-address-2-form-group').addClass('d-none')
+        $('#whitelisted-address-3-form-group').addClass('d-none')
+
+        // Wallet address form group
+        $('#wallet-address-form-group').removeClass('d-none')
+        $('#wallet-address').prop('disabled', false)
+        $('#wallet-address').val("")
+      } else if (radVal == 'handleViewLocker') {
+        $('#content-form-group').addClass('d-none')
+        $('#passphrase-form-group').addClass('d-none')
+        $('#whitelisted-address-1-form-group').addClass('d-none')
+        $('#whitelisted-address-2-form-group').addClass('d-none')
+        $('#whitelisted-address-3-form-group').addClass('d-none')
+
+        // Wallet address form group
+        $('#wallet-address-form-group').removeClass('d-none')
+        $('#wallet-address').prop('disabled', true)
+        $('#wallet-address').val("The wallet you request this from.")
+      } else if (radVal == 'queryViewLocker') {
+        $('#content-form-group').addClass('d-none')
+        $('#passphrase-form-group').removeClass('d-none')
+        $('#whitelisted-address-1-form-group').addClass('d-none')
+        $('#whitelisted-address-2-form-group').addClass('d-none')
+        $('#whitelisted-address-3-form-group').addClass('d-none')
+
+        // Wallet address form group
+        $('#wallet-address-form-group').removeClass('d-none')
+        $('#wallet-address').prop('disabled', false)
+        $('#wallet-address').val("")
       }
-
-      $('input[type=radio][name=interactionType]').on('change', function() {
-        resetInputs();
-        var radVal = $(this).val();
-        if (radVal == 'handleCreateOrUpdate') {
-          $('#content-form-group').removeClass('d-none')
-          $('#passphrase-form-group').removeClass('d-none')
-          $('#whitelisted-address-1-form-group').removeClass('d-none')
-          $('#whitelisted-address-2-form-group').removeClass('d-none')
-          $('#whitelisted-address-3-form-group').removeClass('d-none')
-
-          // Wallet address form group
-          $('#wallet-address-form-group').addClass('d-none')
-        } else if (radVal == 'handleUnlock') {
-          $('#content-form-group').addClass('d-none')
-          $('#passphrase-form-group').addClass('d-none')
-          $('#whitelisted-address-1-form-group').addClass('d-none')
-          $('#whitelisted-address-2-form-group').addClass('d-none')
-          $('#whitelisted-address-3-form-group').addClass('d-none')
-
-          // Wallet address form group
-          $('#wallet-address-form-group').removeClass('d-none')
-          $('#wallet-address').prop('disabled', false)
-          $('#wallet-address').val("")
-        } else if (radVal == 'handleViewLocker') {
-          $('#content-form-group').addClass('d-none')
-          $('#passphrase-form-group').addClass('d-none')
-          $('#whitelisted-address-1-form-group').addClass('d-none')
-          $('#whitelisted-address-2-form-group').addClass('d-none')
-          $('#whitelisted-address-3-form-group').addClass('d-none')
-
-          // Wallet address form group
-          $('#wallet-address-form-group').removeClass('d-none')
-          $('#wallet-address').prop('disabled', true)
-          $('#wallet-address').val("The wallet you request this from.")
-        } else if (radVal == 'queryViewLocker') {
-          $('#content-form-group').addClass('d-none')
-          $('#passphrase-form-group').removeClass('d-none')
-          $('#whitelisted-address-1-form-group').addClass('d-none')
-          $('#whitelisted-address-2-form-group').addClass('d-none')
-          $('#whitelisted-address-3-form-group').addClass('d-none')
-
-          // Wallet address form group
-          $('#wallet-address-form-group').removeClass('d-none')
-          $('#wallet-address').prop('disabled', false)
-          $('#wallet-address').val("")
-        }
-      })
+    })
 
     window.onload = async () => {
       this.address;
@@ -203,6 +194,15 @@ $(document).ready(function(){
           $("#ready").removeClass("d-none")
         }
       };
+    }
+
+    function resetInputs() {
+      document.blockLockerForm.content.value = ""
+      document.blockLockerForm.passphrase.value = ""
+      document.blockLockerForm.walletAddress.value = ""
+      document.blockLockerForm.whitelistedAddress1.value = ""
+      document.blockLockerForm.whitelistedAddress2.value = ""
+      document.blockLockerForm.whitelistedAddress3.value = ""
     }
   };
 });
