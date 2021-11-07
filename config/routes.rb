@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :address_alias, only: %i[index new]
     resources :block_locker, only: :index
     resources :buttcoin, only: :index
+    get 'buttcoin/circulating_supply', defaults: { format: 'json' }
     resources :mount_doom, only: :index
     resources :smart_contract_interface, only: :index
     resources :transactions, only: :index
