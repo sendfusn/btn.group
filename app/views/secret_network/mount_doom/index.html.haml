@@ -14,20 +14,45 @@
                     = features[:secret_network][:name].to_s
                   = render 'environment_switch'
                   = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:mount_doom][:contracts][:production], staging_contract: features[:secret_network][:features][:mount_doom][:contracts][:staging]
-                  %hr
-                  %p This is a smart contract for people to burn their tokens on the Secret Network. It has no admin functionality so it is completely decentralized.
-                  %h5 How to use
-                  %b 1. Send tokens you want to burn to contract.
-                  %br
-                  %b 2. Set viewing key for token if required.
-                  %br
-                  %b 3. Query the balance for smart contract.
+                  %button.btn.btn-sm.btn-theme-dark.mt-1{ 'aria-controls' => 'exampleCollapseExample', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#exampleCollapseExample' }
+                    Instructions/Requirements
+                  .collapse.mt-2#exampleCollapseExample
+                    .card.card-default.bg-theme-light
+                      .card-block
+                        %h6 Requirements
+                        %p
+                          1.
+                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                          %br
+                          2. SCRT for gas, if setting a viewing key
+
+                        %h6 What is it?
+                        %p This is a burn address smart contract on the Secret network. Anyone can send any Secret network token here and set a viewing key for that token, for this smart contract address. It has no admin functionality so it is completely decentralized.
+
+                        %h6 Why it was created
+                        %p We wanted to send some BUTT to a burn address and realised that there wasn't anywhere to send it to, and even if we did, nobody could see it.
+
+                        %h6 How to use
+                        %p
+                          1. Send tokens to contract.
+                          %br
+                          2. Set viewing key for token if required.
+                          %br
+                          3. Query token.
+
+                        %h6 References
+                        %p
+                          1.
+                          = link_to 'github - mount-doom', 'https://github.com/btn-group/mount-doom', target: '_blank', rel: 'noopener'
+                          %br
+                          2.
+                          = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
                   %hr
                   %form{ name: 'mountDoomForm' }
                     .form-group
                       .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
                         %label.btn.btn-light.btn-md
-                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } Query balance
+                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } Query token
                         %label.btn.btn-md.btn-light
                           %input#set-viewing-key{ name: 'interactionType', type: 'radio', value: 'set' } Set viewing key
                     .form-group
