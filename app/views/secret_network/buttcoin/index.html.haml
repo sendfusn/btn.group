@@ -35,8 +35,8 @@
           %ul.nav.tab-nav.tab-nav-line.tab-nav-center
             %li
               %a.active{ 'data-toggle' => 'tab', :href => '#tab-4-1' } About
-            -# %li
-            -#   %a{ 'data-toggle' => 'tab', :href => '#tab-4-2' } How to buy
+            %li
+              %a{ 'data-toggle' => 'tab', :href => '#tab-4-2' } How to buy
             %li
               %a{ 'data-toggle' => 'tab', :href => '#tab-4-3' } Allocation
           .tab-content
@@ -80,8 +80,99 @@
                     %td
                     %td.table-des.font-weight-bold 100,000,000
             .tab-pane#tab-4-2
-            .tab-pane#tab-4-3
+              %b
+                %i These are just a few paths to BUTT. Please message us/community at Discord or Telegram to discuess all options.
+              %h5 SCRT -> BUTT
               %table.table.table-striped.table-bordered.mb-4
+                %thead
+                  %tr
+                    %th
+                    %th from
+                    %th to
+                    %th url
+                %tbody
+                  %tr
+                    %td 1
+                    %td SCRT
+                    %td sSCRT
+                    %td https://wallet.keplr.app/#/secret/secret-secret
+                  %tr
+                    %td 2
+                    %td sSCRT
+                    %td BUTT
+                    %td https://app.secretswap.io/swap?inputCurrency=secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek&outputCurrency=secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt
+              %h5 Monero (XMR) -> BUTT
+              * Wallet received bridged XMR must have SCRT in it.
+              %table.table.table-striped.table-bordered.mb-4
+                %thead
+                  %tr
+                    %th
+                    %th from
+                    %th to
+                    %th url
+                %tbody
+                  %tr
+                    %td 1
+                    %td XMR
+                    %td sXMR
+                    %td https://ipfs.io/ipns/k51qzi5uqu5dhovcugri8aul3itkct8lvnodtnv2y3o1saotkjsa7ao1aq0dqa/
+                  %tr
+                    %td 2
+                    %td sXMR
+                    %td sSCRT
+                    %td https://app.secretswap.io/swap?inputCurrency=secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88&outputCurrency=secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek
+                  %tr
+                    %td 3
+                    %td sSCRT
+                    %td BUTT
+                    %td https://app.secretswap.io/swap?inputCurrency=secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88&outputCurrency=secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek
+              %h5 WBTC -> BUTT
+              * Wallet receiving bridged WBTC must have SCRT in it.
+              %table.table.table-striped.table-bordered.mb-4
+                %thead
+                  %tr
+                    %th
+                    %th from
+                    %th to
+                    %th url
+                %tbody
+                  %tr
+                    %td 1
+                    %td WBTC
+                    %td sWBTC
+                    %td https://bridge.scrt.network/
+                  %tr
+                    %td 2
+                    %td sWBTC
+                    %td BUTT
+                    %td https://app.secretswap.io/swap?inputCurrency=secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a&outputCurrency=secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt
+              %h5 BNB -> BUTT
+              * Wallet received bridged BNB must have SCRT in it.
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th
+                    %th from
+                    %th to
+                    %th url
+                %tbody
+                  %tr
+                    %td 1
+                    %td BNB
+                    %td sBNB
+                    %td https://bridge.scrt.network/
+                  %tr
+                    %td 2
+                    %td sBNB
+                    %td sWBTC
+                    %td https://app.secretswap.io/swap?inputCurrency=secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5&outputCurrency=secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a
+                  %tr
+                    %td 3
+                    %td sWBTC
+                    %td BUTT
+                    %td https://app.secretswap.io/swap?inputCurrency=secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a&outputCurrency=secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt
+            .tab-pane#tab-4-3
+              %table.table.table-striped.table-bordered
                 %thead
                   %tr
                     %th Description
