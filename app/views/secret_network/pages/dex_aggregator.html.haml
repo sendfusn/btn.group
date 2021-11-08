@@ -1,0 +1,66 @@
+.header-banner.bg-theme-grad-s2
+  .nk-banner
+    .banner.banner-page
+      .mt-3.w-100
+        .container#secret-network-dex-aggregator
+          .row
+            .col-12
+              .card
+                .card-body
+                  %h3= features[:secret_network][:features][:dex_aggregator][:name]
+                  %p.mb-0
+                    %b Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+                  %hr
+              -#     %form{ name: 'blockLockerForm' }
+              -#       .form-group
+              -#         .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+              -#           %label.btn.btn-light
+              -#             %input#handle-create-or-update{ name: 'interactionType', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update
+              -#           %label.btn.btn-light
+              -#             %input#handle-unlock{ name: 'interactionType', type: 'radio', value: 'handleUnlock' } Unlock
+              -#           %label.btn.btn-light
+              -#             %input#handle-view{ name: 'interactionType', type: 'radio', value: 'handleViewLocker' } View (when locked)
+              -#           %label.btn.btn-light
+              -#             %input#query-view{ name: 'interactionType', type: 'radio', value: 'queryViewLocker' } View (when unlocked)
+              -#       .form-group.d-none#wallet-address-form-group
+              -#         %label.control-label Wallet address
+              -#         %input.form-control.w-100#wallet-address{ name: 'walletAddress', autocomplete: 'off' }
+              -#       .form-group#content-form-group
+              -#         %label.control-label{ for: 'content' } Content
+              -#         %textarea.form-control.w-100#content{ name: 'content', autocomplete: 'off', rows: 5 }
+              -#       .form-group#passphrase-form-group
+              -#         %label.control-label{ for: 'passphrase' } Passphrase
+              -#         %input.form-control.w-100#passphrase{ name: 'passphrase', autocomplete: 'off' }
+              -#       .form-group#whitelisted-address-1-form-group
+              -#         %label.control-label{ for: 'whitelisted-address-1' } Whitelisted address 1
+              -#         %input.form-control.w-100#whitelisted-address-1{ name: 'whitelistedAddress1', autocomplete: 'off' }
+              -#       .form-group#whitelisted-address-2-form-group
+              -#         %label.control-label{ for: 'whitelisted-address-2' } Whitelisted address 2
+              -#         %input.form-control.w-100#whitelisted-address-2{ name: 'whitelistedAddress2', autocomplete: 'off' }
+              -#       .form-group#whitelisted-address-3-form-group
+              -#         %label.control-label{ for: 'whitelisted-address-3' } Whitelisted address 3
+              -#         %input.form-control.w-100#whitelisted-address-3{ name: 'whitelistedAddress3', autocomplete: 'off' }
+              -#       %button.btn.btn-primary.btn-md.mt-3#submit-button{ type: 'submit' }
+              -#         .d-none#loading
+              -#           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+              -#           %em Loading...
+              -#         #ready
+              -#           Submit
+              -#     %hr
+              -#     * Cost to create, update or unlock a locker = 1 BUTT + ~gas(SCRT)
+              -#     %br
+              -#     * Cost to view the locker when locked = ~gas(SCRT)
+              -#     %br
+              -#     * Cost to view the locker when unlocked = FREE
+              -#     %br
+              -#     * You can get BUTT from
+              -#     = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
+              -#     or from the
+              -#     = link_to 'Buttcoin round 2 sales page', secret_network_buttcoin_index_path
+              -#     while stocks last.
+              -# .card.my-3.d-none#result-container
+              -#   .card-body
+              -#     %h3 Result
+              -#     %pre.p-1.m-1.alert.alert-success.d-none#result-value

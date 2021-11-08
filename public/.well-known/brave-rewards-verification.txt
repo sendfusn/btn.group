@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: btn.group
+Token: 41a4686fdfa5073f0d2b8c25493863f34c09db990c2b720a0dd84ca768da7b97

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :transactions, only: :index
     resources :yield_optimizer, only: :index
 
+    get 'dex_aggregator' => 'pages#dex_aggregator'
     get 'why_some_of_our_contracts_are_not_private' => 'pages#why_some_of_our_contracts_are_not_private'
   end
 

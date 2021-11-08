@@ -49,6 +49,11 @@ class ApplicationController < ActionController::Base
               production: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
             }
           },
+          dex_aggregator: {
+            name: 'DEX aggregator',
+            show_link: false,
+            status: 'WIP'
+          },
           mount_doom: {
             name: 'Mount Doom',
             show_link: true,
