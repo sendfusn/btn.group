@@ -77,8 +77,7 @@ $(document).ready(function(){
           // ID & Date
           transactionsTableBodyContent += '<tr><td>'
           if (value['block_time']) {
-            let options = { year: 'numeric', month: 'short', day: 'numeric' };
-            let dateAsString = new Date(Number(value['block_time']) * 1000).toLocaleDateString(undefined, options);
+            let dateAsString = new Date(Number(value['block_time']) * 1000).toLocaleString(undefined, {dateStyle: 'short', timeStyle: 'short'});
             transactionsTableBodyContent += dateAsString + '<hr>'
           }
           transactionsTableBodyContent += 'id: #' + value['id'] + '</td><td>'
