@@ -115,3 +115,13 @@
                   %p
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
+  %section.section.section-s.bg-white
+    .container
+      .nk-block.block-partners
+        %ul.partner-list.flex-lg-nowrap.mgb-m30
+          %li.partner-logo-s3
+            = link_to 'https://www.coingecko.com/en/coins/buttcoin', target: '_blank', rel: 'noopener' do
+              = image_tag 'https://siasky.net/EABzzVzt2sqMn_OjbL_BYjBapbu85rAfLHubjSxlGS5LeQ'
+          %li.partner-logo-s3
+            = link_to 'https://secretanalytics.xyz/secretswap/secret1f30aqh59eg5xhalsdc6u8cv26qe283ey9pp658', target: '_blank', rel: 'noopener' do
+              = image_tag 'https://siasky.net/GACBaASSYS-kHQ-iSYCUF9PeH-ql5MQIKI_-OcNsM0O-Jw'
