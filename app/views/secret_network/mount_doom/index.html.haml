@@ -67,7 +67,15 @@
                         %em Loading...
                       #ready
                         Submit
-              .card.my-3.d-none#result-container
-                .card-body
-                  %h3 Result
-                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                  #transactions-container
+                    %h6.mt-4
+                      Balance:
+                      %span#balance
+                    .table-responsive
+                      %table.table.table-striped.table-bordered
+                        %thead
+                          %tr
+                            %th{ style: 'min-width: 135px !important;' }
+                            %th Description
+                            %th Amount
+                        %tbody#transactions-table-body
