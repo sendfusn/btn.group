@@ -9,4 +9,8 @@ RSpec.describe Pool, type: :model do
     it { should belong_to(:smart_contract) }
     it { should have_many(:cryptocurrency_pools).dependent(:destroy) }
   end
+
+  describe 'ENUMS' do
+    it { should define_enum_for(:type).with_values(farm: 0, trade_pair: 1, yield_optimizer: 2) }
+  end
 end

@@ -6,4 +6,7 @@ class Pool < ApplicationRecord
   belongs_to :protocol
   belongs_to :smart_contract
   has_many :cryptocurrency_pools, dependent: :destroy
+
+  # === ENUMS ===
+  enum type: { farm: 0, trade_pair: 1, yield_optimizer: 2 }
 end
