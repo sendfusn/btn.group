@@ -8,5 +8,5 @@ class Pool < ApplicationRecord
   has_many :cryptocurrency_pools, dependent: :destroy
 
   # === ENUMS ===
-  enum category: { farm: 0, trade_pair: 1, yield_optimizer: 2 }
+  enum category: { farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3 }
 end
