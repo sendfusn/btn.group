@@ -20,7 +20,7 @@ ActiveAdmin.register Pool do
     f.inputs do
       f.input :protocol
       f.input :smart_contract, collection: SmartContract.all.order(:label), member_label: proc { |sc| sc.label_formatted }
-      f.input :type, as: :select
+      f.input :category, as: :select
       f.input :deadline
       f.input :pending_rewards
       f.input :total_locked
@@ -32,5 +32,5 @@ ActiveAdmin.register Pool do
   end
 
   # === PERMIT PARAMS ===
-  permit_params :apr, :apy, :pool_id, :protocol_id, :smart_contract_id, :deadline, :pending_rewards, :total_locked, :type
+  permit_params :apr, :apy, :pool_id, :protocol_id, :smart_contract_id, :deadline, :pending_rewards, :total_locked, :category
 end
