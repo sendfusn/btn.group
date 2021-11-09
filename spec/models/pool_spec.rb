@@ -11,6 +11,6 @@ RSpec.describe Pool, type: :model do
   end
 
   describe 'ENUMS' do
-    it { should define_enum_for(:type).with_values(farm: 0, trade_pair: 1, yield_optimizer: 2) }
+    it { should define_enum_for(:category).with_values(farm: 0, trade_pair: 1, yield_optimizer: 2) }
   end
 end
