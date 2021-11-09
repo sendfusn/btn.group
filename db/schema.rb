@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_09_025112) do
+ActiveRecord::Schema.define(version: 2021_11_09_041139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2021_11_09_025112) do
     t.decimal "apr", precision: 15, scale: 10
     t.decimal "apy", precision: 15, scale: 10
     t.bigint "pool_id"
-    t.integer "type"
+    t.integer "category"
     t.index ["pool_id"], name: "index_pools_on_pool_id"
     t.index ["protocol_id"], name: "index_pools_on_protocol_id"
     t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id"
