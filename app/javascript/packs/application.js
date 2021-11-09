@@ -24,6 +24,7 @@ import '../src/secret_network/block_locker/index'
 import '../src/secret_network/address_alias/_profile'
 import '../src/secret_network/address_alias/new'
 import '../src/secret_network/address_alias/index'
+import '../src/secret_network/dex_aggregator'
 import '../src/secret_network/mount_doom/index'
 import '../src/secret_network/smart_contract_interface/index'
 import '../src/secret_network/transactions/index'
@@ -39,7 +40,8 @@ window.addEventListener("keplr_keystorechange", () => {
     $("#secret-network-smart-contract-interface").length ||
     $("#secret-network-mount-doom").length ||
     $("#secret-network-block-locker").length ||
-    $("#secret-network-address-alias-index").length) {
+    $("#secret-network-address-alias-index").length ||
+    $("#secret-network-dex-aggregator").length) {
     console.log("Key store in Keplr is changed. You may need to refetch the account info.")
     window.location.reload()
   }
