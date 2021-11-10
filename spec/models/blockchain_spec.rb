@@ -10,4 +10,8 @@ RSpec.describe Blockchain, type: :model do
   describe 'ENUMS' do
     it { should define_enum_for(:identifier).with_values(secret_network: 0) }
   end
+
+  describe 'VALIDATIONS' do
+    it { should validate_presence_of(:identifier) }
+  end
 end

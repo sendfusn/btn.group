@@ -6,4 +6,7 @@ class Blockchain < ApplicationRecord
 
   # === ENUMS ===
   enum identifier: { secret_network: 0 }
+
+  # === VALIDATIONS ===
+  validates :identifier, presence: true
 end
