@@ -23,6 +23,7 @@ module PayMeCrypto
         CalculateAprForYieldOptimizerBJob.perform_now
         SecretFinanceStakingPoolsJob.perform_now
         SecretNetworkGetSmartContractsJob.perform_now
+        SecretSwapGetPairsJob.perform_now
       end
     end
   end
