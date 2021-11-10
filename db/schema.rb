@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_004139) do
+ActiveRecord::Schema.define(version: 2021_11_10_010024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_004139) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "total"
     t.index ["cryptocurrency_id"], name: "index_cryptocurrencies_pools_on_cryptocurrency_id"
+    t.index ["cryptocurrency_role", "cryptocurrency_id", "pool_id"], name: "by_role_and_associations", unique: true
     t.index ["pool_id"], name: "index_cryptocurrencies_pools_on_pool_id"
   end
 
