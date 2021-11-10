@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :blockchain do
-    identifier { rand(1) }
+    identifier { 0 }
     sequence(:name) { |n| "cryptocurrency#{n}" }
   end
 end
