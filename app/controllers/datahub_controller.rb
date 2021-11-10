@@ -8,7 +8,7 @@ class DatahubController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    datahub_url = "https://secret-3--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}"
+    datahub_url = "https://secret-4--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}"
     path = request.fullpath.split('datahub').second
     reverse_proxy datahub_url, path: path, headers: { 'HOST' => nil } do |config|
       # We got a 404!

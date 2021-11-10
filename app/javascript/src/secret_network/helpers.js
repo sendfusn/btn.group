@@ -8,7 +8,7 @@ document.secretNetworkClient = function(environment) {
 }
 
 document.secretNetworkChainId = function(environment) {
-  let chainId = 'secret-3'
+  let chainId = 'secret-4'
   if (environment == 'staging') {
     chainId = 'holodeck-2'
   };
