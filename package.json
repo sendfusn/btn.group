@@ -15,7 +15,7 @@
     "is-svg": "^4.2.2",
     "jquery": "^3.6.0",
     "near-api-js": "^0.42.0",
-    "secretjs": "0.10.3",
+    "secretjs": "0.17.0",
     "tar": "6.1.9",
     "trim-newlines": "3.0.1"
   },
