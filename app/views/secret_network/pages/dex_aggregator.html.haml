@@ -16,6 +16,7 @@
                   %form{ name: 'secretNetworkDexAggregatorForm' }
                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
                       .form-group
+                        -# = select_tag "from", options_from_collection_for_select(@people, "id", "name")
                         %select.form-control{ name: 'fromTokenAddress' }
                           %option{ value: 'butt' } BUTT
                           %option{ value: 'scrt' } SCRT

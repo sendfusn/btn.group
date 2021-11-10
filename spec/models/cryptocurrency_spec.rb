@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Cryptocurrency, type: :model do
   describe 'ASSOCIATIONS' do
+    it { should belong_to(:blockchain) }
     it { should belong_to(:smart_contract).optional(true) }
   end
 

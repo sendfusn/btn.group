@@ -2,6 +2,7 @@
 
 class Cryptocurrency < ApplicationRecord
   # === ASSOCIATIONS ===
+  belongs_to :blockchain
   belongs_to :smart_contract, optional: true
 
   # === DELEGATES ===

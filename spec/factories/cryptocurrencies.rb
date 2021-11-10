@@ -6,6 +6,7 @@ FactoryBot.define do
     sequence(:name) { |n| "name#{n}" }
     sequence(:symbol) { |n| "symbol#{n}" }
 
+    association :blockchain
     association :smart_contract
   end
 end
