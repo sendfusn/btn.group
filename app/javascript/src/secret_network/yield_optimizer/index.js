@@ -12,7 +12,6 @@ $(document).ready(function(){
         butt: {
           address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
           decimals: 6,
-          logo: 'https://siasky.net/AAB1xbkxt91L2pStCCLRe-s2BG0N03K8OCugzeG8MSAP5g',
           symbol: 'BUTT'
         },
         butt_swbtc_lp: {
@@ -25,25 +24,21 @@ $(document).ready(function(){
         sbnb_bsc: {
           address: 'secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5',
           decimals: 18,
-          logo: 'https://siasky.net/AACF1KK4sIYJAvdd7DcxQUJdW_1n8lnb7l7k2k1TYZoeag',
           symbol: 'sBNB(BSC)'
         },
         sdai_eth: {
           address: 'secret1vnjck36ld45apf8u4fedxd5zy7f5l92y3w5qwq',
           decimals: 18,
-          logo: 'https://siasky.net/CADFDvkEPwGfeBEJPJIV5ZjOzyAvLTs2Ib2HFkdSy2y9Ng',
           symbol: 'sDAI'
         },
         sdot_bsc: {
           address: 'secret1px5mtmjh072znpez4fjpmxqsv3hpevdpyu9l4v',
           decimals: 18,
-          logo: 'https://siasky.net/AABoC4jQvXmvz_dwuegzpIW1wmiZpETMqZBj0lMH599SHw',
           symbol: 'sDOT(BSC)'
         },
         sefi: {
           address: 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt',
           decimals: 6,
-          logo: 'https://siasky.net/AABeTmPkxJ8CuGzgqCQM7sR0Y-3rTPZHJo4Jc9KObuTyBQ',
           symbol: 'SEFI'
         },
         sefi_susdc_eth_lp: {
@@ -63,49 +58,41 @@ $(document).ready(function(){
         seth_bsc: {
           address: 'secret1m6a72200733a7jnm76xrznh9cpmt4kf5ql0a6t',
           decimals: 18,
-          logo: 'https://siasky.net/AADSgvwvMSA3YjxpWGBtObf1zODXGCut10bt66Jr8DUhcw',
           symbol: 'sETH(BSC)'
         },
         seth_eth: {
           address: 'secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw',
           decimals: 18,
-          logo: 'https://siasky.net/AAAyGsQVk6vF6wYWUUvFMqkVX4LlNpCg432ucBCAgw9Hyw',
           symbol: 'sETH(ETH)'
         },
         sienna: {
           address: 'secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4',
           decimals: 18,
-          logo: 'https://siasky.net/AADF3iN20PtbAY-7r4VrFlFqkNpS0FbGtPu07AbqgkiXbg',
           symbol: 'SIENNA'
         },
         smana_eth: {
           address: 'secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega',
           decimals: 18,
-          logo: 'https://siasky.net/AAARSocbMzqrBV1oATe-H4OXhS01c8OMNXcetLoVzTJ14w',
           symbol: 'sMANA(ETH)'
         },
         socean_eth: {
           address: 'secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps',
           decimals: 18,
-          logo: 'https://siasky.net/GAB8EwAVnvjYW8ynq6zCMyBJpRrpMyEBbOWrSanyGm2veA',
           symbol: 'sOCEAN(ETH)'
         },
         srsr_eth: {
           address: 'secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un',
           decimals: 18,
-          logo: 'https://siasky.net/AAC6eLf4brMjdRRTPePDbuq4QgxLn2HIN9Kd66DQHJGPvg',
           symbol: 'sRSR(ETH)'
         },
         srune_eth: {
           address: 'secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24',
           decimals: 18,
-          logo: 'https://siasky.net/AADMji-JPI3F-JuP4G4eMfnq4ilKyxWrVR1-2d5BCosk3g',
           symbol: 'sRUNE(ETH)'
         },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
           decimals: 6,
-          logo: 'https://siasky.net/AACL5VVg8IZC4H_9cTiaPSzvD8hXmaJYXFc2t8piZgf5Ig',
           symbol: 'sSCRT'
         },
         sscrt_sbnb_bsc_lp: {
@@ -160,19 +147,16 @@ $(document).ready(function(){
         suni_eth: {
           address: 'secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te',
           decimals: 18,
-          logo: 'https://siasky.net/EAB_e9XgWK_CrqcZFUvD7LirQox_lakStwc8YKJCWfkf-A',
           symbol: 'sUNI(ETH)'
         },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
           decimals: 18,
-          logo: 'https://siasky.net/AADY8NK1wfSi7DUdrDRk9k9Gr80EeTWnLoq1mLIAbGg3_A',
           symbol: 'sUSDC(BSC)'
         },
         susdc_eth: {
           address: 'secret1h6z05y90gwm4sqxzhz4pkyp36cna9xtp7q0urv',
           decimals: 6,
-          logo: 'https://siasky.net/AABXRSQbMXk8PLV3CkBPSl4NW2WsSQvyOkZZRfsZeaW4Ww',
           symbol: 'sUSDC(ETH)'
         },
         susdc_eth_susdc_bsc_lp: {
@@ -185,25 +169,21 @@ $(document).ready(function(){
         susdt_eth: {
           address: 'secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f',
           decimals: 6,
-          logo: 'https://siasky.net/AAAbmpaWIL-4kXFj0xxrXsby7kSN9AQeyV6hBD65m2o9mg',
           symbol: 'sUSDT(ETH)'
         },
         swbtc: {
           address: 'secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a',
           decimals: 8,
-          logo: 'https://siasky.net/CADR09K2Etst36IFvwVUdFwO4WhD91YiURrWNwzq_-7m1A',
           symbol: 'sWBTC'
         },
         sxmr: {
           address: 'secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88',
           decimals: 12,
-          logo: 'https://siasky.net/FABkpNmXiHbaXby3duNfzFZXjDeLPxxhH2TAmBddKoGZhQ',
           symbol: 'sXMR'
         },
         syfi_eth: {
           address: 'secret15grq8y54tvc24j8hf8chunsdcr84fd3d30fvqv',
           decimals: 18,
-          logo: 'https://siasky.net/AAAPBQ2YpF1e6u3yrC1bL0UnzGYh2YVjWBeYODi4BsWIvg',
           symbol: 'sYFI(ETH)'
         }
       };
