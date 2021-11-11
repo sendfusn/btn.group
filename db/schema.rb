@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_110539) do
+ActiveRecord::Schema.define(version: 2021_11_11_051818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_110539) do
     t.integer "category"
     t.index ["pool_id"], name: "index_pools_on_pool_id"
     t.index ["protocol_id"], name: "index_pools_on_protocol_id"
-    t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id"
+    t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id", unique: true
   end
 
   create_table "protocols", force: :cascade do |t|

@@ -13,4 +13,10 @@ RSpec.describe Pool, type: :model do
   describe 'ENUMS' do
     it { should define_enum_for(:category).with_values(farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3) }
   end
+
+  describe 'VALIDATIONS' do
+    before { create(:pool) }
+
+    it { should validate_uniqueness_of(:smart_contract_id) }
+  end
 end
