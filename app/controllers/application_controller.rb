@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
   helper_method :features, :logo_cloudinary_public_id
 
+  def brand_assets; end
+
   def home; end
 
   def roadmap; end

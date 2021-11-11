@@ -43,7 +43,7 @@ Rails.application.routes.draw do
         defaults: { format: 'json' }
 
   # SITE PAGES
-  get 'blog' => 'application#blog'
+  get 'brand_assets' => 'application#brand_assets'
   get 'roadmap' => 'application#roadmap'
   root 'application#home'
 end
