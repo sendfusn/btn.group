@@ -16,12 +16,7 @@
                   %form{ name: 'secretNetworkDexAggregatorForm' }
                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
                       .form-group
-                        -# = select_tag "from", options_from_collection_for_select(@people, "id", "name")
-                        %select.form-control{ name: 'fromTokenAddress' }
-                          %option{ value: 'butt' } BUTT
-                          %option{ value: 'scrt' } SCRT
-                          %option{ value: 'sefi' } SEFI
-                          %option{ value: 'sscrt' } sSCRT
+                        = select_tag 'from', options_from_collection_for_select(Cryptocurrency.secret_network.tradeable, 'address', 'symbol'), class: 'form-control'
                       .form-group.m-0
                         %input.form-control{ name: 'fromAmount', placeholder: '0.0' }
                     .text-center
@@ -29,11 +24,7 @@
                         %em.fas.fa-arrow-down#flip-token
                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
                       .form-group
-                        %select.form-control{ name: 'toTokenAddress' }
-                          %option{ value: 'butt' } BUTT
-                          %option{ value: 'scrt' } SCRT
-                          %option{ value: 'sefi' } SEFI
-                          %option{ value: 'sscrt' } sSCRT
+                        = select_tag 'from', options_from_collection_for_select(Cryptocurrency.secret_network.tradeable, 'address', 'symbol'), class: 'form-control'
                       .form-group.m-0
                         %input.form-control{ name: 'toAmount', placeholder: '0.0' }
                     %button.btn.btn-grad-alt.w-100.mt-4

@@ -6,6 +6,7 @@ RSpec.describe Cryptocurrency, type: :model do
   describe 'ASSOCIATIONS' do
     it { should belong_to(:blockchain) }
     it { should belong_to(:smart_contract).optional(true) }
+    it { should have_many(:cryptocurrency_pools).dependent(:restrict_with_exception) }
   end
 
   describe 'VALIDATIONS' do
