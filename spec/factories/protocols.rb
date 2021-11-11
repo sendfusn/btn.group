@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :protocol do
+    identifier { rand(2) }
     sequence(:name) { |n| "name#{n}" }
     sequence(:url) { |n| "https://url#{n}.com" }
-    sequence(:identifier) { rand(2) }
   end
 end

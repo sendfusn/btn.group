@@ -77,7 +77,7 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
     cryptocurrency = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
     unless cryptocurrency.persisted?
       cryptocurrency.update(decimals: token_json['decimals'], name: token_json['name'], symbol: token_json['symbol'],
-                            price: token_json['price'], blockchain: 'secret_swap')
+                            price: token_json['price'], blockchain: Blockchain.find_by(identifier: 'secret_network'))
     end
     cryptocurrency
   end

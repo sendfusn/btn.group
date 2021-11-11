@@ -31,7 +31,7 @@ class CalculateAprForYieldOptimizerBJob < ApplicationJob
         asset_two_amount.to_i
       end
       buttcoin_released_per_day = 19_200_000_000
-      pool = Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id)
+      pool = Pool.find_or_initialize_by(protocol: Protocol.find_by(identifier: 'btn_group'), smart_contract: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku'))
       pool.update!(apr: buttcoin_released_per_day * 365 * 100 / (buttcoin_amount * 2))
       break
     end
