@@ -27,7 +27,7 @@ end
  %w[secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp secret16pqkssv08hjfmamrcz9gruhxxsuvc25n4gq0s2],
  %w[secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj secret1pqvny7lp32z939vtd08jhe66cxl0qp3quxyls5]].each do |yo_pool_address_and_farm_address|
   farm_pool = Pool.find_by(smart_contract: SmartContract.find_by(address: yo_pool_address_and_farm_address[1]))
-  next if farm_pool.pool
+  next if farm_pool&.pool
 
   yop_pool = Pool.find_or_create_by!(protocol: Protocol.find_by(identifier: 'btn_group'),
                                      smart_contract: SmartContract.find_by(address: yo_pool_address_and_farm_address[0]),
