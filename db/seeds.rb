@@ -4,8 +4,7 @@ Blockchain.identifiers.each_key do |identifier|
   b = Blockchain.find_or_initialize_by(identifier: identifier)
   next if b.persisted?
 
-  url = 'https://scrt.network/' if identifier == 'secret_network'
-  b.update!(name: identifier.humanize, url: url)
+  b.update!(name: identifier.humanize)
 end
 
 Protocol.identifiers.each_key do |identifier|
