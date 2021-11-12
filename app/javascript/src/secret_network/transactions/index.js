@@ -40,7 +40,7 @@ $(document).ready(function(){
           }
         }
         let balance_response = await this.client.queryContractSmart(this.buttcoinContractAddress, params);
-        premiumAccess = balance_response["balance"]["amount"] >= 555_000_000
+        premiumAccess = balance_response["balance"]["amount"] >= 55_000_000
         if (!premiumAccess) {
           $('#pay-wall').removeClass('d-none')
         }
