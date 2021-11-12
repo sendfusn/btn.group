@@ -81,12 +81,12 @@ $(document).ready(function(){
                       window.getEnigmaUtils(chainId),
                       {
                         init: {
-                          amount: [{ amount: '500000', denom: 'uscrt' }],
-                          gas: '500000',
+                          amount: [{ amount: '75000', denom: 'uscrt' }],
+                          gas: '75000',
                         },
                         exec: {
-                          amount: [{ amount: '500000', denom: 'uscrt' }],
-                          gas: '500000',
+                          amount: [{ amount: '75000', denom: 'uscrt' }],
+                          gas: '75000',
                         },
                       },
                     );
