@@ -28,10 +28,11 @@ ActiveAdmin.register Cryptocurrency do
   # === FORM ===
   form do |f|
     f.inputs do
-      f.input :smart_contract, collection: SmartContract.all.order(:label), member_label: proc { |sc| "#{sc.label} - #{sc.address}" }
-      f.input :decimals
       f.input :name
       f.input :symbol
+      f.input :decimals
+      f.input :blockchain
+      f.input :smart_contract, collection: SmartContract.all.order(:label), member_label: proc { |sc| "#{sc.label} - #{sc.address}" }
       f.input :price
       f.input :official
     end
@@ -39,5 +40,5 @@ ActiveAdmin.register Cryptocurrency do
   end
 
   # === PERMIT PARAMS ===
-  permit_params :smart_contract_id, :decimals, :name, :symbol, :price, :official
+  permit_params :blockchain_id, :smart_contract_id, :decimals, :name, :symbol, :price, :official
 end

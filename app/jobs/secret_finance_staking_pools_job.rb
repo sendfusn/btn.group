@@ -43,7 +43,8 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
     return unless (pool_smart_contract = SmartContract.find_by(address: pool_json['pool_address']))
 
     pool = Pool.find_or_initialize_by(smart_contract_id: pool_smart_contract.id)
-    pool.update!(deadline: pool_json['deadline'].to_i,
+    pool.update!(category: 'farm',
+                 deadline: pool_json['deadline'].to_i,
                  pending_rewards: pool_json['pending_rewards'].to_i,
                  protocol: Protocol.find_by(identifier: :secret_swap),
                  total_locked: pool_json['total_locked'].to_i)
