@@ -130,8 +130,8 @@ $(document).ready(function(){
                 window.getEnigmaUtils(this.chainId),
                 {
                   exec: {
-                    amount: [{ amount: '800000', denom: 'uscrt' }],
-                    gas: '800000',
+                    amount: [{ amount: '200000', denom: 'uscrt' }],
+                    gas: '200000',
                   },
                 },
               );
@@ -146,8 +146,8 @@ $(document).ready(function(){
                 window.getEnigmaUtils(this.chainId),
                 {
                   exec: {
-                    amount: [{ amount: '400000', denom: 'uscrt' }],
-                    gas: '400000',
+                    amount: [{ amount: '100000', denom: 'uscrt' }],
+                    gas: '100000',
                   },
                 },
               );
@@ -162,8 +162,8 @@ $(document).ready(function(){
                 window.getEnigmaUtils(this.chainId),
                 {
                   exec: {
-                    amount: [{ amount: '150000', denom: 'uscrt' }],
-                    gas: '150000',
+                    amount: [{ amount: '37500', denom: 'uscrt' }],
+                    gas: '37500',
                   },
                 },
               );
