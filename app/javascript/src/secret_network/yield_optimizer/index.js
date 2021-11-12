@@ -378,7 +378,7 @@ $(document).ready(function(){
             catch(err) {
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
               // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
-              if (err.message.includes('HTTP 502')) {
+              if (err.message.includes('HTTP 502') || err.message.includes('HTTP 500')) {
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
@@ -436,7 +436,7 @@ $(document).ready(function(){
             catch(err) {
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
               // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
-              if (err.message.includes('HTTP 502')) {
+              if (err.message.includes('HTTP 502') || err.message.includes('HTTP 500')) {
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()

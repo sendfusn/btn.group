@@ -9,6 +9,10 @@ RSpec.describe Cryptocurrency, type: :model do
     it { should have_many(:cryptocurrency_pools).dependent(:restrict_with_exception) }
   end
 
+  describe 'DELEGATES' do
+    it { should delegate_method(:address).to(:smart_contract).allow_nil }
+  end
+
   describe 'VALIDATIONS' do
     before { create(:cryptocurrency) }
 

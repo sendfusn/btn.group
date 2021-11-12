@@ -7,7 +7,7 @@ class Cryptocurrency < ApplicationRecord
   has_many :cryptocurrency_pools, dependent: :restrict_with_exception
 
   # === DELEGATES ===
-  delegate :address, to: :smart_contract
+  delegate :address, to: :smart_contract, allow_nil: true
 
   # === SCOPES ===
   scope :secret_network, lambda { where(blockchain: Blockchain.find_by(identifier: 'secret_network')) }
