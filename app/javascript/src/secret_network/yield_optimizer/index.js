@@ -19,7 +19,7 @@ $(document).ready(function(){
           asset_one: 'butt',
           asset_two: 'swbtc',
           decimals: 6,
-          symbol: 'BUTT-sWBTC LP'
+          symbol: 'BUTT-sWBTC'
         },
         sbnb_bsc: {
           address: 'secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5',
@@ -164,7 +164,7 @@ $(document).ready(function(){
           asset_one: 'susdc_eth',
           asset_two: 'susdc_bsc',
           decimals: 6,
-          symbol: 'sUSDC(ETH)-sUSDC(BSC) LP'
+          symbol: 'sUSDC(ETH)-sUSDC(BSC)'
         },
         susdt_eth: {
           address: 'secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f',
