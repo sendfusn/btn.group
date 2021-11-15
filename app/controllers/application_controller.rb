@@ -28,11 +28,10 @@ class ApplicationController < ActionController::Base
         features: {
           address_alias: {
             name: 'Address alias',
-            show_link: false,
-            status: 'Under maintenance',
+            show_link: true,
+            status: 'Live',
             contracts: {
-              staging: 'secret1jyh69wsrq6ml8e7lp7jymupjqa2u736l3pnns0',
-              production: 'secret1v2kg4uf4ffjyez3g50h3d0hze6858qgszlluzz'
+              production: 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w'
             }
           },
           block_locker: {
@@ -49,6 +48,14 @@ class ApplicationController < ActionController::Base
             status: 'Live',
             contracts: {
               production: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
+            }
+          },
+          butt_lode: {
+            name: 'BUTT lode',
+            show_link: false,
+            status: 'WIP',
+            contracts: {
+              production: 'secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5'
             }
           },
           dex_aggregator: {
