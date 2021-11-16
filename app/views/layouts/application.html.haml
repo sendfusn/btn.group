@@ -47,7 +47,7 @@
                       %ul.menu-sub.menu-drop{ style: 'right: 0; left: inherit;' }
                         - features.each do |blockchain_symbol, blockchain_object|
                           - blockchain_object[:features].each do |feature_key, feature_value|
-                            - if feature_value[:show_link]
+                            - if feature_value[:show_in_navbar] && feature_value[:show_link]
                               %li.menu-item
                                 = link_to "/#{blockchain_symbol}/#{feature_key}", class: 'menu-link nav-link' do
                                   .d-block.mb-1= feature_value[:name]

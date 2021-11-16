@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
         features: {
           smart_contract_interface: {
             name: 'Smart contract interface',
+            show_in_navbar: true,
             show_link: true,
             status: 'Live'
           }
@@ -28,6 +29,7 @@ class ApplicationController < ActionController::Base
         features: {
           address_alias: {
             name: 'Address alias',
+            show_in_navbar: false,
             show_link: false,
             status: 'Under maintenance',
             contracts: {
@@ -36,6 +38,7 @@ class ApplicationController < ActionController::Base
           },
           block_locker: {
             name: 'Block locker',
+            show_in_navbar: true,
             show_link: true,
             status: 'Live',
             contracts: {
@@ -44,6 +47,7 @@ class ApplicationController < ActionController::Base
           },
           buttcoin: {
             name: 'Buttcoin (BUTT)',
+            show_in_navbar: false,
             show_link: true,
             status: 'Live',
             contracts: {
@@ -52,6 +56,7 @@ class ApplicationController < ActionController::Base
           },
           butt_lode: {
             name: 'BUTT lode',
+            show_in_navbar: false,
             show_link: false,
             status: 'WIP',
             contracts: {
@@ -60,11 +65,13 @@ class ApplicationController < ActionController::Base
           },
           dex_aggregator: {
             name: 'DEX aggregator',
+            show_in_navbar: false,
             show_link: false,
             status: 'WIP'
           },
           mount_doom: {
             name: 'Mount Doom',
+            show_in_navbar: false,
             show_link: true,
             status: 'Live',
             contracts: {
@@ -74,16 +81,19 @@ class ApplicationController < ActionController::Base
           },
           smart_contract_interface: {
             name: 'Smart contract interface',
+            show_in_navbar: true,
             show_link: true,
             status: 'Live'
           },
           transactions: {
             name: 'Transactions',
+            show_in_navbar: true,
             show_link: true,
             status: 'Live'
           },
           yield_optimizer: {
             name: 'Yield optimizer',
+            show_in_navbar: true,
             show_link: true,
             status: 'Live'
           }
