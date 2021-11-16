@@ -57,8 +57,8 @@ class ApplicationController < ActionController::Base
           butt_lode: {
             name: 'BUTT lode',
             show_in_navbar: false,
-            show_link: false,
-            status: 'WIP',
+            show_link: true,
+            status: 'Live',
             contracts: {
               production: 'secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5'
             }
