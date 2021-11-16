@@ -20,8 +20,6 @@ import '../src/near/smart_contract_interface/index'
 
 // SECRET NETWORK
 import '../src/secret_network/helpers'
-import '../src/secret_network/address_alias/_profile'
-import '../src/secret_network/address_alias/new'
 import '../src/secret_network/address_alias/index'
 import '../src/secret_network/block_locker/index'
 import '../src/secret_network/butt_lode'

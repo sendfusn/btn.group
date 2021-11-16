@@ -1,33 +1,66 @@
 .header-banner.bg-theme-grad-s2
   .nk-banner
     .banner.banner-page
-      .mt-3.w-100
-        .container#secret-network-address-alias-index
-          .row
-            .col-12
-              .card
-                .card-body
-                  %h3= features[:secret_network][:features][:address_alias][:name]
-                  %p.mb-0
-                    %b Blockchain:
-                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                    = features[:secret_network][:name].to_s
-                  = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:address_alias][:contracts][:production], staging_contract: nil
-                  %hr
-                  %form{ name: 'aliasSearchForm' }
-                    .form-group
-                      %label.control-label Search by
-                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light.btn-md
-                          %input#address{ name: 'searchType', type: 'radio', value: 'address' } Address
-                        %label.btn.btn-md.btn-light
-                          %input#alias{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
-                    .form-group
-                      %input.form-control.w-100#search-value{ name: 'searchValue', required: true, autocomplete: 'off' }
-                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
-                      .d-none#loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      #ready
-                        Search
-          = render partial: 'profile'
+      .container.mt-3.mb-5#secret-network-address-alias
+        .row.justify-content-center
+          .col-xl-6.col-lg-9
+            .card.mt-3
+              .card-body
+                %h3= features[:secret_network][:features][:address_alias][:name]
+                %p.mb-0
+                  %b Blockchain:
+                  = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                  = features[:secret_network][:name].to_s
+                = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:address_alias][:contracts][:production], staging_contract: nil
+                %hr
+                %ul.nav.tab-nav.tab-nav-btn
+                  %li
+                    %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Search
+                  %li
+                    %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Create
+                .tab-content
+                  .tab-pane.fade.active.show#tab-2-1
+                    %form{ name: 'aliasSearchForm' }
+                      .form-group
+                        %label.control-label Search by
+                        .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                          %label.btn.btn-light.btn-md
+                            %input#address{ name: 'searchType', type: 'radio', value: 'address' } Address
+                          %label.btn.btn-md.btn-light
+                            %input{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
+                      .form-group
+                        %input.form-control.w-100#search-value{ name: 'searchValue', required: true, autocomplete: 'off' }
+                      %button.btn.btn-grad-alt.w-100.mt-3#search-button{ type: 'submit' }
+                        .d-none#loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        #ready
+                          Search
+                  .tab-pane.fade#tab-2-2
+                    %form{ name: 'aliasCreateForm' }
+                      .form-group
+                        %label{ for: 'alias' } Alias
+                        %input.form-control.w-100#alias{ name: 'alias', required: true }
+                      .form-group
+                        %label{ for: 'avatar-url' } Avatar url
+                        %button.btn.btn-light.btn-sm.ml-2.border#cloudinary-upload-widget Upload image
+                        %input.form-control.w-100#avatar-url{ name: 'avatarUrl' }
+                      %button.btn.btn-grad-alt.w-100.mt-3#create-button{ type: 'submit' }
+                        .d-none.loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        .ready
+                          Create
+        .row.justify-content-center#secret-network-address-alias-profile
+          .col-xl-6.col-lg-9
+            .card.bg-light.my-3.d-none#result-container
+              .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
+                #result-value
+                %button.btn.btn-danger.w-100.mt-3.btn-md#delete-button
+                  .d-none#delete-loading
+                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                    %em Loading...
+                  #delete-ready
+                    Delete
+                %p.mt-2 * You can only delete your own alias
+
