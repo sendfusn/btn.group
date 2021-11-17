@@ -119,9 +119,6 @@ $(document).ready(function(){
               // Display results
               $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
             } else {
-              const {
-                SigningCosmWasmClient,
-              } = require('secretjs');
               let contractHash = document.mountDoomForm.contractHash.value;
               let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
               if (!window.getOfflineSigner || !window.keplr) {
@@ -138,19 +135,13 @@ $(document).ready(function(){
                     const keplrOfflineSigner = window.getOfflineSigner(chainId);
                     const accounts = await keplrOfflineSigner.getAccounts();
                     this.address = accounts[0].address;
-                    client = new SigningCosmWasmClient(
-                      httpUrl,
-                      this.address,
-                      keplrOfflineSigner,
-                      window.getEnigmaUtils(chainId),
-                      {
+                    let gasParams = {
                         exec: {
                           amount: [{ amount: '50000', denom: 'uscrt' }],
                           gas: '50000',
                         },
-                      },
-                    );
-                    this.account = await client.getAccount(this.address);
+                      }
+                    client = document.secretNetworkSigningClient(environment, this.address, gasParams)
                   } catch (error) {
                     console.error(error)
                   }

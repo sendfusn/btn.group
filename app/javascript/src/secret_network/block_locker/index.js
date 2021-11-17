@@ -80,9 +80,6 @@ $(document).ready(function(){
                 scrollTop: $("#result-container").offset().top
             }, 2000);
           } else {
-            const {
-              SigningCosmWasmClient,
-            } = require('secretjs');
             if (!window.getOfflineSigner || !window.keplr) {
               throw("Please install keplr extension")
             } else {
@@ -123,50 +120,35 @@ $(document).ready(function(){
                 }
               }
               handleMsg = { send: { amount: "1000000", recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create_or_update_locker: { content: content, passphrase: passphrase, whitelisted_addresses: whitelistedAddresses } })).toString('base64') } };
-              this.client = new SigningCosmWasmClient(
-                this.httpUrl,
-                this.address,
-                this.keplrOfflineSigner,
-                window.getEnigmaUtils(this.chainId),
-                {
+              let gasParams = {
                   exec: {
                     amount: [{ amount: '200000', denom: 'uscrt' }],
                     gas: '200000',
                   },
-                },
-              );
+                }
+              this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               resultText = "Locked updated."
             } else if (document.blockLockerForm.interactionType.value == 'handleUnlock') {
               confirm("Are you sure you want to unlock? Once unlocked, the current contents of the locker can be accessed with only the passphrase forever.")
               handleMsg = { send: { amount: "1000000", recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerForm.walletAddress.value } })).toString('base64') } };
-              this.client = new SigningCosmWasmClient(
-                this.httpUrl,
-                this.address,
-                this.keplrOfflineSigner,
-                window.getEnigmaUtils(this.chainId),
-                {
+              let gasParams = {
                   exec: {
                     amount: [{ amount: '100000', denom: 'uscrt' }],
                     gas: '100000',
                   },
-                },
-              );
+                }
+              this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
             } else if (document.blockLockerForm.interactionType.value == 'handleViewLocker') {
               contractAddressToExecute = this.contractAddress;
               handleMsg = { get_user_locker: {} };
-              this.client = new SigningCosmWasmClient(
-                this.httpUrl,
-                this.address,
-                this.keplrOfflineSigner,
-                window.getEnigmaUtils(this.chainId),
-                {
+              let gasParams = {
                   exec: {
                     amount: [{ amount: '37500', denom: 'uscrt' }],
                     gas: '37500',
                   },
-                },
-              );
+                }
+              this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
             }
             result = await this.client.execute(contractAddressToExecute, handleMsg)
             if (resultText.length > 0) {

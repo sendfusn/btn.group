@@ -215,9 +215,6 @@ $(document).ready(function(){
           $target.find('.loading').removeClass('d-none')
           $target.find('.ready').addClass('d-none')
           try {
-            const {
-              SigningCosmWasmClient,
-            } = require('secretjs');
             if (!window.getOfflineSigner || !window.keplr) {
               throw("Please install keplr extension")
             } else {
@@ -258,9 +255,6 @@ $(document).ready(function(){
           $target.find('.loading').removeClass('d-none')
           $target.find('.ready').addClass('d-none')
           try {
-            const {
-              SigningCosmWasmClient,
-            } = require('secretjs');
             if (!window.getOfflineSigner || !window.keplr) {
               throw("Please install keplr extension")
             } else {

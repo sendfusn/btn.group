@@ -1,9 +1,5 @@
 $(document).ready(function(){
   if($("#secret-network-address-alias").length) {
-    const {
-      SigningCosmWasmClient,
-    } = require('secretjs');
-
     var myWidget = cloudinary.createUploadWidget({
       cloudName: 'hv5cxagki',
       cropping: true,
@@ -53,19 +49,13 @@ $(document).ready(function(){
                   const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                   const accounts = await keplrOfflineSigner.getAccounts();
                   this.address = accounts[0].address;
-                  this.client = new SigningCosmWasmClient(
-                    this.httpUrl,
-                    this.address,
-                    keplrOfflineSigner,
-                    window.getEnigmaUtils(this.chainId),
-                    {
+                  let gasParams = {
                       exec: {
                         amount: [{ amount: '200000', denom: 'uscrt' }],
                         gas: '200000',
                       },
-                    },
-                  );
-                  this.account = await this.client.getAccount(this.address);
+                    }
+                  this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
                 } catch (error) {
                   console.error(error)
                 }
@@ -115,19 +105,13 @@ $(document).ready(function(){
                   const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                   const accounts = await keplrOfflineSigner.getAccounts();
                   this.address = accounts[0].address;
-                  this.client = new SigningCosmWasmClient(
-                    this.httpUrl,
-                    this.address,
-                    keplrOfflineSigner,
-                    window.getEnigmaUtils(this.chainId),
-                    {
+                  let gasParams = {
                       exec: {
                         amount: [{ amount: '200000', denom: 'uscrt' }],
                         gas: '200000',
                       },
-                    },
-                  );
-                  this.account = await this.client.getAccount(this.address);
+                    }
+                  this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
                 } catch (error) {
                   console.error(error)
                 }

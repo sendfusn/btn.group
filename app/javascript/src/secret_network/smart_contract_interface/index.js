@@ -56,10 +56,6 @@ $(document).ready(function(){
               this.client =  document.secretNetworkClient(environment);
               result = await this.client.queryContractSmart(contractAddress, msg);
             } else {
-              const {
-                SigningCosmWasmClient,
-              } = require('secretjs');
-
               if (!window.getOfflineSigner || !window.keplr) {
                 alert("Please install keplr extension");
               } else {
@@ -74,23 +70,13 @@ $(document).ready(function(){
                     const keplrOfflineSigner = window.getOfflineSigner(chainId);
                     const accounts = await keplrOfflineSigner.getAccounts();
                     this.address = accounts[0].address;
-                    this.client = new SigningCosmWasmClient(
-                      httpUrl,
-                      this.address,
-                      keplrOfflineSigner,
-                      window.getEnigmaUtils(chainId),
-                      {
-                        init: {
-                          amount: [{ amount: '75000', denom: 'uscrt' }],
-                          gas: '75000',
-                        },
+                    let gasParams = {
                         exec: {
                           amount: [{ amount: '75000', denom: 'uscrt' }],
                           gas: '75000',
                         },
-                      },
-                    );
-                    this.account = await this.client.getAccount(this.address);
+                      }
+                    this.client = document.secretNetworkSigningClient(environment, this.address, gasParams)
                   } catch (error) {
                     console.error(error)
                   }

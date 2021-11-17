@@ -1,9 +1,5 @@
 $(document).ready(function(){
   if($("#secret-network-butt-lode").length) {
-    const {
-      SigningCosmWasmClient,
-    } = require('secretjs');
-
     window.onload = async () => {
       this.admin;
       this.buttcoinBalance;
@@ -47,18 +43,13 @@ $(document).ready(function(){
 
       document['buttLodeSendForm'].onsubmit = async (e) => {
         e.preventDefault()
-        this.client = new SigningCosmWasmClient(
-          document.secretNetworkHttpUrl(this.environment),
-          this.admin,
-          this.keplrOfflineSigner,
-          window.getEnigmaUtils(this.chainId),
-          {
+        let gasParams = {
             exec: {
               amount: [{ amount: '75000', denom: 'uscrt' }],
               gas: '75000',
             },
-          },
-        );
+          }
+        this.client = document.secretNetworkSigningClient(this.environment, this.admin, gasParams)
         $sendButton = $("#butt-lode-send-button")
         $sendButtonLoading = $("#butt-lode-send-button-loading")
         $sendButtonReady = $("#butt-lode-send-button-ready")

@@ -1,9 +1,5 @@
 $(document).ready(function(){
   if($("#secret-network-yield-optimizer").length) {
-    const {
-      SigningCosmWasmClient,
-    } = require('secretjs');
-
     window.onload = async () => {
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
@@ -467,18 +463,13 @@ $(document).ready(function(){
       }.bind(this))
 
       this.setClient = (gas) => {
-        this.client = new SigningCosmWasmClient(
-          this.httpUrl,
-          this.address,
-          window.getOfflineSigner(this.chainId),
-          window.getEnigmaUtils(this.chainId),
-          {
+        let gasParams = {
             exec: {
               amount: [{ amount: gas, denom: 'uscrt' }],
               gas: gas,
             },
-          },
-        );
+          }
+        this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
       }
 
       this.updatePoolInterface = (pool, afterTransaction = false) => {
