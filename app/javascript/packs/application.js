@@ -80,6 +80,8 @@ $(document).ready(function(){
         }
       })
     })
+ 
+    $(".keplr-wallet-button").first().click()
   }
 })
 
