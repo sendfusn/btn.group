@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  if($("#secret-network-yield-optimizer").length) {
+  if($("#secret-network-pools").length) {
     window.onload = async () => {
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
@@ -16,6 +16,13 @@ $(document).ready(function(){
           asset_two: 'swbtc',
           decimals: 6,
           symbol: 'BUTT-sWBTC'
+        },
+        butt_sxmr_lp: {
+          address: 'secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf',
+          asset_one: 'butt',
+          asset_two: 'sxmr',
+          decimals: 6,
+          symbol: 'BUTT-sXMR'
         },
         sbnb_bsc: {
           address: 'secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5',
@@ -196,6 +203,7 @@ $(document).ready(function(){
       }
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.pools = [
+        // This has to be first position in array
         {
           address: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz',
           deposit_gas: '75000',
@@ -205,6 +213,7 @@ $(document).ready(function(){
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '75000',
         },
+        // This has to be second position in array
         {
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
           deposit_gas: '175000',
@@ -213,6 +222,16 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['butt'],
           reward_token: cryptocurrencies['butt'],
           withdraw_gas: '175000',
+        },
+        // This has to be third position in array
+        {
+          address: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan',
+          deposit_gas: '75000',
+          deposit_msg: 'eyJkZXBvc2l0Ijoge319',
+          deposit_token: cryptocurrencies['butt_sxmr_lp'],
+          earn_token: cryptocurrencies['butt_sxmr_lp'],
+          reward_token: cryptocurrencies['butt'],
+          withdraw_gas: '75000',
         },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
@@ -419,7 +438,7 @@ $(document).ready(function(){
               let handleMsg;
               if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
                 handleMsg = { withdraw: { shares_amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
-              } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || value['address'] == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
+              } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || value['address'] == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || value['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
                 handleMsg = { withdraw: { amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
               } else {
                 handleMsg = { withdraw: { incentivized_token_amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
@@ -497,7 +516,7 @@ $(document).ready(function(){
           $userShares.text('Loading...');
           let userResponse;
           let withdrawable = 0;
-          if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
+          if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
             userResponse = await client.queryContractSmart(pool.address, {user: {user_address: this.address}})
             withdrawable = userResponse['user']['shares']
           } else {
@@ -543,11 +562,9 @@ $(document).ready(function(){
                 console.log(err)
                 console.log(this.height)
                 console.log(pool)
-                if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
-                  if (this.retryCount < 5) {
-                    this.retryCount += 1
-                    this.updateClaimable(pool)
-                  }
+                if (this.retryCount < 5) {
+                  this.retryCount += 1
+                  this.updateClaimable(pool)
                 }
               }
             }
@@ -559,7 +576,7 @@ $(document).ready(function(){
           } else {
             try {
               $poolClaimable.text('Loading...');
-              if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
+              if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
                 let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
                 $poolClaimable.text((response['claimable_profit']['amount'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
               } else {
@@ -570,7 +587,7 @@ $(document).ready(function(){
                 $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
               }
             } catch(err) {
-              if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
+              if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}') || err.message.includes('{"not_found":{"kind":"cw_profit_distributor_b::state::User"}}')) {
                 $poolClaimable.text('0');
               } else {
                 console.log(err)
@@ -591,7 +608,7 @@ $(document).ready(function(){
           let totalSharesSelector = '.' + poolAddress + '-total-shares'
           let client = document.secretNetworkClient(this.environment);
           $(totalSharesSelector).text('Loading...')
-          if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2') {
+          if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || poolAddress == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
             let config = await client.queryContractSmart(poolAddress, {config: {}})
             $(totalSharesSelector).text((config['config']['total_shares'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}) + ' ' + depositTokenSymbol)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
@@ -649,6 +666,30 @@ $(document).ready(function(){
         this.updateUserInterface()
       })
 
+      document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
+        if (this.pools[0]['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
+          let $claimSEFI = $('#claim-sefi')
+          this.setClient(this.pools[0]['deposit_gas']);
+          $claimSEFI.prop("disabled", true);
+          $claimSEFI.find('.loading').removeClass("d-none")
+          $claimSEFI.find('.ready').addClass("d-none")
+          try {
+            let handleMsg = { send: { amount: '0', recipient: this.pools[0]['address'], msg: this.pools[0]['deposit_msg'] } }
+            let response = await this.client.execute(this.pools[0]['deposit_token']['address'], handleMsg)
+            document.showAlertSuccess("Claim successful");
+            $claimSEFI.find('.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable').text('0')
+          }
+          catch(err) {
+            document.showAlertDanger(err)
+          }
+          finally {
+            $claimSEFI.prop("disabled", false);
+            $claimSEFI.find('.loading').addClass("d-none")
+            $claimSEFI.find('.ready').removeClass("d-none")
+          }
+        }
+      })
+
       document.querySelector('#claim-butt').addEventListener('click', async(evt) => {
         if (this.pools[1]['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
           let $claimBUTT = $('#claim-butt')
@@ -673,26 +714,26 @@ $(document).ready(function(){
         }
       })
 
-      document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
-        if (this.pools[0]['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
-          let $claimSEFI = $('#claim-sefi')
-          this.setClient(this.pools[0]['deposit_gas']);
-          $claimSEFI.prop("disabled", true);
-          $claimSEFI.find('.loading').removeClass("d-none")
-          $claimSEFI.find('.ready').addClass("d-none")
+      document.querySelector('#claim-profit-distributor-b-butt').addEventListener('click', async(evt) => {
+        if (this.pools[2]['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
+          let $claimBUTT = $('#claim-profit-distributor-b-butt')
+          this.setClient(this.pools[2]['deposit_gas']);
+          $claimBUTT.prop("disabled", true);
+          $claimBUTT.find('.loading').removeClass("d-none")
+          $claimBUTT.find('.ready').addClass("d-none")
           try {
-            let handleMsg = { send: { amount: '0', recipient: this.pools[0]['address'], msg: this.pools[0]['deposit_msg'] } }
-            let response = await this.client.execute(this.pools[0]['deposit_token']['address'], handleMsg)
+            let handleMsg = { send: { amount: '0', recipient: this.pools[2]['address'], msg: this.pools[2]['deposit_msg'] } }
+            let response = await this.client.execute(this.pools[2]['deposit_token']['address'], handleMsg)
             document.showAlertSuccess("Claim successful");
-            $claimSEFI.find('.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable').text('0')
+            $claimBUTT.find('.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable').text('0')
           }
           catch(err) {
             document.showAlertDanger(err)
           }
           finally {
-            $claimSEFI.prop("disabled", false);
-            $claimSEFI.find('.loading').addClass("d-none")
-            $claimSEFI.find('.ready').removeClass("d-none")
+            $claimBUTT.prop("disabled", false);
+            $claimBUTT.find('.loading').addClass("d-none")
+            $claimBUTT.find('.ready').removeClass("d-none")
           }
         }
       })

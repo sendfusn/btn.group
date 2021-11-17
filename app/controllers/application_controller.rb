@@ -79,6 +79,12 @@ class ApplicationController < ActionController::Base
               staging: 'secret15nfjk7zfh54damy09d2jegkrw4rq33d3zug4a5'
             }
           },
+          pools: {
+            name: 'Pools',
+            show_in_navbar: true,
+            show_link: true,
+            status: 'Live'
+          },
           smart_contract_interface: {
             name: 'Smart contract interface',
             show_in_navbar: true,
@@ -87,12 +93,6 @@ class ApplicationController < ActionController::Base
           },
           transactions: {
             name: 'Transactions',
-            show_in_navbar: true,
-            show_link: true,
-            status: 'Live'
-          },
-          yield_optimizer: {
-            name: 'Yield optimizer',
             show_in_navbar: true,
             show_link: true,
             status: 'Live'

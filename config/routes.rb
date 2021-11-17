@@ -26,11 +26,12 @@ Rails.application.routes.draw do
     resources :mount_doom, only: :index
     resources :smart_contract_interface, only: :index
     resources :transactions, only: :index
-    resources :yield_optimizer, only: :index
 
     get 'butt_lode' => 'pages#butt_lode'
     get 'dex_aggregator' => 'pages#dex_aggregator'
+    get 'pools' => 'pages#pools'
     get 'why_some_of_our_contracts_are_not_private' => 'pages#why_some_of_our_contracts_are_not_private'
+    get 'yield_optimizer' => redirect('secret_network/pools')
   end
 
   # === DATAHUB REVERSE PROXY ===
