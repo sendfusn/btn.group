@@ -40,12 +40,12 @@
                       %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-total-shares Loading...
                       %br
                       Claimable SEFI:
-                      %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-play-icon-s2#claim-sefi{ type: 'button' }
+                      %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-xxs#claim-sefi{ type: 'button' }
                         .d-none.loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
                         .ready
-                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Loading...
+                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Connect wallet
                   .row
                     .col-12
                       %hr
@@ -53,7 +53,7 @@
                       Depositable:
                       %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-loading.d-none Loading...
                       %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-link
-                        %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance Loading...
+                        %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -73,7 +73,7 @@
                           .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Loading...
+                      %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Connect wallet
                       %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -111,12 +111,12 @@
               -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-total-shares Loading...
               -#         %br
               -#         Claimable BUTT:
-              -#         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-play-icon-s2#claim-profit-distributor-b-butt{ type: 'button' }
+              -#         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-xxs#claim-profit-distributor-b-butt{ type: 'button' }
               -#           .d-none.loading
               -#             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
               -#             %em Loading...
               -#           .ready
-              -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable Loading...
+              -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable Connect wallet
               -#     .row
               -#       .col-12
               -#         %hr
@@ -124,7 +124,7 @@
               -#         Depositable:
               -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-loading.d-none Loading...
               -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-link
-              -#           %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance Loading...
+              -#           %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance Connect wallet
               -#           %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-view-button.d-none{ type: 'button' }
               -#             .d-none.loading
               -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -144,7 +144,7 @@
               -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button-ready Deposit
               -#       .col-md-6
               -#         Withdrawable:
-              -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-user-shares Loading...
+              -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-user-shares Connect wallet
               -#         %form{ name: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzanWithdrawForm' }
               -#           .input-group.mb-3
               -#             %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -184,12 +184,12 @@
                       APR: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id).apr}%
                       %br
                       Claimable BUTT:
-                      %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-play-icon-s2#claim-butt{ type: 'button' }
+                      %button.btn.btn-light.btn-sm.ml-2.mb-1.border.btn-xxs#claim-butt{ type: 'button' }
                         .d-none.loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
                         .ready
-                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Loading...
+                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Connect wallet
                   .row
                     .col-12
                       %hr
@@ -197,7 +197,7 @@
                       Depositable:
                       %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-loading.d-none Loading...
                       %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-link
-                        %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance Loading...
+                        %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -217,7 +217,7 @@
                           .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Loading...
+                      %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Connect wallet
                       %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -262,7 +262,7 @@
                       Depositable:
                       %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-loading.d-none Loading...
                       %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-link
-                        %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance Loading...
+                        %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -282,7 +282,7 @@
                           .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-user-shares Loading...
+                      %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-user-shares Connect wallet
                       %form{ name: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvfWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -331,7 +331,7 @@
                       Depositable:
                       %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-loading.d-none Loading...
                       %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-link
-                        %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance Loading...
+                        %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -351,7 +351,7 @@
                           .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-user-shares Loading...
+                      %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-user-shares Connect wallet
                       %form{ name: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0vWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -400,7 +400,7 @@
                       Depositable:
                       %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-loading.d-none Loading...
                       %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-link
-                        %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance Loading...
+                        %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -420,7 +420,7 @@
                           .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-user-shares Loading...
+                      %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-user-shares Connect wallet
                       %form{ name: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmjWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -469,7 +469,7 @@
                       Depositable:
                       %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-loading.d-none Loading...
                       %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-link
-                        %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance Loading...
+                        %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -489,7 +489,7 @@
                           .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-user-shares Loading...
+                      %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-user-shares Connect wallet
                       %form{ name: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jnWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -538,7 +538,7 @@
                       Depositable:
                       %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-loading.d-none Loading...
                       %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-link
-                        %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance Loading...
+                        %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -558,7 +558,7 @@
                           .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-user-shares Loading...
+                      %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-user-shares Connect wallet
                       %form{ name: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5zWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -607,7 +607,7 @@
                       Depositable:
                       %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-loading.d-none Loading...
                       %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-link
-                        %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance Loading...
+                        %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -627,7 +627,7 @@
                           .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-user-shares Loading...
+                      %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-user-shares Connect wallet
                       %form{ name: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzkuWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -676,7 +676,7 @@
                       Depositable:
                       %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-loading.d-none Loading...
                       %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-link
-                        %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance Loading...
+                        %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -696,7 +696,7 @@
                           .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-user-shares Loading...
+                      %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-user-shares Connect wallet
                       %form{ name: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79vWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -745,7 +745,7 @@
                       Depositable:
                       %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-loading.d-none Loading...
                       %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-link
-                        %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance Loading...
+                        %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -765,7 +765,7 @@
                           .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-user-shares Loading...
+                      %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-user-shares Connect wallet
                       %form{ name: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxpWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -814,7 +814,7 @@
                       Depositable:
                       %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-loading.d-none Loading...
                       %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-link
-                        %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance Loading...
+                        %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -834,7 +834,7 @@
                           .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-user-shares Loading...
+                      %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-user-shares Connect wallet
                       %form{ name: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242cWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
@@ -883,7 +883,7 @@
                       Depositable:
                       %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-loading.d-none Loading...
                       %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-link
-                        %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance Loading...
+                        %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance Connect wallet
                         %button.btn.btn-light.btn-sm.ml-2.mb-1.border.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-view-button.d-none{ type: 'button' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -903,7 +903,7 @@
                           .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button-ready Deposit
                     .col-md-6
                       Withdrawable:
-                      %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-user-shares Loading...
+                      %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-user-shares Connect wallet
                       %form{ name: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravqlWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount' }
