@@ -41,43 +41,45 @@ $(document).ready(function(){
       window.location.reload()
     })
 
-    document.querySelector(".keplr-wallet-button").addEventListener('click', async(evt) => {
-      $(".keplr-wallet-button").prop("disabled", true);
-      $(".keplr-wallet-button .loading").removeClass("d-none")
-      $(".keplr-wallet-button .ready").addClass("d-none")
-      try {
-        // Keplr extension injects the offline signer that is compatible with cosmJS.
-        // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
-        // And it also injects the helper function to `window.keplr`.
-        // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-        if (!window.getOfflineSigner || !window.keplr) {
-          throw "Please install keplr extension";
-        } else {
-          if (window.keplr.experimentalSuggestChain) {
-            // This method will ask the user whether or not to allow access if they haven't visited this website.
-            // Also, it will request user to unlock the wallet if the wallet is locked.
-            // If you don't request enabling before usage, there is no guarantee that other methods will work.
-            await window.keplr.enable('secret-4');
-
-            // @ts-ignore
-            window.keplrOfflineSigner = window.getOfflineSigner('secret-4');
+    document.querySelectorAll(".keplr-wallet-button").forEach(item => {
+      item.addEventListener('click', async(evt) => {
+        $(".keplr-wallet-button").prop("disabled", true);
+        $(".keplr-wallet-button .loading").removeClass("d-none")
+        $(".keplr-wallet-button .ready").addClass("d-none")
+        try {
+          // Keplr extension injects the offline signer that is compatible with cosmJS.
+          // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
+          // And it also injects the helper function to `window.keplr`.
+          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
+          if (!window.getOfflineSigner || !window.keplr) {
+            throw "Please install keplr extension";
           } else {
-            throw "Please use the recent version of keplr extension";
+            if (window.keplr.experimentalSuggestChain) {
+              // This method will ask the user whether or not to allow access if they haven't visited this website.
+              // Also, it will request user to unlock the wallet if the wallet is locked.
+              // If you don't request enabling before usage, there is no guarantee that other methods will work.
+              await window.keplr.enable('secret-4');
+
+              // @ts-ignore
+              window.keplrOfflineSigner = window.getOfflineSigner('secret-4');
+            } else {
+              throw "Please use the recent version of keplr extension";
+            }
           }
+          $('.keplr-wallet-button').addClass('d-none')
+          $('#header-menu .wallet-container').removeClass('d-lg-block')
+          $(document).trigger('keplr_connected', {});
         }
-        $('.keplr-wallet-button').addClass('d-none')
-        $('#header-menu .wallet-container').removeClass('d-lg-block')
-        $(document).trigger('keplr_connected', {});
-      }
-      catch(err) {
-        document.showAlertDanger(err)
-      }
-      finally {
-        $(".keplr-wallet-button").prop("disabled", false);
-        $(".keplr-wallet-button .ready").removeClass("d-none")
-        $(".keplr-wallet-button .loading").addClass("d-none")
-      }
-    });
+        catch(err) {
+          document.showAlertDanger(err)
+        }
+        finally {
+          $(".keplr-wallet-button").prop("disabled", false);
+          $(".keplr-wallet-button .ready").removeClass("d-none")
+          $(".keplr-wallet-button .loading").addClass("d-none")
+        }
+      })
+    })
   }
 })
 
