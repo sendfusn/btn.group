@@ -224,15 +224,15 @@ $(document).ready(function(){
           withdraw_gas: '175000',
         },
         // This has to be third position in array
-        {
-          address: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan',
-          deposit_gas: '75000',
-          deposit_msg: 'eyJkZXBvc2l0Ijoge319',
-          deposit_token: cryptocurrencies['butt_sxmr_lp'],
-          earn_token: cryptocurrencies['butt_sxmr_lp'],
-          reward_token: cryptocurrencies['butt'],
-          withdraw_gas: '75000',
-        },
+        // {
+        //   address: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan',
+        //   deposit_gas: '75000',
+        //   deposit_msg: 'eyJkZXBvc2l0Ijoge319',
+        //   deposit_token: cryptocurrencies['butt_sxmr_lp'],
+        //   earn_token: cryptocurrencies['butt_sxmr_lp'],
+        //   reward_token: cryptocurrencies['butt'],
+        //   withdraw_gas: '75000',
+        // },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
           deposit_gas: '400000',
@@ -714,29 +714,29 @@ $(document).ready(function(){
         }
       })
 
-      document.querySelector('#claim-profit-distributor-b-butt').addEventListener('click', async(evt) => {
-        if (this.pools[2]['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-          let $claimBUTT = $('#claim-profit-distributor-b-butt')
-          this.setClient(this.pools[2]['deposit_gas']);
-          $claimBUTT.prop("disabled", true);
-          $claimBUTT.find('.loading').removeClass("d-none")
-          $claimBUTT.find('.ready').addClass("d-none")
-          try {
-            let handleMsg = { send: { amount: '0', recipient: this.pools[2]['address'], msg: this.pools[2]['deposit_msg'] } }
-            let response = await this.client.execute(this.pools[2]['deposit_token']['address'], handleMsg)
-            document.showAlertSuccess("Claim successful");
-            $claimBUTT.find('.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable').text('0')
-          }
-          catch(err) {
-            document.showAlertDanger(err)
-          }
-          finally {
-            $claimBUTT.prop("disabled", false);
-            $claimBUTT.find('.loading').addClass("d-none")
-            $claimBUTT.find('.ready').removeClass("d-none")
-          }
-        }
-      })
+      // document.querySelector('#claim-profit-distributor-b-butt').addEventListener('click', async(evt) => {
+      //   if (this.pools[2]['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
+      //     let $claimBUTT = $('#claim-profit-distributor-b-butt')
+      //     this.setClient(this.pools[2]['deposit_gas']);
+      //     $claimBUTT.prop("disabled", true);
+      //     $claimBUTT.find('.loading').removeClass("d-none")
+      //     $claimBUTT.find('.ready').addClass("d-none")
+      //     try {
+      //       let handleMsg = { send: { amount: '0', recipient: this.pools[2]['address'], msg: this.pools[2]['deposit_msg'] } }
+      //       let response = await this.client.execute(this.pools[2]['deposit_token']['address'], handleMsg)
+      //       document.showAlertSuccess("Claim successful");
+      //       $claimBUTT.find('.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable').text('0')
+      //     }
+      //     catch(err) {
+      //       document.showAlertDanger(err)
+      //     }
+      //     finally {
+      //       $claimBUTT.prop("disabled", false);
+      //       $claimBUTT.find('.loading').addClass("d-none")
+      //       $claimBUTT.find('.ready').removeClass("d-none")
+      //     }
+      //   }
+      // })
 
       $(".keplr-wallet-button").first().click()
     }
