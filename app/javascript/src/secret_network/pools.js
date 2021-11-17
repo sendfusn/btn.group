@@ -397,7 +397,7 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateClaimable(value)
+                this.updateRewards(value)
                 this.updateTotalShares(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
@@ -455,7 +455,7 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateClaimable(value)
+                this.updateRewards(value)
                 this.updateTotalShares(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
@@ -491,19 +491,31 @@ $(document).ready(function(){
         this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
       }
 
-      this.updatePoolInterface = (pool, afterTransaction = false) => {
+      this.updatePoolInterface = (pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false) => {
+        if (poolDetailsOnly) {
+          this.updateRewards(pool, afterTransaction)
+          this.updateTotalShares(pool)
+        } else if (userDetailsOnly) {
           this.updateWalletBalance(pool['deposit_token'], pool)
-          this.updateClaimable(pool, afterTransaction)
+          this.updateRewards(pool, afterTransaction)
+          this.updateUserWithdrawable(pool)
+          if (afterTransaction) {
+            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
+          }
+        } else {
+          this.updateWalletBalance(pool['deposit_token'], pool)
+          this.updateRewards(pool, afterTransaction)
           this.updateUserWithdrawable(pool)
           if (afterTransaction) {
             this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
           }
           this.updateTotalShares(pool)
+        }
       }
 
-      this.updateUserInterface = () => {
+      this.updateUserInterface = (poolDetailsOnly = false, userDetailsOnly = false) => {
         this.pools.forEach(function(pool, index) {
-          this.updatePoolInterface(pool)
+          this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly)
         }.bind(this));
       }
 
@@ -543,7 +555,7 @@ $(document).ready(function(){
         }
       }
 
-      this.updateClaimable = async(pool, afterTransaction = false) => {
+      this.updateRewards = async(pool, afterTransaction = false) => {
         let client = document.secretNetworkClient(this.environment);
         if (pool.farm_contract_address) {
           if (!pool.under_maintenance) {
@@ -564,36 +576,38 @@ $(document).ready(function(){
                 console.log(pool)
                 if (this.retryCount < 5) {
                   this.retryCount += 1
-                  this.updateClaimable(pool)
+                  this.updateRewards(pool)
                 }
               }
             }
           }
         } else {
-          let $poolClaimable = $('.' + pool.address + '-claimable')
-          if (afterTransaction) {
-            $poolClaimable.text('0');
-          } else {
-            try {
-              $poolClaimable.text('Loading...');
-              if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-                let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
-                $poolClaimable.text((response['claimable_profit']['amount'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
-              } else {
-                if (!this.height) {
-                  this.height = await client.getHeight();
+          if (this.address) {
+            let $poolClaimable = $('.' + pool.address + '-claimable')
+            if (afterTransaction) {
+              $poolClaimable.text('0');
+            } else {
+              try {
+                $poolClaimable.text('Loading...');
+                if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
+                  let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
+                  $poolClaimable.text((response['claimable_profit']['amount'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
+                } else {
+                  if (!this.height) {
+                    this.height = await client.getHeight();
+                  }
+                  let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: this.height }})
+                  $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
                 }
-                let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: this.height }})
-                $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
-              }
-            } catch(err) {
-              if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}') || err.message.includes('{"not_found":{"kind":"cw_profit_distributor_b::state::User"}}')) {
-                $poolClaimable.text('0');
-              } else {
-                console.log(err)
-                if (this.retryCount < 5) {
-                  this.retryCount += 1
-                  this.updateClaimable(pool)
+              } catch(err) {
+                if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}') || err.message.includes('{"not_found":{"kind":"cw_profit_distributor_b::state::User"}}')) {
+                  $poolClaimable.text('0');
+                } else {
+                  console.log(err)
+                  if (this.retryCount < 5) {
+                    this.retryCount += 1
+                    this.updateRewards(pool)
+                  }
                 }
               }
             }
@@ -662,8 +676,7 @@ $(document).ready(function(){
       $(document).on('keplr_connected', async(evt) => {
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
-        this.setClient('350000');
-        this.updateUserInterface()
+        this.updateUserInterface(false, true)
       })
 
       document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
@@ -737,6 +750,8 @@ $(document).ready(function(){
       //     }
       //   }
       // })
+
+      this.updateUserInterface(true, false)
     }
   };
 });
