@@ -34,6 +34,13 @@
                   %h3.text-white.d-inline btn.group
               / Menu Toogle @s
               .header-nav-toggle
+                .wallet-container.float-left.d-none
+                  %button.btn.btn-grad-alt.btn-md.no-change.keplr-wallet-button
+                    .d-none.loading
+                      %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                      %em Loading...
+                    .ready
+                      Connect Keplr wallet
                 %a.navbar-toggle{ 'data-menu-toggle' => 'header-menu', href: '#' }
                   .toggle-line
                     %span
@@ -41,6 +48,14 @@
               .header-navbar.header-navbar-s2
                 %nav.header-menu.justify-content-between#header-menu
                   %ul.menu
+                    %li.menu-item
+                      .wallet-container.d-none
+                        %button.btn.btn-grad-alt.btn-md.no-change.keplr-wallet-button
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            Connect Keplr wallet
                     %li.menu-item.has-sub
                       %a.menu-link.nav-link.menu-toggle{ href: '#' }
                         Features

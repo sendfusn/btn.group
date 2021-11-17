@@ -8,7 +8,6 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 // BOOTSTRAP & jquery IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
-
 import 'lodash'
 
 // APP
@@ -33,19 +32,56 @@ Rails.start()
 ActiveStorage.start()
 
 // === LISTENERS ===
-window.addEventListener("keplr_keystorechange", () => {
-  if($("#secret-network-yield-optimizer").length ||
-    $("#secret-network-transactions").length ||
-    $("#secret-network-smart-contract-interface").length ||
-    $("#secret-network-mount-doom").length ||
-    $("#secret-network-block-locker").length ||
-    $("#secret-network-address-alias-index").length ||
-    $("#secret-network-dex-aggregator").length) {
-    console.log("Key store in Keplr is changed. You may need to refetch the account info.")
-    window.location.reload()
+$(document).ready(function(){
+  if($(".keplr-wallet").length) {
+    $('.header-nav-toggle .wallet-container').removeClass('d-none')
+    $('#header-menu .wallet-container').addClass('d-lg-block')
+
+    window.addEventListener("keplr_keystorechange", () => {
+      window.location.reload()
+    })
+
+    document.querySelector(".keplr-wallet-button").addEventListener('click', async(evt) => {
+      $(".keplr-wallet-button").prop("disabled", true);
+      $(".keplr-wallet-button .loading").removeClass("d-none")
+      $(".keplr-wallet-button .ready").addClass("d-none")
+      try {
+        // Keplr extension injects the offline signer that is compatible with cosmJS.
+        // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
+        // And it also injects the helper function to `window.keplr`.
+        // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
+        if (!window.getOfflineSigner || !window.keplr) {
+          throw "Please install keplr extension";
+        } else {
+          if (window.keplr.experimentalSuggestChain) {
+            // This method will ask the user whether or not to allow access if they haven't visited this website.
+            // Also, it will request user to unlock the wallet if the wallet is locked.
+            // If you don't request enabling before usage, there is no guarantee that other methods will work.
+            await window.keplr.enable('secret-4');
+
+            // @ts-ignore
+            window.keplrOfflineSigner = window.getOfflineSigner('secret-4');
+          } else {
+            throw "Please use the recent version of keplr extension";
+          }
+        }
+        $('.keplr-wallet-button').addClass('d-none')
+        $('#header-menu .wallet-container').removeClass('d-lg-block')
+        $(document).trigger('keplr_connected', {});
+      }
+      catch(err) {
+        document.showAlertDanger(err)
+      }
+      finally {
+        $(".keplr-wallet-button").prop("disabled", false);
+        $(".keplr-wallet-button .ready").removeClass("d-none")
+        $(".keplr-wallet-button .loading").addClass("d-none")
+      }
+    });
   }
 })
 
+// === FUNCTIONS ===
 document.featureContractAddress = function(environment) {
   let contractAddress
   if (environment == 'staging') {

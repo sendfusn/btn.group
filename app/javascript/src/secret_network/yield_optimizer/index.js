@@ -470,7 +470,7 @@ $(document).ready(function(){
         this.client = new SigningCosmWasmClient(
           this.httpUrl,
           this.address,
-          this.keplrOfflineSigner,
+          window.getOfflineSigner(this.chainId),
           window.getEnigmaUtils(this.chainId),
           {
             exec: {
@@ -480,49 +480,6 @@ $(document).ready(function(){
           },
         );
       }
-
-      document.connectWalletForm.onsubmit = async (e) => {
-        e.preventDefault()
-        $("#connect-wallet-button").prop("disabled", true);
-        $("#connect-wallet-button-loading").removeClass("d-none")
-        $("#connect-wallet-button-ready").addClass("d-none")
-
-        try {
-          // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
-          // And it also injects the helper function to `window.keplr`.
-          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-          if (!window.getOfflineSigner || !window.keplr) {
-            throw "Please install keplr extension";
-          } else {
-            if (window.keplr.experimentalSuggestChain) {
-              // This method will ask the user whether or not to allow access if they haven't visited this website.
-              // Also, it will request user to unlock the wallet if the wallet is locked.
-              // If you don't request enabling before usage, there is no guarantee that other methods will work.
-              await window.keplr.enable(this.chainId);
-
-              // @ts-ignore
-              this.keplrOfflineSigner = window.getOfflineSigner(this.chainId);
-              const accounts = await this.keplrOfflineSigner.getAccounts();
-              this.address = accounts[0].address;
-              this.setClient('350000');
-              this.updateUserInterface()
-            } else {
-              throw "Please use the recent version of keplr extension";
-            }
-          }
-          $('#connect-wallet-form').addClass('d-none')
-        }
-        catch(err) {
-          let errorDisplayMessage = err;
-          document.showAlertDanger(errorDisplayMessage)
-        }
-        finally {
-          $("#connect-wallet-button").prop("disabled", false);
-          $("#connect-wallet-button-ready").removeClass("d-none")
-          $("#connect-wallet-button-loading").addClass("d-none")
-        }
-      };
 
       this.updatePoolInterface = (pool, afterTransaction = false) => {
           this.updateWalletBalance(pool['deposit_token'], pool)
@@ -694,6 +651,13 @@ $(document).ready(function(){
         }
       }
 
+      $(document).on('keplr_connected', async(evt) => {
+        let accounts = await window.keplrOfflineSigner.getAccounts()
+        this.address = accounts[0].address;
+        this.setClient('350000');
+        this.updateUserInterface()
+      })
+
       document.querySelector('#claim-butt').addEventListener('click', async(evt) => {
         if (this.pools[1]['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
           let $claimBUTT = $('#claim-butt')
@@ -742,8 +706,7 @@ $(document).ready(function(){
         }
       })
 
-      // Query profit distributor
-      $('#connect-wallet-form').submit()
+      $(".keplr-wallet-button").first().click()
     }
   };
 });
