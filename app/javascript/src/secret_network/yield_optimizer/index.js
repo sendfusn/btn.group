@@ -475,11 +475,11 @@ $(document).ready(function(){
       this.updatePoolInterface = (pool, afterTransaction = false) => {
           this.updateWalletBalance(pool['deposit_token'], pool)
           this.updateClaimable(pool, afterTransaction)
-          this.updateTotalShares(pool)
           this.updateUserWithdrawable(pool)
           if (afterTransaction) {
             this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
           }
+          this.updateTotalShares(pool)
       }
 
       this.updateUserInterface = () => {
