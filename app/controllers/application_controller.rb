@@ -29,9 +29,9 @@ class ApplicationController < ActionController::Base
         features: {
           address_alias: {
             name: 'Address alias',
-            show_in_navbar: false,
-            show_link: false,
-            status: 'Under maintenance',
+            show_in_navbar: true,
+            show_link: true,
+            status: 'Live',
             contracts: {
               production: 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w'
             }
