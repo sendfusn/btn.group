@@ -2,6 +2,8 @@
 
 module SecretNetwork
   class PagesController < ApplicationController
+    def address_alias; end
+
     def dex_aggregator; end
 
     def butt_lode; end

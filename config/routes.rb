@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   end
 
   namespace :secret_network do
-    resources :address_alias, only: %i[index new]
     resources :block_locker, only: :index
     resources :buttcoin, only: :index
     get 'buttcoin/circulating_supply', defaults: { format: 'json' }
@@ -27,6 +26,7 @@ Rails.application.routes.draw do
     resources :smart_contract_interface, only: :index
     resources :transactions, only: :index
 
+    get 'address_alias' => 'pages#address_alias'
     get 'butt_lode' => 'pages#butt_lode'
     get 'dex_aggregator' => 'pages#dex_aggregator'
     get 'pools' => 'pages#pools'
