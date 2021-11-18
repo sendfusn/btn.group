@@ -29,7 +29,7 @@
                           %label.btn.btn-md.btn-light
                             %input{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
                       .form-group
-                        %input.form-control.w-100#search-value{ name: 'searchValue', required: true, autocomplete: 'off' }
+                        %input.form-control.text-lowercase.w-100{ name: 'searchValue', required: true, autocomplete: 'off' }
                       %button.btn.btn-grad-alt.w-100.mt-3#search-button{ type: 'submit' }
                         .d-none#loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -44,7 +44,7 @@
                     %form{ name: 'aliasCreateForm' }
                       .form-group
                         %label{ for: 'alias' } Alias
-                        %input.form-control.w-100#alias{ name: 'alias', required: true }
+                        %input.form-control.text-lowercase.w-100#alias{ name: 'alias', required: true }
                       .form-group
                         %label{ for: 'avatar-url' } Avatar url
                         %button.btn.btn-light.btn-sm.ml-2.border#cloudinary-upload-widget Upload image

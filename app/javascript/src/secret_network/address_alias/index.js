@@ -10,7 +10,14 @@ $(document).ready(function(){
       }, (error, result) => {
       if (!error && result && result.event === "success") {
         console.log("Done! Here is the image info: ", result.info);
-        $("#avatar-url").val(result.info.url);
+        let imageUrl = result.info.secure_url
+        if (result.info.coordinates) {
+          let splitUrl = result.info.secure_url.split("upload/")
+          let coordinates = result.info.coordinates.custom
+          let transformationString = 'upload/c_crop,x_' + coordinates[0][0] + ',y_' + coordinates[0][1] + ',h_' + coordinates[0][2] + ',w_' + coordinates[0][3] + '/'
+          imageUrl = splitUrl[0] + transformationString +  splitUrl[1]
+        }
+        $("#avatar-url").val(imageUrl);
       }
     })
 
@@ -119,7 +126,7 @@ $(document).ready(function(){
             }
           }
 
-          let alias = document.aliasCreateForm.alias.value;
+          let alias = document.aliasCreateForm.alias.value
           let avatarUrl = document.aliasCreateForm.avatarUrl.value;
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
           let response = await this.client.execute(this.buttcoinAddress, handleMsg)
@@ -158,7 +165,7 @@ $(document).ready(function(){
         try {
           let search_type = document.aliasSearchForm.searchType.value;
           let search_value = document.aliasSearchForm.searchValue.value;
-          let search_params = { search_type: search_type, search_value: search_value.toLowerCase() };
+          let search_params = { search_type: search_type, search_value: search_value };
           let result = await client.queryContractSmart(this.contractAddress, { search: search_params })
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
