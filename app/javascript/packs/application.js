@@ -37,7 +37,6 @@ $(document).ready(function(){
     $('.header-nav-toggle .wallet-container').removeClass('d-none')
     $('#header-menu .wallet-container').addClass('d-lg-block')
 
-
     window.addEventListener("keplr_keystorechange", () => {
       window.location.reload()
     })
