@@ -37,6 +37,7 @@ $(document).ready(function(){
     $('.header-nav-toggle .wallet-container').removeClass('d-none')
     $('#header-menu .wallet-container').addClass('d-lg-block')
 
+
     window.addEventListener("keplr_keystorechange", () => {
       window.location.reload()
     })
@@ -67,8 +68,10 @@ $(document).ready(function(){
             }
           }
           $('.keplr-wallet-button').addClass('d-none')
-          $('#header-menu .wallet-container').removeClass('d-lg-block')
           $(document).trigger('keplr_connected', {});
+          let accounts = await window.keplrOfflineSigner.getAccounts()
+          $('.wallet-details').removeClass('d-none')
+          $('.wallet-details .content').text(accounts[0].address)
         }
         catch(err) {
           document.showAlertDanger(err)

@@ -42,6 +42,8 @@
                     .ready
                       = cl_image_tag('logos/b8thbiihwftyjolgjjz2_dhy5mr', height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'height: 20px;', class: 'mr-1')
                       Connect wallet
+                  -# .wallet-details.btn.btn-round.btn-info.btn-md.d-none
+                  -#   .content.overflow-hidden{ style: 'text-overflow: ellipsis; max-width: 155px; cursor: text !important;' }
                 %a.navbar-toggle{ 'data-menu-toggle' => 'header-menu', href: '#' }
                   .toggle-line
                     %span
@@ -58,6 +60,8 @@
                           .ready
                             = cl_image_tag('logos/b8thbiihwftyjolgjjz2_dhy5mr', height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'height: 20px;', class: 'mr-1')
                             Connect wallet
+                        .wallet-details.btn.btn-round.btn-md.no-change.d-none{ style: 'cursor: text !important;' }
+                          .content.overflow-hidden{ style: 'text-overflow: ellipsis; max-width: auto;' }
                     %li.menu-item.has-sub
                       %a.menu-link.nav-link.menu-toggle{ href: '#' }
                         Features
