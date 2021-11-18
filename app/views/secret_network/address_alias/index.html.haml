@@ -36,6 +36,10 @@
                           %em Loading...
                         #ready
                           Search
+                    %hr
+                    * Cost to search = FREE
+                    %br
+                    * Cost to delete alias = ~gas(SCRT)
                   .tab-pane.fade#tab-2-2
                     %form{ name: 'aliasCreateForm' }
                       .form-group
@@ -51,16 +55,21 @@
                           %em Loading...
                         .ready
                           Create
+                    %hr
+                    * To change alias, search and delete your current alias first.
+                    %br
+                    * Cost to create alias = 1 BUTT + ~gas(SCRT)
+                    %br
+                    * You can get BUTT from
+                    = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
         .row.justify-content-center#secret-network-address-alias-profile
           .col-xl-6.col-lg-9
             .card.bg-light.my-3.d-none#result-container
               .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
                 #result-value
-                %button.btn.btn-danger.w-100.mt-3.btn-md#delete-button
+                %button.btn.btn-danger.w-100.mt-3.btn-md.d-none#delete-button
                   .d-none#delete-loading
                     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                     %em Loading...
                   #delete-ready
                     Delete
-                %p.mt-2 * You can only delete your own alias
-

@@ -20,6 +20,7 @@ $(document).ready(function(){
     }, false);
 
     window.onload = async () => {
+      this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
       this.contractAddress = document.featureContractAddress(this.environment);
       this.chainId = document.secretNetworkChainId(this.environment)
@@ -51,8 +52,8 @@ $(document).ready(function(){
                   this.address = accounts[0].address;
                   let gasParams = {
                       exec: {
-                        amount: [{ amount: '200000', denom: 'uscrt' }],
-                        gas: '200000',
+                        amount: [{ amount: '100000', denom: 'uscrt' }],
+                        gas: '100000',
                       },
                     }
                   this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
@@ -122,8 +123,8 @@ $(document).ready(function(){
 
             let alias = document.aliasCreateForm.alias.value;
             let avatarUrl = document.aliasCreateForm.avatarUrl.value;
-            let handleMsg = { create: { alias: alias, avatar_url: avatarUrl } }
-            let response = await this.client.execute(this.contractAddress, handleMsg)
+            let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
+            let response = await this.client.execute(this.buttcoinAddress, handleMsg)
             $("#result-value-container").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
             let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + this.address
@@ -133,6 +134,7 @@ $(document).ready(function(){
             $("#delete-button").data('environment', environment)
             $("#delete-button").data('alias', alias)
             $("#result-container").removeClass("d-none");
+            $('#delete-button').removeClass('d-none')
           }
           catch(err) {
             let errorDisplayMessage = err;
@@ -162,16 +164,24 @@ $(document).ready(function(){
           try {
             let search_type = document.aliasSearchForm.searchType.value;
             let search_value = document.aliasSearchForm.searchValue.value;
-            let search_params = { search_type: search_type, search_value: search_value };
+            let search_params = { search_type: search_type, search_value: search_value.toLowerCase() };
             let result = await client.queryContractSmart(this.contractAddress, { search: search_params })
             $("#result-value-container").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
             let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + result['attributes']['address']
             let resultValueHtml = '<h3 class="mb-0">' + result['attributes']['alias'] + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + result['attributes']['address'] + '</a><img class="w-100" src="' + result['attributes']['avatar_url'] + '">'
             $("#result-value").html(resultValueHtml)
-            // Set data on delete button
-            $("#delete-button").data('alias', result['attributes']['alias'])
             $("#result-container").removeClass("d-none");
+            if (window.keplrOfflineSigner) {
+              $("#delete-button").data('alias', result['attributes']['alias'])
+              let accounts = await window.keplrOfflineSigner.getAccounts()
+              let walletAddress = accounts[0].address
+              if (walletAddress == result['attributes']['address']) {
+                $('#delete-button').removeClass('d-none')
+              } else {
+                $('#delete-button').addClass('d-none')
+              }
+            }
           }
           catch(err) {
             console.error(err)
