@@ -129,7 +129,6 @@ $(document).ready(function(){
           let resultValueHtml = '<h3 class="mb-0">' + alias + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + this.address + '</a><img class="w-100" src="' + avatarUrl + '">'
           $("#result-value").html(resultValueHtml)
           // Set data on delete button
-          $("#delete-button").data('environment', environment)
           $("#delete-button").data('alias', alias)
           $("#result-container").removeClass("d-none");
           $('#delete-button').removeClass('d-none')
