@@ -67,9 +67,10 @@
             .card.bg-light.my-3.d-none#result-container
               .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
                 #result-value
-                %button.btn.btn-danger.w-100.mt-3.btn-md.d-none#delete-button
-                  .d-none#delete-loading
-                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                    %em Loading...
-                  #delete-ready
-                    Delete
+                %form{ name: 'aliasDeleteForm' }
+                  %button.btn.btn-danger.w-100.mt-3.btn-md.d-none#delete-button{ type: 'submit' }
+                    .d-none#delete-loading
+                      %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                      %em Loading...
+                    #delete-ready
+                      Delete
