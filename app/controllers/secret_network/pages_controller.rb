@@ -8,7 +8,10 @@ module SecretNetwork
 
     def butt_lode; end
 
-    def mount_doom; end
+    def mount_doom
+      @head_description = 'Burn contract for Secret network tokens.'
+      @head_title = 'Mount Doom | Secret network | btn.group'
+    end
 
     def pools; end
 
