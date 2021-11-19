@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  helper_method :features, :logo_cloudinary_public_id
+  helper_method :features, :logo_cloudinary_public_id, :head_title
 
   def brand_assets; end
 
@@ -100,6 +100,10 @@ class ApplicationController < ActionController::Base
         }
       }
     }
+  end
+
+  def head_title
+    'btn.group'
   end
 
   def logo_cloudinary_public_id
