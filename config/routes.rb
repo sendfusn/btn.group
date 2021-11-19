@@ -22,14 +22,14 @@ Rails.application.routes.draw do
     resources :block_locker, only: :index
     resources :buttcoin, only: :index
     get 'buttcoin/circulating_supply', defaults: { format: 'json' }
-    resources :mount_doom, only: :index
     resources :smart_contract_interface, only: :index
-    resources :transactions, only: :index
 
     get 'address_alias' => 'pages#address_alias'
     get 'butt_lode' => 'pages#butt_lode'
     get 'dex_aggregator' => 'pages#dex_aggregator'
+    get 'mount_doom' => 'pages#mount_doom'
     get 'pools' => 'pages#pools'
+    get 'transactions' => 'pages#transactions'
     get 'why_some_of_our_contracts_are_not_private' => 'pages#why_some_of_our_contracts_are_not_private'
     get 'yield_optimizer' => redirect('secret_network/pools')
   end

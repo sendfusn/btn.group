@@ -23,10 +23,10 @@ import '../src/secret_network/address_alias'
 import '../src/secret_network/block_locker/index'
 import '../src/secret_network/butt_lode'
 import '../src/secret_network/dex_aggregator'
-import '../src/secret_network/mount_doom/index'
+import '../src/secret_network/mount_doom'
 import '../src/secret_network/pools'
 import '../src/secret_network/smart_contract_interface/index'
-import '../src/secret_network/transactions/index'
+import '../src/secret_network/transactions'
 
 Rails.start()
 ActiveStorage.start()
