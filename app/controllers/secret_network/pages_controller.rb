@@ -15,6 +15,12 @@ module SecretNetwork
 
     def pools; end
 
+    def smart_contract_interface
+      @head_description = 'Web interface for Secret network smart contracts.'
+      @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/smart_contract_interface/contract_rough_MG_tw1vei.png'
+      @head_title = 'Smart contract interface | Secret network | btn.group'
+    end
+
     def transactions
       @head_description = 'Transactions viewer for Secret network tokens.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/transactions/transaction_rough_j8coyp.png'

@@ -21,14 +21,13 @@ Rails.application.routes.draw do
   namespace :secret_network do
     resources :block_locker, only: :index
     resources :buttcoin, only: :index
-    get 'buttcoin/circulating_supply', defaults: { format: 'json' }
-    resources :smart_contract_interface, only: :index
-
     get 'address_alias' => 'pages#address_alias'
     get 'butt_lode' => 'pages#butt_lode'
+    get 'buttcoin/circulating_supply', defaults: { format: 'json' }
     get 'dex_aggregator' => 'pages#dex_aggregator'
     get 'mount_doom' => 'pages#mount_doom'
     get 'pools' => 'pages#pools'
+    get 'smart_contract_interface' => 'pages#smart_contract_interface'
     get 'transactions' => 'pages#transactions'
     get 'why_some_of_our_contracts_are_not_private' => 'pages#why_some_of_our_contracts_are_not_private'
     get 'yield_optimizer' => redirect('secret_network/pools')
