@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
 
   namespace :near do
-    resources :smart_contract_interface, only: :index
+    get 'smart_contract_interface' => 'pages#smart_contract_interface'
   end
 
   namespace :secret_network do

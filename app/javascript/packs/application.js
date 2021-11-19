@@ -15,7 +15,7 @@ import '../src/application/_environment_switch'
 
 // NEAR
 import '../src/near/helpers'
-import '../src/near/smart_contract_interface/index'
+import '../src/near/smart_contract_interface'
 
 // SECRET NETWORK
 import '../src/secret_network/helpers'
