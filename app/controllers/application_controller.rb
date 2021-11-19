@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  helper_method :features, :head_description, :head_link, :head_title, :logo_cloudinary_public_id
+  helper_method :features, :head_description, :head_image, :head_link, :head_title, :logo_cloudinary_public_id
 
   def brand_assets; end
 
@@ -104,6 +104,10 @@ class ApplicationController < ActionController::Base
 
   def head_description
     'Buttcoin, block locker, yield optimizer and other blockchain solutions on the Secret and NEAR networks.'
+  end
+
+  def head_image
+    'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_80/v1621228725/logos/btn_purple_background_uu2ere.png'
   end
 
   def head_link
