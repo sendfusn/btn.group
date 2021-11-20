@@ -624,13 +624,13 @@ $(document).ready(function(){
           $(totalSharesSelector).text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || poolAddress == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
             let config = await client.queryContractSmart(poolAddress, {config: {}})
-            $(totalSharesSelector).text((config['config']['total_shares'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((config['config']['total_shares'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: 0}) + ' ' + depositTokenSymbol)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
             let response = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((response['pool']['shares_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((response['pool']['shares_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: 0}) + ' ' + depositTokenSymbol)
           } else {
             let responseTwo = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((responseTwo['pool']['incentivized_token_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}) + ' ' + depositTokenSymbol)
+            $(totalSharesSelector).text((responseTwo['pool']['incentivized_token_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: 0}) + ' ' + depositTokenSymbol)
           }
         } catch(err) {
           console.log(err)
