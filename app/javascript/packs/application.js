@@ -83,7 +83,9 @@ $(document).ready(function(){
       })
     })
  
-    $(".keplr-wallet-button").first().click()
+    setTimeout(function(){
+      $(".keplr-wallet-button").first().click()
+    }, 500);
   }
 })
 

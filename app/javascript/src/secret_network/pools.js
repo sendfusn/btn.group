@@ -58,6 +58,13 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'SEFI-sXMR'
         },
+        seth_eth_swbtc_lp: {
+          address: 'secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45',
+          asset_one: 'seth_eth',
+          asset_two: 'swbtc',
+          decimals: 6,
+          symbol: 'sETH(ETH)-sWBTC'
+        },
         seth_bsc: {
           address: 'secret1m6a72200733a7jnm76xrznh9cpmt4kf5ql0a6t',
           decimals: 18,
@@ -341,6 +348,17 @@ $(document).ready(function(){
           farm_contract_address: 'secret1rcvjaua8dfhjlh0kwhrsj54l4aj46mu5evgqwq',
           protocol: protocols['secret_swap'],
           withdraw_gas: '750000',
+          reward_token: cryptocurrencies['sefi'],
+        },
+        {
+          address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm',
+          deposit_gas: '200000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['seth_eth_swbtc_lp'],
+          earn_token: cryptocurrencies['seth_eth_swbtc_lp'],
+          farm_contract_address: 'secret1zsnjdcjwpyamc98lyvd5v8u9rw0949px6r5agg',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '200000',
           reward_token: cryptocurrencies['sefi'],
         },
       ]
