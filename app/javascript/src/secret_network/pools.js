@@ -352,13 +352,13 @@ $(document).ready(function(){
         },
         {
           address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm',
-          deposit_gas: '300000',
+          deposit_gas: '700000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['seth_eth_swbtc_lp'],
           earn_token: cryptocurrencies['seth_eth_swbtc_lp'],
           farm_contract_address: 'secret1zsnjdcjwpyamc98lyvd5v8u9rw0949px6r5agg',
           protocol: protocols['secret_swap'],
-          withdraw_gas: '300000',
+          withdraw_gas: '700000',
           reward_token: cryptocurrencies['sefi'],
         },
       ]
