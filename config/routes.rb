@@ -19,9 +19,9 @@ Rails.application.routes.draw do
   end
 
   namespace :secret_network do
-    resources :block_locker, only: :index
     resources :buttcoin, only: :index
     get 'address_alias' => 'pages#address_alias'
+    get 'block_locker' => 'pages#block_locker'
     get 'butt_lode' => 'pages#butt_lode'
     get 'buttcoin/circulating_supply', defaults: { format: 'json' }
     get 'dex_aggregator' => 'pages#dex_aggregator'

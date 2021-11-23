@@ -20,7 +20,7 @@ import '../src/near/smart_contract_interface'
 // SECRET NETWORK
 import '../src/secret_network/helpers'
 import '../src/secret_network/address_alias'
-import '../src/secret_network/block_locker/index'
+import '../src/secret_network/block_locker'
 import '../src/secret_network/butt_lode'
 import '../src/secret_network/dex_aggregator'
 import '../src/secret_network/mount_doom'
