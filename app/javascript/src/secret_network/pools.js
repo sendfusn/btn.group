@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js";
+
 $(document).ready(function(){
   if($("#secret-network-pools").length) {
     window.onload = async () => {
@@ -57,6 +59,13 @@ $(document).ready(function(){
           asset_two: 'sxmr',
           decimals: 6,
           symbol: 'SEFI-sXMR'
+        },
+        seth_bsc_seth_eth_lp: {
+          address: 'secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu',
+          asset_one: 'seth_bsc',
+          asset_two: 'seth_eth',
+          decimals: 6,
+          symbol: 'sETH(BSC)-sETH(ETH)'
         },
         seth_eth_swbtc_lp: {
           address: 'secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45',
@@ -361,6 +370,17 @@ $(document).ready(function(){
           withdraw_gas: '700000',
           reward_token: cryptocurrencies['sefi'],
         },
+        {
+          address: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82',
+          deposit_gas: '700000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['seth_bsc_seth_eth_lp'],
+          earn_token: cryptocurrencies['seth_bsc_seth_eth_lp'],
+          farm_contract_address: 'secret1s3gg4l6u2vpewqp2lpupqwr52ktdak00rq05ms',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '700000',
+          reward_token: cryptocurrencies['sefi'],
+        },
       ]
       this.retryCount = 0;
       $.each(this.pools, function(index, value) {
@@ -401,8 +421,8 @@ $(document).ready(function(){
             $depositButtonReady.addClass("d-none")
             try {
               let amount = document[value['address'] + 'DepositForm'].amount.value;
-              amount = amount.replace(/,/g, '');
-              let handleMsg = { send: { amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0), recipient: value['address'], msg: value['deposit_msg'] } }
+              amount = this.formatStringNumberForSmartContract(amount, value['deposit_token']['decimals'])
+              let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
@@ -451,15 +471,15 @@ $(document).ready(function(){
             $withdrawButtonLoading.removeClass("d-none")
             $withdrawButtonReady.addClass("d-none")
             try {
-              let amount = document[value['address'] + 'WithdrawForm'].amount.value;
-              amount = amount.replace(/,/g, '');
+              let amount = document[value['address'] + 'WithdrawForm'].amount.value
+              amount = this.formatStringNumberForSmartContract(amount, value['deposit_token']['decimals'])
               let handleMsg;
               if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
-                handleMsg = { withdraw: { shares_amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
+                handleMsg = { withdraw: { shares_amount: amount } }
               } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || value['address'] == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || value['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-                handleMsg = { withdraw: { amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
+                handleMsg = { withdraw: { amount: amount } }
               } else {
-                handleMsg = { withdraw: { incentivized_token_amount: (amount * Math.pow(10, value['deposit_token']['decimals'])).toFixed(0) } }
+                handleMsg = { withdraw: { incentivized_token_amount: amount } }
               }
               let response = await this.client.execute(value['address'], handleMsg)
               document.showAlertSuccess("Withdraw successful");
@@ -498,6 +518,14 @@ $(document).ready(function(){
           };
         }
       }.bind(this))
+
+      this.formatStringNumberForSmartContract = (stringNumber, decimals) => {
+        return new BigNumber(stringNumber.replace(/,/g, '')).times(new BigNumber("10").pow(decimals)).toFixed();
+      }
+
+      this.humanizeStringNumberFromSmartContract = (stringNumber, decimals, toFormatDecimals = undefined) => {
+        return new BigNumber(stringNumber).dividedBy(new BigNumber("10").pow(decimals)).toFormat(toFormatDecimals)
+      }
 
       this.setClient = (gas) => {
         let gasParams = {
@@ -545,26 +573,29 @@ $(document).ready(function(){
         try {
           $userShares.text('Loading...');
           let userResponse;
-          let withdrawable = 0;
+          let withdrawable = new BigNumber("0");
           if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
             userResponse = await client.queryContractSmart(pool.address, {user: {user_address: this.address}})
-            withdrawable = userResponse['user']['shares']
+            withdrawable = new BigNumber(userResponse['user']['shares'])
           } else {
             userResponse = await client.queryContractSmart(pool.address, {user_info: {address: this.address}})
-            withdrawable = userResponse['user_info']['shares']
+            withdrawable = new BigNumber(userResponse['user_info']['shares'])
             if (pool.address != 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
               // Factor in rewards when you get the chance
               let poolResponse = await client.queryContractSmart(pool.address, {pool: {}})
-              let incentivizedTokenTotal = Number(poolResponse['pool']['incentivized_token_total']);
-              if (Number(poolResponse['pool']['shares_total'] > 0)) {
-                withdrawable = withdrawable * incentivizedTokenTotal / Number(poolResponse['pool']['shares_total'])
+              let incentivizedTokenTotal = new BigNumber(poolResponse['pool']['incentivized_token_total']);
+              if (new BigNumber(poolResponse['pool']['shares_total']) > 0) {
+                withdrawable = withdrawable.multipliedBy(incentivizedTokenTotal).dividedBy(new BigNumber(poolResponse['pool']['shares_total']))
               } else {
-                withdrawable = 0
+                withdrawable = new BigNumber("0");
               }
               
             }
           }
-          $userShares.text((withdrawable / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['deposit_token']['decimals']}))
+          if (withdrawable > 0) {
+            withdrawable = new BigNumber(withdrawable.dividedBy(new BigNumber("10").pow(pool['deposit_token']['decimals'])).toFixed(pool['deposit_token']['decimals']))
+          }
+          $userShares.text(withdrawable.toFormat())
         } catch(err) {
           $userShares.text('0');
           if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
@@ -587,7 +618,7 @@ $(document).ready(function(){
                   this.height = await client.getHeight();
                 }
                 let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: this.height, key: "DoTheRightThing." }})
-                $poolRewardsToProcess.text((response['rewards']['rewards'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
+                $poolRewardsToProcess.text(this.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
               } catch(err) {
                 console.log(err)
                 console.log(this.height)
@@ -609,13 +640,13 @@ $(document).ready(function(){
                 $poolClaimable.text('Loading...');
                 if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
                   let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
-                  $poolClaimable.text((response['claimable_profit']['amount'] / Math.pow(10, pool['reward_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: pool['reward_token']['decimals']}))
+                  $poolClaimable.text(this.humanizeStringNumberFromSmartContract(response['claimable_profit']['amount'], pool['reward_token']['decimals']))
                 } else {
                   if (!this.height) {
                     this.height = await client.getHeight();
                   }
                   let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: this.height }})
-                  $poolClaimable.text((response['pending_buttcoin']['amount'] / 1_000_000).toLocaleString('en', {maximumFractionDigits: 6}))
+                  $poolClaimable.text(this.humanizeStringNumberFromSmartContract(response['pending_buttcoin']['amount'], 6))
                 }
               } catch(err) {
                 if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}') || err.message.includes('{"not_found":{"kind":"cw_profit_distributor_b::state::User"}}')) {
@@ -639,17 +670,19 @@ $(document).ready(function(){
           let depositTokenSymbol = pool['deposit_token']['symbol']
           let totalSharesSelector = '.' + poolAddress + '-total-shares'
           let client = document.secretNetworkClient(this.environment);
+          let humanizedStringNumberFromSmartContract;
           $(totalSharesSelector).text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || poolAddress == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
             let config = await client.queryContractSmart(poolAddress, {config: {}})
-            $(totalSharesSelector).text((config['config']['total_shares'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: 0}) + ' ' + depositTokenSymbol)
+            humanizedStringNumberFromSmartContract = this.humanizeStringNumberFromSmartContract(config['config']['total_shares'], pool['deposit_token']['decimals'], 0)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
             let response = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((response['pool']['shares_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: 0}) + ' ' + depositTokenSymbol)
+            humanizedStringNumberFromSmartContract = this.humanizeStringNumberFromSmartContract(response['pool']['shares_total'], pool['deposit_token']['decimals'], 0)
           } else {
             let responseTwo = await client.queryContractSmart(poolAddress, {pool: {}})
-            $(totalSharesSelector).text((responseTwo['pool']['incentivized_token_total'] / Math.pow(10, pool['deposit_token']['decimals'])).toLocaleString('en', {maximumFractionDigits: 0}) + ' ' + depositTokenSymbol)
+            humanizedStringNumberFromSmartContract = this.humanizeStringNumberFromSmartContract(responseTwo['pool']['incentivized_token_total'], pool['deposit_token']['decimals'], 0)
           }
+          $(totalSharesSelector).text(humanizedStringNumberFromSmartContract + ' ' + depositTokenSymbol)
         } catch(err) {
           console.log(err)
         }
@@ -668,7 +701,7 @@ $(document).ready(function(){
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, address)
           // If they have the key, replace the button with the balance
           let balanceResponse = await client.queryContractSmart(address, { balance: { address: this.address, key: key } })
-          let balanceFormatted = (balanceResponse['balance']['amount'] / Math.pow(10, cryptocurrency['decimals'])).toLocaleString('en', {maximumFractionDigits: cryptocurrency['decimals']})
+          let balanceFormatted = this.humanizeStringNumberFromSmartContract(balanceResponse['balance']['amount'], cryptocurrency['decimals'])
           $walletBalance.text(balanceFormatted)
           $walletBalance.removeClass('d-none')
           $walletBalanceViewButton.addClass('d-none')
