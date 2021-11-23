@@ -597,7 +597,7 @@ $(document).ready(function(){
             }
           }
           if (withdrawable > 0) {
-            withdrawable = new BigNumber(withdrawable.dividedBy(new BigNumber("10").pow(pool['deposit_token']['decimals'])).toFixed(pool['deposit_token']['decimals']))
+            withdrawable = withdrawable.dividedBy(new BigNumber("10").pow(pool['deposit_token']['decimals'])).decimalPlaces(pool['deposit_token']['decimals'])
           }
           $userShares.text(withdrawable.toFormat())
         } catch(err) {
@@ -625,11 +625,12 @@ $(document).ready(function(){
                 $poolRewardsToProcess.text(this.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
               } catch(err) {
                 console.log(err)
-                console.log(this.height)
-                console.log(pool)
                 if (this.retryCount < 5) {
-                  this.retryCount += 1
-                  this.updateRewards(pool)
+                  setTimeout(function(){
+                    this.retryCount += 1
+                    this.height = undefined
+                    this.updateRewards(pool)
+                  }.bind(this), 5000);
                 }
               }
             }
@@ -658,8 +659,11 @@ $(document).ready(function(){
                 } else {
                   console.log(err)
                   if (this.retryCount < 5) {
-                    this.retryCount += 1
-                    this.updateRewards(pool)
+                    setTimeout(function(){
+                      this.retryCount += 1
+                      this.height = undefined
+                      this.updateRewards(pool)
+                    }.bind(this), 5000);
                   }
                 }
               }
@@ -713,8 +717,10 @@ $(document).ready(function(){
           console.log(err)
           if (err.message.includes('502')) {
             if (this.retryCount < 5) {
-              this.retryCount += 1
-              this.updatePoolInterface(pool, true)
+              setTimeout(function(){
+                this.retryCount += 1
+                this.updatePoolInterface(pool, true)
+              }.bind(this), 5000);
             }
           } else {
             // If they don't have a viewing key, show the view balance button and hide the balance
