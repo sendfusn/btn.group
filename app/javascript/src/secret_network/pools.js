@@ -520,6 +520,10 @@ $(document).ready(function(){
       }.bind(this))
 
       this.formatStringNumberForSmartContract = (stringNumber, decimals) => {
+        if (stringNumber == '') {
+          stringNumber = '0'
+        }
+
         return new BigNumber(stringNumber.replace(/,/g, '')).times(new BigNumber("10").pow(decimals)).toFixed();
       }
 
