@@ -5,34 +5,67 @@ $(document).ready(function(){
       this.environment = 'production';
       // this.contractAddress = document.featureContractAddress(this.environment);
       this.chainId = document.secretNetworkChainId(this.environment)
+      this.chosenAuthenticationId;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      window.authentications = [{ "id": "0", "label": "google", "username": "s", "password": "s", "notes": "v" }]
+      this.authentications = [{ "id": "0", "label": "google", "username": "s", "password": "s", "notes": "v" }]
 
       // listeners
-      $('.fa-edit').click(function(e){
+      $('td .fa-edit').click(function(e){
         e.preventDefault()
-        let id = $('td .fa-edit').first().closest('td').data('id')
+        this.chosenAuthenticationId = $('td .fa-edit').first().closest('td').data('id')
         document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
-        document.passwordManagerUpdateForm.id.value = id
-        document.passwordManagerUpdateForm.label.value = window.authentications[id]['label']
-        document.passwordManagerUpdateForm.username.value = window.authentications[id]['username']
-        document.passwordManagerUpdateForm.password.value = window.authentications[id]['password']
-        document.passwordManagerUpdateForm.notes.value = window.authentications[id]['notes']
-      })
+        this.setPasswordManagerUpdateForm()
+      }.bind(this))
 
-      $('.fa-eye').click(function(e){
+      $('td .fa-eye').click(function(e){
         e.preventDefault()
-        let id = $('.fa-eye').first().closest('td').data('id')
+        this.chosenAuthenticationId = $('td .fa-edit').first().closest('td').data('id')
         document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
         $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
-        $('#id-table-data').text(id)
-        $('#table-title').text('Authentication #' + id)
-        $('#label-table-data').text(window.authentications[id]['label'])
-        $('#username-table-data').text(window.authentications[id]['username'] + '*****')
-        $('#password-table-data').text(window.authentications[id]['password'] + '*****')
-        $('#notes-table-data').text(window.authentications[id]['notes'] + '*****')
-      })
+        this.setShowTableData()
+      }.bind(this))
+
+      $('button .fa-edit').parent().click(function(e){
+        e.preventDefault()
+        document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
+        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
+        this.setPasswordManagerUpdateForm()
+      }.bind(this))
+
+      $('button .fa-eye').parent().click(function(e){
+        e.preventDefault()
+        this.authentications[this.chosenAuthenticationId].revealed = true
+        this.authentications[this.chosenAuthenticationId].username = 'abc'
+        this.authentications[this.chosenAuthenticationId].password = 'def'
+        this.authentications[this.chosenAuthenticationId].notes = 'ghi'
+        this.setPasswordManagerUpdateForm()
+        this.setShowTableData()
+        $('button .fa-eye').parent().addClass('d-none')
+      }.bind(this))
+
+      this.setPasswordManagerUpdateForm = function() {
+        document.passwordManagerUpdateForm.id.value = this.chosenAuthenticationId
+        document.passwordManagerUpdateForm.label.value = this.authentications[this.chosenAuthenticationId]['label']
+        document.passwordManagerUpdateForm.username.value = this.authentications[this.chosenAuthenticationId]['username']
+        document.passwordManagerUpdateForm.password.value = this.authentications[this.chosenAuthenticationId]['password']
+        document.passwordManagerUpdateForm.notes.value = this.authentications[this.chosenAuthenticationId]['notes']
+      }
+
+      this.setShowTableData = function() {
+        $('#id-table-data').text(this.chosenAuthenticationId)
+        $('#table-title').text('Authentication #' + this.chosenAuthenticationId)
+        $('#label-table-data').text(this.authentications[this.chosenAuthenticationId]['label'])
+        if(this.authentications[this.chosenAuthenticationId]['revealed']) {
+          $('#username-table-data').text(this.authentications[this.chosenAuthenticationId]['username'])
+          $('#password-table-data').text(this.authentications[this.chosenAuthenticationId]['password'])
+          $('#notes-table-data').text(this.authentications[this.chosenAuthenticationId]['notes'])
+        } else {
+          $('#username-table-data').text(this.authentications[this.chosenAuthenticationId]['username'] + '*****')
+          $('#password-table-data').text(this.authentications[this.chosenAuthenticationId]['password'] + '*****')
+          $('#notes-table-data').text(this.authentications[this.chosenAuthenticationId]['notes'] + '*****')
+        }
+      }
     }
   };
 });
