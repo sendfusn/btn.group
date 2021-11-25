@@ -44,6 +44,14 @@ $(document).ready(function(){
         $('button .fa-eye').parent().addClass('d-none')
       }.bind(this))
 
+      $('button .fa-trash').parent().click(function(e){
+        e.preventDefault()
+        this.authentications.splice(this.chosenAuthenticationId, 1)
+        document.querySelectorAll("a[href^='#tab-2-1']")[0].click()
+        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
+        $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).addClass('d-none')
+      }.bind(this))
+
       this.setPasswordManagerUpdateForm = function() {
         document.passwordManagerUpdateForm.id.value = this.chosenAuthenticationId
         document.passwordManagerUpdateForm.label.value = this.authentications[this.chosenAuthenticationId]['label']
