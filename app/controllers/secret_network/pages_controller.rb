@@ -19,6 +19,11 @@ module SecretNetwork
       @head_title = 'Mount Doom | Secret network | btn.group'
     end
 
+    def password_manager
+      @head_description = 'Decentralized password manager on the Secret network.'
+      @head_title = 'Password manager | Secret network | btn.group'
+    end
+
     def pools; end
 
     def smart_contract_interface
