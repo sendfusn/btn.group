@@ -16,6 +16,29 @@
   width: 24px;
 }
 
+//=== DATATABLES ===
+.dataTables_wrapper {
+  .toolbar {
+    float:left;
+    margin: 4px 0;
+    padding: 13px 20px 10px;
+  }
+
+  table {
+    width: 100% !important;
+  }
+  .dataTables_filter {
+    input {
+      height: 38px;
+      padding: 0.375rem 0.75rem;
+    }
+
+    label {
+      border: 0 !important;
+    }
+  }
+}
+
 //=== MAILCHIMP ===
 #mc-embedded-subscribe-form {
   #anti-spam-container {

@@ -2980,6 +2980,38 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+datatables.net-bs4@>=1.10.25, datatables.net-bs4@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/datatables.net-bs4/-/datatables.net-bs4-1.11.3.tgz#04817c5d9457f1b9807a1330f12c37a541596328"
+  integrity sha512-UPT2F1nvZZzKJSSHb+3+bTeQy1ULLMT1BexBHCkh5PhMnAZNPbTEZD+6To1RCBfUF1rtPwIJTwJ+Jjjxy86xRw==
+  dependencies:
+    datatables.net ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net-buttons-bs4@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons-bs4/-/datatables.net-buttons-bs4-2.0.1.tgz#0f506a95c44279dd1e5100018ca442155de37cd8"
+  integrity sha512-wmW0NyvwzX5nFk8DnhZojaSH5Yjrn2fFNY6arubuifcBI8yYqPjIjkV3ImTYNRyIstg1BJAbKFesLzeTHm1F6A==
+  dependencies:
+    datatables.net-bs4 ">=1.10.25"
+    datatables.net-buttons ">=1.7.1"
+    jquery ">=1.7"
+
+datatables.net-buttons@>=1.7.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-2.0.1.tgz#0ffd52dcc9921766f9ea5144dc610f1f45712cf7"
+  integrity sha512-Vl64BZmBWCpenE2OB+DMnsl4FX/timC9KHvjxyLoCedfIWJcuwQxJ9netMXgsd9dfl7XLQfYn4S1ObgvrrZzsw==
+  dependencies:
+    datatables.net ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net@>=1.10.25:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.11.3.tgz#80e691036efcd62467558ee64c07dd566cb761b4"
+  integrity sha512-VMj5qEaTebpNurySkM6jy6sGpl+s6onPK8xJhYr296R/vUBnz1+id16NVqNf9z5aR076OGcpGHCuiTuy4E05oQ==
+  dependencies:
+    jquery ">=1.7"
+
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -4787,7 +4819,7 @@ jest-worker@^26.5.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jquery@^3.6.0:
+jquery@>=1.7, jquery@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==

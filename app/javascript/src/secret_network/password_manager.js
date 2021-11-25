@@ -9,6 +9,35 @@ $(document).ready(function(){
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.authentications = [{ "id": "0", "label": "google", "username": "s", "password": "s", "notes": "v" }]
 
+      // %td{ 'data-id': '0' }
+      //   = link_to '#' do
+      //     %em.fa-eye.fa.mr-2
+      //   = link_to '#' do
+      //     %em.fa-edit.fa.mr-2
+      //   = link_to '#' do
+      //     %em.fa-trash.fa
+
+      // datatable
+      this.datatable = window.$('#authentications-table').DataTable({
+        columns: [
+            { title: "label" },
+            { title: "username" },
+            { title: "password" },
+            { title: "notes" },
+            {
+                data: null,
+                className: "dt-center editor-edit",
+                defaultContent: '<em class="fa fa-eye mr-2"/><em class="fa fa-edit mr-2"/><em class="fa fa-trash"/>',
+                orderable: false
+            },
+        ],
+        dom: '<"top"i>frtp',
+        ordering: false,
+        paging: false
+      });
+      this.datatable.rows.add([[this.authentications[0]['label'], this.authentications[0]['username'], this.authentications[0]['password'], this.authentications[0]['notes']]]);
+      this.datatable.draw();
+
       // listeners
       $('td .fa-edit').click(function(e){
         e.preventDefault()
