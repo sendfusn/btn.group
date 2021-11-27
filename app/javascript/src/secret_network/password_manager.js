@@ -96,6 +96,21 @@ $(document).ready(function(){
         $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).addClass('d-none')
       }.bind(this))
 
+      // === FORMS ===
+      window.passwordManagerSearchForm.onsubmit = async (e) => {
+        e.preventDefault()
+        $('button[type="submit"]').prop("disabled", true)
+        $(".loading").removeClass("d-none")
+        $(".ready").addClass("d-none")
+      }
+
+      window.setViewingKeyForm.onsubmit = async(e) => {
+        e.preventDefault()
+        $('button[type="submit"]').prop("disabled", true)
+        $(".loading").removeClass("d-none")
+        $(".ready").addClass("d-none")
+      }
+
       this.setPasswordManagerUpdateForm = function() {
         document.passwordManagerUpdateForm.id.value = this.chosenAuthenticationId
         document.passwordManagerUpdateForm.label.value = this.authentications[this.chosenAuthenticationId]['label']
