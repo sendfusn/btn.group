@@ -9,17 +9,10 @@ $(document).ready(function(){
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.authentications = [{ "id": "0", "label": "google", "username": "s", "password": "s", "notes": "v" }]
 
-      // %td{ 'data-id': '0' }
-      //   = link_to '#' do
-      //     %em.fa-eye.fa.mr-2
-      //   = link_to '#' do
-      //     %em.fa-edit.fa.mr-2
-      //   = link_to '#' do
-      //     %em.fa-trash.fa
-
       // datatable
       this.datatable = window.$('#authentications-table').DataTable({
         columns: [
+            { title: "id" },
             { title: "label" },
             { title: "username" },
             { title: "password" },
@@ -27,21 +20,25 @@ $(document).ready(function(){
             {
                 data: null,
                 className: "dt-center editor-edit",
-                defaultContent: '<em class="fa fa-eye mr-2"/><em class="fa fa-edit mr-2"/><em class="fa fa-trash"/>',
-                orderable: false
+                defaultContent: '<a href="#"><em class="fa fa-eye mr-2"></em></a><a href="#"><em class="fa fa-edit mr-2"></em></a><a href="#"><em class="fa fa-trash"></em></a>',
+                orderable: false,
+                width: '115px'
             },
         ],
         dom: '<"top"i>frtp',
         ordering: false,
-        paging: false
+        paging: false,
+        rowId: function(a) {
+          return 'id_' + a[0];
+        },
       });
-      this.datatable.rows.add([[this.authentications[0]['label'], this.authentications[0]['username'], this.authentications[0]['password'], this.authentications[0]['notes']]]);
+      this.datatable.rows.add([[this.authentications[0]['id'] ,this.authentications[0]['label'], this.authentications[0]['username'], this.authentications[0]['password'], this.authentications[0]['notes']]]);
       this.datatable.draw();
 
       // listeners
       $('td .fa-edit').click(function(e){
         e.preventDefault()
-        this.chosenAuthenticationId = $('td .fa-edit').first().closest('td').data('id')
+        this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
         document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
         this.setPasswordManagerUpdateForm()
@@ -49,7 +46,7 @@ $(document).ready(function(){
 
       $('td .fa-eye').click(function(e){
         e.preventDefault()
-        this.chosenAuthenticationId = $('td .fa-edit').first().closest('td').data('id')
+        this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
         document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
         $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
         this.setShowTableData()
