@@ -54,6 +54,15 @@ $(document).ready(function(){
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
       })
 
+      $('.input-group-append .fa-eye').click(function(e){
+        let inputType = e.currentTarget.parentNode.parentNode.parentElement.children[0].type
+        if(inputType == 'text') {
+          e.currentTarget.parentNode.parentNode.parentElement.children[0].type = 'password'
+        } else {
+          e.currentTarget.parentNode.parentNode.parentElement.children[0].type = 'text'
+        }
+      })
+
       $('td .fa-edit').click(function(e){
         e.preventDefault()
         this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
