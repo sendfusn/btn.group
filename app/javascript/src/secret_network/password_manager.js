@@ -19,7 +19,7 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId(this.environment)
       this.chosenAuthenticationId;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.authentications = [{ "id": "0", "label": "google", "username": "s", "password": "s", "notes": "v" }]
+      this.authentications = [{ "id": "0", "label": "google", "username": "s...", "password": "s...", "notes": "v..." }]
 
       // datatable
       this.datatable = window.$('#authentications-table').DataTable({
@@ -100,7 +100,6 @@ $(document).ready(function(){
 
       $('button .fa-eye').parent().click(function(e){
         e.preventDefault()
-        this.authentications[this.chosenAuthenticationId].revealed = true
         this.authentications[this.chosenAuthenticationId].username = 'abc'
         this.authentications[this.chosenAuthenticationId].password = 'def'
         this.authentications[this.chosenAuthenticationId].notes = 'ghi'
@@ -247,15 +246,9 @@ $(document).ready(function(){
         $('#id-table-data').text(this.chosenAuthenticationId)
         $('#table-title').text('Authentication #' + this.chosenAuthenticationId)
         $('#label-table-data').text(this.authentications[this.chosenAuthenticationId]['label'])
-        if(this.authentications[this.chosenAuthenticationId]['revealed']) {
-          $('#username-table-data').text(this.authentications[this.chosenAuthenticationId]['username'])
-          $('#password-table-data').text(this.authentications[this.chosenAuthenticationId]['password'])
-          $('#notes-table-data').text(this.authentications[this.chosenAuthenticationId]['notes'])
-        } else {
-          $('#username-table-data').text(this.authentications[this.chosenAuthenticationId]['username'] + '*****')
-          $('#password-table-data').text(this.authentications[this.chosenAuthenticationId]['password'] + '*****')
-          $('#notes-table-data').text(this.authentications[this.chosenAuthenticationId]['notes'] + '*****')
-        }
+        $('#username-table-data').text(this.authentications[this.chosenAuthenticationId]['username'])
+        $('#password-table-data').text(this.authentications[this.chosenAuthenticationId]['password'])
+        $('#notes-table-data').text(this.authentications[this.chosenAuthenticationId]['notes'])
       }
     }
   };
