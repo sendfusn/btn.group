@@ -32,9 +32,9 @@ $(document).ready(function(){
             {
                 data: null,
                 className: "dt-center editor-edit",
-                defaultContent: '<a href="#"><em class="fa fa-eye mr-2"></em></a><a href="#"><em class="fa fa-edit mr-2"></em></a><a href="#"><em class="fa fa-trash"></em></a>',
+                defaultContent: '<a href="#"><em class="fa fa-eye mr-2"></em></a><a href="#"><em class="fa fa-edit"></em></a>',
                 orderable: false,
-                width: '115px'
+                width: '91px'
             },
         ],
         dom: '<"top"i>frtp',
@@ -107,14 +107,6 @@ $(document).ready(function(){
         this.setPasswordManagerUpdateForm()
         this.setShowTableData()
         $('button .fa-eye').parent().addClass('d-none')
-      }.bind(this))
-
-      $('button .fa-trash').parent().click(function(e){
-        e.preventDefault()
-        this.authentications.splice(this.chosenAuthenticationId, 1)
-        document.querySelectorAll("a[href^='#tab-2-1']")[0].click()
-        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
-        $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).addClass('d-none')
       }.bind(this))
 
       // === FORMS ===
