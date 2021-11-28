@@ -1,5 +1,17 @@
 $(document).ready(function(){
   if($("#secret-network-password-manager").length) {
+    var changeSubmitButtonToLoading = function() {
+      $('button[type="submit"]').prop("disabled", true)
+      $(".loading").removeClass("d-none")
+      $(".ready").addClass("d-none")
+    }
+
+    var changeSubmitButtonToReady = function() {
+      $('button[type="submit"]').prop("disabled", false)
+      $(".loading").addClass("d-none")
+      $(".ready").removeClass("d-none")
+    }
+
     window.onload = () => {
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
@@ -106,25 +118,129 @@ $(document).ready(function(){
       }.bind(this))
 
       // === FORMS ===
-      window.passwordManagerCreateForm.onsubmit = async (e) => {
+      document.passwordManagerCreateForm.onsubmit = async (e) => {
         e.preventDefault()
-        $('button[type="submit"]').prop("disabled", true)
-        $(".loading").removeClass("d-none")
-        $(".ready").addClass("d-none")
+        changeSubmitButtonToLoading()
+        try {
+          // Keplr extension injects the offline signer that is compatible with cosmJS.
+          // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+          // And it also injects the helper function to `window.keplr`.
+          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
+          if (!window.getOfflineSigner || !window.keplr) {
+            alert("Please install keplr extension");
+          } else {
+            if (window.keplr.experimentalSuggestChain) {
+              try {
+                // This method will ask the user whether or not to allow access if they haven't visited this website.
+                // Also, it will request user to unlock the wallet if the wallet is locked.
+                // If you don't request enabling before usage, there is no guarantee that other methods will work.
+                await window.keplr.enable(this.chainId);
+
+                // @ts-ignore
+                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const accounts = await keplrOfflineSigner.getAccounts();
+                this.address = accounts[0].address;
+                let gasParams = {
+                    exec: {
+                      amount: [{ amount: '50000', denom: 'uscrt' }],
+                      gas: '50000',
+                    },
+                  }
+                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+              } catch (error) {
+                document.showAlertDanger(error)
+              }
+            } else {
+              alert("Please use the recent version of keplr extension");
+            }
+          }
+
+          // let alias = $("#delete-button").data('alias');
+          // let handleMsg = { destroy: { alias: alias } }
+          // let response = await this.client.execute(this.contractAddress, handleMsg)
+          // $("#result-value").html('')
+          // $("#result-container").addClass("d-none");
+          // $("#result-value-container").addClass("d-none");
+          document.showAlertSuccess('Authentication created.')
+        }
+        catch(err) {
+          document.showAlertDanger(err)
+        }
+        finally {
+          changeSubmitButtonToReady()
+        }
       }
 
-      window.passwordManagerSearchForm.onsubmit = async (e) => {
+      document.passwordManagerSearchForm.onsubmit = async (e) => {
         e.preventDefault()
-        $('button[type="submit"]').prop("disabled", true)
-        $(".loading").removeClass("d-none")
-        $(".ready").addClass("d-none")
+        changeSubmitButtonToLoading()
+        let client = document.secretNetworkClient(this.environment);
+        try {
+          let address = document.passwordManagerSearchForm.address.value;
+          let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
+          let params = { address: address, key: viewingKey };
+          // let result = await client.queryContractSmart(this.contractAddress, { hints: params })
+          $(".table-responsive").removeClass("d-none");
+        }
+        catch(err) {
+          document.showAlertDanger(err)
+        }
+        finally {
+          changeSubmitButtonToReady()
+        }
       }
 
-      window.setViewingKeyForm.onsubmit = async(e) => {
+      document.setViewingKeyForm.onsubmit = async(e) => {
         e.preventDefault()
-        $('button[type="submit"]').prop("disabled", true)
-        $(".loading").removeClass("d-none")
-        $(".ready").addClass("d-none")
+        changeSubmitButtonToLoading()
+        try {
+          // Keplr extension injects the offline signer that is compatible with cosmJS.
+          // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+          // And it also injects the helper function to `window.keplr`.
+          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
+          if (!window.getOfflineSigner || !window.keplr) {
+            alert("Please install keplr extension");
+          } else {
+            if (window.keplr.experimentalSuggestChain) {
+              try {
+                // This method will ask the user whether or not to allow access if they haven't visited this website.
+                // Also, it will request user to unlock the wallet if the wallet is locked.
+                // If you don't request enabling before usage, there is no guarantee that other methods will work.
+                await window.keplr.enable(this.chainId);
+
+                // @ts-ignore
+                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const accounts = await keplrOfflineSigner.getAccounts();
+                this.address = accounts[0].address;
+                let gasParams = {
+                    exec: {
+                      amount: [{ amount: '50000', denom: 'uscrt' }],
+                      gas: '50000',
+                    },
+                  }
+                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+              } catch (error) {
+                document.showAlertDanger(error)
+              }
+            } else {
+              alert("Please use the recent version of keplr extension");
+            }
+          }
+
+          let alias = $("#delete-button").data('alias');
+          let handleMsg = { destroy: { alias: alias } }
+          let response = await this.client.execute(this.contractAddress, handleMsg)
+          $("#result-value").html('')
+          $("#result-container").addClass("d-none");
+          $("#result-value-container").addClass("d-none");
+          document.showAlertSuccess('Alias deleted.')
+        }
+        catch(err) {
+          document.showAlertDanger(err)
+        }
+        finally {
+          changeSubmitButtonToReady()
+        }
       }
 
       this.setPasswordManagerUpdateForm = function() {
