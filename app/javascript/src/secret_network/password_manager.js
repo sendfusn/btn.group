@@ -106,6 +106,13 @@ $(document).ready(function(){
       }.bind(this))
 
       // === FORMS ===
+      window.passwordManagerCreateForm.onsubmit = async (e) => {
+        e.preventDefault()
+        $('button[type="submit"]').prop("disabled", true)
+        $(".loading").removeClass("d-none")
+        $(".ready").addClass("d-none")
+      }
+
       window.passwordManagerSearchForm.onsubmit = async (e) => {
         e.preventDefault()
         $('button[type="submit"]').prop("disabled", true)
