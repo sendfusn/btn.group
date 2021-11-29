@@ -8,19 +8,13 @@ blocks:
   - name: Deploy
     task:
       secrets:
-        - name: btn.group
+        - name: heroku-http
       env_vars:
-        - name: HEROKU_REMOTE
-          value: 'https://git.heroku.com/btn-group.git'
         - name: HEROKU_APP_NAME
           value: btn-group
       jobs:
         - name: Push code
           commands:
-            - checkout --use-cache
-            - ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
-            - chmod 600 ~/.ssh/id_rsa_semaphore_heroku
-            - ssh-add ~/.ssh/id_rsa_semaphore_heroku
-            - 'git config --global url.ssh://git@heroku.com/.insteadOf https://git.heroku.com/'
-            - git remote add heroku $HEROKU_REMOTE
-            - 'git push heroku -f $SEMAPHORE_GIT_BRANCH:master'
+          - checkout --use-cache
+          - heroku git:remote -a $HEROKU_APP_NAME
+          - git push heroku -f $SEMAPHORE_GIT_BRANCH:master
