@@ -222,13 +222,11 @@ $(document).ready(function(){
             }
           }
 
-          let alias = $("#delete-button").data('alias');
-          let handleMsg = { destroy: { alias: alias } }
+          let viewingKey = document.setViewingKeyForm.viewingKey.value
+          let padding = Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10)))) + Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10))))
+          let handleMsg = { set_viewing_key: { key: viewingKey, padding: padding } }
           let response = await this.client.execute(this.contractAddress, handleMsg)
-          $("#result-value").html('')
-          $("#result-container").addClass("d-none");
-          $("#result-value-container").addClass("d-none");
-          document.showAlertSuccess('Alias deleted.')
+          document.showAlertSuccess('Viewing key set.')
         }
         catch(err) {
           document.showAlertDanger(err)
