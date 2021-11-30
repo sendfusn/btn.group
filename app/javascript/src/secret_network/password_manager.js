@@ -128,6 +128,9 @@ $(document).ready(function(){
             this.authentications[this.chosenAuthenticationId].password = authentication['password']
             this.authentications[this.chosenAuthenticationId].notes = authentication['notes']
             this.authentications[this.chosenAuthenticationId].revealed = true
+            this.datatable.clear()
+            this.datatable.rows.add(this.authentications);
+            this.datatable.draw();
             this.setPasswordManagerUpdateForm()
             this.setShowTableData()
             document.showAlertSuccess('Revealed')
