@@ -20,6 +20,7 @@ $(document).ready(function(){
       this.chosenAuthenticationId;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.authentications = []
+      this.authenticationsFormatted = []
 
       // datatable
       this.datatable = window.$('#authentications-table').DataTable({
@@ -61,6 +62,11 @@ $(document).ready(function(){
       })
 
       $("a[href^='#tab-2-4']").click(function(e){
+        if(this.authentications[this.chosenAuthenticationId].revealed) {
+          $('button .fa-eye').closest('button').addClass('d-none')
+        } else {
+          $('button .fa-eye').closest('button').removeClass('d-none')
+        }
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
       })
 
@@ -73,7 +79,7 @@ $(document).ready(function(){
         }
       })
 
-      $('button .fa-edit').parent().click(function(e){
+      $('button .fa-edit').closest('button').click(function(e){
         e.preventDefault()
         document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
@@ -190,23 +196,28 @@ $(document).ready(function(){
           let notes = document.passwordManagerCreateForm.notes.value;
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
           let response = await this.client.execute(this.buttcoinAddress, handleMsg)
+          let newAuthentication = {
+            revealed: true
+          } 
           _.each(response['logs'][0]['events'][1]['attributes'], function(kV){
             if (kV['id']) {
-
+              newAuthentication.id = kV['id']
             }
             if (kV['label']) {
-
+              newAuthentication.label = kV['label']
             }
             if (kV['username']) {
-
+              newAuthentication.username = kV['username']
             }
             if (kV['password']) {
-
+              newAuthentication.password = kV['password']
             }
             if (kV['notes']) {
-
+              newAuthentication.notes = kV['notes']
             }
           })
+          this.authentications.push(newAuthentication)
+          this.authenticationsFormatted.push(newAuthentication)
           document.showAlertSuccess('Authentication created.')
         }
         catch(err) {
@@ -219,6 +230,7 @@ $(document).ready(function(){
 
       document.passwordManagerSearchForm.onsubmit = async (e) => {
         e.preventDefault()
+        this.datatable.clear()
         $(".table-responsive").addClass("d-none");
         changeSubmitButtonToLoading()
         let client = document.secretNetworkClient(this.environment);
@@ -230,7 +242,7 @@ $(document).ready(function(){
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
           }
-          this.authentications = response['hints']['hints'];
+          this.authentications = _.cloneDeep(response['hints']['hints']);
           this.authenticationsFormatted = _.map(response['hints']['hints'], function(authentication){
             authentication['username'] += '...'
             authentication['password'] += '...'
@@ -326,10 +338,10 @@ $(document).ready(function(){
       this.setShowTableData = function() {
         $('#id-table-data').text(this.chosenAuthenticationId)
         $('#table-title').text('Authentication #' + this.chosenAuthenticationId)
-        $('#label-table-data').text(this.authentications[this.chosenAuthenticationId]['label'])
-        $('#username-table-data').text(this.authentications[this.chosenAuthenticationId]['username'])
-        $('#password-table-data').text(this.authentications[this.chosenAuthenticationId]['password'])
-        $('#notes-table-data').text(this.authentications[this.chosenAuthenticationId]['notes'])
+        $('#label-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['label'])
+        $('#username-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['username'])
+        $('#password-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['password'])
+        $('#notes-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['notes'])
       }
     }
   };
