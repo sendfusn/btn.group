@@ -48,9 +48,10 @@ $(document).ready(function(){
 
       // listeners
       $("a[href^='#tab-2-1']").click(function(e){
+        this.refreshTable(this.authenticationsFormatted)
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
         $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).addClass('d-none')
-      })
+      }.bind(this))
 
       $("a[href^='#tab-2-2']").click(function(e){
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
@@ -68,7 +69,7 @@ $(document).ready(function(){
           $('button .fa-eye').closest('button').removeClass('d-none')
         }
         $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
-      })
+      }.bind(this))
 
       $('.input-group-append .fa-eye').click(function(e){
         let inputType = e.currentTarget.parentNode.parentNode.parentElement.children[0].type
@@ -87,10 +88,12 @@ $(document).ready(function(){
       }.bind(this))
 
       $('button .fa-eye').closest('button').click(function(e){
-        $("#tab-2-3 button .loading").removeClass('d-none');
-        $("#tab-2-3 button .ready").addClass('d-none');
-        $("#tab-2-4 button .loading").removeClass('d-none');
-        $("#tab-2-4 button .ready").addClass('d-none');
+        let $button = $('button .fa-eye').closest('button');
+        let $loading = $button.children('.loading')
+        let $ready = $button.children('.ready')
+        $button.prop("disabled", true)
+        $loading.removeClass('d-none');
+        $ready.addClass('d-none');
         (async () => {
           try {
             // Keplr extension injects the offline signer that is compatible with cosmJS.
@@ -130,25 +133,22 @@ $(document).ready(function(){
             let resultText = '';
             response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
             let authentication = JSON.parse(resultText)['show']['authentication']
-            this.authentications[this.chosenAuthenticationId].username = authentication['username']
-            this.authentications[this.chosenAuthenticationId].password = authentication['password']
-            this.authentications[this.chosenAuthenticationId].notes = authentication['notes']
-            this.authentications[this.chosenAuthenticationId].revealed = true
-            this.datatable.clear()
-            this.datatable.rows.add(this.authentications);
-            this.datatable.draw();
+            authentication['revealed'] = true
+            this.chosenAuthenticationId = authentication['id']
+            this.authentications[this.chosenAuthenticationId] = authentication
+            this.authenticationsFormatted[this.chosenAuthenticationId] = authentication
             this.setPasswordManagerUpdateForm()
             this.setShowTableData()
+            $button.addClass('d-none')
             document.showAlertSuccess('Revealed')
           }
           catch(err) {
             document.showAlertDanger(err)
           }
           finally {
-            $("#tab-2-3 button .loading").addClass('d-none');
-            $("#tab-2-3 button .ready").removeClass('d-none');
-            $("#tab-2-4 button .loading").addClass('d-none');
-            $("#tab-2-4 button .ready").removeClass('d-none');
+            $button.prop("disabled", false)
+            $loading.addClass('d-none');
+            $ready.removeClass('d-none');
           }
         })();
       }.bind(this))
@@ -249,24 +249,8 @@ $(document).ready(function(){
             authentication['notes'] += '...'
             return authentication
           });
-          this.datatable.rows.add(this.authenticationsFormatted);
-          this.datatable.draw();
+          this.refreshTable(this.authenticationsFormatted)
           $(".table-responsive").removeClass("d-none");
-          $('td .fa-edit').click(function(e){
-            e.preventDefault()
-            this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
-            document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
-            $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
-            this.setPasswordManagerUpdateForm()
-          }.bind(this))
-
-          $('td .fa-eye').click(function(e){
-            e.preventDefault()
-            this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
-            document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
-            $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
-            this.setShowTableData()
-          }.bind(this))
         }
         catch(err) {
           document.showAlertDanger(err)
@@ -337,11 +321,31 @@ $(document).ready(function(){
 
       this.setShowTableData = function() {
         $('#id-table-data').text(this.chosenAuthenticationId)
-        $('#table-title').text('Authentication #' + this.chosenAuthenticationId)
         $('#label-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['label'])
         $('#username-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['username'])
         $('#password-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['password'])
         $('#notes-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['notes'])
+      }
+
+      this.refreshTable = function(data) {
+        this.datatable.clear()
+        this.datatable.rows.add(data);
+        this.datatable.draw();
+        $('td .fa-edit').click(function(e){
+          e.preventDefault()
+          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
+          document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
+          $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
+          this.setPasswordManagerUpdateForm()
+        }.bind(this))
+
+        $('td .fa-eye').click(function(e){
+          e.preventDefault()
+          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
+          document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
+          $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
+          this.setShowTableData()
+        }.bind(this))
       }
     }
   };
