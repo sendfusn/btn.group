@@ -79,12 +79,15 @@ class ApplicationController < ActionController::Base
               staging: 'secret15nfjk7zfh54damy09d2jegkrw4rq33d3zug4a5'
             }
           },
-          # password_manager: {
-          #   name: 'Password manager',
-          #   show_in_navbar: false,
-          #   show_link: false,
-          #   status: 'WIP'
-          # },
+          password_manager: {
+            name: 'Password manager',
+            show_in_navbar: false,
+            show_link: false,
+            status: 'WIP',
+            contracts: {
+              production: 'secret14ht8qyy2u06h4tqudmqxcqu0jdfd5a6d86yp8v'
+            }
+          },
           pools: {
             name: 'Pools',
             show_in_navbar: true,

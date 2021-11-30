@@ -15,11 +15,11 @@ $(document).ready(function(){
     window.onload = () => {
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
-      // this.contractAddress = document.featureContractAddress(this.environment);
+      this.contractAddress = document.featureContractAddress(this.environment);
       this.chainId = document.secretNetworkChainId(this.environment)
       this.chosenAuthenticationId;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.authentications = [{ "id": "0", "label": "google", "username": "s...", "password": "s...", "notes": "v..." }]
+      this.authentications = []
 
       // datatable
       this.datatable = window.$('#authentications-table').DataTable({
@@ -44,8 +44,6 @@ $(document).ready(function(){
           return 'id_' + a[0];
         },
       });
-      this.datatable.rows.add([[this.authentications[0]['id'] ,this.authentications[0]['label'], this.authentications[0]['username'], this.authentications[0]['password'], this.authentications[0]['notes']]]);
-      this.datatable.draw();
 
       // listeners
       $("a[href^='#tab-2-1']").click(function(e){
@@ -170,7 +168,13 @@ $(document).ready(function(){
           let address = document.passwordManagerSearchForm.address.value;
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
           let params = { address: address, key: viewingKey };
-          // let result = await client.queryContractSmart(this.contractAddress, { hints: params })
+          let response = await client.queryContractSmart(this.contractAddress, { hints: params })
+          if (response['viewing_key_error']) {
+            throw(response['viewing_key_error']['msg'])
+          }
+          console.log(response)
+          // this.datatable.rows.add([[this.authentications[0]['id'] ,this.authentications[0]['label'], this.authentications[0]['username'], this.authentications[0]['password'], this.authentications[0]['notes']]]);
+          // this.datatable.draw();
           $(".table-responsive").removeClass("d-none");
         }
         catch(err) {
