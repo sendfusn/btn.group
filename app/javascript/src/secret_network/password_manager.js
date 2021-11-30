@@ -73,22 +73,6 @@ $(document).ready(function(){
         }
       })
 
-      $('td .fa-edit').click(function(e){
-        e.preventDefault()
-        this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
-        document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
-        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
-        this.setPasswordManagerUpdateForm()
-      }.bind(this))
-
-      $('td .fa-eye').click(function(e){
-        e.preventDefault()
-        this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
-        document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
-        $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
-        this.setShowTableData()
-      }.bind(this))
-
       $('button .fa-edit').parent().click(function(e){
         e.preventDefault()
         document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
@@ -199,6 +183,21 @@ $(document).ready(function(){
           this.datatable.rows.add(this.authenticationsFormatted);
           this.datatable.draw();
           $(".table-responsive").removeClass("d-none");
+          $('td .fa-edit').click(function(e){
+            e.preventDefault()
+            this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
+            document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
+            $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
+            this.setPasswordManagerUpdateForm()
+          }.bind(this))
+
+          $('td .fa-eye').click(function(e){
+            e.preventDefault()
+            this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
+            document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
+            $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
+            this.setShowTableData()
+          }.bind(this))
         }
         catch(err) {
           document.showAlertDanger(err)
