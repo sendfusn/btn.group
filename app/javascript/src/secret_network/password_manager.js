@@ -24,11 +24,11 @@ $(document).ready(function(){
       // datatable
       this.datatable = window.$('#authentications-table').DataTable({
         columns: [
-            { title: "id" },
-            { title: "label" },
-            { title: "username" },
-            { title: "password" },
-            { title: "notes" },
+            { data: 'id', title: "id" },
+            { data: 'label', title: "label" },
+            { data: 'username', title: "username" },
+            { data: 'password', title: "password" },
+            { data: 'notes', title: "notes" },
             {
                 data: null,
                 className: "dt-center editor-edit",
@@ -41,7 +41,7 @@ $(document).ready(function(){
         ordering: false,
         paging: false,
         rowId: function(a) {
-          return 'id_' + a[0];
+          return 'id_' + a['id'];
         },
       });
 
@@ -131,8 +131,8 @@ $(document).ready(function(){
                 this.address = accounts[0].address;
                 let gasParams = {
                     exec: {
-                      amount: [{ amount: '50000', denom: 'uscrt' }],
-                      gas: '50000',
+                      amount: [{ amount: '100000', denom: 'uscrt' }],
+                      gas: '100000',
                     },
                   }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
@@ -143,13 +143,29 @@ $(document).ready(function(){
               alert("Please use the recent version of keplr extension");
             }
           }
+          let label = document.passwordManagerCreateForm.label.value
+          let username = document.passwordManagerCreateForm.username.value;
+          let password = document.passwordManagerCreateForm.password.value
+          let notes = document.passwordManagerCreateForm.notes.value;
+          let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
+          let response = await this.client.execute(this.buttcoinAddress, handleMsg)
+          _.each(response['logs'][0]['events'][1]['attributes'], function(kV){
+            if (kV['id']) {
 
-          // let alias = $("#delete-button").data('alias');
-          // let handleMsg = { destroy: { alias: alias } }
-          // let response = await this.client.execute(this.contractAddress, handleMsg)
-          // $("#result-value").html('')
-          // $("#result-container").addClass("d-none");
-          // $("#result-value-container").addClass("d-none");
+            }
+            if (kV['label']) {
+
+            }
+            if (kV['username']) {
+
+            }
+            if (kV['password']) {
+
+            }
+            if (kV['notes']) {
+
+            }
+          })
           document.showAlertSuccess('Authentication created.')
         }
         catch(err) {
@@ -162,6 +178,7 @@ $(document).ready(function(){
 
       document.passwordManagerSearchForm.onsubmit = async (e) => {
         e.preventDefault()
+        $(".table-responsive").addClass("d-none");
         changeSubmitButtonToLoading()
         let client = document.secretNetworkClient(this.environment);
         try {
@@ -172,9 +189,15 @@ $(document).ready(function(){
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
           }
-          console.log(response)
-          // this.datatable.rows.add([[this.authentications[0]['id'] ,this.authentications[0]['label'], this.authentications[0]['username'], this.authentications[0]['password'], this.authentications[0]['notes']]]);
-          // this.datatable.draw();
+          this.authentications = response['hints']['hints'];
+          this.authenticationsFormatted = _.map(response['hints']['hints'], function(authentication){
+            authentication['username'] += '...'
+            authentication['password'] += '...'
+            authentication['notes'] += '...'
+            return authentication
+          });
+          this.datatable.rows.add(this.authenticationsFormatted);
+          this.datatable.draw();
           $(".table-responsive").removeClass("d-none");
         }
         catch(err) {
