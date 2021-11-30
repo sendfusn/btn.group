@@ -12,6 +12,10 @@ $(document).ready(function(){
       $(".ready").removeClass("d-none")
     }
 
+    $("#set-key-button").click(function(e){
+      document.querySelectorAll("a[href^='#tab-2-1-2']")[0].click()
+    })
+
     window.onload = () => {
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
