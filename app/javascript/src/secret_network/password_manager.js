@@ -83,6 +83,8 @@ $(document).ready(function(){
       $('button .fa-eye').closest('button').click(function(e){
         $("#tab-2-3 button .loading").removeClass('d-none');
         $("#tab-2-3 button .ready").addClass('d-none');
+        $("#tab-2-4 button .loading").removeClass('d-none');
+        $("#tab-2-4 button .ready").addClass('d-none');
         (async () => {
           try {
             // Keplr extension injects the offline signer that is compatible with cosmJS.
@@ -136,6 +138,8 @@ $(document).ready(function(){
           finally {
             $("#tab-2-3 button .loading").addClass('d-none');
             $("#tab-2-3 button .ready").removeClass('d-none');
+            $("#tab-2-4 button .loading").addClass('d-none');
+            $("#tab-2-4 button .ready").removeClass('d-none');
           }
         })();
       }.bind(this))
