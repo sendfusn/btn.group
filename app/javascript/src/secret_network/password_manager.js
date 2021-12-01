@@ -52,7 +52,7 @@ $(document).ready(function(){
 
       // listeners
       $("a[href^='#tab-2-1']").click(function(e){
-        this.refreshTable(this.authenticationsFormatted)
+        this.datatable.clear()
       }.bind(this))
 
       $("a[href^='#tab-2-3']").click(function(e){
@@ -177,8 +177,8 @@ $(document).ready(function(){
                 this.address = accounts[0].address;
                 let gasParams = {
                     exec: {
-                      amount: [{ amount: '100000', denom: 'uscrt' }],
-                      gas: '100000',
+                      amount: [{ amount: '150000', denom: 'uscrt' }],
+                      gas: '150000',
                     },
                   }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
@@ -199,24 +199,25 @@ $(document).ready(function(){
             revealed: true
           } 
           _.each(response['logs'][0]['events'][1]['attributes'], function(kV){
-            if (kV['id']) {
-              newAuthentication.id = kV['id']
+            if (kV['key'] == 'id') {
+              newAuthentication['id'] = Number(kV['value'])
             }
-            if (kV['label']) {
-              newAuthentication.label = kV['label']
+            if (kV['key'] == 'label') {
+              newAuthentication['label'] = kV['value']
             }
-            if (kV['username']) {
-              newAuthentication.username = kV['username']
+            if (kV['key'] == 'username') {
+              newAuthentication['username'] = kV['value']
             }
-            if (kV['password']) {
-              newAuthentication.password = kV['password']
+            if (kV['key'] == 'password') {
+              newAuthentication['password'] = kV['value']
             }
-            if (kV['notes']) {
-              newAuthentication.notes = kV['notes']
+            if (kV['key'] == 'notes') {
+              newAuthentication['notes'] = kV['value']
             }
           })
-          this.authentications.push(newAuthentication)
-          this.authenticationsFormatted.push(newAuthentication)
+          this.chosenAuthenticationId = newAuthentication['id']
+          this.authentications[newAuthentication['id']] = newAuthentication;
+          this.authenticationsFormatted[newAuthentication['id']] = newAuthentication;
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           document.showAlertSuccess('Authentication created.')
         }
@@ -235,7 +236,7 @@ $(document).ready(function(){
         changeSubmitButtonToLoading()
         let client = document.secretNetworkClient(this.environment);
         try {
-          let address = document.passwordManagerSearchForm.address.value;
+          let address = document.passwordManagerSearchForm.address.value.toLowerCase();
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
           let params = { address: address, key: viewingKey };
           let response = await client.queryContractSmart(this.contractAddress, { hints: params })
