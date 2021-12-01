@@ -2,14 +2,14 @@ $(document).ready(function(){
   if($("#secret-network-password-manager").length) {
     var changeSubmitButtonToLoading = function() {
       $('button[type="submit"]').prop("disabled", true)
-      $(".loading").removeClass("d-none")
-      $(".ready").addClass("d-none")
+      $("form .loading").removeClass("d-none")
+      $("form .ready").addClass("d-none")
     }
 
     var changeSubmitButtonToReady = function() {
       $('button[type="submit"]').prop("disabled", false)
-      $(".loading").addClass("d-none")
-      $(".ready").removeClass("d-none")
+      $("form .loading").addClass("d-none")
+      $("form .ready").removeClass("d-none")
     }
 
     $("#set-key-button").click(function(e){
@@ -249,6 +249,67 @@ $(document).ready(function(){
           });
           this.refreshTable(this.authenticationsFormatted)
           $(".table-responsive").removeClass("d-none");
+        }
+        catch(err) {
+          document.showAlertDanger(err)
+        }
+        finally {
+          changeSubmitButtonToReady()
+        }
+      }
+
+      document.passwordManagerUpdateForm.onsubmit = async (e) => {
+        e.preventDefault()
+        changeSubmitButtonToLoading()
+        try {
+          // Keplr extension injects the offline signer that is compatible with cosmJS.
+          // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+          // And it also injects the helper function to `window.keplr`.
+          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
+          if (!window.getOfflineSigner || !window.keplr) {
+            alert("Please install keplr extension");
+          } else {
+            if (window.keplr.experimentalSuggestChain) {
+              try {
+                // This method will ask the user whether or not to allow access if they haven't visited this website.
+                // Also, it will request user to unlock the wallet if the wallet is locked.
+                // If you don't request enabling before usage, there is no guarantee that other methods will work.
+                await window.keplr.enable(this.chainId);
+
+                // @ts-ignore
+                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const accounts = await keplrOfflineSigner.getAccounts();
+                this.address = accounts[0].address;
+                let gasParams = {
+                    exec: {
+                      amount: [{ amount: '100000', denom: 'uscrt' }],
+                      gas: '100000',
+                    },
+                  }
+                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+              } catch (error) {
+                document.showAlertDanger(error)
+              }
+            } else {
+              alert("Please use the recent version of keplr extension");
+            }
+          }
+          let id = Number(document.passwordManagerUpdateForm.id.value)
+          let label = document.passwordManagerUpdateForm.label.value
+          let username = document.passwordManagerUpdateForm.username.value;
+          let password = document.passwordManagerUpdateForm.password.value
+          let notes = document.passwordManagerUpdateForm.notes.value;
+          let handleMsg = { update_authentication: { id: id, label: label, username: username, password: password, notes: notes } }
+          let response = await this.client.execute(this.contractAddress, handleMsg)
+          let resultText = '';
+          response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
+          let authentication = JSON.parse(resultText)['update_authentication']['authentication']
+          authentication['revealed'] = true
+          this.chosenAuthenticationId = authentication['id']
+          this.authentications[this.chosenAuthenticationId] = authentication
+          this.authenticationsFormatted[this.chosenAuthenticationId] = authentication
+          this.setPasswordManagerUpdateForm()
+          document.showAlertSuccess('Update successful.')
         }
         catch(err) {
           document.showAlertDanger(err)
