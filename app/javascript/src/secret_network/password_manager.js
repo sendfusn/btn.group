@@ -64,6 +64,7 @@ $(document).ready(function(){
       }.bind(this))
 
       $("a[href^='#tab-2-4']").click(function(e){
+        this.setShowTableData()
         if(this.authentications[this.chosenAuthenticationId].revealed) {
           $('.reveal-button').addClass('d-none')
         } else {
@@ -404,7 +405,6 @@ $(document).ready(function(){
         $('.view-link').click(function(e){
           this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
-          this.setShowTableData()
         }.bind(this))
       }
     }
