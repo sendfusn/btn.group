@@ -53,26 +53,22 @@ $(document).ready(function(){
       // listeners
       $("a[href^='#tab-2-1']").click(function(e){
         this.refreshTable(this.authenticationsFormatted)
-        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
-        $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).addClass('d-none')
       }.bind(this))
 
-      $("a[href^='#tab-2-2']").click(function(e){
-        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
-        $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).addClass('d-none')
-      })
-
       $("a[href^='#tab-2-3']").click(function(e){
-        $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).addClass('d-none')
-      })
+        if(this.authentications[this.chosenAuthenticationId].revealed) {
+          $('.reveal-button').addClass('d-none')
+        } else {
+          $('.reveal-button').removeClass('d-none')
+        }
+      }.bind(this))
 
       $("a[href^='#tab-2-4']").click(function(e){
         if(this.authentications[this.chosenAuthenticationId].revealed) {
-          $('button .fa-eye').closest('button').addClass('d-none')
+          $('.reveal-button').addClass('d-none')
         } else {
-          $('button .fa-eye').closest('button').removeClass('d-none')
+          $('.reveal-button').removeClass('d-none')
         }
-        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).addClass('d-none')
       }.bind(this))
 
       $('.input-group-append .fa-eye').click(function(e){
@@ -84,15 +80,13 @@ $(document).ready(function(){
         }
       })
 
-      $('button .fa-edit').closest('button').click(function(e){
-        e.preventDefault()
+      $('#edit-button').click(function(e){
         document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
-        $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
         this.setPasswordManagerUpdateForm()
       }.bind(this))
 
-      $('button .fa-eye').closest('button').click(function(e){
-        let $button = $('button .fa-eye').closest('button');
+      $('.reveal-button').click(function(e){
+        let $button = $('.reveal-button');
         let $loading = $button.children('.loading')
         let $ready = $button.children('.ready')
         $button.prop("disabled", true)
@@ -325,6 +319,7 @@ $(document).ready(function(){
 
       this.setShowTableData = function() {
         $('#id-table-data').text(this.chosenAuthenticationId)
+        $('#table-title').text('Authentication #' + this.chosenAuthenticationId)
         $('#label-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['label'])
         $('#username-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['username'])
         $('#password-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['password'])
@@ -340,7 +335,6 @@ $(document).ready(function(){
           e.preventDefault()
           this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
-          $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
           this.setPasswordManagerUpdateForm()
         }.bind(this))
 
@@ -348,7 +342,6 @@ $(document).ready(function(){
           e.preventDefault()
           this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
-          $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
           this.setShowTableData()
         }.bind(this))
       }
