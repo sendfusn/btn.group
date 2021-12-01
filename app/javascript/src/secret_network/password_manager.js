@@ -216,6 +216,7 @@ $(document).ready(function(){
           })
           this.authentications.push(newAuthentication)
           this.authenticationsFormatted.push(newAuthentication)
+          document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           document.showAlertSuccess('Authentication created.')
         }
         catch(err) {
@@ -309,6 +310,7 @@ $(document).ready(function(){
           this.authentications[this.chosenAuthenticationId] = authentication
           this.authenticationsFormatted[this.chosenAuthenticationId] = authentication
           this.setPasswordManagerUpdateForm()
+          document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           document.showAlertSuccess('Update successful.')
         }
         catch(err) {
@@ -400,7 +402,6 @@ $(document).ready(function(){
         }.bind(this))
 
         $('.view-link').click(function(e){
-          e.preventDefault()
           this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           this.setShowTableData()
