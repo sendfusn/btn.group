@@ -37,7 +37,7 @@ $(document).ready(function(){
             {
                 data: null,
                 className: "dt-center editor-edit",
-                defaultContent: '<a href="#"><em class="fa fa-eye mr-2"></em></a><a href="#"><em class="fa fa-edit"></em></a>',
+                defaultContent: '<a href="#" class="mr-3 view-link">View</a><a href="#" class="edit-link">Edit</a>',
                 orderable: false,
                 width: '91px'
             },
@@ -335,17 +335,18 @@ $(document).ready(function(){
         this.datatable.clear()
         this.datatable.rows.add(data);
         this.datatable.draw();
-        $('td .fa-edit').click(function(e){
+        $('.edit-link').click(function(e){
+          window.test = e
           e.preventDefault()
-          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
+          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
           $(document.querySelectorAll("a[href^='#tab-2-3']")[0].parentElement).removeClass('d-none')
           this.setPasswordManagerUpdateForm()
         }.bind(this))
 
-        $('td .fa-eye').click(function(e){
+        $('.view-link').click(function(e){
           e.preventDefault()
-          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.parentNode.id.split('_')[1]
+          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           $(document.querySelectorAll("a[href^='#tab-2-4']")[0].parentElement).removeClass('d-none')
           this.setShowTableData()
