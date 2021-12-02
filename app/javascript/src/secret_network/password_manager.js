@@ -17,6 +17,7 @@ $(document).ready(function(){
     })
 
     window.onload = () => {
+      this.addressAliasAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w';
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
       this.contractAddress = document.featureContractAddress(this.environment);
@@ -236,9 +237,15 @@ $(document).ready(function(){
         changeSubmitButtonToLoading()
         let client = document.secretNetworkClient(this.environment);
         try {
-          let address = document.passwordManagerSearchForm.address.value.toLowerCase();
+          let searchType = document.passwordManagerSearchForm.searchType.value;
+          let searchValue = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
+          if (searchType == 'alias') {
+            let searchParams = { search_type: searchType, search_value: searchValue };
+            let result = await client.queryContractSmart(this.addressAliasAddress, { search: searchParams })
+            searchValue = result['attributes']['address']
+          }
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
-          let params = { address: address, key: viewingKey };
+          let params = { address: searchValue, key: viewingKey };
           let response = await client.queryContractSmart(this.contractAddress, { hints: params })
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
@@ -254,6 +261,9 @@ $(document).ready(function(){
           $(".table-responsive").removeClass("d-none");
         }
         catch(err) {
+          if (err.message.includes('not_found')) {
+            err = 'Alias not found.'
+          }
           document.showAlertDanger(err)
         }
         finally {
