@@ -26,6 +26,11 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'BUTT-sXMR'
         },
+        satom: {
+          address: 'secret14mzwd0ps5q277l20ly2q3aetqe3ev4m4260gf4',
+          decimals: 6,
+          symbol: 'sATOM'
+        },
         sbnb_bsc: {
           address: 'secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5',
           decimals: 18,
@@ -45,6 +50,13 @@ $(document).ready(function(){
           address: 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt',
           decimals: 6,
           symbol: 'SEFI'
+        },
+        sefi_satom_lp: {
+          address: 'secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u',
+          asset_one: 'sefi',
+          asset_two: 'satom',
+          decimals: 6,
+          symbol: 'SEFI-sATOM'
         },
         sefi_susdc_eth_lp: {
           address: 'secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr',
@@ -259,6 +271,17 @@ $(document).ready(function(){
           protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '400000',
+        },
+        {
+          address: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6',
+          deposit_gas: '1250000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['sefi_satom_lp'],
+          earn_token: cryptocurrencies['sefi_satom_lp'],
+          farm_contract_address: 'secret1twjquxp06j9ppyg4v6dr496fnmfcvzpx8weddm',
+          protocol: protocols['secret_swap'],
+          reward_token: cryptocurrencies['sefi'],
+          withdraw_gas: '1250000',
         },
         {
           address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v',

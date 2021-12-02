@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_11_051818) do
+ActiveRecord::Schema.define(version: 2021_12_02_224031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(version: 2021_11_11_051818) do
     t.decimal "deadline", precision: 40
     t.decimal "pending_rewards", precision: 40
     t.decimal "total_locked", precision: 40
-    t.decimal "apr", precision: 15, scale: 10
-    t.decimal "apy", precision: 15, scale: 10
+    t.decimal "apr", precision: 30, scale: 10
+    t.decimal "apy", precision: 30, scale: 10
     t.bigint "pool_id"
     t.integer "category"
     t.index ["pool_id"], name: "index_pools_on_pool_id"
