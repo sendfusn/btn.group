@@ -67,7 +67,11 @@ $(document).ready(function(){
         if(this.authentications[this.chosenAuthenticationId].revealed) {
           $('.reveal-button').addClass('d-none')
         } else {
-          $('.reveal-button').removeClass('d-none')
+          if(this.addressOwnsAuthenthication(this.searchedAddress)) {
+            $('.reveal-button').removeClass('d-none')
+          } else {
+            $('.reveal-button').addClass('d-none')
+          }
         }
       }.bind(this))
 
@@ -76,7 +80,13 @@ $(document).ready(function(){
         if(this.authentications[this.chosenAuthenticationId].revealed) {
           $('.reveal-button').addClass('d-none')
         } else {
-          $('.reveal-button').removeClass('d-none')
+          if(this.addressOwnsAuthenthication(this.searchedAddress)) {
+            $('.reveal-button').removeClass('d-none')
+            $('#edit-button').removeClass('d-none')
+          } else {
+            $('.reveal-button').addClass('d-none')
+            $('#edit-button').addClass('d-none')
+          }
         }
       }.bind(this))
 
@@ -247,14 +257,14 @@ $(document).ready(function(){
         let client = document.secretNetworkClient(this.environment);
         try {
           let searchType = document.passwordManagerSearchForm.searchType.value;
-          let searchValue = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
+          this.searchedAddress = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
           if (searchType == 'alias') {
-            let searchParams = { search_type: searchType, search_value: searchValue };
+            let searchParams = { search_type: searchType, search_value: this.searchedAddress };
             let result = await client.queryContractSmart(this.addressAliasAddress, { search: searchParams })
-            searchValue = result['attributes']['address']
+            this.searchedAddress = result['attributes']['address']
           }
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
-          let params = { address: searchValue, key: viewingKey };
+          let params = { address: this.searchedAddress, key: viewingKey };
           let response = await client.queryContractSmart(this.contractAddress, { hints: params })
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
@@ -266,12 +276,14 @@ $(document).ready(function(){
             authentication['notes'] += '...'
             return authentication
           });
-          this.refreshTable(this.authenticationsFormatted)
+          this.refreshTable(this.searchedAddress, this.authenticationsFormatted)
           $(".table-responsive").removeClass("d-none");
         }
         catch(err) {
-          if (err.message.includes('not_found')) {
-            err = 'Alias not found.'
+          if (err instanceof Object) {
+            if (err.message.includes('not_found')) {
+              err = 'Alias not found.'
+            }
           }
           document.showAlertDanger(err)
         }
@@ -412,12 +424,11 @@ $(document).ready(function(){
         $('#notes-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['notes'])
       }
 
-      this.refreshTable = function(data) {
+      this.refreshTable = function(address, data) {
         this.datatable.clear()
         this.datatable.rows.add(data);
         this.datatable.draw();
         $('.edit-link').click(function(e){
-          window.test = e
           e.preventDefault()
           this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
@@ -425,9 +436,19 @@ $(document).ready(function(){
         }.bind(this))
 
         $('.view-link').click(function(e){
+          e.preventDefault()
           this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
         }.bind(this))
+        if(this.addressOwnsAuthenthication(address)) {
+          $('.edit-link').removeClass('d-none')
+        } else {
+          $('.edit-link').addClass('d-none')
+        }
+      }
+
+      this.addressOwnsAuthenthication = function(address) {
+        return address.length > 5 && address == $("#navbar-wallet-address").text()
       }
     }
   };
