@@ -1,5 +1,12 @@
 $(document).ready(function(){
   if($("#secret-network-password-manager").length) {
+    var calculateGas = function(minGas, dataLength) {
+      let gasBuffer = 30_000
+      let gas = minGas + gasBuffer
+      gas += dataLength * 15
+      return String(Math.ceil(gas / 100) * 100)
+    }
+
     var changeSubmitButtonToLoading = function() {
       $('button[type="submit"]').prop("disabled", true)
       $("form .loading").removeClass("d-none")
@@ -157,6 +164,12 @@ $(document).ready(function(){
       document.passwordManagerCreateForm.onsubmit = async (e) => {
         e.preventDefault()
         changeSubmitButtonToLoading()
+        let label = document.passwordManagerCreateForm.label.value
+        let username = document.passwordManagerCreateForm.username.value;
+        let password = document.passwordManagerCreateForm.password.value
+        let notes = document.passwordManagerCreateForm.notes.value;
+        let dataLength = label.length + username.length + password.length + notes.length
+        let gas = calculateGas(180_000, dataLength)
         try {
           // Keplr extension injects the offline signer that is compatible with cosmJS.
           // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
@@ -178,8 +191,8 @@ $(document).ready(function(){
                 this.address = accounts[0].address;
                 let gasParams = {
                     exec: {
-                      amount: [{ amount: '150000', denom: 'uscrt' }],
-                      gas: '150000',
+                      amount: [{ amount: gas, denom: 'uscrt' }],
+                      gas: gas,
                     },
                   }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
@@ -190,10 +203,6 @@ $(document).ready(function(){
               alert("Please use the recent version of keplr extension");
             }
           }
-          let label = document.passwordManagerCreateForm.label.value
-          let username = document.passwordManagerCreateForm.username.value;
-          let password = document.passwordManagerCreateForm.password.value
-          let notes = document.passwordManagerCreateForm.notes.value;
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
           let response = await this.client.execute(this.buttcoinAddress, handleMsg)
           let newAuthentication = {
@@ -274,6 +283,13 @@ $(document).ready(function(){
       document.passwordManagerUpdateForm.onsubmit = async (e) => {
         e.preventDefault()
         changeSubmitButtonToLoading()
+        let id = Number(document.passwordManagerUpdateForm.id.value)
+        let label = document.passwordManagerUpdateForm.label.value
+        let username = document.passwordManagerUpdateForm.username.value;
+        let password = document.passwordManagerUpdateForm.password.value
+        let notes = document.passwordManagerUpdateForm.notes.value;
+        let dataLength = document.passwordManagerUpdateForm.id.value.length + label.length + username.length + password.length + notes.length
+        let gas = calculateGas(122_000, dataLength)
         try {
           // Keplr extension injects the offline signer that is compatible with cosmJS.
           // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
@@ -295,8 +311,8 @@ $(document).ready(function(){
                 this.address = accounts[0].address;
                 let gasParams = {
                     exec: {
-                      amount: [{ amount: '100000', denom: 'uscrt' }],
-                      gas: '100000',
+                      amount: [{ amount: gas, denom: 'uscrt' }],
+                      gas: gas,
                     },
                   }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
@@ -307,11 +323,6 @@ $(document).ready(function(){
               alert("Please use the recent version of keplr extension");
             }
           }
-          let id = Number(document.passwordManagerUpdateForm.id.value)
-          let label = document.passwordManagerUpdateForm.label.value
-          let username = document.passwordManagerUpdateForm.username.value;
-          let password = document.passwordManagerUpdateForm.password.value
-          let notes = document.passwordManagerUpdateForm.notes.value;
           let handleMsg = { update_authentication: { id: id, label: label, username: username, password: password, notes: notes } }
           let response = await this.client.execute(this.contractAddress, handleMsg)
           let resultText = '';
