@@ -243,6 +243,10 @@ $(document).ready(function(){
           this.authenticationsFormatted[newAuthentication['position']] = newAuthentication;
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           document.showAlertSuccess('Authentication created.')
+          document.passwordManagerCreateForm.label.value = ''
+          document.passwordManagerCreateForm.username.value = ''
+          document.passwordManagerCreateForm.password.value = ''
+          document.passwordManagerCreateForm.notes.value = ''
         }
         catch(err) {
           document.showAlertDanger(err)
