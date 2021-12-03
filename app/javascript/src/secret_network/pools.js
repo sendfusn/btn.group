@@ -46,6 +46,11 @@ $(document).ready(function(){
           decimals: 18,
           symbol: 'sDOT(BSC)'
         },
+        sdvpn: {
+          address: 'secret1k8cge73c3nh32d4u0dsd5dgtmk63shtlrfscj5',
+          decimals: 6,
+          symbol: 'sDVPN'
+        },
         sefi: {
           address: 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt',
           decimals: 6,
@@ -57,6 +62,13 @@ $(document).ready(function(){
           asset_two: 'satom',
           decimals: 6,
           symbol: 'SEFI-sATOM'
+        },
+        sefi_sdvpn_lp: {
+          address: 'secret1prxa3js02lys75a48hru944j5knszzr5tyehar',
+          asset_one: 'sefi',
+          asset_two: 'sdvpn',
+          decimals: 6,
+          symbol: 'SEFI-sDVPN'
         },
         sefi_sluna_lp: {
           address: 'secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem',
@@ -450,6 +462,17 @@ $(document).ready(function(){
           withdraw_gas: '1050000',
           reward_token: cryptocurrencies['sefi'],
         },
+        {
+          address: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs',
+          deposit_gas: '1050000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['sefi_sdvpn_lp'],
+          earn_token: cryptocurrencies['sefi_sdvpn_lp'],
+          farm_contract_address: 'secret1zyd8tdq5wxe7jmmhw99uwh3qwwhx5cphu85lya',
+          protocol: protocols['secret_swap'],
+          withdraw_gas: '1050000',
+          reward_token: cryptocurrencies['sefi'],
+        }
       ]
       this.retryCount = 0;
       $.each(this.pools, function(index, value) {
