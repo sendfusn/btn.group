@@ -81,9 +81,9 @@ class ApplicationController < ActionController::Base
           },
           password_manager: {
             name: 'Password manager',
-            show_in_navbar: false,
-            show_link: false,
-            status: 'WIP',
+            show_in_navbar: true,
+            show_link: true,
+            status: 'Live',
             contracts: {
               production: 'secret1x56ls7efhdy8axktua0gzuc7muvgwnr98gh54j'
             }
