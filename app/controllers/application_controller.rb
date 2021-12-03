@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
             show_link: false,
             status: 'WIP',
             contracts: {
-              production: 'secret14ht8qyy2u06h4tqudmqxcqu0jdfd5a6d86yp8v'
+              production: 'secret1x56ls7efhdy8axktua0gzuc7muvgwnr98gh54j'
             }
           },
           pools: {
