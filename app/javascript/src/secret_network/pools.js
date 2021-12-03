@@ -65,6 +65,13 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'SEFI-sLUNA'
         },
+        sefi_sosmo_lp: {
+          address: 'secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu',
+          asset_one: 'sefi',
+          asset_two: 'sosmo',
+          decimals: 6,
+          symbol: 'SEFI-sOSMO'
+        },
         sefi_susdc_eth_lp: {
           address: 'secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr',
           asset_one: 'sefi',
@@ -122,6 +129,11 @@ $(document).ready(function(){
           address: 'secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps',
           decimals: 18,
           symbol: 'sOCEAN(ETH)'
+        },
+        sosmo: {
+          address: 'secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg',
+          decimals: 6,
+          symbol: 'sOSMO'
         },
         srsr_eth: {
           address: 'secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un',
@@ -302,6 +314,17 @@ $(document).ready(function(){
           deposit_token: cryptocurrencies['sefi_sluna_lp'],
           earn_token: cryptocurrencies['sefi_sluna_lp'],
           farm_contract_address: 'secret1hzul4anur0lw3mq4t0sg95ew27hjg8x9tz6jes',
+          protocol: protocols['secret_swap'],
+          reward_token: cryptocurrencies['sefi'],
+          withdraw_gas: '937500',
+        },
+        {
+          address: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww',
+          deposit_gas: '937500',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['sefi_sosmo_lp'],
+          earn_token: cryptocurrencies['sefi_sosmo_lp'],
+          farm_contract_address: 'secret170mt93k5fh07vdhdvu585mxv2e7j7me2xtkae9',
           protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '937500',
