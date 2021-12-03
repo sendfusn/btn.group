@@ -29,7 +29,7 @@ $(document).ready(function(){
       this.environment = 'production';
       this.contractAddress = document.featureContractAddress(this.environment);
       this.chainId = document.secretNetworkChainId(this.environment)
-      this.chosenAuthenticationId;
+      this.chosenPosition;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.authentications = []
       this.authenticationsFormatted = []
@@ -37,7 +37,7 @@ $(document).ready(function(){
       // datatable
       this.datatable = window.$('#authentications-table').DataTable({
         columns: [
-            { data: 'id', title: "id" },
+            { data: 'position', title: "#" },
             { data: 'label', title: "label" },
             { data: 'username', title: "username" },
             { data: 'password', title: "password" },
@@ -54,7 +54,7 @@ $(document).ready(function(){
         ordering: false,
         paging: false,
         rowId: function(a) {
-          return 'id_' + a['id'];
+          return 'position_' + a['position'];
         },
       });
 
@@ -64,7 +64,7 @@ $(document).ready(function(){
       }.bind(this))
 
       $("a[href^='#tab-2-3']").click(function(e){
-        if(this.authentications[this.chosenAuthenticationId].revealed) {
+        if(this.authentications[this.chosenPosition].revealed) {
           $('.reveal-button').addClass('d-none')
         } else {
           if(this.addressOwnsAuthenthication(this.searchedAddress)) {
@@ -77,7 +77,7 @@ $(document).ready(function(){
 
       $("a[href^='#tab-2-4']").click(function(e){
         this.setShowTableData()
-        if(this.authentications[this.chosenAuthenticationId].revealed) {
+        if(this.authentications[this.chosenPosition].revealed) {
           $('.reveal-button').addClass('d-none')
         } else {
           if(this.addressOwnsAuthenthication(this.searchedAddress)) {
@@ -145,15 +145,15 @@ $(document).ready(function(){
                 alert("Please use the recent version of keplr extension");
               }
             }
-            let handleMsg = { show: { id: Number(this.chosenAuthenticationId) } }
+            let handleMsg = { show: { position: Number(this.chosenPosition) } }
             let response = await this.client.execute(this.contractAddress, handleMsg)
             let resultText = '';
             response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
             let authentication = JSON.parse(resultText)['show']['authentication']
             authentication['revealed'] = true
-            this.chosenAuthenticationId = authentication['id']
-            this.authentications[this.chosenAuthenticationId] = authentication
-            this.authenticationsFormatted[this.chosenAuthenticationId] = authentication
+            this.chosenPosition = authentication['position']
+            this.authentications[this.chosenPosition] = authentication
+            this.authenticationsFormatted[this.chosenPosition] = authentication
             this.setPasswordManagerUpdateForm()
             this.setShowTableData()
             $button.addClass('d-none')
@@ -220,7 +220,10 @@ $(document).ready(function(){
           } 
           _.each(response['logs'][0]['events'][1]['attributes'], function(kV){
             if (kV['key'] == 'id') {
-              newAuthentication['id'] = Number(kV['value'])
+              newAuthentication['id'] = kV['value']
+            }
+            if (kV['key'] == 'position') {
+              newAuthentication['position'] = Number(kV['value'])
             }
             if (kV['key'] == 'label') {
               newAuthentication['label'] = kV['value']
@@ -235,9 +238,9 @@ $(document).ready(function(){
               newAuthentication['notes'] = kV['value']
             }
           })
-          this.chosenAuthenticationId = newAuthentication['id']
-          this.authentications[newAuthentication['id']] = newAuthentication;
-          this.authenticationsFormatted[newAuthentication['id']] = newAuthentication;
+          this.chosenPosition = newAuthentication['position']
+          this.authentications[newAuthentication['position']] = newAuthentication;
+          this.authenticationsFormatted[newAuthentication['position']] = newAuthentication;
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           document.showAlertSuccess('Authentication created.')
         }
@@ -295,12 +298,13 @@ $(document).ready(function(){
       document.passwordManagerUpdateForm.onsubmit = async (e) => {
         e.preventDefault()
         changeSubmitButtonToLoading()
-        let id = Number(document.passwordManagerUpdateForm.id.value)
+        let position = Number(document.passwordManagerUpdateForm.position.value)
+        let id = document.passwordManagerUpdateForm.id.value
         let label = document.passwordManagerUpdateForm.label.value
         let username = document.passwordManagerUpdateForm.username.value;
         let password = document.passwordManagerUpdateForm.password.value
         let notes = document.passwordManagerUpdateForm.notes.value;
-        let dataLength = document.passwordManagerUpdateForm.id.value.length + label.length + username.length + password.length + notes.length
+        let dataLength = document.passwordManagerUpdateForm.position.value.length + id.length + label.length + username.length + password.length + notes.length
         let gas = calculateGas(122_000, dataLength)
         try {
           // Keplr extension injects the offline signer that is compatible with cosmJS.
@@ -335,15 +339,15 @@ $(document).ready(function(){
               alert("Please use the recent version of keplr extension");
             }
           }
-          let handleMsg = { update_authentication: { id: id, label: label, username: username, password: password, notes: notes } }
+          let handleMsg = { update_authentication: { position: position, id: id, label: label, username: username, password: password, notes: notes } }
           let response = await this.client.execute(this.contractAddress, handleMsg)
           let resultText = '';
           response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           let authentication = JSON.parse(resultText)['update_authentication']['authentication']
           authentication['revealed'] = true
-          this.chosenAuthenticationId = authentication['id']
-          this.authentications[this.chosenAuthenticationId] = authentication
-          this.authenticationsFormatted[this.chosenAuthenticationId] = authentication
+          this.chosenPosition = authentication['position']
+          this.authentications[this.chosenPosition] = authentication
+          this.authenticationsFormatted[this.chosenPosition] = authentication
           this.setPasswordManagerUpdateForm()
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
           document.showAlertSuccess('Update successful.')
@@ -408,20 +412,21 @@ $(document).ready(function(){
       }
 
       this.setPasswordManagerUpdateForm = function() {
-        document.passwordManagerUpdateForm.id.value = this.chosenAuthenticationId
-        document.passwordManagerUpdateForm.label.value = this.authentications[this.chosenAuthenticationId]['label']
-        document.passwordManagerUpdateForm.username.value = this.authentications[this.chosenAuthenticationId]['username']
-        document.passwordManagerUpdateForm.password.value = this.authentications[this.chosenAuthenticationId]['password']
-        document.passwordManagerUpdateForm.notes.value = this.authentications[this.chosenAuthenticationId]['notes']
+        document.passwordManagerUpdateForm.position.value = this.chosenPosition
+        document.passwordManagerUpdateForm.id.value = this.authentications[this.chosenPosition]['id']
+        document.passwordManagerUpdateForm.label.value = this.authentications[this.chosenPosition]['label']
+        document.passwordManagerUpdateForm.username.value = this.authentications[this.chosenPosition]['username']
+        document.passwordManagerUpdateForm.password.value = this.authentications[this.chosenPosition]['password']
+        document.passwordManagerUpdateForm.notes.value = this.authentications[this.chosenPosition]['notes']
       }
 
       this.setShowTableData = function() {
-        $('#id-table-data').text(this.chosenAuthenticationId)
-        $('#table-title').text('Authentication #' + this.chosenAuthenticationId)
-        $('#label-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['label'])
-        $('#username-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['username'])
-        $('#password-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['password'])
-        $('#notes-table-data').text(this.authenticationsFormatted[this.chosenAuthenticationId]['notes'])
+        $('#position-table-data').text(this.chosenPosition)
+        $('#table-title').text('Authentication #' + this.chosenPosition)
+        $('#label-table-data').text(this.authenticationsFormatted[this.chosenPosition]['label'])
+        $('#username-table-data').text(this.authenticationsFormatted[this.chosenPosition]['username'])
+        $('#password-table-data').text(this.authenticationsFormatted[this.chosenPosition]['password'])
+        $('#notes-table-data').text(this.authenticationsFormatted[this.chosenPosition]['notes'])
       }
 
       this.refreshTable = function(address, data) {
@@ -430,14 +435,14 @@ $(document).ready(function(){
         this.datatable.draw();
         $('.edit-link').click(function(e){
           e.preventDefault()
-          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
+          this.chosenPosition = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-3']")[0].click()
           this.setPasswordManagerUpdateForm()
         }.bind(this))
 
         $('.view-link').click(function(e){
           e.preventDefault()
-          this.chosenAuthenticationId = e.currentTarget.parentNode.parentNode.id.split('_')[1]
+          this.chosenPosition = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
         }.bind(this))
         if(this.addressOwnsAuthenthication(address)) {
