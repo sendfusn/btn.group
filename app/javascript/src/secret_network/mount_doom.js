@@ -69,7 +69,7 @@ $(document).ready(function(){
                     }
                   }
                   let nftInfoResponse = await client.queryContractSmart(tokenAddress, params);
-                  nftsContainerHtml += '<div class="col-sm-6 col-lg-4"><div class="card"><div class="card-body">'
+                  nftsContainerHtml += '<div class="col-sm-6 col-lg-4 mb-4"><div class="card"><div class="card-body">'
                   nftsContainerHtml += '<img class="w-100" src="' + nftInfoResponse['nft_info']['extension']['image'] + '">'
                   nftsContainerHtml += '<h5>' + nftInfoResponse['nft_info']['extension']['name'] + '</h5>'
                   nftsContainerHtml += '</div></div></div>'

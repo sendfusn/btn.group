@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
           },
           mount_doom: {
             name: 'Mount Doom',
-            show_in_navbar: false,
+            show_in_navbar: true,
             show_link: true,
             status: 'Live',
             contracts: {
