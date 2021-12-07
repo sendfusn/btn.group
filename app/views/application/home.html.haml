@@ -83,12 +83,32 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
           .col-lg-4.col-md-6
+            = link_to secret_network_mount_doom_path do
+              .card.card-lg-y.feature.feature-center
+                .feature-icon.feature-icon-bg-grd.feature-icon-s5-2
+                  = cl_image_tag 'secret_network/mount_doom/mt_doom_biwkdj', height: 242, width: 230, crop: :fill, dpr: 2, fetch_format: :auto
+                .feature-text
+                  %h4.title.title-md.title-dark.mb-1 Mount Doom
+                  %p
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                    = features[:secret_network][:name]
+          .col-lg-4.col-md-6
             = link_to secret_network_password_manager_path do
               .card.card-lg-y.feature.feature-center
                 .feature-icon.feature-icon-bg-grd.feature-icon-s5-2
                   = cl_image_tag 'secret_network/password_manager/wheel_of_password_obhsyv', height: 242, width: 230, crop: :fill, dpr: 2, fetch_format: :auto
                 .feature-text
                   %h4.title.title-md.title-dark.mb-1 Password manager
+                  %p
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                    = features[:secret_network][:name]
+          .col-lg-4.col-md-6
+            = link_to secret_network_pools_path do
+              .card.card-lg-y.feature.feature-center
+                .feature-icon.feature-icon-bg-grd.feature-icon-s5-3.p-3
+                  = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', crop: :lpad, dpr: 2, fetch_format: :auto, height: 246, width: 230
+                .feature-text
+                  %h4.title.title-md.title-dark.mb-1 Pools
                   %p
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
@@ -112,16 +132,6 @@
                   = cl_image_tag 'secret_network/transactions/transaction_rough_j8coyp', crop: :lpad, dpr: 2, fetch_format: :auto, height: 246, width: 230
                 .feature-text
                   %h4.title.title-md.title-dark.mb-1 Transactions
-                  %p
-                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
-                    = features[:secret_network][:name]
-          .col-lg-4.col-md-6
-            = link_to secret_network_pools_path do
-              .card.card-lg-y.feature.feature-center
-                .feature-icon.feature-icon-bg-grd.feature-icon-s5-3.p-3
-                  = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', crop: :lpad, dpr: 2, fetch_format: :auto, height: 246, width: 230
-                .feature-text
-                  %h4.title.title-md.title-dark.mb-1 Yield optimizer
                   %p
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
