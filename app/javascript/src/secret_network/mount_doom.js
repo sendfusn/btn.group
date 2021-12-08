@@ -69,9 +69,22 @@ $(document).ready(function(){
                     }
                   }
                   let nftInfoResponse = await client.queryContractSmart(tokenAddress, params);
+                  let imageUrl;
+                  let nftName;
+                  if (nftInfoResponse['nft_info']['token_uri']) {
+                    let result = await $.ajax({
+                      url: nftInfoResponse['nft_info']['token_uri'],
+                      type: 'GET'
+                    })
+                    imageUrl = result['image']
+                    nftName = result['name']
+                  } else {
+                    imageUrl = nftInfoResponse['nft_info']['extension']['image']
+                    nftName = nftInfoResponse['nft_info']['extension']['name']
+                  }
                   nftsContainerHtml += '<div class="col-sm-6 col-lg-4 mb-4"><div class="card"><div class="card-body">'
-                  nftsContainerHtml += '<img class="w-100" src="' + nftInfoResponse['nft_info']['extension']['image'] + '">'
-                  nftsContainerHtml += '<h5>' + nftInfoResponse['nft_info']['extension']['name'] + '</h5>'
+                  nftsContainerHtml += '<img class="w-100" src="' + imageUrl + '">'
+                  nftsContainerHtml += '<h5>' + nftName + '</h5>'
                   nftsContainerHtml += '</div></div></div>'
                   $nftsContainer.html(nftsContainerHtml)
                   $nftsContainer.removeClass('d-none')
