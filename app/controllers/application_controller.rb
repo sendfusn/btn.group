@@ -67,7 +67,10 @@ class ApplicationController < ActionController::Base
             name: 'DEX aggregator',
             show_in_navbar: false,
             show_link: false,
-            status: 'WIP'
+            status: 'WIP',
+            contracts: {
+              production: 'secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud'
+            }
           },
           mount_doom: {
             name: 'Mount Doom',
@@ -75,8 +78,7 @@ class ApplicationController < ActionController::Base
             show_link: true,
             status: 'Live',
             contracts: {
-              production: 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq',
-              staging: 'secret15nfjk7zfh54damy09d2jegkrw4rq33d3zug4a5'
+              production: 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq'
             }
           },
           password_manager: {

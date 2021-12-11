@@ -39,7 +39,7 @@ $(document).ready(function(){
         document.hideAllAlerts();
         try {
           // Set environment
-          let environment = document.featureEnvironment();
+          let environment = 'production';
           let chainId = document.secretNetworkChainId(environment)
           let client =  document.secretNetworkClient(environment);
           let contractAddress = document.featureContractAddress(environment);
