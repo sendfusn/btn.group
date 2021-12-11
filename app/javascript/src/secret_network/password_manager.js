@@ -1,7 +1,7 @@
 $(document).ready(function(){
   if($("#secret-network-password-manager").length) {
     var calculateGas = function(minGas, dataLength) {
-      let gasBuffer = 30_000
+      let gasBuffer = 50_000
       let gas = minGas + gasBuffer
       gas += dataLength * 15
       return String(Math.ceil(gas / 100) * 100)
