@@ -34,7 +34,7 @@ class DatahubController < ApplicationController
   end
 
   def index_staging
-    datahub_url = "https://secret-holodeck-2--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}"
+    datahub_url = "https://secret-pulsar-1--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}"
     path = request.fullpath.split('datahub_staging').second
     reverse_proxy datahub_url, path: path, headers: { 'HOST' => nil } do |config|
       # We got a 404!
