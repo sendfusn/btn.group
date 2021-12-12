@@ -13,6 +13,7 @@ Protocol.identifiers.each_key do |identifier|
 
   url = 'https://btn.group/' if identifier == 'btn_group'
   url = 'https://secretswap.io/' if identifier == 'secret_swap'
+  url = 'https://sienna.network/' if identifier == 'sienna'
   p.update!(name: identifier.humanize, url: url)
 end
 

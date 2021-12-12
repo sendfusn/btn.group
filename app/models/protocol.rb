@@ -5,7 +5,7 @@ class Protocol < ApplicationRecord
   has_many :pools, dependent: :restrict_with_exception
 
   # === ENUMS ===
-  enum identifier: { btn_group: 0, secret_swap: 1 }
+  enum identifier: { btn_group: 0, secret_swap: 1, sienna: 2 }
 
   # === VALIDATIONS ===
   validates :identifier, presence: true

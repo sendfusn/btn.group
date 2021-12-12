@@ -25,6 +25,7 @@ module PayMeCrypto
         SecretFinanceStakingPoolsJob.perform_now
         SecretSwapGetPairsJob.perform_now
         CalculateAprForYieldOptimizerBJob.perform_now
+        SiennaGetPairsJob.perform_now
       end
     end
   end
