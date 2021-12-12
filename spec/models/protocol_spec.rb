@@ -8,7 +8,7 @@ RSpec.describe Protocol, type: :model do
   end
 
   describe 'ENUMS' do
-    it { should define_enum_for(:identifier).with_values(btn_group: 0, secret_swap: 1) }
+    it { should define_enum_for(:identifier).with_values(btn_group: 0, secret_swap: 1, sienna: 2) }
   end
 
   describe 'VALIDATIONS' do
