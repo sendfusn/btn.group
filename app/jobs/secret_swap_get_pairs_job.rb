@@ -35,10 +35,8 @@ class SecretSwapGetPairsJob < ApplicationJob
     pool.cryptocurrency_pools
         .find_or_create_by!(cryptocurrency_role: 'deposit',
                             cryptocurrency: cryptocurrency_deposit_one)
-        .update(total: swap_pair_json['asset0_volume'])
     pool.cryptocurrency_pools
         .find_or_create_by!(cryptocurrency_role: 'deposit',
                             cryptocurrency: cryptocurrency_deposit_two)
-        .update(total: swap_pair_json['asset1_volume'])
   end
 end
