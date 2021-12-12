@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Cryptocurrency, type: :model do
+  let(:blockchain) { build(:blockchain) }
+  let(:subject) { build(:cryptocurrency, blockchain: blockchain) }
+
   describe 'ASSOCIATIONS' do
     it { should belong_to(:blockchain) }
     it { should belong_to(:smart_contract).optional(true) }
@@ -14,7 +17,7 @@ RSpec.describe Cryptocurrency, type: :model do
   end
 
   describe 'VALIDATIONS' do
-    before { create(:cryptocurrency) }
+    before { create(:cryptocurrency, blockchain: blockchain) }
 
     it { should validate_numericality_of(:decimals).is_greater_than_or_equal_to(0) }
     it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0).allow_nil }

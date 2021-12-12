@@ -65,7 +65,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara'
-  gem 'database_cleaner'
+  gem 'database_cleaner-active_record'
   gem 'selenium-webdriver'
   # Collection of testing matchers extracted from Shoulda
   gem 'shoulda-matchers', require: false

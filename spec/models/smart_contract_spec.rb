@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe SmartContract, type: :model do
-  let(:smart_contract) { build(:smart_contract) }
+  let(:blockchain) { create(:blockchain) }
+  let(:subject) { build(:smart_contract, blockchain: blockchain) }
 
   describe 'ASSOCIATIONS' do
     it { should belong_to(:blockchain) }
