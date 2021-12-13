@@ -5,6 +5,7 @@ class Cryptocurrency < ApplicationRecord
   belongs_to :blockchain
   belongs_to :smart_contract, optional: true
   has_many :cryptocurrency_pools, dependent: :restrict_with_exception
+  has_many :pools, through: :cryptocurrency_pools
 
   # === DELEGATES ===
   delegate :address, to: :smart_contract, allow_nil: true
