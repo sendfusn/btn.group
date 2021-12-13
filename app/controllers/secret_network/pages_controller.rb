@@ -14,7 +14,7 @@ module SecretNetwork
       pools = Pool.where(category: :trade_pair)
                   .joins(:smart_contract)
                   .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
-      cryptocurrency_ids = Cryptocurrency.where(official: true, symbol: %w[ATOM DVPN LUNA OSMO SCRT UST]).pluck(:id)
+      cryptocurrency_ids = []
       pools.each do |pool|
         pool.cryptocurrency_pools.where(cryptocurrency_role: :deposit).each do |cp|
           cryptocurrency_ids.push(cp.cryptocurrency_id)
