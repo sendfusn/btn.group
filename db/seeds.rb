@@ -26,7 +26,7 @@ smart_contract = SmartContract.find_by(address: 'secret1k0jntykt7e4g3y88ltc60czg
 sc = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
 sc.update!(decimals: 6, name: 'sSCRT', symbol: 'SSCRT', official: true, blockchain: Blockchain.find_by(identifier: :secret_network)) unless sc.persisted?
 pool = Pool.find_or_create_by(smart_contract: smart_contract, category: :trade_pair)
-if pool.cryptocurrency_pools.empty?
+if pool.persisted? && pool.cryptocurrency_pools.empty?
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: c)
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: sc)
 end
@@ -37,7 +37,7 @@ smart_contract = SmartContract.find_by(address: 'secret14mzwd0ps5q277l20ly2q3aet
 sc = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
 sc.update!(decimals: 6, name: 'sATOM', symbol: 'SATOM', official: true, blockchain: Blockchain.find_by(identifier: :secret_network)) unless sc.persisted?
 pool = Pool.find_or_create_by(smart_contract: smart_contract, category: :trade_pair)
-if pool.cryptocurrency_pools.empty?
+if pool.persisted? && pool.cryptocurrency_pools.empty?
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: c)
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: sc)
 end
@@ -48,7 +48,7 @@ smart_contract = SmartContract.find_by(address: 'secret1ra7avvjh9fhr7dtr3djutugw
 sc = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
 sc.update!(decimals: 6, name: 'sLUNA', symbol: 'SLUNA', official: true, blockchain: Blockchain.find_by(identifier: :secret_network)) unless sc.persisted?
 pool = Pool.find_or_create_by(smart_contract: smart_contract, category: :trade_pair)
-if pool.cryptocurrency_pools.empty?
+if pool.persisted? && pool.cryptocurrency_pools.empty?
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: c)
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: sc)
 end
@@ -59,7 +59,7 @@ smart_contract = SmartContract.find_by(address: 'secret129h4vu66y3gry6wzwa24rw0v
 sc = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
 sc.update!(decimals: 6, name: 'sUST', symbol: 'SUST', official: true, blockchain: Blockchain.find_by(identifier: :secret_network)) unless sc.persisted?
 pool = Pool.find_or_create_by(smart_contract: smart_contract, category: :trade_pair)
-if pool.cryptocurrency_pools.empty?
+if pool.persisted? && pool.cryptocurrency_pools.empty?
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: c)
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: sc)
 end
@@ -70,7 +70,7 @@ smart_contract = SmartContract.find_by(address: 'secret1zwwealwm0pcl9cul4nt6f38d
 sc = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
 sc.update!(decimals: 6, name: 'sOSMO', symbol: 'SOSMO', official: true, blockchain: Blockchain.find_by(identifier: :secret_network)) unless sc.persisted?
 pool = Pool.find_or_create_by(smart_contract: smart_contract, category: :trade_pair)
-if pool.cryptocurrency_pools.empty?
+if pool.persisted? && pool.cryptocurrency_pools.empty?
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: c)
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: sc)
 end
@@ -81,7 +81,7 @@ smart_contract = SmartContract.find_by(address: 'secret1k8cge73c3nh32d4u0dsd5dgt
 sc = Cryptocurrency.find_or_initialize_by(smart_contract: smart_contract)
 sc.update!(decimals: 6, name: 'sDVPN', symbol: 'SDVPN', official: true, blockchain: Blockchain.find_by(identifier: :secret_network)) unless sc.persisted?
 pool = Pool.find_or_create_by(smart_contract: smart_contract, category: :trade_pair)
-if pool.cryptocurrency_pools.empty?
+if pool.persisted? && pool.cryptocurrency_pools.empty?
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: c)
   pool.cryptocurrency_pools.create(cryptocurrency_role: :deposit, cryptocurrency: sc)
 end
