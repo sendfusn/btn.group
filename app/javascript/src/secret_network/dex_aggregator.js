@@ -2,13 +2,12 @@ $(document).ready(function(){
   if($("#secret-network-dex-aggregator").length) {
     // === LISTENERS ===
     $('#flip-token').click(function(event){
-      event.preventDefault();
-      let fromAddresss = document.secretNetworkDexAggregatorForm.fromTokenAddress.value
-      let toAddress =document.secretNetworkDexAggregatorForm.toTokenAddress.value
+      let fromId = document.secretNetworkDexAggregatorForm.from.value
+      let toId =document.secretNetworkDexAggregatorForm.to.value
 
-      document.secretNetworkDexAggregatorForm.fromTokenAddress.value = toAddress
+      document.secretNetworkDexAggregatorForm.from.value = toId
       document.secretNetworkDexAggregatorForm.fromAmount.value = ''
-      document.secretNetworkDexAggregatorForm.toTokenAddress.value = fromAddresss
+      document.secretNetworkDexAggregatorForm.to.value = fromId
       document.secretNetworkDexAggregatorForm.toAmount.value = ''
     })
 
