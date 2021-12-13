@@ -24,4 +24,13 @@ RSpec.describe Cryptocurrency, type: :model do
     it { should validate_uniqueness_of(:smart_contract_id).allow_nil }
     it { should validate_uniqueness_of(:symbol).case_insensitive.scoped_to(:smart_contract_id) }
   end
+
+  describe 'CALLBACKS' do
+    let(:cryptocurrency) { subject }
+
+    it 'upcases the symbol before save' do
+      cryptocurrency.update(symbol: 'butt')
+      expect(cryptocurrency.symbol).to eq('BUTT')
+    end
+  end
 end

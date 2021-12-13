@@ -21,6 +21,8 @@ module SecretNetwork
         end
       end
       @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids.uniq).order(:symbol)
+      @head_description = 'DEX aggregator for Secret network.'
+      @head_title = 'DEX aggregator | Secret network | btn.group'
     end
 
     def butt_lode; end

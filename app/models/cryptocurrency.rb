@@ -24,6 +24,11 @@ class Cryptocurrency < ApplicationRecord
   validates :smart_contract_id, uniqueness: { allow_nil: true }
   validates :symbol, uniqueness: { case_sensitive: false, scope: [:smart_contract_id] }
 
+  # === CALLBACKS ===
+  before_save do |cryptocurrency|
+    cryptocurrency.symbol = cryptocurrency.symbol.upcase
+  end
+
   # === INSTANCE METHODS ===
   def label_formatted
     "#{symbol} / #{name} / #{address}"
