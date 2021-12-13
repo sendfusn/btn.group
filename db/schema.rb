@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_13_010048) do
+ActiveRecord::Schema.define(version: 2021_12_13_230829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_12_13_010048) do
     t.bigint "pool_id"
     t.integer "category"
     t.string "third_party_identifier"
+    t.boolean "enabled", default: false
     t.index ["pool_id"], name: "index_pools_on_pool_id"
     t.index ["protocol_id"], name: "index_pools_on_protocol_id"
     t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id", unique: true
