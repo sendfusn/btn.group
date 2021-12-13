@@ -11,7 +11,7 @@ module SecretNetwork
     end
 
     def dex_aggregator
-      pools = Pool.where(category: :trade_pair)
+      pools = Pool.where(category: :trade_pair, enabled: true)
                   .joins(:smart_contract)
                   .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
       cryptocurrency_ids = []
