@@ -18,7 +18,7 @@
                       .form-group
                         = select_tag 'from', options_from_collection_for_select(@cryptocurrencies, 'id', 'symbol'), class: 'form-control'
                       .form-group.m-0
-                        %input.form-control{ name: 'fromAmount', placeholder: '0.0' }
+                        %input.form-control{ name: 'fromAmount', placeholder: '0.0', type: 'number', min: '0', step: '0.1' }
                     .text-center
                       = link_to '#' do
                         %em.fas.fa-arrow-down#flip-token
@@ -26,7 +26,7 @@
                       .form-group
                         = select_tag 'from', options_from_collection_for_select(@cryptocurrencies, 'id', 'symbol'), class: 'form-control'
                       .form-group.m-0
-                        %input.form-control{ name: 'toAmount', placeholder: '0.0' }
+                        %input.form-control{ name: 'toAmount', placeholder: '0.0', type: 'number', min: '0', step: '0.1' }
                     %button.btn.btn-grad-alt.w-100.mt-4
                       Swap
   .nk-ovm.shape-q
