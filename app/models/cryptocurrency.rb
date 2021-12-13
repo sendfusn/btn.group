@@ -33,4 +33,10 @@ class Cryptocurrency < ApplicationRecord
   def label_formatted
     "#{symbol} / #{name} / #{address}"
   end
+
+  def label_formatted_for_dex_aggregator_select
+    label = symbol
+    label += " | #{smart_contract.address}" if smart_contract.present?
+    label
+  end
 end
