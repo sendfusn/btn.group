@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# === BLOCKCHAIN ===
 Blockchain.identifiers.each_key do |identifier|
   b = Blockchain.find_or_initialize_by(identifier: identifier)
   next if b.persisted?
@@ -7,6 +8,21 @@ Blockchain.identifiers.each_key do |identifier|
   b.update!(name: identifier.humanize)
 end
 
+# === CRYPTOCURRENCY ===
+c = Cryptocurrency.find_or_initialize_by(symbol: 'SCRT')
+c.update!(blockchain: Blockchain.find_by(identifier: :secret_network), decimals: 6, denom: 'uscrt', official: true, name: 'Secret') unless c.persisted?
+c = Cryptocurrency.find_or_initialize_by(symbol: 'ATOM')
+c.update(blockchain: Blockchain.find_by(identifier: :cosmos), decimals: 6, denom: 'ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2', official: true, name: 'Cosmos') unless c.persisted?
+c = Cryptocurrency.find_or_initialize_by(symbol: 'LUNA')
+c.update(blockchain: Blockchain.find_by(identifier: :terra), decimals: 6, denom: 'ibc/D70B0FBF97AEB04491E9ABF4467A7F66CD6250F4382CE5192D856114B83738D2', official: true, name: 'Terra') unless c.persisted?
+c = Cryptocurrency.find_or_initialize_by(symbol: 'UST')
+c.update(blockchain: Blockchain.find_by(identifier: :terra), decimals: 6, denom: 'ibc/4294C3DB67564CF4A0B2BFACC8415A59B38243F6FF9E288FBA34F9B4823BA16E', official: true, name: 'TerraUSD') unless c.persisted?
+c = Cryptocurrency.find_or_initialize_by(symbol: 'OSMO')
+c.update(blockchain: Blockchain.find_by(identifier: :osmosis), decimals: 6, denom: 'ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B', official: true, name: 'Osmosis') unless c.persisted?
+c = Cryptocurrency.find_or_initialize_by(symbol: 'DVPN')
+c.update(blockchain: Blockchain.find_by(identifier: :sentinel), decimals: 6, denom: 'ibc/E83107E876FF194B54E9AC3099E49DBB7728156F250ABD3E997D2B7E89E0810B', official: true, name: 'Sentinel') unless c.persisted?
+
+# === PROTOCOL ===
 Protocol.identifiers.each_key do |identifier|
   p = Protocol.find_or_initialize_by(identifier: identifier)
   next if p.persisted?
