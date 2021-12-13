@@ -90,7 +90,7 @@ $(document).ready(function(){
  
     setTimeout(function(){
       $(".keplr-wallet-button").first().click()
-    }, 500);
+    }, 1500);
   }
 })
 
