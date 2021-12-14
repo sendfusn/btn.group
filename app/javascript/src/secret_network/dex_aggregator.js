@@ -22,7 +22,7 @@ $(document).ready(function(){
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
         let result = await $.ajax({
-          url: '/pools',
+          url: '/pools?enabled=true',
           type: 'GET'
         })
         this.tradePairs = result

@@ -31,6 +31,7 @@ import '../src/secret_network/mount_doom'
 import '../src/secret_network/password_manager'
 import '../src/secret_network/pools'
 import '../src/secret_network/smart_contract_interface'
+import '../src/secret_network/trade_pairs'
 import '../src/secret_network/transactions'
 
 Rails.start()

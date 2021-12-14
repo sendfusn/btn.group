@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get 'password_manager' => 'pages#password_manager'
     get 'pools' => 'pages#pools'
     get 'smart_contract_interface' => 'pages#smart_contract_interface'
+    get 'trade_pairs' => 'pages#trade_pairs'
     get 'transactions' => 'pages#transactions'
     get 'why_some_of_our_contracts_are_not_private' => 'pages#why_some_of_our_contracts_are_not_private'
     get 'yield_optimizer' => redirect('secret_network/pools')

@@ -2,6 +2,8 @@
 
 module SecretNetwork
   class PagesController < ApplicationController
+    before_action :authenticate_admin_user!, only: :trade_pairs
+
     def address_alias; end
 
     def block_locker
@@ -45,6 +47,10 @@ module SecretNetwork
       @head_description = 'Web interface for Secret network smart contracts.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/smart_contract_interface/contract_rough_MG_tw1vei.png'
       @head_title = 'Smart contract interface | Secret network | btn.group'
+    end
+
+    def trade_pairs
+      @admin_api_key = Rails.application.credentials.admin_api_key
     end
 
     def transactions
