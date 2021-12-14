@@ -15,7 +15,7 @@ class Cryptocurrency < ApplicationRecord
   scope :tradeable, lambda {
     joins(:cryptocurrency_pools)
       .where(cryptocurrency_pools: { cryptocurrency_role: 'deposit' })
-      .where.not(cryptocurrency_pools: { total: ['0', nil] })
+      .where.not(cryptocurrency_pools: { amount: ['0', nil] })
       .uniq
   }
 
