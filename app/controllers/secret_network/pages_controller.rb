@@ -49,9 +49,7 @@ module SecretNetwork
       @head_title = 'Smart contract interface | Secret network | btn.group'
     end
 
-    def trade_pairs
-      @admin_api_key = Rails.application.credentials.admin_api_key
-    end
+    def trade_pairs; end
 
     def transactions
       @head_description = 'Transactions viewer for Secret network tokens.'
