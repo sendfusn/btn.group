@@ -24,9 +24,22 @@ class SiennaGetPairsJob < ApplicationJob
     pool.update!(category: 'trade_pair') if pool.category.nil?
     return unless (token_zero = swap_pair_json['asset_infos'][0]['token'])
     return unless (token_one = swap_pair_json['asset_infos'][1]['token'])
-    return unless (cryptocurrency_shares_token = Cryptocurrency.find_by(smart_contract: SmartContract.find_by(address: swap_pair_json['liquidity_token'])))
-    return unless (cryptocurrency_deposit_one = Cryptocurrency.find_by(smart_contract: SmartContract.find_by(address: token_zero['contract_addr'])))
-    return unless (cryptocurrency_deposit_two = Cryptocurrency.find_by(smart_contract: SmartContract.find_by(address: token_one['contract_addr'])))
+
+    cryptocurrency_shares_token = Cryptocurrency.find_by(smart_contract: SmartContract.find_by(address: swap_pair_json['liquidity_token']))
+    if cryptocurrency_shares_token.nil?
+      Airbrake.notify("Cryptocurrency for smart contract #{swap_pair_json['liquidity_token']} missing")
+      return
+    end
+    cryptocurrency_deposit_one = Cryptocurrency.find_by(smart_contract: SmartContract.find_by(address: token_zero['contract_addr']))
+    if cryptocurrency_deposit_one.nil?
+      Airbrake.notify("Cryptocurrency for smart contract #{token_zero['contract_addr']} missing")
+      return
+    end
+    cryptocurrency_deposit_two = Cryptocurrency.find_by(smart_contract: SmartContract.find_by(address: token_one['contract_addr']))
+    if cryptocurrency_deposit_two.nil?
+      Airbrake.notify("Cryptocurrency for smart contract #{token_one['contract_addr']} missing")
+      return
+    end
 
     pool.cryptocurrency_pools
         .find_or_create_by!(cryptocurrency_role: 'shares',
