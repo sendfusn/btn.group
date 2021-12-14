@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :cryptocurrencies, only: :index, defaults: { format: 'json' }
   resources :features, only: :index
-  resources :pools, only: :index, defaults: { format: 'json' }
+  resources :pools, only: %w[index update], defaults: { format: 'json' }
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
 
   namespace :near do
