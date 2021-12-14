@@ -14,7 +14,6 @@ $(document).ready(function(){
           type: 'GET'
         })
         this.tradePairs = result
-        console.log(this.tradePairs)
         for (const el of this.tradePairs) {
           await this.queryPoolFromBlockchain(el);
         }
@@ -31,20 +30,12 @@ $(document).ready(function(){
           }
           try {
             let result = await this.client.queryContractSmart(address, msg);
-            console.log(result)
             let asset_0_address;
             let asset_1_address;
             let asset_0_amount;
             let asset_1_amount;
             let enabled;
             if (protocolIdentifier == 'sienna') {
-              // let totalLiquidity = result['total_liquidity']
-              // let enabled;
-              // if (Number(totalLiquidity) > 0) {
-              //   enabled = true
-              // } else {
-              //   enabled = false
-              // }
               asset_0_address = result['pair_info'][
               'pair']['token_0']['custom_token']['contract_addr']
               asset_0_amount == result['pair_info']['amount_0']
@@ -54,11 +45,11 @@ $(document).ready(function(){
               if (result['assets'][0]['info']['token']) {
                 asset_0_address = result['assets'][0]['info']['token']['contract_addr']
               }
-              asset_0_amount == result['assets'][0]['amount']
+              asset_0_amount = result['assets'][0]['amount']
               if (result['assets'][1]['info']['token']) {
                 asset_1_address = result['assets'][1]['info']['token']['contract_addr']
               }
-              asset_1_amount == result['assets'][1]['amount']
+              asset_1_amount = result['assets'][1]['amount']
             }
             if (Number(asset_0_amount) + Number(asset_1_amount) > 0) {
               enabled = true
@@ -72,9 +63,38 @@ $(document).ready(function(){
                 data: { pool: { enabled: enabled } },
                 dataType: 'json'
               })
-              console.log(updateResult)
             }
-            console.log(result)
+            for (let cp of tradePair['cryptocurrency_pools']) {
+              if (cp['cryptocurrency_role'] == 'deposit') {
+                let cryptocurrency = cp['cryptocurrency']
+                let amount;
+                if (cryptocurrency['smart_contract']) {
+                  if (asset_0_address == cryptocurrency['smart_contract']['address']) {
+                    amount = asset_0_amount
+                  } else if (asset_1_address == cryptocurrency['smart_contract']['address']) {
+                    amount = asset_1_amount
+                  }
+                } else {
+                  if (asset_0_address == undefined) {
+                    amount = asset_0_amount
+                  } else if (asset_1_address == undefined) {
+                    amount = asset_1_amount
+                  }
+                }
+                if (amount != cp['amount']) {
+                  try {
+                    let updateResult = await $.ajax({
+                      url: '/cryptocurrency_pools/' + cp['id'],
+                      type: 'put',
+                      data: { cryptocurrency_pool: { amount: amount } },
+                      dataType: 'json'
+                    })
+                  } catch(error) {
+                    console.log(error)
+                  }
+                }
+              }
+            }
           } catch (error) {
             console.error(error)
           }

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   resources :cryptocurrencies, only: :index, defaults: { format: 'json' }
+  resources :cryptocurrency_pools, only: :update, defaults: { format: 'json' }
   resources :features, only: :index
   resources :pools, only: %w[index update], defaults: { format: 'json' }
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
