@@ -17,7 +17,7 @@ $(document).ready(function(){
         for (const el of this.tradePairs) {
           await this.queryPoolFromBlockchain(el);
         }
-        this.getAndSetTradePairs()
+        location.reload()
       }
 
       this.queryPoolFromBlockchain = async(tradePair) => {
