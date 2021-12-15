@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_14_005810) do
+ActiveRecord::Schema.define(version: 2021_12_15_001701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,9 +117,25 @@ ActiveRecord::Schema.define(version: 2021_12_14_005810) do
     t.index ["blockchain_id"], name: "index_smart_contracts_on_blockchain_id"
   end
 
+  create_table "swap_paths", force: :cascade do |t|
+    t.string "swap_path_as_string"
+    t.bigint "from_id"
+    t.bigint "to_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["from_id", "to_id"], name: "index_swap_paths_on_from_id_and_to_id"
+    t.index ["from_id"], name: "index_swap_paths_on_from_id"
+    t.index ["swap_path_as_string", "from_id", "to_id"], name: "index_swap_paths_on_swap_path_as_string_and_from_id_and_to_id", unique: true
+    t.index ["to_id"], name: "index_swap_paths_on_to_id"
+  end
+
+  add_foreign_key "cryptocurrencies", "blockchains", name: "cryptocurrencies_blockchain_id_fk"
   add_foreign_key "cryptocurrencies_pools", "cryptocurrencies", name: "cryptocurrencies_pools_cryptocurrency_id_fk"
   add_foreign_key "cryptocurrencies_pools", "pools", name: "cryptocurrencies_pools_pool_id_fk"
+  add_foreign_key "pools", "pools", name: "pools_pool_id_fk"
   add_foreign_key "pools", "protocols", name: "pools_protocol_id_fk"
   add_foreign_key "pools", "smart_contracts", name: "pools_smart_contract_id_fk"
   add_foreign_key "smart_contracts", "blockchains", name: "smart_contracts_blockchain_id_fk"
+  add_foreign_key "swap_paths", "cryptocurrencies", column: "from_id", name: "swap_paths_from_id_fk"
+  add_foreign_key "swap_paths", "cryptocurrencies", column: "to_id", name: "swap_paths_to_id_fk"
 end

@@ -11,6 +11,9 @@ class Pool < ApplicationRecord
   # === ENUMS ===
   enum category: { farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3 }
 
+  # === SCOPES ===
+  scope :enabled, lambda { where(enabled: true) }
+
   # === VALIDATIONS ===
   validates :smart_contract_id, uniqueness: true
 end

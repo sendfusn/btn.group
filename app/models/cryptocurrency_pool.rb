@@ -10,6 +10,9 @@ class CryptocurrencyPool < ApplicationRecord
   # === ENUMS ===
   enum cryptocurrency_role: { deposit: 0, reward: 1, shares: 2 }
 
+  # === SCOPE ===
+  scope :deposit, lambda { where(cryptocurrency_role: :deposit) }
+
   # === VALIDATIONS ===
   validates :cryptocurrency_role, presence: true
   validates :cryptocurrency_role, uniqueness: { scope: %i[cryptocurrency_id pool_id] }

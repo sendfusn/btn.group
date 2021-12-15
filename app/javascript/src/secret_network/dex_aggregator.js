@@ -19,6 +19,23 @@ $(document).ready(function(){
       this.client = document.secretNetworkClient(this.environment);
       this.height = undefined;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
+      this.gasDeposit;
+      this.gasRedeem;
+      this.gasSiennaPerSwap;
+      this.gasSecretSwapPerSwap;
+      this.gasBase;
+      // For each from to to option, we need to map out all options
+      // there's technically a really really really big number of combinations
+      // so it would have the base key as fhe from cryptocurrency id
+      // and the next level of keys will be all the 
+      // I think one of the rules should be that it never doubles back on the same pair
+      // The other thing should be is that there should be a maximum of 5 swaps
+      this.swapOptions = {
+        1: {
+          2: [[1], []],
+          3: [[], []]
+        }
+      }
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
         let result = await $.ajax({
