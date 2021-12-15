@@ -13,6 +13,7 @@ class Pool < ApplicationRecord
 
   # === SCOPES ===
   scope :enabled, lambda { where(enabled: true) }
+  scope :trade_pair, lambda { where(category: 1) }
 
   # === VALIDATIONS ===
   validates :smart_contract_id, uniqueness: true

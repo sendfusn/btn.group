@@ -12,4 +12,9 @@ class SwapPath < ApplicationRecord
   before_save do |swap_path|
     swap_path.swap_path_as_string&.gsub!(/\s+/, '')
   end
+
+  # === Intance methods ===
+  def swap_path_as_array
+    swap_path_as_string.split(',')
+  end
 end
