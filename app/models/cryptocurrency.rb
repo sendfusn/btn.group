@@ -30,6 +30,11 @@ class Cryptocurrency < ApplicationRecord
     cryptocurrency.symbol = cryptocurrency.symbol.upcase
   end
 
+  # === CLASS METHODS ===
+  def self.buttcoin
+    find_by(symbol: 'BUTT').id
+  end
+
   # === INSTANCE METHODS ===
   def label_formatted
     "#{symbol} / #{name} / #{address}"
