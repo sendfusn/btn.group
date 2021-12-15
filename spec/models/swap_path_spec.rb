@@ -11,7 +11,10 @@ RSpec.describe SwapPath, type: :model do
   end
 
   describe 'VALIDATIONS' do
-    it { should validate_uniqueness_of(:swap_path_as_string).scoped_to(%i[from_id to_id]) }
+    subject { swap_path }
+
+    it { should validate_uniqueness_of(:swap_path_as_string).scoped_to(%i[from_id to_id]).case_insensitive }
+    it { should validate_numericality_of(:swap_count).is_greater_than_or_equal_to(1) }
   end
 
   describe 'CALLBACKS' do
