@@ -26,6 +26,7 @@ module PayMeCrypto
         SecretSwapGetPairsJob.perform_now
         CalculateAprForYieldOptimizerBJob.perform_now
         SiennaGetPairsJob.perform_now
+        RemoveInvalidSwapPathsJob.perform_now
       end
     end
   end
