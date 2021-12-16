@@ -1,19 +1,8 @@
 $(document).ready(function(){
   if($("#secret-network-dex-aggregator").length) {
-    // === LISTENERS ===
-    $('#flip-token').click(function(event){
-      let fromId = document.secretNetworkDexAggregatorForm.from.value
-      let toId =document.secretNetworkDexAggregatorForm.to.value
-
-      document.secretNetworkDexAggregatorForm.from.value = toId
-      document.secretNetworkDexAggregatorForm.fromAmount.value = ''
-      document.secretNetworkDexAggregatorForm.to.value = fromId
-      document.secretNetworkDexAggregatorForm.toAmount.value = ''
-    })
-
     window.onload = async () => {
       this.cryptocurrencies = {}
-      this.tradePairs = []
+      this.tradePairs = {}
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
@@ -24,26 +13,30 @@ $(document).ready(function(){
       this.gasSiennaPerSwap;
       this.gasSecretSwapPerSwap;
       this.gasBase;
-      // For each from to to option, we need to map out all options
-      // there's technically a really really really big number of combinations
-      // so it would have the base key as fhe from cryptocurrency id
-      // and the next level of keys will be all the 
-      // I think one of the rules should be that it never doubles back on the same pair
-      // The other thing should be is that there should be a maximum of 5 swaps
-      this.swapOptions = {
-        1: {
-          2: [[1], []],
-          3: [[], []]
-        }
-      }
+      this.swapPaths = {};
+
+      // === LISTENERS ===
+      $('#flip-token').click(function(event){
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId =document.secretNetworkDexAggregatorForm.to.value
+
+        document.secretNetworkDexAggregatorForm.from.value = toId
+        document.secretNetworkDexAggregatorForm.fromAmount.value = ''
+        document.secretNetworkDexAggregatorForm.to.value = fromId
+        document.secretNetworkDexAggregatorForm.toAmount.value = ''
+      })
+      $("#from-amount-input").on("input", function(){
+          // Print entered value in a div box
+          this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value)
+      }.bind(this));
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
         let result = await $.ajax({
           url: '/pools?enabled=true',
           type: 'GET'
         })
-        this.tradePairs = result
         result.forEach((tradePair) => {
+          this.tradePairs[tradePair['id']] = tradePair
           tradePair['cryptocurrency_pools'].forEach((cryptocurrencyPool) => {
             if (cryptocurrencyPool['cryptocurrency_role'] == 'deposit') {
               let cryptocurrency = cryptocurrencyPool['cryptocurrency']
@@ -52,6 +45,31 @@ $(document).ready(function(){
           })
         })
       }
+
+      this.getSwapPaths = async(from_id) => {
+        if (this.swapPaths[from_id] == undefined) {
+          this.swapPaths[from_id] = {}
+          let url = "/swap_paths?from_id=" + from_id + "&to_id=" + from_id;
+          let result = await $.ajax({
+            url: url,
+            type: 'GET'
+          })
+          result.forEach((swapPath) => {
+            this.getResultOfSwaps(from_id, swapPath['swap_path_as_array'])
+            this.swapPaths[from_id][swapPath['id']] = swapPath
+          })
+        }
+        console.log(this.swapPaths)
+      }
+
+      this.getResultOfSwaps = async(fromId, swapPath) => {
+        let resultAmount;
+        for (const el of swapPath) {
+          resultAmount = await this.querySwapSimulation(this.tradePairs[Number(el)]);
+        }
+      }
+
+      this.querySwapSimulation = function() {}
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
