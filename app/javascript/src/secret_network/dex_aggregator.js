@@ -17,6 +17,8 @@ $(document).ready(function(){
       this.gasSecretSwapPerSwap;
       this.gasBase;
       this.simulateTrades;
+      this.simulationCryptoMaxReturns = {};
+      this.simulationSwapResults = {}
       this.swapPaths = {};
       this.swapPathsAsArray = [];
 
@@ -90,6 +92,7 @@ $(document).ready(function(){
           })
         }
         console.log(this.swapPaths)
+        this.simulationCryptoMaxReturns = {}
         for (const swapPath of this.swapPathsAsArray) {
           let resultOfSwaps = await this.getResultOfSwaps(swapPath)
            // this.querySwapSimulation(el);
@@ -114,6 +117,17 @@ $(document).ready(function(){
         for (const poolId of swapPath['swap_path_as_array']) {
           fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
           fromId = this.extractSwapToId(fromId, poolId)
+          if (this.simulationCryptoMaxReturns[fromId] == undefined) {
+            this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
+          } else if(this.simulationCryptoMaxReturns[fromId] > new BigNumber(fromAmountFormatted)) {
+            console.log(swapPath)
+            console.log(fromId)
+            console.log(new BigNumber(fromAmountFormatted).toFixed())
+            console.log(this.simulationCryptoMaxReturns[fromId].toFixed())
+            return
+          } else {
+            this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
+          }
         }
         if(Number(fromAmountFormatted) > new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()) {
           alert(swapPath['id'])
@@ -124,6 +138,13 @@ $(document).ready(function(){
       }
 
       this.querySwapSimulation = async(fromAmountFormatted, fromId, poolId) => {
+        this.simulationSwapResults = {}
+        this.simulationSwapResults[poolId] = {}
+        this.simulationSwapResults[poolId][fromId] = {}
+        this.simulationSwapResults[poolId][fromId][fromAmountFormatted];
+        if (this.simulationSwapResults[poolId][fromId][fromAmountFormatted]) {
+          return this.simulationSwapResults[poolId][fromId][fromAmountFormatted]
+        }
         let fromCryptoAddress = this.cryptocurrencies[fromId]['smart_contract']['address']
         let fromCryptoCodeHash = this.cryptocurrencies[fromId]['smart_contract']['data_hash']
         let pool = this.tradePairs[poolId]
@@ -136,11 +157,13 @@ $(document).ready(function(){
         }
         try {
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
+          this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
         } catch(error) {
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
 
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
+          this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
         }
       }
