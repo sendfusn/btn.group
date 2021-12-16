@@ -44,6 +44,8 @@ $(document).ready(function(){
             }
           })
         })
+        console.log(this.tradePairs)
+        console.log(this.cryptocurrencies)
       }
 
       this.getSwapPaths = async(from_id) => {
@@ -55,6 +57,8 @@ $(document).ready(function(){
             type: 'GET'
           })
           result.forEach((swapPath) => {
+            let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>id: ' + swapPath['id'] + '</div>' + '<div>Swap path: ' + swapPath['swap_path_as_string'] + '</div>'
+            $("#swap-paths").append(x)
             this.getResultOfSwaps(from_id, swapPath['swap_path_as_array'])
             this.swapPaths[from_id][swapPath['id']] = swapPath
           })

@@ -1,11 +1,11 @@
 .header-banner.bg-theme-grad-s2.keplr-wallet#secret-network-dex-aggregator
-  .nk-banner
+  .nk-banner.pb-5
     .banner.banner-page
       .mt-3.w-100
         .container
           .row.justify-content-center
             .col-xl-7.col-lg-9
-              .card.mt-3.mb-5
+              .card.my-3
                 .card-body
                   %h3= features[:secret_network][:features][:dex_aggregator][:name]
                   %p.mb-0
@@ -29,5 +29,5 @@
                         %input.form-control{ name: 'toAmount', placeholder: '0.0', type: 'number', min: '0' }
                     %button.btn.btn-grad-alt.w-100.mt-4
                       Swap
+              #swap-paths
   .nk-ovm.shape-q
-  .particles-container.particles-bg#particles-bg{ 'data-pt-base' => '#00c0fa', 'data-pt-base-op' => '.3', 'data-pt-line' => '#2b56f5', 'data-pt-line-op' => '.5', 'data-pt-shape' => '#00c0fa', 'data-pt-shape-op' => '.2' }
