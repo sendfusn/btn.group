@@ -17,4 +17,13 @@ class Pool < ApplicationRecord
 
   # === VALIDATIONS ===
   validates :smart_contract_id, uniqueness: true
+
+  # === CALLBACKS ===
+  after_destroy do |pool|
+    RemoveInvalidSwapPathsJob.perform_later if pool.enabled && pool.trade_pair
+  end
+
+  after_update do |pool|
+    RemoveInvalidSwapPathsJob.perform_later if pool.trade_pair && !pool.enabled
+  end
 end
