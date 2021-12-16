@@ -79,6 +79,10 @@ $(document).ready(function(){
             } else {
               enabled = false
             }
+            console.log(tradePair)
+            console.log(tradePair['enabled'])
+            console.log(enabled)
+            console.log(tradePair['enabled'] != enabled)
             if (tradePair['enabled'] != enabled) {
               let updateResult = await $.ajax({
                 url: '/pools/' + tradePair['id'],
