@@ -63,10 +63,14 @@ $(document).ready(function(){
             } else if (protocolIdentifier == 'secret_swap') {
               if (result['assets'][0]['info']['token']) {
                 asset_0_address = result['assets'][0]['info']['token']['contract_addr']
+              } else {
+                asset_0_address = ''
               }
               asset_0_amount = result['assets'][0]['amount']
               if (result['assets'][1]['info']['token']) {
                 asset_1_address = result['assets'][1]['info']['token']['contract_addr']
+              } else {
+                asset_1_address = ''
               }
               asset_1_amount = result['assets'][1]['amount']
             }
