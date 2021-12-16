@@ -2,7 +2,7 @@
 
 module SecretNetwork
   class PagesController < ApplicationController
-    before_action :authenticate_admin_user!, only: :trade_pairs
+    before_action :authenticate_admin_user!, only: %i[dex_aggregator trade_pairs]
 
     def address_alias; end
 
@@ -23,7 +23,7 @@ module SecretNetwork
         end
       end
       @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids.uniq).order(:symbol)
-      @default_from_token_id = Cryptocurrency.find_by(symbol: 'SCRT').id
+      @default_from_token_id = Cryptocurrency.find_by(symbol: 'BUTT').id
       @default_to_token_id = Cryptocurrency.find_by(symbol: 'BUTT').id
       @head_description = 'DEX aggregator for Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png'
