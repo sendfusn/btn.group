@@ -57,8 +57,8 @@ $(document).ready(function(){
             }
           })
         })
-        console.log(this.tradePairs)
-        console.log(this.cryptocurrencies)
+        window.tradePairs = this.tradePairs;
+        window.cryptocurrencies = this.cryptocurrencies;
       }
 
       this.getSwapPaths = async(from_id) => {
@@ -69,7 +69,7 @@ $(document).ready(function(){
             url: url,
             type: 'GET'
           })
-          console.log(this.swapPathsAsArray)
+          window.swapPathsAsArray = this.swapPathsAsArray
           this.swapPathsAsArray.forEach((swapPath) => {
             let currentCryptoId = swapPath['from_id']
             let currentCryptoSymbol = swapPath['from']['symbol']
@@ -91,11 +91,10 @@ $(document).ready(function(){
             this.swapPaths[from_id][swapPath['id']] = swapPath
           })
         }
-        console.log(this.swapPaths)
+        window.swapPaths = this.swapPaths
         this.simulationCryptoMaxReturns = {}
         for (const swapPath of this.swapPathsAsArray) {
           let resultOfSwaps = await this.getResultOfSwaps(swapPath)
-           // this.querySwapSimulation(el);
         }
       }
 
@@ -150,6 +149,7 @@ $(document).ready(function(){
         let pool = this.tradePairs[poolId]
         let protocolIdentifier = pool['protocol']['identifier']
         let swapMsg;
+        console.log(pool)
         if (protocolIdentifier == 'secret_swap') {
           swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
         } else {
@@ -158,11 +158,13 @@ $(document).ready(function(){
         try {
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
+          console.log(result)
           return result['return_amount']
         } catch(error) {
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
 
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
+          console.log(result)
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
         }
