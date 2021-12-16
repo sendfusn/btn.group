@@ -39,6 +39,7 @@ module SecretNetwork
 
     def password_manager
       @head_description = 'Decentralized password manager on the Secret network.'
+      @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/password_manager/wheel_of_password_obhsyv.jpg'
       @head_title = 'Password manager | Secret network | btn.group'
     end
 
