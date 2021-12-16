@@ -130,9 +130,11 @@ $(document).ready(function(){
             this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
           }
         }
-        if(Number(fromAmountFormatted) > new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()) {
-          alert(swapPath['id'])
-          alert(fromAmountFormatted)
+        if(swapPath['to_id'] == swapPath['from_id']) {
+          if(Number(fromAmountFormatted) > new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()) {
+            alert(swapPath['id'])
+            alert(fromAmountFormatted)
+          }
         }
         console.log(swapPath)
         console.log(fromAmountFormatted)
