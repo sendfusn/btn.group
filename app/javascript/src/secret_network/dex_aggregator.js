@@ -11,10 +11,10 @@ $(document).ready(function(){
       this.client = document.secretNetworkClient(this.environment);
       this.height = undefined;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.gasDeposit;
-      this.gasRedeem;
-      this.gasSiennaPerSwap;
-      this.gasSecretSwapPerSwap;
+      this.gasDeposit = '40000';
+      this.gasRedeem = '40000';
+      this.gasSiennaPerSwap = '100000';
+      this.gasSecretSwapPerSwap = '135000';
       this.gasBase;
       this.simulateTrades;
       this.simulationCryptoMaxReturns = {};
