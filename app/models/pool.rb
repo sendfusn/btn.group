@@ -20,10 +20,18 @@ class Pool < ApplicationRecord
 
   # === CALLBACKS ===
   after_destroy do |pool|
-    RemoveInvalidSwapPathsJob.perform_later if pool.enabled && pool.trade_pair
+    RemoveInvalidSwapPathsJob.perform_later if pool.enabled && pool.category == 'trade_pair'
+  end
+
+  after_save do |pool|
+    if pool.category == 'trade_pair' && pool.enabled && pool.enabled_changed?
+      CreateSwapPathsJob.perform_later
+      CreateArbitragePathsJob.perform_later('BUTT')
+      CreateArbitragePathsJob.perform_later('SWBTC')
+    end
   end
 
   after_update do |pool|
-    RemoveInvalidSwapPathsJob.perform_later if pool.trade_pair && !pool.enabled
+    RemoveInvalidSwapPathsJob.perform_later if pool.category == 'trade_pair' && !pool.enabled && pool.enabled_changed?
   end
 end
