@@ -38,7 +38,7 @@ $(document).ready(function(){
         setTimeout(function(){
           // this.simulateTrades = true
           if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value) {
-            this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value)
+            this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
           }
         }.bind(this), 1500);
       }.bind(this));
@@ -61,35 +61,37 @@ $(document).ready(function(){
         window.cryptocurrencies = this.cryptocurrencies;
       }
 
-      this.getSwapPaths = async(from_id) => {
+      this.getSwapPaths = async(from_id, to_id) => {
         if (this.swapPaths[from_id] == undefined) {
           this.swapPaths[from_id] = {}
-          let url = "/swap_paths?from_id=" + from_id + "&to_id=" + from_id;
-          this.swapPathsAsArray = await $.ajax({
-            url: url,
-            type: 'GET'
-          })
-          window.swapPathsAsArray = this.swapPathsAsArray
-          this.swapPathsAsArray.forEach((swapPath) => {
-            let currentCryptoId = swapPath['from_id']
-            let currentCryptoSymbol = swapPath['from']['symbol']
-            let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>id: ' + swapPath['id'] + '</div>' + '<div>Swap path pool ids: ' + swapPath['swap_path_as_string'] + '</div><div>Swap path:</div>'
-            swapPath['swap_path_as_array'].forEach((tradePairId) => {
-              let protocolName = this.tradePairs[tradePairId]['protocol']['name']
-              let xId = currentCryptoId
-              this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
-                if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
-                  x = x + '<div>' + currentCryptoSymbol
-                  currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
-                  currentCryptoId = cryptoPool['cryptocurrency_id']
-                  x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
-                }
-              })
+          if (this.swapPaths[from_id][to_id] == undefined) {
+            let url = "/swap_paths?from_id=" + from_id + "&to_id=" + to_id;
+            this.swapPathsAsArray = await $.ajax({
+              url: url,
+              type: 'GET'
             })
-            x = x
-            $("#swap-paths").append(x)
-            this.swapPaths[from_id][swapPath['id']] = swapPath
-          })
+            window.swapPathsAsArray = this.swapPathsAsArray
+            this.swapPathsAsArray.forEach((swapPath) => {
+              let currentCryptoId = swapPath['from_id']
+              let currentCryptoSymbol = swapPath['from']['symbol']
+              let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>id: ' + swapPath['id'] + '</div>' + '<div>Swap path pool ids: ' + swapPath['swap_path_as_string'] + '</div><div>Swap path:</div>'
+              swapPath['swap_path_as_array'].forEach((tradePairId) => {
+                let protocolName = this.tradePairs[tradePairId]['protocol']['name']
+                let xId = currentCryptoId
+                this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
+                  if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
+                    x = x + '<div>' + currentCryptoSymbol
+                    currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
+                    currentCryptoId = cryptoPool['cryptocurrency_id']
+                    x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
+                  }
+                })
+              })
+              x = x
+              $("#swap-paths").append(x)
+              this.swapPaths[from_id][swapPath['id']] = swapPath
+            })
+          }
         }
         window.swapPaths = this.swapPaths
         this.simulationCryptoMaxReturns = {}
