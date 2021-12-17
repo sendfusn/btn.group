@@ -197,8 +197,10 @@ $(document).ready(function(){
         let swapMsg;
         if (protocolIdentifier == 'secret_swap') {
           swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
-        } else {
+        } else if (protocolIdentifier == 'sienna') {
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: ''}}, amount: fromAmountFormatted}}}
+        } else {
+          return fromAmountFormatted
         }
         try {
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
