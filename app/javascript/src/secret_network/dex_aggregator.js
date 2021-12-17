@@ -9,17 +9,16 @@ $(document).ready(function(){
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
-      this.height = undefined;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.gasDeposit = '40000';
       this.gasRedeem = '40000';
       this.gasSiennaPerSwap = '100000';
       this.gasSecretSwapPerSwap = '135000';
       this.queryCount = 0;
-      this.simulationCryptoMaxReturns = {};
+      // This holds the results of swaps for a pool, for crypto id, for the amount offered
+      // It never needs to be reset
       this.simulationSwapResults = {}
       this.swapPaths = {};
-      this.swapPathsAsArray = [];
 
       // === LISTENERS ===
       $('#flip-token').click(function(event){
@@ -88,19 +87,19 @@ $(document).ready(function(){
 
       this.getSwapPaths = async(from_id, to_id) => {
         this.queryCount += 1;
+        this.reset()
         let currentQueryCount = this.queryCount;
         if (this.swapPaths[from_id] == undefined) {
           this.swapPaths[from_id] = {}
-          if (this.swapPaths[from_id][to_id] == undefined) {
-            let url = "/swap_paths?from_id=" + from_id + "&to_id=" + to_id;
-            this.swapPathsAsArray = await $.ajax({
-              url: url,
-              type: 'GET'
-            })
-            window.swapPathsAsArray = this.swapPathsAsArray
-          }
         }
-        this.swapPathsAsArray.forEach((swapPath) => {
+        if (this.swapPaths[from_id][to_id] == undefined) {
+          let url = "/swap_paths?from_id=" + from_id + "&to_id=" + to_id;
+          this.swapPaths[from_id][to_id] = await $.ajax({
+            url: url,
+            type: 'GET'
+          })
+        }
+        this.swapPaths[from_id][to_id].forEach((swapPath) => {
           let currentCryptoId = swapPath['from_id']
           let currentCryptoSymbol = swapPath['from']['symbol']
           let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>id: ' + swapPath['id'] + '</div>' + '<div>Swap path pool ids: ' + swapPath['swap_path_as_string'] + '</div><div>Swap path:</div>'
@@ -116,15 +115,17 @@ $(document).ready(function(){
               }
             })
           })
-          x = x
+          x = x + '<div class="result">Result: <b>Loading...</b></div>'
           $("#swap-paths").append(x)
-          this.swapPaths[from_id][swapPath['id']] = swapPath
         })
-        window.swapPaths = this.swapPaths
-        this.simulationCryptoMaxReturns = {}
-        for (const swapPath of this.swapPathsAsArray) {
+        for (const swapPath of this.swapPaths[from_id][to_id]) {
           if(currentQueryCount == this.queryCount) {
             let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
+            if (resultOfSwaps == '0') {
+              $('#' + swapPath['id']).remove()
+            } else {
+              $('#' + swapPath['id']).find('.result b').text(resultOfSwaps)
+            }
           }
         }
       }
@@ -148,16 +149,19 @@ $(document).ready(function(){
           if(currentQueryCount == this.queryCount) {
             fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
             fromId = this.extractSwapToId(fromId, poolId)
-            if (this.simulationCryptoMaxReturns[fromId] == undefined) {
-              this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
-            } else if(this.simulationCryptoMaxReturns[fromId] > new BigNumber(fromAmountFormatted)) {
-              console.log(swapPath)
-              console.log(fromId)
-              console.log(new BigNumber(fromAmountFormatted).toFixed())
-              console.log(this.simulationCryptoMaxReturns[fromId].toFixed())
-              return
+            if (this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] == undefined) {
+              this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] = new BigNumber(fromAmountFormatted)
+            } else if(this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] > new BigNumber(fromAmountFormatted)) {
+              // For arbitrage just keep going because I want to see the results
+              if(swapPath['from_id'] != swapPath['to_id']) {
+                console.log(swapPath)
+                console.log(fromId)
+                console.log(new BigNumber(fromAmountFormatted).toFixed())
+                console.log(this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId].toFixed())
+                return '0'
+              }
             } else {
-              this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
+              this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] = new BigNumber(fromAmountFormatted)
             }
           }
         }
@@ -170,14 +174,19 @@ $(document).ready(function(){
           }
           console.log(swapPath)
           console.log(fromAmountFormatted)
+          return fromAmountFormatted
         }
+        return '0'
       }
 
       this.querySwapSimulation = async(fromAmountFormatted, fromId, poolId) => {
-        this.simulationSwapResults = {}
-        this.simulationSwapResults[poolId] = {}
-        this.simulationSwapResults[poolId][fromId] = {}
-        this.simulationSwapResults[poolId][fromId][fromAmountFormatted];
+        if (this.simulationSwapResults[poolId] == undefined) {
+          this.simulationSwapResults[poolId] = {}
+        }
+        if (this.simulationSwapResults[poolId][fromId] == undefined) {
+          this.simulationSwapResults[poolId][fromId] = {}
+        }
+        // If this exact trade has been done before, return the result
         if (this.simulationSwapResults[poolId][fromId][fromAmountFormatted]) {
           return this.simulationSwapResults[poolId][fromId][fromAmountFormatted]
         }
@@ -186,7 +195,6 @@ $(document).ready(function(){
         let pool = this.tradePairs[poolId]
         let protocolIdentifier = pool['protocol']['identifier']
         let swapMsg;
-        console.log(pool)
         if (protocolIdentifier == 'secret_swap') {
           swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
         } else {
@@ -195,15 +203,31 @@ $(document).ready(function(){
         try {
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
-          console.log(result)
           return result['return_amount']
         } catch(error) {
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
 
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
-          console.log(result)
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
+        }
+      }
+
+      this.reset = () => {
+        this.bestResultsPerSwapCount = {}
+        // This holds the best result of swap to per swap_count e.g. cryptoId => swapCount => 555_555
+        // The concept is that if the new amount is lower than the stored amount, there would be a better path out there 
+        this.simulationCryptoMaxReturns = {
+          1: {},
+          2: {},
+          3: {},
+          4: {},
+          5: {},
+          6: {},
+          7: {},
+          8: {},
+          9: {},
+          10: {},
         }
       }
 
