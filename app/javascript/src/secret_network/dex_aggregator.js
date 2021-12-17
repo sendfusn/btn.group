@@ -124,10 +124,15 @@ $(document).ready(function(){
             if (resultOfSwaps == '0') {
               $('#' + swapPath['id']).remove()
             } else {
-              $('#' + swapPath['id']).find('.result b').text(resultOfSwaps)
+              console.log(swapPath)
+              $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(resultOfSwaps, this.cryptocurrencies[to_id]['decimals']))
             }
           }
         }
+      }
+
+      this.humanizeStringNumberFromSmartContract = (stringNumber, decimals, toFormatDecimals = undefined) => {
+        return new BigNumber(stringNumber).dividedBy(new BigNumber("10").pow(decimals)).toFormat(toFormatDecimals)
       }
 
       this.extractSwapToId = function(fromId, tradePairId) {
