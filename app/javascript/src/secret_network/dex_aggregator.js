@@ -24,7 +24,6 @@ $(document).ready(function(){
       $('#flip-token').click(function(event){
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId =document.secretNetworkDexAggregatorForm.to.value
-
         document.secretNetworkDexAggregatorForm.from.value = toId
         document.secretNetworkDexAggregatorForm.fromAmount.value = ''
         document.secretNetworkDexAggregatorForm.to.value = fromId
@@ -34,6 +33,7 @@ $(document).ready(function(){
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
+        $("#swap-paths").html('')
         setTimeout(function(){
           if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
             this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
@@ -44,6 +44,7 @@ $(document).ready(function(){
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
+        $("#swap-paths").html('')
         if (Number(fromAmount) > 0) {
           setTimeout(function(){
             if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
@@ -56,6 +57,7 @@ $(document).ready(function(){
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
+        $("#swap-paths").html('')
         if (Number(fromAmount) > 0) {
           setTimeout(function(){
             if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
