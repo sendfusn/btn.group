@@ -15,6 +15,7 @@ $(document).ready(function(){
       this.gasRedeem = '40000';
       this.gasSiennaPerSwap = '100000';
       this.gasSecretSwapPerSwap = '135000';
+      this.queryCount = 0;
       this.simulationCryptoMaxReturns = {};
       this.simulationSwapResults = {}
       this.swapPaths = {};
@@ -86,6 +87,8 @@ $(document).ready(function(){
       }
 
       this.getSwapPaths = async(from_id, to_id) => {
+        this.queryCount += 1;
+        let currentQueryCount = this.queryCount;
         if (this.swapPaths[from_id] == undefined) {
           this.swapPaths[from_id] = {}
           if (this.swapPaths[from_id][to_id] == undefined) {
@@ -95,32 +98,34 @@ $(document).ready(function(){
               type: 'GET'
             })
             window.swapPathsAsArray = this.swapPathsAsArray
-            this.swapPathsAsArray.forEach((swapPath) => {
-              let currentCryptoId = swapPath['from_id']
-              let currentCryptoSymbol = swapPath['from']['symbol']
-              let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>id: ' + swapPath['id'] + '</div>' + '<div>Swap path pool ids: ' + swapPath['swap_path_as_string'] + '</div><div>Swap path:</div>'
-              swapPath['swap_path_as_array'].forEach((tradePairId) => {
-                let protocolName = this.tradePairs[tradePairId]['protocol']['name']
-                let xId = currentCryptoId
-                this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
-                  if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
-                    x = x + '<div>' + currentCryptoSymbol
-                    currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
-                    currentCryptoId = cryptoPool['cryptocurrency_id']
-                    x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
-                  }
-                })
-              })
-              x = x
-              $("#swap-paths").append(x)
-              this.swapPaths[from_id][swapPath['id']] = swapPath
-            })
           }
         }
+        this.swapPathsAsArray.forEach((swapPath) => {
+          let currentCryptoId = swapPath['from_id']
+          let currentCryptoSymbol = swapPath['from']['symbol']
+          let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>id: ' + swapPath['id'] + '</div>' + '<div>Swap path pool ids: ' + swapPath['swap_path_as_string'] + '</div><div>Swap path:</div>'
+          swapPath['swap_path_as_array'].forEach((tradePairId) => {
+            let protocolName = this.tradePairs[tradePairId]['protocol']['name']
+            let xId = currentCryptoId
+            this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
+              if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
+                x = x + '<div>' + currentCryptoSymbol
+                currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
+                currentCryptoId = cryptoPool['cryptocurrency_id']
+                x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
+              }
+            })
+          })
+          x = x
+          $("#swap-paths").append(x)
+          this.swapPaths[from_id][swapPath['id']] = swapPath
+        })
         window.swapPaths = this.swapPaths
         this.simulationCryptoMaxReturns = {}
         for (const swapPath of this.swapPathsAsArray) {
-          let resultOfSwaps = await this.getResultOfSwaps(swapPath)
+          if(currentQueryCount == this.queryCount) {
+            let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
+          }
         }
       }
 
@@ -134,34 +139,38 @@ $(document).ready(function(){
         return x
       }
 
-      this.getResultOfSwaps = async(swapPath) => {
+      this.getResultOfSwaps = async(swapPath, currentQueryCount) => {
         let fromId = swapPath['from_id']
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromCryptoDecimals = this.cryptocurrencies[fromId]['decimals']
         let fromAmountFormatted = new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()
         for (const poolId of swapPath['swap_path_as_array']) {
-          fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
-          fromId = this.extractSwapToId(fromId, poolId)
-          if (this.simulationCryptoMaxReturns[fromId] == undefined) {
-            this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
-          } else if(this.simulationCryptoMaxReturns[fromId] > new BigNumber(fromAmountFormatted)) {
-            console.log(swapPath)
-            console.log(fromId)
-            console.log(new BigNumber(fromAmountFormatted).toFixed())
-            console.log(this.simulationCryptoMaxReturns[fromId].toFixed())
-            return
-          } else {
-            this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
+          if(currentQueryCount == this.queryCount) {
+            fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
+            fromId = this.extractSwapToId(fromId, poolId)
+            if (this.simulationCryptoMaxReturns[fromId] == undefined) {
+              this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
+            } else if(this.simulationCryptoMaxReturns[fromId] > new BigNumber(fromAmountFormatted)) {
+              console.log(swapPath)
+              console.log(fromId)
+              console.log(new BigNumber(fromAmountFormatted).toFixed())
+              console.log(this.simulationCryptoMaxReturns[fromId].toFixed())
+              return
+            } else {
+              this.simulationCryptoMaxReturns[fromId] = new BigNumber(fromAmountFormatted)
+            }
           }
         }
-        if(swapPath['to_id'] == swapPath['from_id']) {
-          if(Number(fromAmountFormatted) > new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()) {
-            alert(swapPath['id'])
-            alert(fromAmountFormatted)
+        if(currentQueryCount == this.queryCount) {
+          if(swapPath['to_id'] == swapPath['from_id']) {
+            if(Number(fromAmountFormatted) > new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()) {
+              alert(swapPath['id'])
+              alert(fromAmountFormatted)
+            }
           }
+          console.log(swapPath)
+          console.log(fromAmountFormatted)
         }
-        console.log(swapPath)
-        console.log(fromAmountFormatted)
       }
 
       this.querySwapSimulation = async(fromAmountFormatted, fromId, poolId) => {
