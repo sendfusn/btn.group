@@ -15,8 +15,6 @@ $(document).ready(function(){
       this.gasRedeem = '40000';
       this.gasSiennaPerSwap = '100000';
       this.gasSecretSwapPerSwap = '135000';
-      this.gasBase;
-      this.simulateTrades;
       this.simulationCryptoMaxReturns = {};
       this.simulationSwapResults = {}
       this.swapPaths = {};
@@ -34,13 +32,37 @@ $(document).ready(function(){
       })
       $("#from-amount-input").on("input", function(){
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        // this.simulateTrades = false
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
         setTimeout(function(){
-          // this.simulateTrades = true
-          if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value) {
+          if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
             this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
           }
         }.bind(this), 1500);
+      }.bind(this));
+      $("#from").change(function(){
+        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
+        if (Number(fromAmount) > 0) {
+          setTimeout(function(){
+            if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
+              this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
+            }
+          }.bind(this), 1500);
+        }
+      }.bind(this));
+      $("#to").change(function(){
+        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
+        if (Number(fromAmount) > 0) {
+          setTimeout(function(){
+            if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
+              this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
+            }
+          }.bind(this), 1500);
+        }
       }.bind(this));
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
