@@ -28,6 +28,7 @@ class Pool < ApplicationRecord
       CreateSwapPathsJob.perform_later
       CreateArbitragePathsJob.perform_later('BUTT')
       CreateArbitragePathsJob.perform_later('SWBTC')
+      CreateArbitragePathsJob.perform_later('SXMR')
     end
   end
 
