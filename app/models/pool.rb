@@ -21,10 +21,6 @@ class Pool < ApplicationRecord
   validates :smart_contract_id, uniqueness: true
 
   # === CALLBACKS ===
-  after_destroy do |pool|
-    RemoveInvalidSwapPathsJob.perform_later if pool.enabled && pool.category == 'trade_pair'
-  end
-
   after_save do |pool|
     if pool.category == 'trade_pair' && pool.enabled
       if pool.enabled_changed?
@@ -43,7 +39,7 @@ class Pool < ApplicationRecord
   end
 
   after_update do |pool|
-    RemoveInvalidSwapPathsJob.perform_later if pool.category == 'trade_pair' && !pool.enabled && pool.enabled_changed?
+    pool_swap_paths.destroy_all if pool.category == 'trade_pair' && !pool.enabled && pool.enabled_changed?
   end
 
   # === INSTANCE METHODS ===
