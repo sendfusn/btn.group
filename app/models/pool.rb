@@ -29,12 +29,7 @@ class Pool < ApplicationRecord
         CreateArbitragePathsJob.perform_later('SWBTC')
         CreateArbitragePathsJob.perform_later('SXMR')
       end
-      if pool.total_locked.present? && pool.total_locked_changed?
-        pool.swap_paths.each do |swap_path|
-          mtv = swap_path.pools.order(:total_locked).last.total_locked
-          swap_path.update(maximum_tradeable_value: mtv)
-        end
-      end
+      SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.total_locked_changed?
     end
   end
 
