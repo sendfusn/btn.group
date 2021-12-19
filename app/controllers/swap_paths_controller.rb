@@ -16,6 +16,8 @@ class SwapPathsController < ApplicationController
 
     def maximum_tradeable_amount
       c = Cryptocurrency.find(params['from_id'])
+      return 0.0 if c.price.blank? || c.decimals.blank?
+
       c.price * params['from_amount'].to_d / (10**c.decimals)
     end
 end
