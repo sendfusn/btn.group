@@ -8,6 +8,8 @@ RSpec.describe SwapPath, type: :model do
   describe 'ASSOCIATIONS' do
     it { should belong_to(:from) }
     it { should belong_to(:to) }
+    it { should have_many(:pool_swap_paths).dependent(:destroy) }
+    it { should have_many(:pools) }
   end
 
   describe 'VALIDATIONS' do

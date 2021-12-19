@@ -26,6 +26,20 @@ class Cryptocurrency < ApplicationRecord
   validates :symbol, uniqueness: { case_sensitive: false, scope: [:smart_contract_id] }
 
   # === CALLBACKS ===
+  after_save do |c|
+    if c.price.present? && c.price_changed?
+      c.pools.trade_pair.each do |pool|
+        total_locked = 0
+        pool.cryptocurrency_pools.deposit.each do |cp|
+          break if cp.amount.nil? || cp.cryptocurrency.price.nil?
+
+          total_locked += cp.amount.to_i * cp.cryptocurrency.price
+        end
+        pool.update(total_locked: total_locked)
+      end
+    end
+  end
+
   before_save do |cryptocurrency|
     cryptocurrency.coin_gecko_id = cryptocurrency.coin_gecko_id&.downcase
     cryptocurrency.symbol = cryptocurrency.symbol.upcase

@@ -8,6 +8,8 @@ RSpec.describe Pool, type: :model do
     it { should belong_to(:protocol).optional }
     it { should belong_to(:smart_contract) }
     it { should have_many(:cryptocurrency_pools).dependent(:destroy) }
+    it { should have_many(:pool_swap_paths).dependent(:destroy) }
+    it { should have_many(:swap_paths) }
   end
 
   describe 'ENUMS' do

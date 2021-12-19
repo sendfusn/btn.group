@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_19_022134) do
+ActiveRecord::Schema.define(version: 2021_12_19_033255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,17 @@ ActiveRecord::Schema.define(version: 2021_12_19_022134) do
     t.index ["cryptocurrency_id"], name: "index_cryptocurrencies_pools_on_cryptocurrency_id"
     t.index ["cryptocurrency_role", "cryptocurrency_id", "pool_id"], name: "by_role_and_associations", unique: true
     t.index ["pool_id"], name: "index_cryptocurrencies_pools_on_pool_id"
+  end
+
+  create_table "pool_swap_paths", force: :cascade do |t|
+    t.integer "position"
+    t.bigint "pool_id"
+    t.bigint "swap_path_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pool_id"], name: "index_pool_swap_paths_on_pool_id"
+    t.index ["position", "pool_id", "swap_path_id"], name: "index_pool_swap_paths_on_position_and_pool_id_and_swap_path_id", unique: true
+    t.index ["swap_path_id"], name: "index_pool_swap_paths_on_swap_path_id"
   end
 
   create_table "pools", force: :cascade do |t|
