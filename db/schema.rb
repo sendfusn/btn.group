@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_19_000741) do
+ActiveRecord::Schema.define(version: 2021_12_19_022134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 2021_12_19_000741) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "swap_count", null: false
+    t.decimal "maximum_tradeable_value", precision: 15, scale: 2
     t.index ["from_id", "to_id"], name: "index_swap_paths_on_from_id_and_to_id"
     t.index ["from_id"], name: "index_swap_paths_on_from_id"
     t.index ["swap_count"], name: "index_swap_paths_on_swap_count"
