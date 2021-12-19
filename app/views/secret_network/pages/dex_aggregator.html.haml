@@ -25,8 +25,12 @@
                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
                       .form-group
                         = select_tag 'to', options_from_collection_for_select(@cryptocurrencies, 'id', 'label_formatted_for_dex_aggregator_select', @default_to_token_id), class: 'form-control'
+                      .form-group
+                        %label Estimate
+                        %input.form-control{ name: 'estimateAmount', placeholder: '0.0', type: 'number', min: '0', disabled: true }
                       .form-group.m-0
-                        %input.form-control{ name: 'toAmount', placeholder: '0.0', type: 'number', min: '0' }
+                        %label Minimum acceptable amount
+                        %input.form-control{ name: 'minAmount', placeholder: '0.0', type: 'number', min: '0' }
                     %button.btn.btn-grad-alt.w-100.mt-4
                       Swap
               #swap-paths

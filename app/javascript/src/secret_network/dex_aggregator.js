@@ -27,7 +27,7 @@ $(document).ready(function(){
         document.secretNetworkDexAggregatorForm.from.value = toId
         document.secretNetworkDexAggregatorForm.fromAmount.value = ''
         document.secretNetworkDexAggregatorForm.to.value = fromId
-        document.secretNetworkDexAggregatorForm.toAmount.value = ''
+        document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
       })
       $("#from-amount-input").on("input", function(){
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
@@ -249,7 +249,7 @@ $(document).ready(function(){
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
         console.log(document.secretNetworkDexAggregatorForm.fromAmount.value)
-        console.log(document.secretNetworkDexAggregatorForm.toAmount.value)
+        console.log(document.secretNetworkDexAggregatorForm.estimateAmount.value)
         console.log(this.cryptocurrencies)
         console.log(this.tradePairs)
       };
