@@ -45,4 +45,15 @@ class Pool < ApplicationRecord
   after_update do |pool|
     RemoveInvalidSwapPathsJob.perform_later if pool.category == 'trade_pair' && !pool.enabled && pool.enabled_changed?
   end
+
+  # === INSTANCE METHODS ===
+  def update_total_locked
+    total_locked = 0.0
+    cryptocurrency_pools.deposit.each do |cp|
+      break if cp.amount.nil? || cp.cryptocurrency.price.nil? || cp.cryptocurrency.decimals.nil?
+
+      total_locked += cp.cryptocurrency.amount_with_decimals(cp.amount) * cp.cryptocurrency.price
+    end
+    update!(total_locked: total_locked)
+  end
 end

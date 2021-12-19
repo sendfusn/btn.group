@@ -36,7 +36,7 @@ $(document).ready(function(){
         $("#swap-paths").html('')
         setTimeout(function(){
           if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
-            this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
+            this.getSwapPaths(fromId, toId, fromAmount)
           }
         }.bind(this), 1500);
       }.bind(this));
@@ -48,7 +48,7 @@ $(document).ready(function(){
         if (Number(fromAmount) > 0) {
           setTimeout(function(){
             if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
-              this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
+              this.getSwapPaths(fromId, toId, fromAmount)
             }
           }.bind(this), 1500);
         }
@@ -61,7 +61,7 @@ $(document).ready(function(){
         if (Number(fromAmount) > 0) {
           setTimeout(function(){
             if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
-              this.getSwapPaths(document.secretNetworkDexAggregatorForm.from.value, document.secretNetworkDexAggregatorForm.to.value)
+              this.getSwapPaths(fromId, toId, fromAmount)
             }
           }.bind(this), 1500);
         }
@@ -85,7 +85,7 @@ $(document).ready(function(){
         window.cryptocurrencies = this.cryptocurrencies;
       }
 
-      this.getSwapPaths = async(from_id, to_id) => {
+      this.getSwapPaths = async(from_id, to_id, fromAmount) => {
         this.queryCount += 1;
         this.reset()
         let currentQueryCount = this.queryCount;
@@ -93,7 +93,7 @@ $(document).ready(function(){
           this.swapPaths[from_id] = {}
         }
         if (this.swapPaths[from_id][to_id] == undefined) {
-          let url = "/swap_paths?from_id=" + from_id + "&to_id=" + to_id;
+          let url = "/swap_paths?from_id=" + from_id + "&to_id=" + to_id + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
           this.swapPaths[from_id][to_id] = await $.ajax({
             url: url,
             type: 'GET'
@@ -129,6 +129,14 @@ $(document).ready(function(){
             }
           }
         }
+      }
+
+      this.formatStringNumberForSmartContract = (stringNumber, decimals) => {
+        if (stringNumber == '') {
+          stringNumber = '0'
+        }
+
+        return new BigNumber(stringNumber.replace(/,/g, '')).times(new BigNumber("10").pow(decimals)).toFixed();
       }
 
       this.humanizeStringNumberFromSmartContract = (stringNumber, decimals, toFormatDecimals = undefined) => {

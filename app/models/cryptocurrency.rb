@@ -27,17 +27,7 @@ class Cryptocurrency < ApplicationRecord
 
   # === CALLBACKS ===
   after_save do |c|
-    if c.price.present? && c.price_changed?
-      c.pools.trade_pair.each do |pool|
-        total_locked = 0
-        pool.cryptocurrency_pools.deposit.each do |cp|
-          break if cp.amount.nil? || cp.cryptocurrency.price.nil?
-
-          total_locked += cp.amount.to_i * cp.cryptocurrency.price
-        end
-        pool.update(total_locked: total_locked)
-      end
-    end
+    c.pools.trade_pair.each(&:update_total_locked) if c.price.present? && c.price_changed?
   end
 
   before_save do |cryptocurrency|
@@ -51,6 +41,12 @@ class Cryptocurrency < ApplicationRecord
   end
 
   # === INSTANCE METHODS ===
+  def amount_with_decimals(amount)
+    return 0.0 if decimals.nil?
+
+    amount.to_d / 10**decimals
+  end
+
   def label_formatted
     "#{symbol} / #{name} / #{address}"
   end
