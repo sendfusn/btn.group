@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_19_124107) do
+ActiveRecord::Schema.define(version: 2021_12_19_033255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,8 +148,6 @@ ActiveRecord::Schema.define(version: 2021_12_19_124107) do
   add_foreign_key "cryptocurrencies", "blockchains", name: "cryptocurrencies_blockchain_id_fk"
   add_foreign_key "cryptocurrencies_pools", "cryptocurrencies", name: "cryptocurrencies_pools_cryptocurrency_id_fk"
   add_foreign_key "cryptocurrencies_pools", "pools", name: "cryptocurrencies_pools_pool_id_fk"
-  add_foreign_key "pool_swap_paths", "pools", name: "pool_swap_paths_pool_id_fk"
-  add_foreign_key "pool_swap_paths", "swap_paths", name: "pool_swap_paths_swap_path_id_fk"
   add_foreign_key "pools", "pools", name: "pools_pool_id_fk"
   add_foreign_key "pools", "protocols", name: "pools_protocol_id_fk"
   add_foreign_key "pools", "smart_contracts", name: "pools_smart_contract_id_fk"
