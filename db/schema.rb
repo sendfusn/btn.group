@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_16_002430) do
+ActiveRecord::Schema.define(version: 2021_12_19_000741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,9 @@ ActiveRecord::Schema.define(version: 2021_12_16_002430) do
     t.boolean "official"
     t.bigint "blockchain_id"
     t.string "denom"
+    t.string "coin_gecko_id"
     t.index ["blockchain_id"], name: "index_cryptocurrencies_on_blockchain_id"
+    t.index ["coin_gecko_id"], name: "index_cryptocurrencies_on_coin_gecko_id"
     t.index ["smart_contract_id", "symbol"], name: "index_cryptocurrencies_on_smart_contract_id_and_symbol", unique: true
     t.index ["smart_contract_id"], name: "index_cryptocurrencies_on_smart_contract_id", unique: true
   end

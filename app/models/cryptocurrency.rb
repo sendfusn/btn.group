@@ -27,6 +27,7 @@ class Cryptocurrency < ApplicationRecord
 
   # === CALLBACKS ===
   before_save do |cryptocurrency|
+    cryptocurrency.coin_gecko_id = cryptocurrency.coin_gecko_id&.downcase
     cryptocurrency.symbol = cryptocurrency.symbol.upcase
   end
 

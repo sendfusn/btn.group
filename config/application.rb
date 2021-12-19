@@ -21,11 +21,12 @@ module PayMeCrypto
     config.after_initialize do
       if initialized_server? && !Rails.env.test?
         Rails.application.load_seed
-        SecretNetworkGetSmartContractsJob.perform_now
-        SecretFinanceStakingPoolsJob.perform_now
-        SecretSwapGetPairsJob.perform_now
-        CalculateAprForYieldOptimizerBJob.perform_now
-        SiennaGetPairsJob.perform_now
+        CryptoPricesJob.perform_later
+        SecretNetworkGetSmartContractsJob.perform_later
+        SecretFinanceStakingPoolsJob.perform_later
+        SecretSwapGetPairsJob.perform_later
+        CalculateAprForYieldOptimizerBJob.perform_later
+        SiennaGetPairsJob.perform_later
       end
     end
   end
