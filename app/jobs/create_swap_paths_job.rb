@@ -14,7 +14,7 @@ class CreateSwapPathsJob < ApplicationJob
   end
 
   def create_swap_path(current_cryptocurrency_id, from_id, swap_path)
-    return if swap_path.length > 4
+    return if swap_path.length >= 4
 
     valid_pools_joined_with_cryptocurrency_pools = Pool.enabled
                                                        .trade_pair
