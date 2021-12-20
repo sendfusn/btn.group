@@ -16,7 +16,6 @@ $(document).ready(function(){
       this.gasSiennaPerSwap = '100000';
       this.gasSecretSwapPerSwap = '135000';
       this.queryCount = 0;
-      this.swapPaths = {};
 
       // === LISTENERS ===
       $('#flip-token').click(function(event){
@@ -266,6 +265,7 @@ $(document).ready(function(){
           9: {},
           10: {},
         }
+        this.swapPaths = {};
       }
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
