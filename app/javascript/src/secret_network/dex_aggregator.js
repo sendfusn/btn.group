@@ -274,7 +274,7 @@ $(document).ready(function(){
           let fromId = document.secretNetworkDexAggregatorForm.from.value
           let currentFromId = fromId
           let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-          fromAamount = this.formatStringNumberForSmartContract(fromAamount, this.selectedSwapPath['from']['decimals'])
+          fromAmount = this.formatStringNumberForSmartContract(fromAmount, this.selectedSwapPath['from']['decimals'])
           let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
           estimateAmount = this.formatStringNumberForSmartContract(estimateAmount, this.selectedSwapPath['to']['decimals'])
           let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
