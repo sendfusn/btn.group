@@ -5,6 +5,7 @@ $(document).ready(function(){
 
     window.onload = async () => {
       this.cryptocurrencies = {}
+      this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
       this.tradePairs = {}
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
@@ -84,10 +85,16 @@ $(document).ready(function(){
         this.loadingCryptocurrenciesAndTradePairs = false;
       }
 
+      this.delay = async(ms) => {
+        return new Promise(resolve => {
+            setTimeout(() => { resolve('') }, ms);
+        })
+      }
+
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
         this.gettingSwapPaths = true
         if(this.loadingCryptocurrenciesAndTradePairs) {
-          await delay(3000)
+          await this.delay(3000)
         }
 
         this.queryCount += 1;
@@ -142,6 +149,7 @@ $(document).ready(function(){
             }
           }
           if(index == 0 && swapPath['resultOfSwaps']) {
+            this.selectedSwapPath = swapPath
             $('#' + swapPath['id']).addClass('bg-success')
             let fmt = {
               decimalSeparator: '.',
@@ -241,6 +249,7 @@ $(document).ready(function(){
 
       this.reset = () => {
         this.bestResultsPerSwapCount = {}
+        this.selectedSwapPath = undefined;
         // This holds the results of swaps for a pool, for crypto id, for the amount offered
         this.simulationSwapResults = {}
         // This holds the best result of swap to per swap_count e.g. cryptoId => swapCount => 555_555
@@ -261,10 +270,38 @@ $(document).ready(function(){
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
-        console.log(document.secretNetworkDexAggregatorForm.fromAmount.value)
-        console.log(document.secretNetworkDexAggregatorForm.estimateAmount.value)
-        console.log(this.cryptocurrencies)
-        console.log(this.tradePairs)
+        if (this.selectedSwapPath) {
+          let fromId = document.secretNetworkDexAggregatorForm.from.value
+          let currentFromId = fromId
+          let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+          fromAamount = this.formatStringNumberForSmartContract(fromAamount, this.selectedSwapPath['from']['decimals'])
+          let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
+          estimateAmount = this.formatStringNumberForSmartContract(estimateAmount, this.selectedSwapPath['to']['decimals'])
+          let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
+          minAmount = this.formatStringNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
+          let hops = []
+          this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
+            let tradePair = this.tradePairs[tradePairId]
+            let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
+            hops.push(hop)
+            currentFromId = tradePair['to_id']
+          })
+
+          // when single hop
+          // when from token is native
+          // when to token is native
+          // when multi hop and from and to tokens are smart contract tokens
+          // build the message
+          try {
+            let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount }).toString('base64'))
+            console.log(routeMsg)
+            let handleMsg = { send: { amount: fromAamount, recipient: this.dexAggregatorSmartContractAddress, msg: routeMsg } }
+            console.log(handleMsg)
+            let response = await this.client.execute(this.cryptocurrencies[fromId]['smart_contract']['address'], handleMsg)
+          } catch(error) {
+            console.log(error)
+          }
+        }
       };
 
       this.getAndSetCryptocurrenciesAndTradePairs()
