@@ -136,10 +136,10 @@ $(document).ready(function(){
               $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
             }
           }
+          if(index == 0) {
+            $('#' + swapPath['id']).addClass('bg-success')
+          }
         })
-        if(index == 0) {
-          $('#' + swapPath['id']).addClass('bg-success')
-        }
       }
 
       this.formatStringNumberForSmartContract = (stringNumber, decimals) => {
