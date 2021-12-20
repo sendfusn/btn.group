@@ -26,6 +26,7 @@ class Pool < ApplicationRecord
       if pool.enabled_changed?
         CreateSwapPathsJob.perform_later
         CreateArbitragePathsJob.perform_later('BUTT')
+        CreateArbitragePathsJob.perform_later('SBNB(BSC)')
         CreateArbitragePathsJob.perform_later('SWBTC')
         CreateArbitragePathsJob.perform_later('SXMR')
       end
