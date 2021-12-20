@@ -4,6 +4,7 @@ $(document).ready(function(){
   if($("#secret-network-dex-aggregator").length) {
 
     window.onload = async () => {
+      this.address;
       this.cryptocurrencies = {}
       this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
       this.tradePairs = {}
@@ -11,13 +12,17 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.gasDeposit = '40000';
-      this.gasRedeem = '40000';
-      this.gasSiennaPerSwap = '100000';
-      this.gasSecretSwapPerSwap = '135000';
+      this.gasDeposit = 40000;
+      this.gasRedeem = 40000;
+      this.gasSiennaPerSwap = 100000;
+      this.gasSecretSwapPerSwap = 135000;
       this.queryCount = 0;
 
       // === LISTENERS ===
+      $(document).on('keplr_connected', async(evt) => {
+        let accounts = await window.keplrOfflineSigner.getAccounts()
+        this.address = accounts[0].address;
+      })
       $('#flip-token').click(function(event){
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId =document.secretNetworkDexAggregatorForm.to.value
@@ -282,11 +287,23 @@ $(document).ready(function(){
           let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
           minAmount = this.formatStringNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
           let hops = []
+          let gas = 0
           this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
             let tradePair = this.tradePairs[tradePairId]
+            if (tradePair['protocol']['identifier'] == 'sienna') {
+              gas += gasSiennaPerSwap
+            } else if (tradePair['protocol']['identifier'] == 'secret_swap') {
+              gas += gasSecretSwapPerSwap
+            }
             let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
             hops.push(hop)
-            currentFromId = tradePair['to_id']
+            let changed = false
+            tradePair['cryptocurrency_pools'].forEach(function(cp) {
+              if(cp['cryptocurrency_role'] == 'deposit' && cp['cryptocurrency_id'] != currentFromId && !changed) {
+                currentFromId = cp['cryptocurrency_id']
+                changed = true
+              }
+            })
           })
 
           // when single hop
@@ -295,16 +312,25 @@ $(document).ready(function(){
           // when multi hop and from and to tokens are smart contract tokens
           // build the message
           try {
-            let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount }).toString('base64'))
-            console.log(routeMsg)
+            let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount })).toString('base64')
             let handleMsg = { send: { amount: fromAmount, recipient: this.dexAggregatorSmartContractAddress, msg: routeMsg } }
-            console.log(handleMsg)
-            let response = await this.client.execute(this.cryptocurrencies[fromId]['smart_contract']['address'], handleMsg)
+            this.setClient(String(gas));
+            let response = await this.client.execute(this.dexAggregatorSmartContractAddress, handleMsg)
           } catch(error) {
             console.log(error)
           }
         }
       };
+
+      this.setClient = (gas) => {
+        let gasParams = {
+            exec: {
+              amount: [{ amount: gas, denom: 'uscrt' }],
+              gas: gas,
+            },
+          }
+        this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+      }
 
       this.getAndSetCryptocurrenciesAndTradePairs()
     }
