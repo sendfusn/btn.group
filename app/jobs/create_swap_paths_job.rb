@@ -2,11 +2,12 @@
 
 class CreateSwapPathsJob < ApplicationJob
   def perform
-    valid_pools_joined_with_cryptocurrency_pools = Pool.enabled
-                                                       .trade_pair
-                                                       .joins(:cryptocurrency_pools)
-    cryptocurrency_ids = valid_pools_joined_with_cryptocurrency_pools.pluck(:cryptocurrency_id)
-                                                                     .uniq
+    cryptocurrency_ids = Pool.enabled
+                             .trade_pair
+                             .joins(:cryptocurrency_pools)
+                             .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
+                             .pluck(:cryptocurrency_id)
+                             .uniq
     cryptocurrency_ids.each do |from_id|
       swap_path = []
       create_swap_path(from_id, from_id, swap_path)
@@ -16,10 +17,13 @@ class CreateSwapPathsJob < ApplicationJob
   def create_swap_path(current_cryptocurrency_id, from_id, swap_path)
     return if swap_path.length >= 4
 
-    valid_pools_joined_with_cryptocurrency_pools = Pool.enabled
-                                                       .trade_pair
-                                                       .joins(:cryptocurrency_pools)
-    trade_pair_pool_ids = valid_pools_joined_with_cryptocurrency_pools.where(cryptocurrency_pools: { cryptocurrency_role: :deposit, cryptocurrency_id: current_cryptocurrency_id }).pluck(:id)
+    trade_pair_pool_ids = Pool.enabled
+                              .trade_pair
+                              .joins(:cryptocurrency_pools)
+                              .where(cryptocurrency_pools: { cryptocurrency_role: :deposit, cryptocurrency_id: current_cryptocurrency_id })
+                              .pluck(:id)
+                              .uniq
+
     trade_pair_pool_ids.each do |pool_id|
       next if swap_path.include?(pool_id)
 
