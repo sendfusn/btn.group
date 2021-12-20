@@ -295,7 +295,7 @@ $(document).ready(function(){
           try {
             let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount }).toString('base64'))
             console.log(routeMsg)
-            let handleMsg = { send: { amount: fromAamount, recipient: this.dexAggregatorSmartContractAddress, msg: routeMsg } }
+            let handleMsg = { send: { amount: fromAmount, recipient: this.dexAggregatorSmartContractAddress, msg: routeMsg } }
             console.log(handleMsg)
             let response = await this.client.execute(this.cryptocurrencies[fromId]['smart_contract']['address'], handleMsg)
           } catch(error) {
