@@ -22,8 +22,8 @@ module SecretNetwork
                                .pluck(:cryptocurrency_id)
                                .uniq
       @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids).order(:symbol)
-      @default_from_token_id = 26
-      @default_to_token_id = 8
+      @default_from_token_id = Cryptocurrency.buttcoin.id
+      @default_to_token_id = Cryptocurrency.buttcoin.id
       @head_description = 'DEX aggregator for Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png'
       @head_title = 'DEX aggregator | Secret network | btn.group'
