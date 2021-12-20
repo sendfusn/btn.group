@@ -102,7 +102,7 @@ $(document).ready(function(){
         this.swapPaths[from_id][to_id].forEach((swapPath) => {
           let currentCryptoId = swapPath['from_id']
           let currentCryptoSymbol = swapPath['from']['symbol']
-          let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>id: ' + swapPath['id'] + '</div>' + '<div>Swap path pool ids: ' + swapPath['swap_path_as_string'] + '</div><div>Swap path:</div>'
+          let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
           swapPath['swap_path_as_array'].forEach((tradePairId) => {
             let protocolName = this.tradePairs[tradePairId]['protocol']['name']
             let xId = currentCryptoId
