@@ -111,7 +111,7 @@ $(document).ready(function(){
 
       this.renderResults = (from_id, to_id) => {
         $("#swap-paths").html('')
-        this.swapPaths[from_id][to_id].sort((a, b) => b.resultOfSwaps - a.resultOfSwaps).forEach((swapPath) => {
+        this.swapPaths[from_id][to_id].sort((a, b) => b.resultOfSwaps - a.resultOfSwaps).forEach((swapPath, index) => {
           let currentCryptoId = swapPath['from_id']
           let currentCryptoSymbol = swapPath['from']['symbol']
           let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
@@ -137,6 +137,9 @@ $(document).ready(function(){
             }
           }
         })
+        if(index == 0) {
+          $('#' + swapPath['id']).addClass('bg-success')
+        }
       }
 
       this.formatStringNumberForSmartContract = (stringNumber, decimals) => {
