@@ -143,8 +143,13 @@ $(document).ready(function(){
           }
           if(index == 0 && swapPath['resultOfSwaps']) {
             $('#' + swapPath['id']).addClass('bg-success')
-            document.secretNetworkDexAggregatorForm.estimateAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'])
-            document.secretNetworkDexAggregatorForm.minAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'])
+            let fmt = {
+              decimalSeparator: '.',
+              groupSeparator: '',
+              secondaryGroupSize: this.cryptocurrencies[to_id]['decimals']
+            }
+            document.secretNetworkDexAggregatorForm.estimateAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'], fmt)
+            document.secretNetworkDexAggregatorForm.minAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'], fmt)
           }
         })
       }
