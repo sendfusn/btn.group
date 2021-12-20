@@ -141,8 +141,10 @@ $(document).ready(function(){
               $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
             }
           }
-          if(index == 0) {
+          if(index == 0 && swapPath['resultOfSwaps']) {
             $('#' + swapPath['id']).addClass('bg-success')
+            document.secretNetworkDexAggregatorForm.estimateAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'])
+            document.secretNetworkDexAggregatorForm.minAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'])
           }
         })
       }
