@@ -13,16 +13,15 @@ module SecretNetwork
     end
 
     def dex_aggregator
-      pools = Pool.where(category: :trade_pair, enabled: true)
-                  .joins(:smart_contract)
-                  .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
-      cryptocurrency_ids = []
-      pools.each do |pool|
-        pool.cryptocurrency_pools.where(cryptocurrency_role: :deposit).each do |cp|
-          cryptocurrency_ids.push(cp.cryptocurrency_id)
-        end
-      end
-      @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids.uniq).order(:symbol)
+      cryptocurrency_ids = Pool.trade_pair
+                               .enabled
+                               .joins(:smart_contract)
+                               .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
+                               .joins(:cryptocurrency_pools)
+                               .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
+                               .pluck(:cryptocurrency_id)
+                               .uniq
+      @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids).order(:symbol)
       @default_from_token_id = Cryptocurrency.find_by(symbol: 'BUTT').id
       @default_to_token_id = Cryptocurrency.find_by(symbol: 'BUTT').id
       @head_description = 'DEX aggregator for Secret network.'

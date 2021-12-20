@@ -266,6 +266,8 @@ $(document).ready(function(){
           10: {},
         }
         this.swapPaths = {};
+        document.secretNetworkDexAggregatorForm.estimateAmount.valu = ''
+        document.secretNetworkDexAggregatorForm.minAmount.value = ''
       }
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
