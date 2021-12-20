@@ -15,9 +15,6 @@ $(document).ready(function(){
       this.gasSiennaPerSwap = '100000';
       this.gasSecretSwapPerSwap = '135000';
       this.queryCount = 0;
-      // This holds the results of swaps for a pool, for crypto id, for the amount offered
-      // It never needs to be reset
-      this.simulationSwapResults = {}
       this.swapPaths = {};
 
       // === LISTENERS ===
@@ -68,6 +65,7 @@ $(document).ready(function(){
       }.bind(this));
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
+        this.loadingCryptocurrenciesAndTradePairs = true;
         let result = await $.ajax({
           url: '/pools?enabled=true',
           type: 'GET'
@@ -83,9 +81,15 @@ $(document).ready(function(){
         })
         window.tradePairs = this.tradePairs;
         window.cryptocurrencies = this.cryptocurrencies;
+        this.loadingCryptocurrenciesAndTradePairs = false;
       }
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
+        this.gettingSwapPaths = true
+        if(this.loadingCryptocurrenciesAndTradePairs) {
+          await delay(3000)
+        }
+
         this.queryCount += 1;
         this.reset()
         let currentQueryCount = this.queryCount;
@@ -107,6 +111,7 @@ $(document).ready(function(){
             this.renderResults(from_id, to_id)
           }
         }
+        this.gettingSwapPaths = false
       }
 
       this.renderResults = (from_id, to_id) => {
@@ -229,6 +234,8 @@ $(document).ready(function(){
 
       this.reset = () => {
         this.bestResultsPerSwapCount = {}
+        // This holds the results of swaps for a pool, for crypto id, for the amount offered
+        this.simulationSwapResults = {}
         // This holds the best result of swap to per swap_count e.g. cryptoId => swapCount => 555_555
         // The concept is that if the new amount is lower than the stored amount, there would be a better path out there 
         this.simulationCryptoMaxReturns = {
