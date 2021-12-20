@@ -104,11 +104,6 @@ $(document).ready(function(){
           if(currentQueryCount == this.queryCount) {
             let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
             swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
-            if (resultOfSwaps == '0') {
-              $('#' + swapPath['id']).remove()
-            } else {
-              $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(resultOfSwaps, this.cryptocurrencies[to_id]['decimals']))
-            }
             this.renderResults(from_id, to_id)
           }
         }
@@ -134,6 +129,13 @@ $(document).ready(function(){
           })
           x = x + '<div class="result">Result: <b>Loading...</b></div>'
           $("#swap-paths").append(x)
+          if (swapPath['resultOfSwaps']) {
+            if (swapPath['resultOfSwaps'] == 0) {
+              $('#' + swapPath['id']).remove()
+            } else {
+              $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
+            }
+          }
         })
       }
 
