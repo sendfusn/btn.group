@@ -99,7 +99,24 @@ $(document).ready(function(){
             type: 'GET'
           })
         }
-        this.swapPaths[from_id][to_id].forEach((swapPath) => {
+        this.renderResults(from_id, to_id)
+        for (const swapPath of this.swapPaths[from_id][to_id]) {
+          if(currentQueryCount == this.queryCount) {
+            let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
+            swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
+            if (resultOfSwaps == '0') {
+              $('#' + swapPath['id']).remove()
+            } else {
+              $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(resultOfSwaps, this.cryptocurrencies[to_id]['decimals']))
+            }
+            this.renderResults(from_id, to_id)
+          }
+        }
+      }
+
+      this.renderResults = (from_id, to_id) => {
+        $("#swap-paths").html('')
+        this.swapPaths[from_id][to_id].sort((a, b) => b.resultOfSwaps - a.resultOfSwaps).forEach((swapPath) => {
           let currentCryptoId = swapPath['from_id']
           let currentCryptoSymbol = swapPath['from']['symbol']
           let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
@@ -118,17 +135,6 @@ $(document).ready(function(){
           x = x + '<div class="result">Result: <b>Loading...</b></div>'
           $("#swap-paths").append(x)
         })
-        for (const swapPath of this.swapPaths[from_id][to_id]) {
-          if(currentQueryCount == this.queryCount) {
-            let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
-            if (resultOfSwaps == '0') {
-              $('#' + swapPath['id']).remove()
-            } else {
-              console.log(swapPath)
-              $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(resultOfSwaps, this.cryptocurrencies[to_id]['decimals']))
-            }
-          }
-        }
       }
 
       this.formatStringNumberForSmartContract = (stringNumber, decimals) => {
@@ -167,10 +173,6 @@ $(document).ready(function(){
             } else if(this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] > new BigNumber(fromAmountFormatted)) {
               // For arbitrage just keep going because I want to see the results
               if(swapPath['from_id'] != swapPath['to_id']) {
-                console.log(swapPath)
-                console.log(fromId)
-                console.log(new BigNumber(fromAmountFormatted).toFixed())
-                console.log(this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId].toFixed())
                 return '0'
               }
             } else {
