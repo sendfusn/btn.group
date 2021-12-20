@@ -18,7 +18,7 @@
                       .form-group
                         = select_tag 'from', options_from_collection_for_select(@cryptocurrencies, 'id', 'label_formatted_for_dex_aggregator_select', @default_from_token_id), class: 'form-control'
                       .form-group.m-0
-                        %input.form-control#from-amount-input{ name: 'fromAmount', placeholder: '0.0', type: 'number', min: '0' }
+                        %input.form-control#from-amount-input{ name: 'fromAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any' }
                     .text-center
                       = link_to '#' do
                         %em.fas.fa-arrow-down#flip-token
@@ -27,10 +27,10 @@
                         = select_tag 'to', options_from_collection_for_select(@cryptocurrencies, 'id', 'label_formatted_for_dex_aggregator_select', @default_to_token_id), class: 'form-control'
                       .form-group
                         %label Estimate
-                        %input.form-control{ name: 'estimateAmount', placeholder: '0.0', type: 'number', min: '0', disabled: true }
+                        %input.form-control{ name: 'estimateAmount', placeholder: '0.0', type: 'number', min: '0', disabled: true, step: 'any' }
                       .form-group.m-0
                         %label Minimum acceptable amount
-                        %input.form-control{ name: 'minAmount', placeholder: '0.0', type: 'number', min: '0' }
+                        %input.form-control{ name: 'minAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any' }
                     %button.btn.btn-grad-alt.w-100.mt-4
                       Swap
               #swap-paths
