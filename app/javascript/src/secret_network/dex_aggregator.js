@@ -186,14 +186,6 @@ $(document).ready(function(){
           }
         }
         if(currentQueryCount == this.queryCount) {
-          if(swapPath['to_id'] == swapPath['from_id']) {
-            if(Number(fromAmountFormatted) > new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()) {
-              alert(swapPath['id'])
-              alert(fromAmountFormatted)
-            }
-          }
-          console.log(swapPath)
-          console.log(fromAmountFormatted)
           return fromAmountFormatted
         }
         return '0'
