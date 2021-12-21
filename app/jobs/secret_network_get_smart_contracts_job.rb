@@ -12,7 +12,20 @@ class SecretNetworkGetSmartContractsJob < ApplicationJob
     response = RestClient.get 'https://api.secretapi.io/wasm/code'
     smart_contract_upload_codes = JSON.parse(response)['result']
     smart_contract_upload_codes.reverse_each do |code|
-      SecretNetworkGetSmartContractsByCodeIdJob.perform_later(code['id'], code['data_hash'])
+      code_id = code['id']
+      data_hash = code['data_hash']
+      contracts_for_code_id_response = RestClient.get "https://api.secretapi.io/wasm/code/#{code_id}/contracts"
+      contracts_for_code_id = JSON.parse(contracts_for_code_id_response)['result']
+      contracts_for_code_id&.each do |contract|
+        sc = SmartContract.find_or_initialize_by(address: contract['address'])
+        unless sc.persisted?
+          sc.update(blockchain: Blockchain.find_by(identifier: 'secret_network'),
+                    code_id: code_id,
+                    creator: contract['creator'],
+                    data_hash: data_hash,
+                    label: contract['label'])
+        end
+      end
     end
   end
 end
