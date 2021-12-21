@@ -155,7 +155,7 @@ $(document).ready(function(){
           let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
           let currentCryptoId = swapPath['from_id']
           let currentCryptoSymbol = swapPath['from']['symbol']
-          if(this.wrapPaths[from_id]) {
+          if(this.cryptocurrencies[from_id]['smart_contract'] == undefined) {
             x = x + '<div>' + this.cryptocurrencies[from_id]['symbol'] + ' == wrap ==> ' + this.cryptocurrencies[this.wrapPaths[from_id]]['symbol'] + '</div>'
             currentCryptoId = this.wrapPaths[from_id]
             currentCryptoSymbol = this.cryptocurrencies[this.wrapPaths[from_id]]['symbol']
