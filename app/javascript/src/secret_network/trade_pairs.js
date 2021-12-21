@@ -1,10 +1,7 @@
 $(document).ready(function(){
-  console.log(3)
   if($("#secret-network-trade-pairs").length) {
-    console.log(4)
     // === LISTENERS ===
     window.onload = async () => {
-      console.log(5)
       this.tradePairs = []
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);

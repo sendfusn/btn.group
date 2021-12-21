@@ -31,7 +31,11 @@
                       .form-group.m-0
                         %label Minimum acceptable amount
                         %input.form-control{ name: 'minAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any' }
-                    %button.btn.btn-grad-alt.w-100.mt-4
-                      Swap
+                    %button.btn.btn-grad-alt.w-100.mt-4#submit-button
+                      .d-none.loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      .ready
+                        Swap
               #swap-paths
   .nk-ovm.shape-q

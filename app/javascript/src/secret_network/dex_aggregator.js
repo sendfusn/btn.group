@@ -278,6 +278,11 @@ $(document).ready(function(){
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
         if (this.selectedSwapPath) {
+          let submitButtonSelector = '#submit-button'
+          let $submitButton = $(submitButtonSelector)
+          $submitButton.prop("disabled", true);
+          $submitButton.find('.loading').removeClass('d-none')
+          $submitButton.find('.ready').addClass('d-none')
           let fromId = document.secretNetworkDexAggregatorForm.from.value
           let currentFromId = fromId
           let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
@@ -318,6 +323,11 @@ $(document).ready(function(){
             let response = await this.client.execute(this.cryptocurrencies[fromId]['smart_contract']['address'], handleMsg)
           } catch(error) {
             console.log(error)
+          } finally {
+            // Show ready ui
+            $submitButton.prop("disabled", false);
+            $submitButton.find('.loading').addClass('d-none')
+            $submitButton.find('.ready').removeClass('d-none')
           }
         }
       };
