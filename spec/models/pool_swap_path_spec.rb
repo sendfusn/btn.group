@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe PoolSwapPath, type: :model do
   describe 'ASSOCIATIONS' do
     it { should belong_to(:pool) }
-    it { should belong_to(:swap_path).dependent(:destroy) }
+    it { should belong_to(:swap_path) }
   end
 
   describe 'VALIDATIONS' do
