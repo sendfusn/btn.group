@@ -156,14 +156,22 @@ $(document).ready(function(){
           let currentCryptoSymbol = swapPath['from']['symbol']
           let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
           swapPath['swap_path_as_array'].forEach((tradePairId) => {
-            let protocolName = this.tradePairs[tradePairId]['protocol']['name']
+            if (currentCryptoId == from_id) {
+              let swapMethod = 'wrap'
+            }
+            if (this.tradePairs[tradePairId]['protocol']) {
+              swapMethod = this.tradePairs[tradePairId]['protocol']['name']
+            }
             let xId = currentCryptoId
             this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
               if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
                 x = x + '<div>' + currentCryptoSymbol
                 currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
                 currentCryptoId = cryptoPool['cryptocurrency_id']
-                x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
+                if (currentCryptoId == to_id && this.wrapPaths[to_id]) {
+                  swapMethod = 'unwrap'
+                }
+                x = x + ' == ' + swapMethod + ' ==> ' + currentCryptoSymbol + '</div>'
               }
             })
           })
