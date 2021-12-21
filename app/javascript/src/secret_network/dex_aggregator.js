@@ -325,6 +325,14 @@ $(document).ready(function(){
           minAmount = this.formatStringNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
           let hops = []
           let gas = 0
+          let toId = document.secretNetworkDexAggregatorForm.to.value
+          if(this.cryptocurrencies[fromId]['smart_contract'] == undefined) {
+            let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
+            let hop = {smart_contract: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}, from_token: {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}}
+            hops.push(hop)
+            currentFromId = this.wrapPaths[currentFromId]
+            gas += this.gasRedeem
+          }
           this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
             let tradePair = this.tradePairs[tradePairId]
             if (tradePair['protocol']['identifier'] == 'sienna') {
@@ -342,17 +350,32 @@ $(document).ready(function(){
               }
             })
           })
-
+          if (currentFromId != toId) {
+            let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
+            let hop = {redeem_denom: this.cryptocurrencies[toId]['denom'], smart_contract: {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}, from_token: {snip20: {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}}}
+            hops.push(hop)
+            gas += this.gasRedeem
+          }
           // when single hop
           // when from token is native
           // when to token is native
           // when multi hop and from and to tokens are smart contract tokens
           // build the message
           try {
+            let contract;
             let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount })).toString('base64')
-            let handleMsg = { send: { amount: fromAmount, recipient: this.dexAggregatorSmartContractAddress, msg: routeMsg } }
+            let handleMsg;
+            let sentFunds = []
+            if (this.cryptocurrencies[fromId]['smart_contract']) {
+              contract = this.cryptocurrencies[fromId]['smart_contract']['address']
+              handleMsg = { send: { amount: fromAmount, recipient: this.dexAggregatorSmartContractAddress, msg: routeMsg } }
+            } else {
+              contract = this.dexAggregatorSmartContractAddress
+              handleMsg = { receive: { amount: fromAmount, from: this.address, msg: routeMsg } }
+              sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
+            }
             this.setClient(String(gas));
-            let response = await this.client.execute(this.cryptocurrencies[fromId]['smart_contract']['address'], handleMsg)
+            let response = await this.client.execute(contract, handleMsg, '', sentFunds)
           } catch(error) {
             console.log(error)
           } finally {
