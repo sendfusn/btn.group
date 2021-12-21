@@ -2,6 +2,8 @@
 
 class CreateSwapPathsForCryptoJob < ApplicationJob
   def perform(id)
+    return if Cryptocurrency.find(id).smart_contract_id.nil?
+
     swap_path = []
     create_swap_path(id, id, swap_path)
   end
@@ -28,6 +30,7 @@ class CreateSwapPathsForCryptoJob < ApplicationJob
                        .first
                        .cryptocurrency_id
       next if from_id == swap_to_id
+      next if Cryptocurrency.find(swap_to_id).smart_contract_id.nil?
 
       SwapPath.create(from_id: from_id,
                       to_id: swap_to_id,
