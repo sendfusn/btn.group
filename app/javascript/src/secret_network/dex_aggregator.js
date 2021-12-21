@@ -291,9 +291,9 @@ $(document).ready(function(){
           this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
             let tradePair = this.tradePairs[tradePairId]
             if (tradePair['protocol']['identifier'] == 'sienna') {
-              gas += gasSiennaPerSwap
+              gas += this.gasSiennaPerSwap
             } else if (tradePair['protocol']['identifier'] == 'secret_swap') {
-              gas += gasSecretSwapPerSwap
+              gas += this.gasSecretSwapPerSwap
             }
             let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
             hops.push(hop)
