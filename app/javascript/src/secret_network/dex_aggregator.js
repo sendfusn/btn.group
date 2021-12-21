@@ -356,14 +356,14 @@ $(document).ready(function(){
               }
             })
           })
+          let hop = {from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['address']}}}
           if (currentFromId != toId) {
             let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
-            let hop = {redeem_denom: this.cryptocurrencies[toId]['denom'], smart_contract: {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}, from_token: {snip20: {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}}}
-            hops.push(hop)
+            hop['redeem_denom'] = this.cryptocurrencies[toId]['denom']
+            hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
             gas += this.gasRedeem
-          } else {
-            hops[hops.length - 1]['smart_contract'] = undefined
           }
+          hops.push(hop)
           // when single hop
           // when from token is native
           // when to token is native
