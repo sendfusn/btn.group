@@ -2,7 +2,7 @@
 
 module SecretNetwork
   class PagesController < ApplicationController
-    before_action :authenticate_admin_user!, only: %i[dex_aggregator trade_pairs]
+    before_action :authenticate_admin_user!, only: %i[trade_pairs]
 
     def address_alias; end
 
