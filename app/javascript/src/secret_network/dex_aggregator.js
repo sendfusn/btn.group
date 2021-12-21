@@ -310,6 +310,7 @@ $(document).ready(function(){
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
         if (this.selectedSwapPath) {
+          this.queryCount += 1
           let submitButtonSelector = '#submit-button'
           let $submitButton = $(submitButtonSelector)
           $submitButton.prop("disabled", true);
