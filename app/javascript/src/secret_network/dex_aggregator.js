@@ -326,11 +326,10 @@ $(document).ready(function(){
           let hops = []
           let gas = 0
           let toId = document.secretNetworkDexAggregatorForm.to.value
+          let initNativeFromToken;
           if(this.cryptocurrencies[fromId]['smart_contract'] == undefined) {
             let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
-            let hop = {smart_contract: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}, from_token: {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}}
-            hops.push(hop)
-            currentFromId = this.wrapPaths[currentFromId]
+            initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
             gas += this.gasRedeem
           }
           this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
@@ -340,7 +339,14 @@ $(document).ready(function(){
             } else if (tradePair['protocol']['identifier'] == 'secret_swap') {
               gas += this.gasSecretSwapPerSwap
             }
-            let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
+            let fromToken;
+            if(initNativeFromToken && hops.length == 0) {
+              fromToken = initNativeFromToken
+              currentFromId = this.wrapPaths[currentFromId]
+            } else {
+              fromToken = {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}
+            }
+            let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: fromToken}
             hops.push(hop)
             let changed = false
             tradePair['cryptocurrency_pools'].forEach(function(cp) {
