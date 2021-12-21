@@ -84,8 +84,28 @@ $(document).ready(function(){
             }
           })
         })
+        this.wrapPaths = {}
+        Object.keys(this.tradePairs).forEach((k) => {
+          let tradePair = this.tradePairs[k]
+          if (tradePair['protocol'] == undefined) {
+            let nativeId;
+            let tokenId;
+            tradePair['cryptocurrency_pools'].forEach((cp) => {
+              if (cp['cryptocurrency_role'] == 'deposit') {
+                if (cp['smart_contract'] == undefined) {
+                  nativeId = cp['cryptocurrency_id']
+                } else {
+                  tokenId = cp['cryptocurrency_id']
+                }
+              }
+            })
+            this.wrapPaths[nativeId] = tokenId
+            this.wrapPaths[tokenId] = nativeId
+          }
+        })
         window.tradePairs = this.tradePairs;
         window.cryptocurrencies = this.cryptocurrencies;
+        window.wrapPaths = this.wrapPaths;
         this.loadingCryptocurrenciesAndTradePairs = false;
       }
 
@@ -97,23 +117,27 @@ $(document).ready(function(){
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
         this.gettingSwapPaths = true
+        let tokenFromId = from_id;
+        let tokenToId = to_id;
         if(this.loadingCryptocurrenciesAndTradePairs) {
           await this.delay(3000)
+        }
+        if (this.wrapPaths[from_id]) {
+          tokenFromId = this.wrapPaths[from_id]
+        }
+        if (this.wrapPaths[to_id]) {
+          tokenToId = this.wrapPaths[to_id]
         }
 
         this.queryCount += 1;
         this.reset()
         let currentQueryCount = this.queryCount;
-        if (this.swapPaths[from_id] == undefined) {
-          this.swapPaths[from_id] = {}
-        }
-        if (this.swapPaths[from_id][to_id] == undefined) {
-          let url = "/swap_paths?from_id=" + from_id + "&to_id=" + to_id + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
-          this.swapPaths[from_id][to_id] = await $.ajax({
-            url: url,
-            type: 'GET'
-          })
-        }
+        this.swapPaths[from_id] = {}
+        let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
+        this.swapPaths[from_id][to_id] = await $.ajax({
+          url: url,
+          type: 'GET'
+        })
         this.renderResults(from_id, to_id)
         for (const swapPath of this.swapPaths[from_id][to_id]) {
           if(currentQueryCount == this.queryCount) {
