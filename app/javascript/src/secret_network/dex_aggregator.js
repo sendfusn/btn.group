@@ -387,6 +387,9 @@ $(document).ready(function(){
             console.log(response)
             window.test = response
             document.showAlertSuccess("Swap successful");
+            document.secretNetworkDexAggregatorForm.fromAmount.value = ''
+            document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
+            document.secretNetworkDexAggregatorForm.minAmount.value = ''
           } catch(error) {
             document.showAlertDanger(error)
           } finally {
