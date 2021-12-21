@@ -361,6 +361,8 @@ $(document).ready(function(){
             let hop = {redeem_denom: this.cryptocurrencies[toId]['denom'], smart_contract: {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}, from_token: {snip20: {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}}}
             hops.push(hop)
             gas += this.gasRedeem
+          } else {
+            hops[hops.length - 1]['smart_contract'] = undefined
           }
           // when single hop
           // when from token is native
