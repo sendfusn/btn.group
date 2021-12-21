@@ -356,7 +356,7 @@ $(document).ready(function(){
               }
             })
           })
-          let hop = {from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['address']}}}
+          let hop = {from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
           if (currentFromId != toId) {
             let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
             hop['redeem_denom'] = this.cryptocurrencies[toId]['denom']
