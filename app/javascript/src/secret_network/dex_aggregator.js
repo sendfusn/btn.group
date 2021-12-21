@@ -152,29 +152,29 @@ $(document).ready(function(){
       this.renderResults = (from_id, to_id) => {
         $("#swap-paths").html('')
         this.swapPaths[from_id][to_id].sort((a, b) => b.resultOfSwaps - a.resultOfSwaps).forEach((swapPath, index) => {
+          let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
           let currentCryptoId = swapPath['from_id']
           let currentCryptoSymbol = swapPath['from']['symbol']
-          let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
+          if(this.wrapPaths[from_id]) {
+            x = x + '<div>' + this.cryptocurrencies[from_id]['symbol'] + ' == wrap ==> ' + this.cryptocurrencies[this.wrapPaths[from_id]]['symbol'] + '</div>'
+            currentCryptoId = this.wrapPaths[from_id]
+            currentCryptoSymbol = this.cryptocurrencies[this.wrapPaths[from_id]]['symbol']
+          }
           swapPath['swap_path_as_array'].forEach((tradePairId) => {
-            if (currentCryptoId == from_id) {
-              let swapMethod = 'wrap'
-            }
-            if (this.tradePairs[tradePairId]['protocol']) {
-              swapMethod = this.tradePairs[tradePairId]['protocol']['name']
-            }
+            let protocolName = this.tradePairs[tradePairId]['protocol']['name']
             let xId = currentCryptoId
             this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
               if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
                 x = x + '<div>' + currentCryptoSymbol
                 currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
                 currentCryptoId = cryptoPool['cryptocurrency_id']
-                if (currentCryptoId == to_id && this.wrapPaths[to_id]) {
-                  swapMethod = 'unwrap'
-                }
-                x = x + ' == ' + swapMethod + ' ==> ' + currentCryptoSymbol + '</div>'
+                x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
               }
             })
           })
+          if (currentCryptoId != to_id) {
+            x = x + '<div>' + this.cryptocurrencies[currentCryptoId]['symbol'] + ' == unwrap ==> ' + this.cryptocurrencies[this.wrapPaths[currentCryptoId]]['symbol'] + '</div>'
+          }
           x = x + '<div class="result">Result: <b>Loading...</b></div>'
           $("#swap-paths").append(x)
           if (swapPath['resultOfSwaps']) {
