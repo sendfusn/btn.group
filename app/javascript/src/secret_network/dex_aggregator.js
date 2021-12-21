@@ -384,8 +384,11 @@ $(document).ready(function(){
             }
             this.setClient(String(gas));
             let response = await this.client.execute(contract, handleMsg, '', sentFunds)
+            console.log(response)
+            window.test = response
+            document.showAlertSuccess("Swap successful");
           } catch(error) {
-            console.log(error)
+            document.showAlertDanger(error)
           } finally {
             // Show ready ui
             $submitButton.prop("disabled", false);
