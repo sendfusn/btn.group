@@ -363,7 +363,7 @@ $(document).ready(function(){
           // build the message
           try {
             let contract;
-            let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount })).toString('base64')
+            let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address })).toString('base64')
             let handleMsg;
             let sentFunds = []
             if (this.cryptocurrencies[fromId]['smart_contract']) {
