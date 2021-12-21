@@ -92,7 +92,7 @@ $(document).ready(function(){
             let tokenId;
             tradePair['cryptocurrency_pools'].forEach((cp) => {
               if (cp['cryptocurrency_role'] == 'deposit') {
-                if (cp['smart_contract'] == undefined) {
+                if (cp['cryptocurrency']['smart_contract'] == undefined) {
                   nativeId = cp['cryptocurrency_id']
                 } else {
                   tokenId = cp['cryptocurrency_id']
