@@ -412,6 +412,7 @@ $(document).ready(function(){
             document.secretNetworkDexAggregatorForm.fromAmount.value = ''
             document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
             document.secretNetworkDexAggregatorForm.minAmount.value = ''
+            $("#swap-paths").html('')
           } catch(error) {
             document.showAlertDanger(error)
           } finally {
