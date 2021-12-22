@@ -385,9 +385,18 @@ $(document).ready(function(){
             }
             this.setClient(String(gas));
             let response = await this.client.execute(contract, handleMsg, '', sentFunds)
-            console.log(response)
+            let returnAmount;
+            response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
+              if(attribute['key'] == 'return_amount') {
+                returnAmount = attribute['value']
+              }
+            })
+            if(new BigNumber(estimateAmount) < new BigNumber(returnAmount)) {
+              returnAmount = estimateAmount
+            }
+            returnAmount = this.humanizeStringNumberFromSmartContract(returnAmount, this.cryptocurrencies[toId]['decimals'])
             window.test = response
-            document.showAlertSuccess("Swap successful");
+            document.showAlertSuccess("Amount received " + returnAmount);
             document.secretNetworkDexAggregatorForm.fromAmount.value = ''
             document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
             document.secretNetworkDexAggregatorForm.minAmount.value = ''
