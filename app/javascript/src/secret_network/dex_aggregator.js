@@ -333,19 +333,23 @@ $(document).ready(function(){
           let contract;
           let handleMsg;
           let sentFunds = []
+          let successMessage;
           if(this.cryptocurrencies[fromId]['smart_contract']) {
             contract = this.cryptocurrencies[fromId]['smart_contract']['address']
             handleMsg = { redeem: { amount: fromAmount } };
+            successMessage = 'Unwrapped'
           } else {
             contract = this.cryptocurrencies[toId]['smart_contract']['address']
             handleMsg = { deposit: {} };
             sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
+            successMessage = 'Wrapped'
           }
           try {
             this.setClient(String(this.gasRedeem));
             let response = await this.client.execute(contract, handleMsg, '', sentFunds)
             document.secretNetworkDexAggregatorForm.fromAmount.value = ''
             document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
+            document.showAlertSuccess(successMessage);
           } catch(error) {
             document.showAlertDanger(error)
           } finally {
