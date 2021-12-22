@@ -334,10 +334,10 @@ $(document).ready(function(){
           let handleMsg;
           let sentFunds = []
           if(this.cryptocurrencies[fromId]['smart_contract']) {
-            contract = this.cryptocurrencies[fromId]['smart_contract']
+            contract = this.cryptocurrencies[fromId]['smart_contract']['address']
             handleMsg = { redeem: { amount: fromAmount } };
           } else {
-            contract = this.cryptocurrencies[toId]['smart_contract']
+            contract = this.cryptocurrencies[toId]['smart_contract']['address']
             handleMsg = { deposit: {} };
             sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
           }
