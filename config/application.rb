@@ -21,12 +21,12 @@ module PayMeCrypto
     config.after_initialize do
       if initialized_server? && !Rails.env.test?
         Rails.application.load_seed
-        CryptoPricesJob.perform_later
-        SecretNetworkGetSmartContractsJob.perform_later
-        SecretFinanceStakingPoolsJob.perform_later
-        SecretSwapGetPairsJob.perform_later
-        CalculateAprForYieldOptimizerBJob.perform_later
-        SiennaGetPairsJob.perform_later
+        CryptoPricesJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless CryptoPricesJob.scheduled?
+        SecretNetworkGetSmartContractsJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless SecretNetworkGetSmartContractsJob.scheduled?
+        SecretFinanceStakingPoolsJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless SecretFinanceStakingPoolsJob.scheduled?
+        SecretSwapGetPairsJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless SecretSwapGetPairsJob.scheduled?
+        CalculateAprForYieldOptimizerBJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless CalculateAprForYieldOptimizerBJob.scheduled?
+        SiennaGetPairsJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless SiennaGetPairsJob.scheduled?
       end
     end
   end
