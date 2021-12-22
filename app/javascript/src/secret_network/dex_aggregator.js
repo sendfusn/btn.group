@@ -61,7 +61,7 @@ $(document).ready(function(){
           let toId = document.secretNetworkDexAggregatorForm.to.value
           let toCryptocurrencyDecimals = this.cryptocurrencies[toId]['decimals']
           let slippage = Number(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(estimateAmount) / 100
-          let minAmount = new BigNumber(estimateAmount) - slippage
+          let minAmount = new BigNumber(estimateAmount - slippage).toFormat(toCryptocurrencyDecimals)
           document.secretNetworkDexAggregatorForm.minAmount.value = minAmount
         }
       }.bind(this));
@@ -203,7 +203,7 @@ $(document).ready(function(){
               secondaryGroupSize: this.cryptocurrencies[to_id]['decimals']
             }
             document.secretNetworkDexAggregatorForm.estimateAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'], fmt)
-            let slippage = Number(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(swapPath['resultOfSwaps']) / 100
+            let slippage = Math.round(new BigNumber(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(swapPath['resultOfSwaps']) / 100)
             let minAmount = new BigNumber(swapPath['resultOfSwaps']) - slippage
             document.secretNetworkDexAggregatorForm.minAmount.value = this.humanizeStringNumberFromSmartContract(minAmount, this.cryptocurrencies[to_id]['decimals'], fmt)
           }
