@@ -30,30 +30,13 @@ $(document).ready(function(){
         document.secretNetworkDexAggregatorForm.fromAmount.value = ''
         document.secretNetworkDexAggregatorForm.to.value = fromId
         document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
+        document.secretNetworkDexAggregatorForm.minAmount.value = ''
       })
       $("#from-amount-input").on("input", function(){
-        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
-        $("#swap-paths").html('')
-        setTimeout(function(){
-          if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
-            this.getSwapPaths(fromId, toId, fromAmount)
-          }
-        }.bind(this), 1500);
+        this.getEstimate()
       }.bind(this));
       $("#from").change(function(){
-        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
-        $("#swap-paths").html('')
-        if (Number(fromAmount) > 0) {
-          setTimeout(function(){
-            if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
-              this.getSwapPaths(fromId, toId, fromAmount)
-            }
-          }.bind(this), 1500);
-        }
+        this.getEstimate()
       }.bind(this));
       $("#slippage-tolerance").change(function(){
         let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
@@ -66,18 +49,34 @@ $(document).ready(function(){
         }
       }.bind(this));
       $("#to").change(function(){
+        this.getEstimate()
+      }.bind(this));
+
+      this.getEstimate = () => {
+        this.queryCount += 1;
+        this.reset()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
         $("#swap-paths").html('')
         if (Number(fromAmount) > 0) {
-          setTimeout(function(){
-            if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
-              this.getSwapPaths(fromId, toId, fromAmount)
-            }
-          }.bind(this), 1500);
+          if(this.wrapPaths[fromId] == toId) {
+            $("#estimate-label").text('To')
+            $("#slippage-container").addClass('d-none')
+            $("#min-acceptable-amount-container").addClass('d-none')
+            document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
+          } else {
+            $("#estimate-label").text('Estimate')
+            $("#slippage-container").removeClass('d-none')
+            $("#min-acceptable-amount-container").removeClass('d-none')
+            setTimeout(function(){
+              if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
+                this.getSwapPaths(fromId, toId, fromAmount)
+              }
+            }.bind(this), 1500);
+          }
         }
-      }.bind(this));
+      }
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
         this.loadingCryptocurrenciesAndTradePairs = true;
@@ -138,9 +137,6 @@ $(document).ready(function(){
         if (this.wrapPaths[to_id]) {
           tokenToId = this.wrapPaths[to_id]
         }
-
-        this.queryCount += 1;
-        this.reset()
         let currentQueryCount = this.queryCount;
         this.swapPaths[from_id] = {}
         let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
@@ -321,24 +317,55 @@ $(document).ready(function(){
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
-        if (this.selectedSwapPath) {
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+        let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
+        fromAmount = this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[fromId]['decimals'])
+        estimateAmount = this.formatStringNumberForSmartContract(estimateAmount, this.cryptocurrencies[toId]['decimals'])
+        if (this.wrapPaths[fromId] == toId) {
           this.queryCount += 1
           let submitButtonSelector = '#submit-button'
           let $submitButton = $(submitButtonSelector)
           $submitButton.prop("disabled", true);
           $submitButton.find('.loading').removeClass('d-none')
           $submitButton.find('.ready').addClass('d-none')
-          let fromId = document.secretNetworkDexAggregatorForm.from.value
+          let contract;
+          let handleMsg;
+          let sentFunds = []
+          if(this.cryptocurrencies[fromId]['smart_contract']) {
+            contract = this.cryptocurrencies[fromId]['smart_contract']
+            handleMsg = { redeem: { amount: fromAmount } };
+          } else {
+            contract = this.cryptocurrencies[toId]['smart_contract']
+            handleMsg = { deposit: {} };
+            sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
+          }
+          try {
+            this.setClient(String(this.gasRedeem));
+            let response = await this.client.execute(contract, handleMsg, '', sentFunds)
+            document.secretNetworkDexAggregatorForm.fromAmount.value = ''
+            document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
+          } catch(error) {
+            document.showAlertDanger(error)
+          } finally {
+            // Show ready ui
+            $submitButton.prop("disabled", false);
+            $submitButton.find('.loading').addClass('d-none')
+            $submitButton.find('.ready').removeClass('d-none')
+          }
+        } else if (this.selectedSwapPath) {
+          this.queryCount += 1
+          let submitButtonSelector = '#submit-button'
+          let $submitButton = $(submitButtonSelector)
+          $submitButton.prop("disabled", true);
+          $submitButton.find('.loading').removeClass('d-none')
+          $submitButton.find('.ready').addClass('d-none')
           let currentFromId = fromId
-          let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-          fromAmount = this.formatStringNumberForSmartContract(fromAmount, this.selectedSwapPath['from']['decimals'])
-          let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
-          estimateAmount = this.formatStringNumberForSmartContract(estimateAmount, this.selectedSwapPath['to']['decimals'])
           let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
           minAmount = this.formatStringNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
           let hops = []
           let gas = 0
-          let toId = document.secretNetworkDexAggregatorForm.to.value
           let initNativeFromToken;
           if(this.cryptocurrencies[fromId]['smart_contract'] == undefined) {
             let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
