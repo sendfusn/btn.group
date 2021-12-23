@@ -9,7 +9,8 @@ class SwapPathsController < ApplicationController
     @swap_paths.each do |sp|
       top_five_swap_paths.push({ swap_path_id: sp.id, result_amount: sp.simulate_swaps(params['from_amount']) })
     end
-    @swap_paths = SwapPath.where(id: top_five_swap_paths.sort_by { |obj| obj[:result_amount].to_i }.reverse.map { |obj| obj[:swap_path_id] }).limit(5)
+    top_five_swap_paths = top_five_swap_paths.sort_by { |obj| obj[:result_amount].to_i }.reverse.map { |obj| obj[:swap_path_id] }[0..4]
+    @swap_paths = SwapPath.where(id: top_five_swap_paths)
     render json: @swap_paths, methods: :swap_path_as_array, include: { from: {}, to: {} }
   end
 
