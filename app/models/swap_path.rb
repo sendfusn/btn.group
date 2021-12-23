@@ -22,7 +22,17 @@ class SwapPath < ApplicationRecord
     swap_path.swap_path_as_string&.gsub!(/\s+/, '')
   end
 
-  # === Intance methods ===
+  # === Instance methods ===
+  def simulate_swaps(amount)
+    current_from_id = from_id
+    swap_path_as_array.each do |pool_id|
+      pool = Pool.find(pool_id)
+      amount = pool.simulate_swap(amount, current_from_id)[:return_amount]
+      current_from_id = pool.cryptocurrency_pools.deposit.where.not(cryptocurrency_id: current_from_id).first.id
+    end
+    amount
+  end
+
   def swap_path_as_array
     swap_path_as_string.split(',')
   end
