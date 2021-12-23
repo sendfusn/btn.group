@@ -21,7 +21,7 @@ module SecretNetwork
                                .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
                                .pluck(:cryptocurrency_id)
                                .uniq
-      @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids).order(:symbol)
+      @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).order(:symbol)
       @default_from_token_id = Cryptocurrency.buttcoin.id
       @default_to_token_id = Cryptocurrency.buttcoin.id
       @head_description = 'DEX aggregator for Secret network.'
