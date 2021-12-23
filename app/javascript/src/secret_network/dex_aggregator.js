@@ -415,15 +415,24 @@ $(document).ready(function(){
           // build the message
           try {
             let contract;
-            let routeMsg = Buffer.from(JSON.stringify({ hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address })).toString('base64')
+            let recipient;
+            let routeMessage;
+            if (hops.length == 1) {
+              recipient = this.tradePairs[hops[0]]['smart_contract']['address']
+              routeMessage = { swap: { expected_return: minAmount } }
+            } else {
+              recipient = this.dexAggregatorSmartContractAddress
+              routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address }
+            }
+            let routeMsgEncoded = Buffer.from(JSON.stringify(routeMessage)).toString('base64')
             let handleMsg;
             let sentFunds = []
             if (this.cryptocurrencies[fromId]['smart_contract']) {
               contract = this.cryptocurrencies[fromId]['smart_contract']['address']
-              handleMsg = { send: { amount: fromAmount, recipient: this.dexAggregatorSmartContractAddress, msg: routeMsg } }
+              handleMsg = { send: { amount: fromAmount, recipient: recipient, msg: routeMsgEncoded } }
             } else {
               contract = this.dexAggregatorSmartContractAddress
-              handleMsg = { receive: { amount: fromAmount, from: this.address, msg: routeMsg } }
+              handleMsg = { receive: { amount: fromAmount, from: this.address, msg: routeMsgEncoded } }
               sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
             }
             this.setClient(String(gas));
