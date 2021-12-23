@@ -28,7 +28,7 @@ class SwapPath < ApplicationRecord
     swap_path_as_array.each do |pool_id|
       pool = Pool.find(pool_id)
       amount = pool.simulate_swap(amount, current_from_id)[:return_amount]
-      current_from_id = pool.cryptocurrency_pools.deposit.where.not(cryptocurrency_id: current_from_id).first.id
+      current_from_id = pool.cryptocurrency_pools.deposit.where.not(cryptocurrency_id: current_from_id).first.cryptocurrency_id
     end
     amount
   end
