@@ -131,10 +131,10 @@ $(document).ready(function(){
         if(this.loadingCryptocurrenciesAndTradePairs) {
           await this.delay(3000)
         }
-        if (this.wrapPaths[from_id]) {
+        if (this.wrapPaths[from_id] && this.cryptocurrencies[this.wrapPaths[from_id]]['smart_contract']) {
           tokenFromId = this.wrapPaths[from_id]
         }
-        if (this.wrapPaths[to_id]) {
+        if (this.wrapPaths[to_id] && this.cryptocurrencies[this.wrapPaths[to_id]]['smart_contract']) {
           tokenToId = this.wrapPaths[to_id]
         }
         let currentQueryCount = this.queryCount;
