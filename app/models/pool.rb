@@ -39,6 +39,42 @@ class Pool < ApplicationRecord
   end
 
   # === INSTANCE METHODS ===
+  # Investigate getting commision_rate_nom and commission_rate_denom
+  def simulate_swap(amount, from_id)
+    return unless category == 'trade_pair'
+    return unless cryptocurrency_pools.deposit.pluck(:cryptocurrency_id).include?(from_id)
+
+    amount = amount.to_d
+    pool_from_amount = cryptocurrency_pools.find_by(cryptocurrency_id: from_id).amount.to_d
+    pool_to_amount = cryptocurrency_pools.deposit.where.not(cryptocurrency_id: from_id).first.amount.to_d
+    commission_rate_nom = 3
+    commission_rate_denom = 1_000
+    cp = pool_from_amount * pool_to_amount
+    return_amount = pool_to_amount - (cp / (pool_from_amount + amount))
+    spread_amount = (amount * pool_to_amount / pool_from_amount) - return_amount
+    commission_amount = return_amount * commission_rate_nom / commission_rate_denom
+    return_amount -= commission_amount
+    { return_amount: return_amount.to_i, spread_amount: spread_amount.to_i, commission_amount: commission_amount.to_i }
+  end
+
+  def simulate_swap_reverse(amount, to_id)
+    return unless category == 'trade_pair'
+    return unless cryptocurrency_pools.deposit.pluck(:cryptocurrency_id).include?(to_id)
+
+    amount = amount.to_d
+    pool_from_amount = cryptocurrency_pools.deposit.where.not(cryptocurrency_id: to_id).first.amount.to_d
+    pool_to_amount = cryptocurrency_pools.find_by(cryptocurrency_id: to_id).amount.to_d
+    commission_rate_nom = 3
+    commission_rate_denom = 1_000
+    cp = pool_from_amount * pool_to_amount
+    one_minus_commission = 1 - (3.to_d / 1_000)
+    offer_amount = cp * (1.to_d / (pool_to_amount - amount * (1_000_000_000 / (1_000_000_000 * one_minus_commission)))) - pool_from_amount
+    before_commission_deduction = amount * (1_000_000_000 / (1_000_000_000 * one_minus_commission))
+    spread_amount = offer_amount * pool_to_amount / pool_from_amount - before_commission_deduction
+    commission_amount = before_commission_deduction * commission_rate_nom / commission_rate_denom
+    { offer_amount: offer_amount.to_i, spread_amount: spread_amount.to_i, commission_amount: commission_amount.to_i }
+  end
+
   def update_total_locked
     total_locked = 0.0
     cryptocurrency_pools.deposit.each do |cp|
