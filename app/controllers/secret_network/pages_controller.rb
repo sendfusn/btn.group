@@ -21,7 +21,7 @@ module SecretNetwork
                                .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
                                .pluck(:cryptocurrency_id)
                                .uniq
-      @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).order(:symbol)
+      @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).where.not(symbol: %w[ATOM DVPN LUNA OSMO UST]).order(:symbol)
       @default_to_token_id = Cryptocurrency.buttcoin.id
       @default_from_token_id = if admin_user_signed_in?
         @default_to_token_id
