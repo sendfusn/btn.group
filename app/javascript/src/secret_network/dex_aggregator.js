@@ -96,6 +96,7 @@ $(document).ready(function(){
         let updateWalletBalanceStillValid = true
         $walletBalance.addClass('d-none')
         $walletBalanceLoading.removeClass('d-none')
+        $walletBalanceViewButton.addClass('d-none')
         try {
           if (cryptocurrency['smart_contract']) {
             cryptoAddress = cryptocurrency['smart_contract']['address']
