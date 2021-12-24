@@ -65,6 +65,9 @@ $(document).ready(function(){
       })
       $("#from-amount-input").on("input", function(){
         this.getEstimate()
+        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        $('#from-usd-price').text('~ $' + (this.cryptocurrencies[fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
       }.bind(this));
       $("#from").change(function(){
         this.updateWalletBalance($('#from').val(), '.from')
@@ -77,7 +80,8 @@ $(document).ready(function(){
           let toCryptocurrencyDecimals = this.cryptocurrencies[toId]['decimals']
           let slippage = Number(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(estimateAmount) / 100
           let minAmount = new BigNumber(estimateAmount - slippage).toFormat(toCryptocurrencyDecimals)
-          document.secretNetworkDexAggregatorForm.minAmount.value = minAmount
+          document.secretNetworkDexAggregatorForm.minAmount.value = parseFloat(minAmount.replace(/,/g, ''))
+          $('#min-acceptable-amount-usd-price').text('~ $' + (this.cryptocurrencies[toId]['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
         }
       }.bind(this));
       $("#to").change(function(){
@@ -293,9 +297,11 @@ $(document).ready(function(){
               secondaryGroupSize: this.cryptocurrencies[to_id]['decimals']
             }
             document.secretNetworkDexAggregatorForm.estimateAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'], fmt)
+            $('#to-usd-price').text('~ $' + (this.cryptocurrencies[to_id]['price'] * document.secretNetworkDexAggregatorForm.estimateAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
             let slippage = Math.round(new BigNumber(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(swapPath['resultOfSwaps']) / 100)
             let minAmount = new BigNumber(swapPath['resultOfSwaps']) - slippage
             document.secretNetworkDexAggregatorForm.minAmount.value = this.humanizeStringNumberFromSmartContract(minAmount, this.cryptocurrencies[to_id]['decimals'], fmt)
+            $('#min-acceptable-amount-usd-price').text('~ $' + (this.cryptocurrencies[to_id]['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
           }
         })
       }
