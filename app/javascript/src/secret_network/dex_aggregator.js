@@ -237,16 +237,6 @@ $(document).ready(function(){
           if(currentQueryCount == this.queryCount) {
             fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
             fromId = this.extractSwapToId(fromId, poolId)
-            if (this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] == undefined) {
-              this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] = new BigNumber(fromAmountFormatted)
-            } else if(this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] > new BigNumber(fromAmountFormatted)) {
-              // For arbitrage just keep going because I want to see the results
-              if(swapPath['from_id'] != swapPath['to_id']) {
-                return '0'
-              }
-            } else {
-              this.simulationCryptoMaxReturns[swapPath['swap_count']][fromId] = new BigNumber(fromAmountFormatted)
-            }
           }
         }
         if(currentQueryCount == this.queryCount) {
@@ -296,20 +286,6 @@ $(document).ready(function(){
         this.selectedSwapPath = undefined;
         // This holds the results of swaps for a pool, for crypto id, for the amount offered
         this.simulationSwapResults = {}
-        // This holds the best result of swap to per swap_count e.g. cryptoId => swapCount => 555_555
-        // The concept is that if the new amount is lower than the stored amount, there would be a better path out there 
-        this.simulationCryptoMaxReturns = {
-          1: {},
-          2: {},
-          3: {},
-          4: {},
-          5: {},
-          6: {},
-          7: {},
-          8: {},
-          9: {},
-          10: {},
-        }
         this.swapPaths = {};
         document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
         document.secretNetworkDexAggregatorForm.minAmount.value = ''
