@@ -19,6 +19,37 @@ $(document).ready(function(){
       this.queryCount = 0;
 
       // === LISTENERS ===
+      $.each(['.from-balance-view-button', '.to-balance-view-button'], function(index, value) {
+        let $balanceViewButton = $(value)
+        document.querySelectorAll(value).forEach(item => {
+          item.addEventListener('click', async(evt) => {
+            $balanceViewButton.prop("disabled", true);
+            $balanceViewButton.find('.loading').removeClass('d-none')
+            $balanceViewButton.find('.ready').addClass('d-none')
+            let cryptoId;
+            let selectorPrefix;
+            if (value == '.from-balance-view-button') {
+              cryptoId = $('#from').val()
+              selectorPrefix = '.from'
+            } else {
+              cryptoId = $('#to').val()
+              selectorPrefix = '.to'
+            }
+            try {
+              await window.keplr.suggestToken(this.chainId, this.cryptocurrencies[cryptoId]['smart_contract']['address']);
+              this.updateWalletBalance(cryptoId, selectorPrefix);
+              $balanceViewButton.addClass('d-none')
+            } catch(err) {
+              document.showAlertDanger(err)
+            } finally {
+              // Show ready ui
+              $balanceViewButton.prop("disabled", false);
+              $balanceViewButton.find('.loading').addClass('d-none')
+              $balanceViewButton.find('.ready').removeClass('d-none')
+            }
+          })
+        })
+      }.bind(this))
       $(document).on('keplr_connected', async(evt) => {
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
@@ -36,6 +67,7 @@ $(document).ready(function(){
         this.getEstimate()
       }.bind(this));
       $("#from").change(function(){
+        this.updateWalletBalance($('#from').val(), '.from')
         this.getEstimate()
       }.bind(this));
       $("#slippage-tolerance").change(function(){
@@ -49,8 +81,69 @@ $(document).ready(function(){
         }
       }.bind(this));
       $("#to").change(function(){
+        this.updateWalletBalance($('#to').val(), '.to')
         this.getEstimate()
       }.bind(this));
+
+      this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix) => {
+        let $walletBalance = $(selectorPrefix + '-balance')
+        let $walletBalanceLink = $(selectorPrefix + '-balance-link')
+        let $walletBalanceLoading = $(selectorPrefix + '-balance-loading')
+        let $walletBalanceViewButton = $(selectorPrefix + '-balance-view-button')
+        let balance
+        let cryptoAddress;
+        let cryptocurrency = this.cryptocurrencies[cryptocurrencyId];
+        let updateWalletBalanceStillValid = true
+        $walletBalance.addClass('d-none')
+        $walletBalanceLoading.removeClass('d-none')
+        try {
+          if (cryptocurrency['smart_contract']) {
+            cryptoAddress = cryptocurrency['smart_contract']['address']
+            let key = await window.keplr.getSecret20ViewingKey(this.chainId, cryptoAddress)
+            // If they have the key, replace the button with the balance
+            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: this.address, key: key } })
+            balance = balanceResponse['balance']['amount']
+          } else {
+            let accountDetails = await this.client.getAccount(this.address)
+            accountDetails['balance'].forEach(function(balanceDetails) {
+              if (cryptocurrency['denom'] == balanceDetails['denom']) {
+                balance = balanceDetails['amount']
+              }
+            })
+            if (balance == undefined) {
+              balance = '0'
+            }
+          }
+          if (selectorPrefix == '.from') {
+            if (cryptocurrencyId != $('#from').val()) {
+              updateWalletBalanceStillValid = false
+            }
+          } else {
+            if (cryptocurrencyId != $('#to').val()) {
+              updateWalletBalanceStillValid = false
+            }
+          }
+          if (updateWalletBalanceStillValid) {
+            let balanceFormatted = this.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
+            $walletBalance.text(balanceFormatted)
+            $walletBalance.removeClass('d-none')
+            $walletBalanceViewButton.addClass('d-none')
+          }
+        } catch(err) {
+          if (updateWalletBalanceStillValid) {
+            console.log(err)
+            // If they don't have a viewing key, show the view balance button and hide the balance
+            $walletBalance.addClass('d-none')
+            $walletBalanceViewButton.removeClass('d-none')
+          }
+        } finally {
+          if (updateWalletBalanceStillValid) {
+            $walletBalanceLoading.addClass('d-none')
+            $walletBalanceViewButton.find('.loading').addClass('d-none')
+            $walletBalanceLink.removeClass('d-none')
+          }
+        }
+      }
 
       this.getEstimate = () => {
         this.queryCount += 1;
@@ -61,12 +154,10 @@ $(document).ready(function(){
         $("#swap-paths").html('')
         if (Number(fromAmount) > 0) {
           if(this.wrapPaths[fromId] == toId) {
-            $("#estimate-label").text('To')
             $("#slippage-container").addClass('d-none')
             $("#min-acceptable-amount-container").addClass('d-none')
             document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
           } else {
-            $("#estimate-label").text('Estimate')
             $("#slippage-container").removeClass('d-none')
             $("#min-acceptable-amount-container").removeClass('d-none')
             setTimeout(function(){
@@ -115,6 +206,8 @@ $(document).ready(function(){
         window.tradePairs = this.tradePairs;
         window.cryptocurrencies = this.cryptocurrencies;
         window.wrapPaths = this.wrapPaths;
+        this.updateWalletBalance($('#from').val(), '.from')
+        this.updateWalletBalance($('#to').val(), '.to')
         this.loadingCryptocurrenciesAndTradePairs = false;
       }
 

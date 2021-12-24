@@ -18,6 +18,7 @@
                       .form-group
                         = select_tag 'from', options_from_collection_for_select(@cryptocurrencies, 'id', 'label_formatted_for_dex_aggregator_select', @default_from_token_id), class: 'form-control'
                       .form-group.m-0
+                        = render 'secret_network/balance', selector_prefix: 'from'
                         %input.form-control#from-amount-input{ name: 'fromAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any' }
                     .text-center
                       = link_to '#' do
@@ -26,7 +27,7 @@
                       .form-group
                         = select_tag 'to', options_from_collection_for_select(@cryptocurrencies, 'id', 'label_formatted_for_dex_aggregator_select', @default_to_token_id), class: 'form-control'
                       .form-group
-                        %label#estimate-label Estimate
+                        = render 'secret_network/balance', selector_prefix: 'to'
                         %input.form-control{ name: 'estimateAmount', placeholder: '0.0', type: 'number', min: '0', disabled: true, step: 'any' }
                       .form-group#slippage-container
                         %label Slippage tolerance
