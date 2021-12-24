@@ -30,7 +30,7 @@
                         = render 'secret_network/balance', selector_prefix: 'to'
                         %input.form-control{ name: 'estimateAmount', placeholder: '0.0', type: 'number', min: '0', disabled: true, step: 'any' }
                       .form-group#slippage-container
-                        %label Slippage tolerance
+                        %label Return amount tolerance
                         .input-group
                           %input.form-control#slippage-tolerance{ name: 'slippageTolerance', value: 0.1, type: 'number', min: '0', step: '0.1', max: '100' }
                           .input-group-append
