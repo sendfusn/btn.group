@@ -421,6 +421,7 @@ $(document).ready(function(){
               recipient = this.tradePairs[hops[0]]['smart_contract']['address']
               routeMessage = { swap: { expected_return: minAmount } }
             } else {
+              gas += 100000
               recipient = this.dexAggregatorSmartContractAddress
               routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address }
             }
