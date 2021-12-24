@@ -183,8 +183,8 @@ $(document).ready(function(){
           }
           x = x + '<div class="result">Result: <b>Loading...</b></div>'
           $("#swap-paths").append(x)
-          if (swapPath['resultOfSwaps']) {
-            if (swapPath['resultOfSwaps'] == 0) {
+          if (swapPath['resultOfSwaps'] != undefined) {
+            if (swapPath['resultOfSwaps'] == '0') {
               $('#' + swapPath['id']).remove()
             } else {
               $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
