@@ -38,7 +38,7 @@
                   %form{ name: 'secretNetworkTransactionsForm' }
                     .form-group
                       %label.form-label{ for: 'contract-address' } Token contract address
-                      = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.where(official: true).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
+                      = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.where(official: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).where.not(coin_gecko_id: nil).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
                     %hr{ style: 'border-style: dashed;' }
                     .form-group
                       .load-wallet-link
