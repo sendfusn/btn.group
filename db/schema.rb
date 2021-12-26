@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_19_033255) do
+ActiveRecord::Schema.define(version: 2021_12_26_043049) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: :cascade do |t|
@@ -138,8 +139,10 @@ ActiveRecord::Schema.define(version: 2021_12_19_033255) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "swap_count", null: false
     t.decimal "maximum_tradeable_value", precision: 15, scale: 2
+    t.bigint "protocol_id"
     t.index ["from_id", "to_id"], name: "index_swap_paths_on_from_id_and_to_id"
     t.index ["from_id"], name: "index_swap_paths_on_from_id"
+    t.index ["protocol_id"], name: "index_swap_paths_on_protocol_id"
     t.index ["swap_count"], name: "index_swap_paths_on_swap_count"
     t.index ["swap_path_as_string", "from_id", "to_id"], name: "index_swap_paths_on_swap_path_as_string_and_from_id_and_to_id", unique: true
     t.index ["to_id"], name: "index_swap_paths_on_to_id"

@@ -4,6 +4,7 @@ class SwapPath < ApplicationRecord
   # === ASSOCIATIONS ===
   belongs_to :from, class_name: 'Cryptocurrency'
   belongs_to :to, class_name: 'Cryptocurrency'
+  belongs_to :protocol, optional: true
   has_many :pool_swap_paths, dependent: :destroy
   has_many :pools, through: :pool_swap_paths
 
@@ -20,6 +21,8 @@ class SwapPath < ApplicationRecord
 
   before_save do |swap_path|
     swap_path.swap_path_as_string&.gsub!(/\s+/, '')
+    protocol_ids = Pool.where(id: swap_path.swap_path_as_array).pluck(:protocol_id)
+    swap_path.protocol_id = protocol_ids.first if protocol_ids.count == 1
   end
 
   # === Instance methods ===

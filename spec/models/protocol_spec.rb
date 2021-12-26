@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Protocol, type: :model do
   describe 'ASSOCIATIONS' do
     it { should have_many(:pools).dependent(:restrict_with_exception) }
+    it { should have_many(:swap_paths).dependent(:destroy) }
   end
 
   describe 'ENUMS' do
