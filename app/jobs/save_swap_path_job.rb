@@ -6,6 +6,6 @@ class SaveSwapPathJob < ApplicationJob
     return unless swap_path
 
     swap_path.save!
-    CreatePoolSwapPathsForSwapPathJob.perform_later(swap_path.id)
+    SaveSwapPathJob.perform_later(swap_path.id)
   end
 end
