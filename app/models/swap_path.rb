@@ -36,6 +36,17 @@ class SwapPath < ApplicationRecord
     amount
   end
 
+  def crypto_id_path
+    current_from_id = from_id
+    cip = [from_id]
+    swap_path_as_array.each do |pool_id|
+      pool = Pool.find(pool_id)
+      current_from_id = pool.cryptocurrency_pools.deposit.where.not(cryptocurrency_id: current_from_id).first.cryptocurrency_id
+      cip.push(current_from_id)
+    end
+    cip
+  end
+
   def swap_path_as_array
     swap_path_as_string.split(',')
   end
