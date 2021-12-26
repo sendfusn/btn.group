@@ -64,6 +64,9 @@ $(document).ready(function(){
         document.secretNetworkDexAggregatorForm.minAmount.value = ''
         this.updateWalletBalance($('#from').val(), '.from')
         this.updateWalletBalance($('#to').val(), '.to')
+        $('#from-usd-price').text('')
+        $('#min-acceptable-amount-usd-price').text('')
+        $('#to-usd-price').text('')
       }.bind(this))
       $("#from-amount-input").on("input", function(){
         this.getEstimate()
