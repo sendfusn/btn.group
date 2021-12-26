@@ -2,14 +2,9 @@
 
 class SwapPathsController < ApplicationController
   before_action :authenticate_admin_user!, only: :index, if: :arbitrage?
+  before_action :set_swap_paths
 
   def index
-    @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
-                          .where('maximum_tradeable_value >= ?', maximum_tradeable_amount)
-                          .order(maximum_tradeable_value: :desc)
-                          .order(:swap_count)
-    @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
-    @swap_paths = @swap_paths.limit(50)
     top_five_swap_paths = []
     @swap_paths.each do |sp|
       top_five_swap_paths.push({ swap_path_id: sp.id, result_amount: sp.simulate_swaps(params['from_amount']) })
@@ -22,12 +17,6 @@ class SwapPathsController < ApplicationController
   end
 
   def simulate_swaps
-    @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
-                          .where('maximum_tradeable_value >= ?', maximum_tradeable_amount)
-                          .order(maximum_tradeable_value: :desc)
-                          .order(:swap_count)
-    @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
-    @swap_paths = @swap_paths.limit(50)
     simulation_results = []
     @swap_paths.each do |sp|
       simulation_results.push({ swap_path_id: sp.id, result_amount: sp.simulate_swaps(params['from_amount']) })
@@ -48,5 +37,21 @@ class SwapPathsController < ApplicationController
       return 0.0 if c.price.blank? || c.decimals.blank?
 
       c.price * params['from_amount'].to_d / (10**c.decimals)
+    end
+
+    def set_swap_paths
+      @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
+                            .where('maximum_tradeable_value >= ?', maximum_tradeable_amount)
+                            .order(maximum_tradeable_value: :desc)
+                            .order(:swap_count)
+      @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
+      @swap_paths = @swap_paths.limit(50)
+      return if @swap_paths.count > 5
+
+      @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
+                            .order(maximum_tradeable_value: :desc)
+                            .order(:swap_count)
+      @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
+      @swap_paths = @swap_paths.limit(50)
     end
 end
