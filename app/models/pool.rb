@@ -46,15 +46,23 @@ class Pool < ApplicationRecord
 
     amount = amount.to_d
     pool_from_amount = cryptocurrency_pools.find_by(cryptocurrency_id: from_id).amount.to_d
-    pool_to_amount = cryptocurrency_pools.deposit.where.not(cryptocurrency_id: from_id).first.amount.to_d
-    commission_rate_nom = 3
-    commission_rate_denom = 1_000
-    cp = pool_from_amount * pool_to_amount
-    return_amount = pool_to_amount - (cp / (pool_from_amount + amount))
-    spread_amount = (amount * pool_to_amount / pool_from_amount) - return_amount
-    commission_amount = return_amount * commission_rate_nom / commission_rate_denom
-    return_amount -= commission_amount
-    { return_amount: return_amount.to_i, spread_amount: spread_amount.to_i, commission_amount: commission_amount.to_i }
+    if pool_from_amount.zero?
+      return_amount = 0
+      spread_amount = 0
+      commission_amount = 0
+    else
+      pool_to_amount = cryptocurrency_pools.deposit.where.not(cryptocurrency_id: from_id).first.amount.to_d
+      commission_rate_nom = 3
+      commission_rate_denom = 1_000
+      cp = pool_from_amount * pool_to_amount
+      return_amount = pool_to_amount - (cp / (pool_from_amount + amount))
+      spread_amount = (amount * pool_to_amount / pool_from_amount) - return_amount
+      commission_amount = return_amount * commission_rate_nom / commission_rate_denom
+      return_amount -= commission_amount
+    end
+    { return_amount: return_amount.to_i,
+      spread_amount: spread_amount.to_i,
+      commission_amount: commission_amount.to_i }
   end
 
   def simulate_swap_reverse(amount, to_id)
