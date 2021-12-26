@@ -21,7 +21,7 @@ class SwapPath < ApplicationRecord
 
   before_save do |swap_path|
     swap_path.swap_path_as_string&.gsub!(/\s+/, '')
-    protocol_ids = Pool.where(id: swap_path.swap_path_as_array).pluck(:protocol_id)
+    protocol_ids = Pool.where(id: swap_path.swap_path_as_array).pluck(:protocol_id).uniq
     swap_path.protocol_id = protocol_ids.first if protocol_ids.count == 1
   end
 
