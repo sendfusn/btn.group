@@ -62,7 +62,9 @@ $(document).ready(function(){
         document.secretNetworkDexAggregatorForm.to.value = fromId
         document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
         document.secretNetworkDexAggregatorForm.minAmount.value = ''
-      })
+        this.updateWalletBalance($('#from').val(), '.from')
+        this.updateWalletBalance($('#to').val(), '.to')
+      }.bind(this))
       $("#from-amount-input").on("input", function(){
         this.getEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value

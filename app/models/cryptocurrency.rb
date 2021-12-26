@@ -37,7 +37,7 @@ class Cryptocurrency < ApplicationRecord
 
   # === CLASS METHODS ===
   def self.buttcoin
-    find_by(symbol: 'BUTT')
+    find_by(symbol: 'BUTT', official: true)
   end
 
   # === INSTANCE METHODS ===
