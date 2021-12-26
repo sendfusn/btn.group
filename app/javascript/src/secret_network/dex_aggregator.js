@@ -227,6 +227,15 @@ $(document).ready(function(){
         })
       }
 
+      this.getSwapSimulationResults = async(tokenFromId, tokenToId, fromAmount, protocolId) => {
+        let url = "/swap_paths/simulate_swaps?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[tokenFromId]['decimals']) + "&protocol_id=" + protocolId;
+        let results = await $.ajax({
+          url: url,
+          type: 'GET'
+        })
+        console.log(results)
+      }
+
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
         this.gettingSwapPaths = true
         let tokenFromId = from_id;
@@ -248,6 +257,8 @@ $(document).ready(function(){
           type: 'GET'
         })
         this.renderResults(from_id, to_id)
+        this.getSwapSimulationResults(tokenFromId, tokenToId, fromAmount, 2)
+        this.getSwapSimulationResults(tokenFromId, tokenToId, fromAmount, 4)
         for (const swapPath of this.swapPaths[from_id][to_id]) {
           if(currentQueryCount == this.queryCount) {
             let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :pools, only: %w[index update], defaults: { format: 'json' }
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
   resources :swap_paths, only: :index, defaults: { format: 'json' }
+  get 'swap_paths/simulate_swaps', defaults: { format: 'json' }
 
   namespace :near do
     get 'smart_contract_interface' => 'pages#smart_contract_interface'
