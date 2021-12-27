@@ -13,10 +13,7 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.gasDeposit = 40000;
-      this.gasRedeem = 40000;
-      this.gasSiennaPerSwap = 100000;
-      this.gasSecretSwapPerSwap = 135000;
+      this.gasWrap = 40000;
       this.queryCount = 0;
       this.userVipLevel = 0;
       this.vipLevels = {
@@ -135,12 +132,12 @@ $(document).ready(function(){
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
       }.bind(this))
-      $("#from-amount-input").on("input", function(){
-        this.getEstimate()
+      $("#from-amount-input").on("input", async(evt) => {
+        await this.getEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         $('#from-usd-price').text('~ $' + (this.cryptocurrencies[fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
-      }.bind(this));
+      });
       $("#from").change(function(){
         this.updateWalletBalance($('#from').val(), '.from')
         this.getEstimate()
@@ -225,7 +222,13 @@ $(document).ready(function(){
         }
       }
 
-      this.getEstimate = () => {
+      this.delay = async(ms) => {
+        return new Promise(resolve => {
+            setTimeout(() => { resolve('') }, ms);
+        })
+      }
+
+      this.getEstimate = async() => {
         $('#results').removeClass('d-none')
         this.queryCount += 1;
         this.reset()
@@ -233,6 +236,9 @@ $(document).ready(function(){
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
         $("#swap-paths").html('')
+        while (!this.wrapPaths) {
+          await this.delay(500)
+        }
         if (Number(fromAmount) > 0) {
           if(this.wrapPaths[fromId] == toId) {
             $("#slippage-container").addClass('d-none')
@@ -251,7 +257,6 @@ $(document).ready(function(){
       }
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
-        this.loadingCryptocurrenciesAndTradePairs = true;
         let result = await $.ajax({
           url: '/pools?enabled=true',
           type: 'GET'
@@ -289,13 +294,6 @@ $(document).ready(function(){
         window.wrapPaths = this.wrapPaths;
         this.updateWalletBalance($('#from').val(), '.from')
         this.updateWalletBalance($('#to').val(), '.to')
-        this.loadingCryptocurrenciesAndTradePairs = false;
-      }
-
-      this.delay = async(ms) => {
-        return new Promise(resolve => {
-            setTimeout(() => { resolve('') }, ms);
-        })
       }
 
       this.getSwapSimulationResults = async(tokenFromId, tokenToId, fromAmount, protocolId) => {
@@ -311,9 +309,6 @@ $(document).ready(function(){
         this.gettingSwapPaths = true
         let tokenFromId = from_id;
         let tokenToId = to_id;
-        if(this.loadingCryptocurrenciesAndTradePairs) {
-          await this.delay(3000)
-        }
         if (this.wrapPaths[from_id] && this.cryptocurrencies[this.wrapPaths[from_id]]['smart_contract']) {
           tokenFromId = this.wrapPaths[from_id]
         }
@@ -510,7 +505,7 @@ $(document).ready(function(){
             successMessage = 'Wrapped'
           }
           try {
-            this.setClient(String(this.gasRedeem));
+            this.setClient(String(this.gasWrap));
             let response = await this.client.execute(contract, handleMsg, '', sentFunds)
             document.secretNetworkDexAggregatorForm.fromAmount.value = ''
             document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
@@ -539,15 +534,11 @@ $(document).ready(function(){
           if(this.cryptocurrencies[fromId]['smart_contract'] == undefined) {
             let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
             initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
-            gas += this.gasRedeem
+            gas += this.gasWrap
           }
+          gas += this.selectedSwapPath['gas']
           this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
             let tradePair = this.tradePairs[tradePairId]
-            if (tradePair['protocol']['identifier'] == 'sienna') {
-              gas += this.gasSiennaPerSwap
-            } else if (tradePair['protocol']['identifier'] == 'secret_swap') {
-              gas += this.gasSecretSwapPerSwap
-            }
             let fromToken;
             if(initNativeFromToken && hops.length == 0) {
               fromToken = initNativeFromToken
@@ -570,7 +561,7 @@ $(document).ready(function(){
             let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
             hop['redeem_denom'] = this.cryptocurrencies[toId]['denom']
             hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
-            gas += this.gasRedeem
+            gas += this.gasWrap
           }
           hops.push(hop)
           // when single hop
@@ -586,7 +577,6 @@ $(document).ready(function(){
               recipient = this.tradePairs[hops[0]]['smart_contract']['address']
               routeMessage = { swap: { expected_return: minAmount } }
             } else {
-              gas += 100000
               recipient = this.dexAggregatorSmartContractAddress
               routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address }
             }

@@ -15,7 +15,7 @@ class SwapPathsController < ApplicationController
                                              .reverse
                                              .map { |obj| obj[:swap_path_id] }[0..4]
     @swap_paths = SwapPath.where(id: top_five_swap_paths)
-    render json: @swap_paths, methods: %i[gas_in_usd swap_path_as_array], include: { from: {}, to: {} }
+    render json: @swap_paths, methods: %i[gas gas_in_usd swap_path_as_array], include: { from: {}, to: {} }
   end
 
   def simulate_swaps
