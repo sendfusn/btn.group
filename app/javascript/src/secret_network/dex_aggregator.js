@@ -329,6 +329,7 @@ $(document).ready(function(){
           if(currentQueryCount == this.queryCount) {
             let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
             swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
+            swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[swapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[swapPath['to_id']]['decimals'])).minus(swapPath['gas_in_usd'])
             this.renderResults(from_id, to_id)
           }
         }
@@ -337,7 +338,7 @@ $(document).ready(function(){
 
       this.renderResults = (from_id, to_id) => {
         $("#swap-paths").html('')
-        this.swapPaths[from_id][to_id].sort((a, b) => b.resultOfSwaps - a.resultOfSwaps).forEach((swapPath, index) => {
+        this.swapPaths[from_id][to_id].sort((a, b) => b.netUsdResultOfSwaps - a.netUsdResultOfSwaps).forEach((swapPath, index) => {
           let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
           let currentCryptoId = swapPath['from_id']
           let currentCryptoSymbol = swapPath['from']['symbol']
