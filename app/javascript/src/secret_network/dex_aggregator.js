@@ -314,15 +314,71 @@ $(document).ready(function(){
         this.renderResults(from_id, to_id)
         for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
           if(currentQueryCount == this.queryCount) {
-            $('#status').text('Getting results of swap path ' + (index + 1) + '/' + this.swapPaths[from_id][to_id].length)
+            $('#status').text('Getting results of swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
             let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
             swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
             swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[swapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[swapPath['to_id']]['decimals'])).minus(swapPath['gas_in_usd'])
+            if (swapPath['protocol_id'] == 2) {
+              if (this.bestResultsPerProtocol[2]) {
+                if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']) {
+                  this.bestResultsPerProtocol[2] = swapPath
+                }
+              } else {
+                this.bestResultsPerProtocol[2] = swapPath
+              }
+            } else if (swapPath['protocol_id'] == 4) {
+              if (this.bestResultsPerProtocol[4]) {
+                if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']) {
+                  this.bestResultsPerProtocol[4] = swapPath
+                }
+              } else {
+                this.bestResultsPerProtocol[4] = swapPath
+              }
+            } else {
+              if (this.bestResultsPerProtocol[0]) {
+                if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']) {
+                  this.bestResultsPerProtocol[0] = swapPath
+                }
+              } else {
+                this.bestResultsPerProtocol[0] = swapPath
+              }
+            }
             this.renderResults(from_id, to_id)
+            this.renderTable()
           }
         }
         $('#status').text('Done')
         $('#results').find('.loading').addClass('d-none')
+      }
+
+      this.renderTable = () => {
+        $('#results tbody td:nth-child(2)').text('-')
+        $('#results tbody td:nth-child(3)').text('-')
+        $('#results tbody td:nth-child(4)').text('-')
+        if(this.bestResultsPerProtocol[0]) {
+          let formattedAmount = this.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[0]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[0]['to_id']]['decimals'])
+          let gasInUsd = parseFloat(this.bestResultsPerProtocol[0]['gas_in_usd']).toFixed(2)
+          let netUsdResult = parseFloat(this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']).toFixed(2)
+          $('#btn-best-result td:nth-child(2)').text(formattedAmount)
+          $('#btn-best-result td:nth-child(3)').text(gasInUsd)
+          $('#btn-best-result td:nth-child(4)').text(netUsdResult)
+        }
+        if(this.bestResultsPerProtocol[2]) {
+          let formattedAmount = this.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[2]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[2]['to_id']]['decimals'])
+          let gasInUsd = parseFloat(this.bestResultsPerProtocol[2]['gas_in_usd']).toFixed(2)
+          let netUsdResult = parseFloat(this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']).toFixed(2)
+          $('#secret-swap-best-result td:nth-child(2)').text(formattedAmount)
+          $('#secret-swap-best-result td:nth-child(3)').text(gasInUsd)
+          $('#secret-swap-best-result td:nth-child(4)').text(netUsdResult)
+        }
+        if(this.bestResultsPerProtocol[4]) {
+          let formattedAmount = this.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[4]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[4]['to_id']]['decimals'])
+          let gasInUsd = parseFloat(this.bestResultsPerProtocol[4]['gas_in_usd']).toFixed(2)
+          let netUsdResult = parseFloat(this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']).toFixed(2)
+          $('#sienna-best-result td:nth-child(2)').text(formattedAmount)
+          $('#sienna-best-result td:nth-child(3)').text(gasInUsd)
+          $('#sienna-best-result td:nth-child(4)').text(netUsdResult)
+        }
       }
 
       this.renderResults = (from_id, to_id) => {
