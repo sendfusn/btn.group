@@ -295,6 +295,7 @@ $(document).ready(function(){
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
         try {
+          $('#status-container').removeClass('d-none')
           $('#results').removeClass('d-none')
           $('#status').text('Getting swap paths')
           let tokenFromId = from_id;
@@ -351,8 +352,8 @@ $(document).ready(function(){
         } catch(error) {
           document.showAlertDanger(error)
         } finally {
-          $('#status').text('Done')
-          $('#results').find('.loading').addClass('d-none')
+          $('#status').text('Ready')
+          $('#status-container').find('.loading').addClass('d-none')
         }
       }
 
