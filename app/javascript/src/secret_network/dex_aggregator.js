@@ -352,9 +352,7 @@ $(document).ready(function(){
       }
 
       this.renderTable = () => {
-        $('#results tbody td:nth-child(2)').text('-')
-        $('#results tbody td:nth-child(3)').text('-')
-        $('#results tbody td:nth-child(4)').text('-')
+        this.resetTable()
         if(this.bestResultsPerProtocol[0]) {
           let formattedAmount = this.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[0]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[0]['to_id']]['decimals'])
           let gasInUsd = parseFloat(this.bestResultsPerProtocol[0]['gas_in_usd']).toFixed(2)
@@ -379,6 +377,12 @@ $(document).ready(function(){
           $('#sienna-best-result td:nth-child(3)').text(gasInUsd)
           $('#sienna-best-result td:nth-child(4)').text(netUsdResult)
         }
+      }
+
+      this.resetTable = () => {
+        $('#results tbody td:nth-child(2)').text('-')
+        $('#results tbody td:nth-child(3)').text('-')
+        $('#results tbody td:nth-child(4)').text('-')
       }
 
       this.renderResults = (from_id, to_id) => {
@@ -516,6 +520,7 @@ $(document).ready(function(){
         $('#results').find('.loading').removeClass('d-none')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
+        this.resetTable()
         this.bestResultsPerProtocol = {}
         this.selectedSwapPath = undefined;
         // This holds the results of swaps for a pool, for crypto id, for the amount offered
