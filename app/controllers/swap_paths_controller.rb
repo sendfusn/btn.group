@@ -7,9 +7,11 @@ class SwapPathsController < ApplicationController
   def index
     top_five_swap_paths = []
     @swap_paths.each do |sp|
-      top_five_swap_paths.push({ swap_path_id: sp.id, result_amount: sp.simulate_swaps(params['from_amount']) })
+      result_amount = sp.simulate_swaps(params['from_amount'])
+      net_usd_outcome = Cryptocurrency.find(sp.to_id).amount_as_usd(result_amount) - sp.gas_in_usd
+      top_five_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
     end
-    top_five_swap_paths = top_five_swap_paths.sort_by { |obj| obj[:result_amount].to_i }
+    top_five_swap_paths = top_five_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
                                              .reverse
                                              .map { |obj| obj[:swap_path_id] }[0..4]
     @swap_paths = SwapPath.where(id: top_five_swap_paths)
@@ -19,9 +21,11 @@ class SwapPathsController < ApplicationController
   def simulate_swaps
     simulation_results = []
     @swap_paths.each do |sp|
-      simulation_results.push({ swap_path_id: sp.id, result_amount: sp.simulate_swaps(params['from_amount']) })
+      result_amount = sp.simulate_swaps(params['from_amount'])
+      net_usd_outcome = Cryptocurrency.find(sp.to_id).amount_as_usd(result_amount) - sp.gas_in_usd
+      simulation_results.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
     end
-    simulation_results = simulation_results.sort_by { |obj| obj[:result_amount].to_i }
+    simulation_results = simulation_results.sort_by { |obj| obj[:net_usd_outcome] }
                                            .reverse
     render json: simulation_results
   end

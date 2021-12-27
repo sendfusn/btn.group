@@ -41,6 +41,10 @@ class Cryptocurrency < ApplicationRecord
   end
 
   # === INSTANCE METHODS ===
+  def amount_as_usd(amount)
+    amount_with_decimals(amount) * price
+  end
+
   def amount_with_decimals(amount)
     return 0.0 if decimals.nil?
 

@@ -47,6 +47,17 @@ class SwapPath < ApplicationRecord
     cip
   end
 
+  def gas_in_usd
+    gas = 0
+    gas += 100_000 if swap_count >= 2
+    swap_path_as_array.each do |pool_id|
+      protocol_identifier = Pool.find(pool_id).protocol.identifier
+      gas += 100_000 if protocol_identifier == 'sienna'
+      gas += 135_000 if protocol_identifier == 'secret_swap'
+    end
+    Cryptocurrency.find_by(symbol: 'SCRT', official: true).price * gas / 4_000_000
+  end
+
   def swap_path_as_array
     swap_path_as_string.split(',')
   end
