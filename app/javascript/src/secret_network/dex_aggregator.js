@@ -6,6 +6,7 @@ $(document).ready(function(){
     window.onload = async () => {
       this.address;
       this.cryptocurrencies = {}
+      this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
       this.tradePairs = {}
       this.environment = 'production';
@@ -17,6 +18,71 @@ $(document).ready(function(){
       this.gasSiennaPerSwap = 100000;
       this.gasSecretSwapPerSwap = 135000;
       this.queryCount = 0;
+      this.userVipLevel = 0;
+      this.vipLevels = {
+        0: {
+          tradingFee: 5,
+          tradingFeeBinance: 1
+        },
+        1: {
+          minAmount: 6_250,
+          tradingFee: 4,
+          tradingFeeBinance: 0.8
+        },
+        2: {
+          minAmount: 12_500,
+          tradingFee: 3,
+          tradingFeeBinance: 0.6
+        },
+        3: {
+          minAmount: 25_000,
+          tradingFee: 2,
+          tradingFeeBinance: 0.4
+        },
+        4: {
+          minAmount: 50_000,
+          tradingFee: 1,
+          tradingFeeBinance: 0.2
+        },
+        5: {
+          minAmount: 100_000,
+          tradingFee: 0,
+          tradingFeeBinance: 0
+        }
+      }
+
+      this.setUserVipLevel = async() => {
+        // Set users vip level
+        try {
+          let params = {
+            balance: {
+              address: this.address,
+              key: await window.keplr.getSecret20ViewingKey(this.chainId, this.buttcoinContractAddress)
+            }
+          }
+          let balance_response = await this.client.queryContractSmart(this.buttcoinContractAddress, params);
+          let balance = balance_response["balance"]["amount"]
+          balance = Number(balance)
+          if (balance >= 100_000_000_000) {
+            this.userVipLevel = 5
+          } else if(balance >= 50_000_000_000) {
+            this.userVipLevel = 4
+          } else if(balance >= 25_000_000_000) {
+            this.userVipLevel = 3
+          } else if(balance >= 12_500_000_000) {
+            this.userVipLevel = 2
+          } else if(balance >= 6_250_000_000) {
+            this.userVipLevel = 1
+          } else {
+            this.userVipLevel = 0
+          }
+        } catch(err) {
+          this.userVipLevel = 0
+          console.error(err)
+        } finally {
+          console.log(this.userVipLevel)
+        }
+      }
 
       // === LISTENERS ===
       $.each(['.from-balance-view-button', '.to-balance-view-button'], function(index, value) {
@@ -53,6 +119,7 @@ $(document).ready(function(){
       $(document).on('keplr_connected', async(evt) => {
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
+        this.setUserVipLevel()
       })
       $('#flip-token').click(function(event){
         let fromId = document.secretNetworkDexAggregatorForm.from.value
@@ -159,6 +226,7 @@ $(document).ready(function(){
       }
 
       this.getEstimate = () => {
+        $('#results').removeClass('d-none')
         this.queryCount += 1;
         this.reset()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value

@@ -52,5 +52,35 @@
                         %em Loading...
                       .ready
                         Swap
+              .d-none#results
+                .card
+                  .card-body
+                    %h5 Results
+                    %table.table.table-striped
+                      %tbody
+                        %tr
+                          %td btn.group
+                          %td#btn-best-result
+                            .loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .ready.d-none
+                              Swap
+                        %tr
+                          %td Secret Swap
+                          %td#secret-swap-best-result
+                            .loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .ready.d-none
+                              Swap
+                        %tr
+                          %td Sienna
+                          %td#sienna-best-result
+                            .loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .ready.d-none
+                              Swap
               #swap-paths
   .nk-ovm.shape-q
