@@ -326,41 +326,40 @@ $(document).ready(function(){
       }
 
       this.renderResults = (from_id, to_id) => {
-        if (this.userVipLevel < 5) {
-          return
-        }
         $("#swap-paths").html('')
         this.swapPaths[from_id][to_id].sort((a, b) => b.netUsdResultOfSwaps - a.netUsdResultOfSwaps).forEach((swapPath, index) => {
-          let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
-          let currentCryptoId = swapPath['from_id']
-          let currentCryptoSymbol = swapPath['from']['symbol']
-          if(this.cryptocurrencies[from_id]['smart_contract'] == undefined) {
-            x = x + '<div>' + this.cryptocurrencies[from_id]['symbol'] + ' == wrap ==> ' + this.cryptocurrencies[this.wrapPaths[from_id]]['symbol'] + '</div>'
-            currentCryptoId = this.wrapPaths[from_id]
-            currentCryptoSymbol = this.cryptocurrencies[this.wrapPaths[from_id]]['symbol']
-          }
-          swapPath['swap_path_as_array'].forEach((tradePairId) => {
-            let protocolName = this.tradePairs[tradePairId]['protocol']['name']
-            let xId = currentCryptoId
-            this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
-              if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
-                x = x + '<div>' + currentCryptoSymbol
-                currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
-                currentCryptoId = cryptoPool['cryptocurrency_id']
-                x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
-              }
+          if (this.userVipLevel == 5) {
+            let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
+            let currentCryptoId = swapPath['from_id']
+            let currentCryptoSymbol = swapPath['from']['symbol']
+            if(this.cryptocurrencies[from_id]['smart_contract'] == undefined) {
+              x = x + '<div>' + this.cryptocurrencies[from_id]['symbol'] + ' == wrap ==> ' + this.cryptocurrencies[this.wrapPaths[from_id]]['symbol'] + '</div>'
+              currentCryptoId = this.wrapPaths[from_id]
+              currentCryptoSymbol = this.cryptocurrencies[this.wrapPaths[from_id]]['symbol']
+            }
+            swapPath['swap_path_as_array'].forEach((tradePairId) => {
+              let protocolName = this.tradePairs[tradePairId]['protocol']['name']
+              let xId = currentCryptoId
+              this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
+                if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
+                  x = x + '<div>' + currentCryptoSymbol
+                  currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
+                  currentCryptoId = cryptoPool['cryptocurrency_id']
+                  x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
+                }
+              })
             })
-          })
-          if (currentCryptoId != to_id) {
-            x = x + '<div>' + this.cryptocurrencies[currentCryptoId]['symbol'] + ' == unwrap ==> ' + this.cryptocurrencies[this.wrapPaths[currentCryptoId]]['symbol'] + '</div>'
-          }
-          x = x + '<div class="result">Result: <b>Loading...</b></div>'
-          $("#swap-paths").append(x)
-          if (swapPath['resultOfSwaps'] != undefined) {
-            if (swapPath['resultOfSwaps'] == '0') {
-              $('#' + swapPath['id']).remove()
-            } else {
-              $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
+            if (currentCryptoId != to_id) {
+              x = x + '<div>' + this.cryptocurrencies[currentCryptoId]['symbol'] + ' == unwrap ==> ' + this.cryptocurrencies[this.wrapPaths[currentCryptoId]]['symbol'] + '</div>'
+            }
+            x = x + '<div class="result">Result: <b>Loading...</b></div>'
+            $("#swap-paths").append(x)
+            if (swapPath['resultOfSwaps'] != undefined) {
+              if (swapPath['resultOfSwaps'] == '0') {
+                $('#' + swapPath['id']).remove()
+              } else {
+                $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
+              }
             }
           }
           if(index == 0 && swapPath['resultOfSwaps']) {
