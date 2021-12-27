@@ -4,30 +4,33 @@ class SwapPathsController < ApplicationController
   before_action :authenticate_admin_user!, only: :index, if: :arbitrage?
   before_action :set_swap_paths
 
+  # This is specfically for the dex aggregator
   def index
-    top_five_swap_paths = []
+    top_swap_paths = []
     @swap_paths.each do |sp|
       result_amount = sp.simulate_swaps(params['from_amount'])
       net_usd_outcome = sp.net_result_as_usd(result_amount)
-      top_five_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
+      top_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
     end
-    top_five_swap_paths = top_five_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
-                                             .reverse
-                                             .map { |obj| obj[:swap_path_id] }[0..4]
-    @swap_paths = SwapPath.where(id: top_five_swap_paths)
+    top_swap_paths = top_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
+                                   .reverse
+                                   .map { |obj| obj[:swap_path_id] }[0..4]
+    # If swap paths don't hold at least one sienna swap path with swap count one, add it.
+    # We are only factoring in swap count one because sienna doesn't do routing.
+    sienna_swap_path_id = SwapPath.find_by(from_id: params['from_id'], to_id: params['to_id'], protocol: Protocol.find_by(identifier: 'sienna'), swap_count: 1)&.id
+    top_swap_paths.push(sienna_swap_path_id) if sienna_swap_path_id
+    # If swap paths don't hold at least two secret swap paths, add the top two.
+    top_secret_swap_paths = []
+    @swap_paths.where(protocol: Protocol.find_by(identifier: 'secret_swap')).each do |sp|
+      result_amount = sp.simulate_swaps(params['from_amount'])
+      net_usd_outcome = sp.net_result_as_usd(result_amount)
+      top_secret_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
+    end
+    top_secret_swap_paths = top_secret_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
+                                                 .reverse
+                                                 .map { |obj| obj[:swap_path_id] }[0..1]
+    @swap_paths = SwapPath.where(id: top_swap_paths + top_secret_swap_paths)
     render json: @swap_paths, methods: %i[gas gas_in_usd swap_path_as_array], include: { from: {}, to: {} }
-  end
-
-  def simulate_swaps
-    simulation_results = []
-    @swap_paths.each do |sp|
-      result_amount = sp.simulate_swaps(params['from_amount'])
-      net_usd_outcome = sp.net_result_as_usd(result_amount)
-      simulation_results.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
-    end
-    simulation_results = simulation_results.sort_by { |obj| obj[:net_usd_outcome] }
-                                           .reverse
-    render json: simulation_results
   end
 
   private
@@ -50,7 +53,7 @@ class SwapPathsController < ApplicationController
                             .order(:swap_count)
       @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
       @swap_paths = @swap_paths.limit(50)
-      return if @swap_paths.count > 5
+      return unless @swap_paths.count.zero?
 
       @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
                             .order(maximum_tradeable_value: :desc)
