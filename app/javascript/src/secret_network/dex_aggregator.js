@@ -2,7 +2,6 @@ import BigNumber from "bignumber.js";
 
 $(document).ready(function(){
   if($("#secret-network-dex-aggregator").length) {
-
     window.onload = async () => {
       this.address;
       this.cryptocurrencies = {}
@@ -201,7 +200,7 @@ $(document).ready(function(){
             }
           }
           if (updateWalletBalanceStillValid) {
-            let balanceFormatted = this.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
+            let balanceFormatted = document.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
             $walletBalance.text(balanceFormatted)
             $walletBalance.removeClass('d-none')
             $walletBalanceViewButton.addClass('d-none')
@@ -296,6 +295,7 @@ $(document).ready(function(){
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
         try {
           $('#status-container').removeClass('d-none')
+          $('#status-container').find('.loading').removeClass('d-none')
           $('#results').removeClass('d-none')
           $('#status').text('Getting swap paths')
           let tokenFromId = from_id;
@@ -308,7 +308,7 @@ $(document).ready(function(){
           }
           let currentQueryCount = this.queryCount;
           this.swapPaths[from_id] = {}
-          let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
+          let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
           this.swapPaths[from_id][to_id] = await $.ajax({
             url: url,
             type: 'GET'
@@ -360,7 +360,7 @@ $(document).ready(function(){
       this.renderTable = () => {
         this.resetTable()
         if(this.bestResultsPerProtocol[0]) {
-          let formattedAmount = this.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[0]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[0]['to_id']]['decimals'])
+          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[0]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[0]['to_id']]['decimals'])
           let gasInUsd = parseFloat(this.bestResultsPerProtocol[0]['gas_in_usd']).toFixed(2)
           let netUsdResult = parseFloat(this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']).toFixed(2)
           $('#btn-best-result td:nth-child(2)').text(formattedAmount)
@@ -368,7 +368,7 @@ $(document).ready(function(){
           $('#btn-best-result td:nth-child(4)').text(netUsdResult)
         }
         if(this.bestResultsPerProtocol[2]) {
-          let formattedAmount = this.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[2]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[2]['to_id']]['decimals'])
+          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[2]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[2]['to_id']]['decimals'])
           let gasInUsd = parseFloat(this.bestResultsPerProtocol[2]['gas_in_usd']).toFixed(2)
           let netUsdResult = parseFloat(this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']).toFixed(2)
           $('#secret-swap-best-result td:nth-child(2)').text(formattedAmount)
@@ -376,7 +376,7 @@ $(document).ready(function(){
           $('#secret-swap-best-result td:nth-child(4)').text(netUsdResult)
         }
         if(this.bestResultsPerProtocol[4]) {
-          let formattedAmount = this.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[4]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[4]['to_id']]['decimals'])
+          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[4]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[4]['to_id']]['decimals'])
           let gasInUsd = parseFloat(this.bestResultsPerProtocol[4]['gas_in_usd']).toFixed(2)
           let netUsdResult = parseFloat(this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']).toFixed(2)
           $('#sienna-best-result td:nth-child(2)').text(formattedAmount)
@@ -424,7 +424,7 @@ $(document).ready(function(){
               if (swapPath['resultOfSwaps'] == '0') {
                 $('#' + swapPath['id']).remove()
               } else {
-                $('#' + swapPath['id']).find('.result b').text(this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
+                $('#' + swapPath['id']).find('.result b').text(document.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
               }
             }
           }
@@ -436,26 +436,14 @@ $(document).ready(function(){
               groupSeparator: '',
               secondaryGroupSize: this.cryptocurrencies[to_id]['decimals']
             }
-            document.secretNetworkDexAggregatorForm.estimateAmount.value = this.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'], fmt)
+            document.secretNetworkDexAggregatorForm.estimateAmount.value = document.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals'], fmt)
             $('#to-usd-price').text('~ $' + (this.cryptocurrencies[to_id]['price'] * document.secretNetworkDexAggregatorForm.estimateAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
             let slippage = Math.round(new BigNumber(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(swapPath['resultOfSwaps']) / 100)
             let minAmount = new BigNumber(swapPath['resultOfSwaps']) - slippage
-            document.secretNetworkDexAggregatorForm.minAmount.value = this.humanizeStringNumberFromSmartContract(minAmount, this.cryptocurrencies[to_id]['decimals'], fmt)
+            document.secretNetworkDexAggregatorForm.minAmount.value = document.humanizeStringNumberFromSmartContract(minAmount, this.cryptocurrencies[to_id]['decimals'], fmt)
             $('#min-acceptable-amount-usd-price').text('~ $' + (this.cryptocurrencies[to_id]['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
           }
         })
-      }
-
-      this.formatStringNumberForSmartContract = (stringNumber, decimals) => {
-        if (stringNumber == '') {
-          stringNumber = '0'
-        }
-
-        return new BigNumber(stringNumber.replace(/,/g, '')).times(new BigNumber("10").pow(decimals)).toFixed();
-      }
-
-      this.humanizeStringNumberFromSmartContract = (stringNumber, decimals, toFormatDecimals = undefined) => {
-        return new BigNumber(stringNumber).dividedBy(new BigNumber("10").pow(decimals)).toFormat(toFormatDecimals)
       }
 
       this.extractSwapToId = function(fromId, tradePairId) {
@@ -542,8 +530,8 @@ $(document).ready(function(){
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
-        fromAmount = this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[fromId]['decimals'])
-        estimateAmount = this.formatStringNumberForSmartContract(estimateAmount, this.cryptocurrencies[toId]['decimals'])
+        fromAmount = document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[fromId]['decimals'])
+        estimateAmount = document.formatHumanizedNumberForSmartContract(estimateAmount, this.cryptocurrencies[toId]['decimals'])
         if (this.wrapPaths[fromId] == toId) {
           this.queryCount += 1
           let submitButtonSelector = '#submit-button'
@@ -588,7 +576,7 @@ $(document).ready(function(){
           $submitButton.find('.ready').addClass('d-none')
           let currentFromId = fromId
           let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
-          minAmount = this.formatStringNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
+          minAmount = document.formatHumanizedNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
           let hops = []
           let gas = 0
           let initNativeFromToken;
@@ -663,7 +651,7 @@ $(document).ready(function(){
             if(new BigNumber(estimateAmount) < new BigNumber(returnAmount)) {
               returnAmount = estimateAmount
             }
-            returnAmount = this.humanizeStringNumberFromSmartContract(returnAmount, this.cryptocurrencies[toId]['decimals'])
+            returnAmount = document.humanizeStringNumberFromSmartContract(returnAmount, this.cryptocurrencies[toId]['decimals'])
             window.test = response
             document.showAlertSuccess("Amount received " + returnAmount);
             document.secretNetworkDexAggregatorForm.fromAmount.value = ''

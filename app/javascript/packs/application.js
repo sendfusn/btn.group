@@ -7,6 +7,8 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+// BigNumber.js
+import BigNumber from "bignumber.js";
 // BOOTSTRAP & jquery IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
 import 'lodash'
 // DATATABLES
@@ -106,9 +108,21 @@ document.featureContractAddress = function(environment) {
   return contractAddress
 }
 
+document.formatHumanizedNumberForSmartContract = function(humanizedNumber, decimals) {
+  if (humanizedNumber == '') {
+    humanizedNumber = '0'
+  }
+
+  return new BigNumber(humanizedNumber.replace(/,/g, '')).times(new BigNumber("10").pow(decimals)).toFixed();
+}
+
 document.hideAllAlerts = function() {
   $('.alert').addClass('d-none')
 };
+
+document.humanizeStringNumberFromSmartContract = function(stringNumber, decimals, toFormatDecimals = undefined) {
+  return new BigNumber(stringNumber).dividedBy(new BigNumber("10").pow(decimals)).toFormat(toFormatDecimals)
+}
 
 document.prettyPrintJSON = function(json) {
   if (typeof json != 'string') {
