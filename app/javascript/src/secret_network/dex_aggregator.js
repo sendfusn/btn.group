@@ -19,22 +19,22 @@ $(document).ready(function(){
       this.vipLevels = {
         0: {
           tradingFee: 5,
-          tradingFeeBinance: 1
+          tradingFeeBinance: 0.1
         },
         1: {
           minAmount: 6_250,
           tradingFee: 4,
-          tradingFeeBinance: 0.8
+          tradingFeeBinance: 0.08
         },
         2: {
           minAmount: 12_500,
           tradingFee: 3,
-          tradingFeeBinance: 0.6
+          tradingFeeBinance: 0.06
         },
         3: {
           minAmount: 25_000,
           tradingFee: 2,
-          tradingFeeBinance: 0.4
+          tradingFeeBinance: 0.04
         },
         4: {
           minAmount: 50_000,
@@ -294,61 +294,66 @@ $(document).ready(function(){
       }
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
-        $('#results').removeClass('d-none')
-        $('#status').text('Getting swap paths')
-        let tokenFromId = from_id;
-        let tokenToId = to_id;
-        if (this.wrapPaths[from_id] && this.cryptocurrencies[this.wrapPaths[from_id]]['smart_contract']) {
-          tokenFromId = this.wrapPaths[from_id]
-        }
-        if (this.wrapPaths[to_id] && this.cryptocurrencies[this.wrapPaths[to_id]]['smart_contract']) {
-          tokenToId = this.wrapPaths[to_id]
-        }
-        let currentQueryCount = this.queryCount;
-        this.swapPaths[from_id] = {}
-        let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
-        this.swapPaths[from_id][to_id] = await $.ajax({
-          url: url,
-          type: 'GET'
-        })
-        this.renderResults(from_id, to_id)
-        for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
-          if(currentQueryCount == this.queryCount) {
-            $('#status').text('Getting results of swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
-            let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
-            swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
-            swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[swapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[swapPath['to_id']]['decimals'])).minus(swapPath['gas_in_usd'])
-            if (swapPath['protocol_id'] == 2) {
-              if (this.bestResultsPerProtocol[2]) {
-                if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']) {
+        try {
+          $('#results').removeClass('d-none')
+          $('#status').text('Getting swap paths')
+          let tokenFromId = from_id;
+          let tokenToId = to_id;
+          if (this.wrapPaths[from_id] && this.cryptocurrencies[this.wrapPaths[from_id]]['smart_contract']) {
+            tokenFromId = this.wrapPaths[from_id]
+          }
+          if (this.wrapPaths[to_id] && this.cryptocurrencies[this.wrapPaths[to_id]]['smart_contract']) {
+            tokenToId = this.wrapPaths[to_id]
+          }
+          let currentQueryCount = this.queryCount;
+          this.swapPaths[from_id] = {}
+          let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + this.formatStringNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
+          this.swapPaths[from_id][to_id] = await $.ajax({
+            url: url,
+            type: 'GET'
+          })
+          this.renderResults(from_id, to_id)
+          for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
+            if(currentQueryCount == this.queryCount) {
+              $('#status').text('Getting results of swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
+              let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
+              swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
+              swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[swapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[swapPath['to_id']]['decimals'])).minus(swapPath['gas_in_usd'])
+              if (swapPath['protocol_id'] == 2) {
+                if (this.bestResultsPerProtocol[2]) {
+                  if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']) {
+                    this.bestResultsPerProtocol[2] = swapPath
+                  }
+                } else {
                   this.bestResultsPerProtocol[2] = swapPath
                 }
-              } else {
-                this.bestResultsPerProtocol[2] = swapPath
-              }
-            } else if (swapPath['protocol_id'] == 4) {
-              if (this.bestResultsPerProtocol[4]) {
-                if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']) {
+              } else if (swapPath['protocol_id'] == 4) {
+                if (this.bestResultsPerProtocol[4]) {
+                  if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']) {
+                    this.bestResultsPerProtocol[4] = swapPath
+                  }
+                } else {
                   this.bestResultsPerProtocol[4] = swapPath
                 }
               } else {
-                this.bestResultsPerProtocol[4] = swapPath
-              }
-            } else {
-              if (this.bestResultsPerProtocol[0]) {
-                if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']) {
+                if (this.bestResultsPerProtocol[0]) {
+                  if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']) {
+                    this.bestResultsPerProtocol[0] = swapPath
+                  }
+                } else {
                   this.bestResultsPerProtocol[0] = swapPath
                 }
-              } else {
-                this.bestResultsPerProtocol[0] = swapPath
               }
+              this.renderResults(from_id, to_id)
+              this.renderTable()
             }
-            this.renderResults(from_id, to_id)
-            this.renderTable()
           }
+        } catch(error) {
+          document.showAlertDanger(error)
+        } finally {
+          $('#status').text('Done')
+          $('#results').find('.loading').addClass('d-none')
         }
-        $('#status').text('Done')
-        $('#results').find('.loading').addClass('d-none')
       }
 
       this.renderTable = () => {
