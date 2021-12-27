@@ -77,6 +77,9 @@ $(document).ready(function(){
       $("#from").change(function(){
         this.updateWalletBalance($('#from').val(), '.from')
         this.getEstimate()
+        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        $('#from-usd-price').text('~ $' + (this.cryptocurrencies[fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
       }.bind(this));
       $("#slippage-tolerance").change(function(){
         let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
@@ -398,6 +401,8 @@ $(document).ready(function(){
       }
 
       this.reset = () => {
+        $('#min-acceptable-amount-usd-price').text('')
+        $('#to-usd-price').text('')
         this.bestResultsPerSwapCount = {}
         this.selectedSwapPath = undefined;
         // This holds the results of swaps for a pool, for crypto id, for the amount offered
