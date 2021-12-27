@@ -26,6 +26,10 @@ class SwapPath < ApplicationRecord
   end
 
   # === Instance methods ===
+  def net_result_as_usd(result_amount)
+    Cryptocurrency.find(to_id).amount_as_usd(result_amount) - gas_in_usd
+  end
+
   def simulate_swaps(amount)
     current_from_id = from_id
     swap_path_as_array.each do |pool_id|
