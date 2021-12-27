@@ -55,32 +55,33 @@
               .d-none#results
                 .card
                   .card-body
-                    %h5 Results
+                    #status-container
+                      %span.loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                      %b Status:
+                      %i#status
                     %table.table.table-striped
+                      %thead
+                        %tr
+                          %th Protocol
+                          %th Return amount
+                          %th Gas ($)
+                          %th Net ($)
                       %tbody
-                        %tr
+                        %tr#btn-best-result
                           %td btn.group
-                          %td#btn-best-result
-                            .loading
-                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                              %em Loading...
-                            .ready.d-none
-                              Swap
-                        %tr
+                          %td
+                          %td
+                          %td
+                        %tr#secret-swap-best-result
                           %td Secret Swap
-                          %td#secret-swap-best-result
-                            .loading
-                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                              %em Loading...
-                            .ready.d-none
-                              Swap
-                        %tr
+                          %td
+                          %td
+                          %td
+                        %tr#sienna-best-result
                           %td Sienna
-                          %td#sienna-best-result
-                            .loading
-                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                              %em Loading...
-                            .ready.d-none
-                              Swap
+                          %td
+                          %td
+                          %td
               #swap-paths
   .nk-ovm.shape-q

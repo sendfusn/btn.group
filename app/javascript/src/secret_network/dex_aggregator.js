@@ -229,7 +229,6 @@ $(document).ready(function(){
       }
 
       this.getEstimate = async() => {
-        $('#results').removeClass('d-none')
         this.queryCount += 1;
         this.reset()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
@@ -242,11 +241,9 @@ $(document).ready(function(){
         if (Number(fromAmount) > 0) {
           if(this.wrapPaths[fromId] == toId) {
             $("#slippage-container").addClass('d-none')
-            $("#min-acceptable-amount-container").addClass('d-none')
             document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
           } else {
             $("#slippage-container").removeClass('d-none')
-            $("#min-acceptable-amount-container").removeClass('d-none')
             setTimeout(function(){
               if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
                 this.getSwapPaths(fromId, toId, fromAmount)
@@ -297,6 +294,8 @@ $(document).ready(function(){
       }
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
+        $('#results').removeClass('d-none')
+        $('#status').text('Getting swap paths')
         let tokenFromId = from_id;
         let tokenToId = to_id;
         if (this.wrapPaths[from_id] && this.cryptocurrencies[this.wrapPaths[from_id]]['smart_contract']) {
@@ -313,17 +312,23 @@ $(document).ready(function(){
           type: 'GET'
         })
         this.renderResults(from_id, to_id)
-        for (const swapPath of this.swapPaths[from_id][to_id]) {
+        for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
           if(currentQueryCount == this.queryCount) {
+            $('#status').text('Getting results of swap path ' + (index + 1) + '/' + this.swapPaths[from_id][to_id].length)
             let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
             swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
             swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[swapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[swapPath['to_id']]['decimals'])).minus(swapPath['gas_in_usd'])
             this.renderResults(from_id, to_id)
           }
         }
+        $('#status').text('Done')
+        $('#results').find('.loading').addClass('d-none')
       }
 
       this.renderResults = (from_id, to_id) => {
+        if (this.userVipLevel < 5) {
+          return
+        }
         $("#swap-paths").html('')
         this.swapPaths[from_id][to_id].sort((a, b) => b.netUsdResultOfSwaps - a.netUsdResultOfSwaps).forEach((swapPath, index) => {
           let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
@@ -452,9 +457,11 @@ $(document).ready(function(){
       }
 
       this.reset = () => {
+        $('#results').addClass('d-none')
+        $('#results').find('.loading').removeClass('d-none')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
-        this.bestResultsPerSwapCount = {}
+        this.bestResultsPerProtocol = {}
         this.selectedSwapPath = undefined;
         // This holds the results of swaps for a pool, for crypto id, for the amount offered
         this.simulationSwapResults = {}
