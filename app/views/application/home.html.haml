@@ -6,29 +6,12 @@
           .row.align-items-center.justify-content-center.justify-content-lg-between.gutter-vr-60px
             .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
               .token-status.token-status-s3.round.bg-theme.tc-light
-                %h4.title-md.title-thin Buttcoin Round 2 Sale Has Sold Out!
                 .token-info.token-info-s1
-                  .token-info-item.token-info-item-s1
-                    .token-info-item-list
-                      %span Token Price:
-                      %h4 1 SEFI = 1 BUTT
-                    .token-info-item-list
-                      %span We Accept:
-                      %h4
-                        %em.fab.fa-sefi
-                          = cl_image_tag('logos/sefi_xa4yx2', width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                        SEFI
-                .token-info.token-info-s1.mb-0
-                  .progress-wrap.progress-wrap-point.mb-0
-                    .progress-bar.progress-bar-xs
-                      .progress-percent.progress-percent-s2#swap-progress-percent{ 'data-percent' => '100', :style => 'width: 100%;' }
-                    %ul.progress-info.progress-info-s2
-                      %li
-                        %span.tc-theme#percentage-swapped{ style: 'font-weight: 400;' } 100%
-                      %li.text-right
-                        %span.tc-theme#total-raised{ style: 'font-weight: 400;' } 3,877,181.2/3,877,181.2
+                  .token-info-item-s1.team
+                    = link_to secret_network_dex_aggregator_path do
+                      = cl_image_tag("secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png", :gravity=>"center", :height=>247, :width=>371, :crop=>"crop")
                 .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
-                  = link_to 'Learn more', secret_network_buttcoin_index_path, class: 'btn btn-md btn-grad w-100'
+                  = link_to 'Get $BUTT now', secret_network_dex_aggregator_path, class: 'btn btn-md btn-grad w-100'
             .col-lg-6.col-xl-6.text-center.text-lg-left
               .banner-caption.tc-light
                 .cpn-head.mt-0
@@ -88,7 +71,7 @@
                 .feature-icon.feature-icon-bg-grd.feature-icon-s5-3
                   = cl_image_tag 'secret_network/dex_aggregator/dex_mhead_rs_xxqpdz', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
                 .feature-text
-                  %h4.title.title-md.title-dark.mb-1 DEX aggregator (WIP)
+                  %h4.title.title-md.title-dark.mb-1 DEX aggregator
                   %p
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
