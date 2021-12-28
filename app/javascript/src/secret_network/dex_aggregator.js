@@ -610,7 +610,6 @@ $(document).ready(function(){
         fromAmount = document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[fromId]['decimals'])
         estimateAmount = document.formatHumanizedNumberForSmartContract(estimateAmount, this.cryptocurrencies[toId]['decimals'])
         if (this.wrapPaths[fromId] == toId) {
-          this.queryCount += 1
           let submitButtonSelector = '#submit-button'
           let $submitButton = $(submitButtonSelector)
           $submitButton.prop("disabled", true);
@@ -645,7 +644,6 @@ $(document).ready(function(){
             $submitButton.find('.ready').removeClass('d-none')
           }
         } else if (this.selectedSwapPath) {
-          this.queryCount += 1
           let submitButtonSelector = '#submit-button'
           let $submitButton = $(submitButtonSelector)
           $submitButton.prop("disabled", true);
