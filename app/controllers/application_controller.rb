@@ -65,9 +65,9 @@ class ApplicationController < ActionController::Base
           },
           dex_aggregator: {
             name: 'DEX aggregator',
-            show_in_navbar: false,
-            show_link: false,
-            status: 'WIP',
+            show_in_navbar: true,
+            show_link: true,
+            status: 'Live',
             contracts: {
               production: 'secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud'
             }

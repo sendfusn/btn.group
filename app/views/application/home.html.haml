@@ -83,14 +83,15 @@
                     = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                     = features[:secret_network][:name]
           .col-lg-4.col-md-6
-            .card.card-lg-y.feature.feature-center
-              .feature-icon.feature-icon-bg-grd.feature-icon-s5-3
-                = cl_image_tag 'secret_network/dex_aggregator/dex_mhead_rs_xxqpdz', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
-              .feature-text
-                %h4.title.title-md.title-dark.mb-1 DEX aggregator (WIP)
-                %p
-                  = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
-                  = features[:secret_network][:name]
+            = link_to secret_network_dex_aggregator_path do
+              .card.card-lg-y.feature.feature-center
+                .feature-icon.feature-icon-bg-grd.feature-icon-s5-3
+                  = cl_image_tag 'secret_network/dex_aggregator/dex_mhead_rs_xxqpdz', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
+                .feature-text
+                  %h4.title.title-md.title-dark.mb-1 DEX aggregator (WIP)
+                  %p
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
+                    = features[:secret_network][:name]
           .col-lg-4.col-md-6
             = link_to secret_network_mount_doom_path do
               .card.card-lg-y.feature.feature-center
