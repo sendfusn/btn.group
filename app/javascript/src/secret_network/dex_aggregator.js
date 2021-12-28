@@ -345,9 +345,10 @@ $(document).ready(function(){
                 }
               }
               this.renderResults(from_id, to_id)
-              this.renderTable()
             }
           }
+          this.applyFee()
+          this.renderTable()
           this.fillForm()
           $('#results').removeClass('d-none')
         } catch(error) {
@@ -355,6 +356,30 @@ $(document).ready(function(){
         } finally {
           $('#status').text('Ready')
           $('#status-container').find('.loading').addClass('d-none')
+        }
+      }
+
+      this.applyFee = () => {
+        // If selectedSwapPath and there's no protocolId
+        if (this.selectedSwapPath && !this.selectedSwapPath['protocol_id']) {
+          this.setUserVipLevel()
+          let fee;
+          let otherProtocolsBestResultAmount;
+          if(this.bestResultsPerProtocol[2]) {
+            otherProtocolsBestResultAmount = this.bestResultsPerProtocol[2]['resultOfSwaps']
+          }
+          if(this.bestResultsPerProtocol[4]) {
+            if(this.bestResultsPerProtocol[4]['resultOfSwaps'] > otherProtocolsBestResultAmount) {
+              otherProtocolsBestResultAmount = this.bestResultsPerProtocol[4]['resultOfSwaps']
+            }
+          }
+          if(otherProtocolsBestResultAmount) {
+            fee = this.vipLevels[this.userVipLevel]['commission'] * (this.selectedSwapPath['resultOfSwaps'] - otherProtocolsBestResultAmount) / 100
+          } else {
+            fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[this.userVipLevel]['tradingFee'] / 100
+          }
+          this.selectedSwapPath['resultOfSwaps'] -= fee
+          this.selectedSwapPath['netUsdResultOfSwaps'] = new BigNumber(this.selectedSwapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[this.selectedSwapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[this.selectedSwapPath['to_id']]['decimals'])).minus(this.selectedSwapPath['gas_in_usd'])
         }
       }
 
