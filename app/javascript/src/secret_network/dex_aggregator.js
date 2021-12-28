@@ -264,6 +264,7 @@ $(document).ready(function(){
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
         let submitButtonSelector = '#submit-button'
         let $submitButton = $(submitButtonSelector)
+        let currentQueryCount = this.queryCount;
         try {
           $submitButton.prop("disabled", true);
           $submitButton.find('.loading').removeClass('d-none')
@@ -277,7 +278,6 @@ $(document).ready(function(){
           if (this.wrapPaths[to_id] && this.cryptocurrencies[this.wrapPaths[to_id]]['smart_contract']) {
             tokenToId = this.wrapPaths[to_id]
           }
-          let currentQueryCount = this.queryCount;
           this.swapPaths[from_id] = {}
           let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
           this.swapPaths[from_id][to_id] = await $.ajax({
@@ -319,16 +319,22 @@ $(document).ready(function(){
               this.renderResults(from_id, to_id)
             }
           }
-          this.applyFee()
-          this.renderTable()
-          this.fillForm()
-          $('#results').removeClass('d-none')
+          if(currentQueryCount == this.queryCount) {
+            this.applyFee()
+            this.renderTable()
+            this.fillForm()
+            $('#results').removeClass('d-none')
+          }
         } catch(error) {
-          document.showAlertDanger(error)
+          if(currentQueryCount == this.queryCount) {
+            document.showAlertDanger(error)
+          }
         } finally {
-          $submitButton.prop("disabled", false);
-          $submitButton.find('.loading').addClass('d-none')
-          $submitButton.find('.ready').removeClass('d-none')
+          if(currentQueryCount == this.queryCount) {
+            $submitButton.prop("disabled", false);
+            $submitButton.find('.loading').addClass('d-none')
+            $submitButton.find('.ready').removeClass('d-none')
+          }
         }
       }
 
