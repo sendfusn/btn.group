@@ -21,62 +21,24 @@ $(document).ready(function(){
           tradingFee: 0.1
         },
         1: {
-          minAmount: 6_250,
           commission: 4,
           tradingFee: 0.08
         },
         2: {
-          minAmount: 12_500,
           commission: 3,
           tradingFee: 0.06
         },
         3: {
-          minAmount: 25_000,
           commission: 2,
           tradingFee: 0.04
         },
         4: {
-          minAmount: 50_000,
           commission: 1,
           tradingFee: 0.2
         },
         5: {
-          minAmount: 100_000,
           commission: 0,
           tradingFee: 0
-        }
-      }
-
-      this.setUserVipLevel = async() => {
-        // Set users vip level
-        try {
-          let params = {
-            balance: {
-              address: this.address,
-              key: await window.keplr.getSecret20ViewingKey(this.chainId, this.buttcoinContractAddress)
-            }
-          }
-          let balance_response = await this.client.queryContractSmart(this.buttcoinContractAddress, params);
-          let balance = balance_response["balance"]["amount"]
-          balance = Number(balance)
-          if (balance >= 100_000_000_000) {
-            this.userVipLevel = 5
-          } else if(balance >= 50_000_000_000) {
-            this.userVipLevel = 4
-          } else if(balance >= 25_000_000_000) {
-            this.userVipLevel = 3
-          } else if(balance >= 12_500_000_000) {
-            this.userVipLevel = 2
-          } else if(balance >= 6_250_000_000) {
-            this.userVipLevel = 1
-          } else {
-            this.userVipLevel = 0
-          }
-        } catch(err) {
-          this.userVipLevel = 0
-          console.error(err)
-        } finally {
-          console.log(this.userVipLevel)
         }
       }
 
@@ -162,79 +124,28 @@ $(document).ready(function(){
         this.getEstimate()
       }.bind(this));
 
-      this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix) => {
-        let $walletBalance = $(selectorPrefix + '-balance')
-        let $walletBalanceLink = $(selectorPrefix + '-balance-link')
-        let $walletBalanceLoading = $(selectorPrefix + '-balance-loading')
-        let $walletBalanceViewButton = $(selectorPrefix + '-balance-view-button')
-        let balance
-        let cryptoAddress;
-        let cryptocurrency = this.cryptocurrencies[cryptocurrencyId];
-        let updateWalletBalanceStillValid = true
-        $walletBalance.addClass('d-none')
-        $walletBalanceLoading.removeClass('d-none')
-        $walletBalanceViewButton.addClass('d-none')
-        try {
-          if (cryptocurrency['smart_contract']) {
-            cryptoAddress = cryptocurrency['smart_contract']['address']
-            let key = await window.keplr.getSecret20ViewingKey(this.chainId, cryptoAddress)
-            // If they have the key, replace the button with the balance
-            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: this.address, key: key } })
-            balance = balanceResponse['balance']['amount']
+      // === Functions ===
+      this.applyFee = () => {
+        // If selectedSwapPath and there's no protocolId
+        if (this.selectedSwapPath && !this.selectedSwapPath['protocol_id']) {
+          this.setUserVipLevel()
+          let fee;
+          let otherProtocolsBestResultAmount;
+          if(this.bestResultsPerProtocol[2]) {
+            otherProtocolsBestResultAmount = this.bestResultsPerProtocol[2]['resultOfSwaps']
+          }
+          if(this.bestResultsPerProtocol[4]) {
+            if(this.bestResultsPerProtocol[4]['resultOfSwaps'] > otherProtocolsBestResultAmount) {
+              otherProtocolsBestResultAmount = this.bestResultsPerProtocol[4]['resultOfSwaps']
+            }
+          }
+          if(otherProtocolsBestResultAmount) {
+            fee = this.vipLevels[this.userVipLevel]['commission'] * (this.selectedSwapPath['resultOfSwaps'] - otherProtocolsBestResultAmount) / 100
           } else {
-            let accountDetails = await this.client.getAccount(this.address)
-            accountDetails['balance'].forEach(function(balanceDetails) {
-              if (cryptocurrency['denom'] == balanceDetails['denom']) {
-                balance = balanceDetails['amount']
-              }
-            })
-            if (balance == undefined) {
-              balance = '0'
-            }
+            fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[this.userVipLevel]['tradingFee'] / 100
           }
-          if (selectorPrefix == '.from') {
-            if (cryptocurrencyId != $('#from').val()) {
-              updateWalletBalanceStillValid = false
-            }
-          } else {
-            if (cryptocurrencyId != $('#to').val()) {
-              updateWalletBalanceStillValid = false
-            }
-          }
-          if (updateWalletBalanceStillValid) {
-            let balanceFormatted = document.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
-            $walletBalance.text(balanceFormatted)
-            $walletBalance.removeClass('d-none')
-            $walletBalanceViewButton.addClass('d-none')
-          }
-        } catch(err) {
-          if (updateWalletBalanceStillValid) {
-            console.log(err)
-            // If they don't have a viewing key, show the view balance button and hide the balance
-            $walletBalance.addClass('d-none')
-            $walletBalanceViewButton.removeClass('d-none')
-          }
-        } finally {
-          if (updateWalletBalanceStillValid) {
-            $walletBalanceLoading.addClass('d-none')
-            $walletBalanceViewButton.find('.loading').addClass('d-none')
-            $walletBalanceLink.removeClass('d-none')
-          }
-        }
-      }
-
-      this.toggleConfig = async() => {
-        while (!this.wrapPaths) {
-          await this.delay(500)
-        }
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
-        if(this.wrapPaths[fromId] == toId) {
-          $("#cog-container").addClass('d-none')
-          $("#slippage-container").addClass('d-none')
-        } else {
-          $("#cog-container").removeClass('d-none')
-          $("#slippage-container").removeClass('d-none')
+          this.selectedSwapPath['resultOfSwaps'] -= fee
+          this.selectedSwapPath['netUsdResultOfSwaps'] = new BigNumber(this.selectedSwapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[this.selectedSwapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[this.selectedSwapPath['to_id']]['decimals'])).minus(this.selectedSwapPath['gas_in_usd'])
         }
       }
 
@@ -244,27 +155,30 @@ $(document).ready(function(){
         })
       }
 
-      this.getEstimate = async() => {
-        this.queryCount += 1;
-        this.resetBeforeEstimate()
-        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
-        $("#swap-paths").html('')
-        while (!this.wrapPaths) {
-          await this.delay(500)
-        }
-        if (Number(fromAmount) > 0) {
-          if(this.wrapPaths[fromId] == toId) {
-            document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
-          } else {
-            setTimeout(function(){
-              if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
-                this.getSwapPaths(fromId, toId, fromAmount)
-              }
-            }.bind(this), 1500);
+      this.extractSwapToId = function(fromId, tradePairId) {
+        let x;
+        this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
+          if (cryptoPool['cryptocurrency_id'] != Number(fromId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
+            x = cryptoPool['cryptocurrency_id']
           }
+        })
+        return x
+      }
+
+      this.fillForm = () => {
+        let toId = this.selectedSwapPath['to_id']
+        let toCryptocurrency = this.cryptocurrencies[toId]
+        let fmt = {
+          decimalSeparator: '.',
+          groupSeparator: '',
+          secondaryGroupSize: toCryptocurrency['decimals']
         }
+        document.secretNetworkDexAggregatorForm.estimateAmount.value = document.humanizeStringNumberFromSmartContract(this.selectedSwapPath['resultOfSwaps'], toCryptocurrency['decimals'], fmt)
+        $('#to-usd-price').text('~ $' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.estimateAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+        let slippage = Math.round(new BigNumber(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(this.selectedSwapPath['resultOfSwaps']) / 100)
+        let minAmount = new BigNumber(this.selectedSwapPath['resultOfSwaps']) - slippage
+        document.secretNetworkDexAggregatorForm.minAmount.value = document.humanizeStringNumberFromSmartContract(minAmount, toCryptocurrency['decimals'], fmt)
+        $('#min-acceptable-amount-usd-price').text('~ $' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
       }
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
@@ -305,6 +219,46 @@ $(document).ready(function(){
         window.wrapPaths = this.wrapPaths;
         this.updateWalletBalance($('#from').val(), '.from')
         this.updateWalletBalance($('#to').val(), '.to')
+      }
+
+      this.getEstimate = async() => {
+        this.queryCount += 1;
+        this.resetBeforeEstimate()
+        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
+        $("#swap-paths").html('')
+        while (!this.wrapPaths) {
+          await this.delay(500)
+        }
+        if (Number(fromAmount) > 0) {
+          if(this.wrapPaths[fromId] == toId) {
+            document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
+          } else {
+            setTimeout(function(){
+              if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
+                this.getSwapPaths(fromId, toId, fromAmount)
+              }
+            }.bind(this), 1500);
+          }
+        }
+      }
+
+      this.getResultOfSwaps = async(swapPath, currentQueryCount) => {
+        let fromId = swapPath['from_id']
+        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+        let fromCryptoDecimals = this.cryptocurrencies[fromId]['decimals']
+        let fromAmountFormatted = new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()
+        for (const poolId of swapPath['swap_path_as_array']) {
+          if(currentQueryCount == this.queryCount) {
+            fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
+            fromId = this.extractSwapToId(fromId, poolId)
+          }
+        }
+        if(currentQueryCount == this.queryCount) {
+          return fromAmountFormatted
+        }
+        return '0'
       }
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
@@ -378,62 +332,40 @@ $(document).ready(function(){
         }
       }
 
-      this.applyFee = () => {
-        // If selectedSwapPath and there's no protocolId
-        if (this.selectedSwapPath && !this.selectedSwapPath['protocol_id']) {
-          this.setUserVipLevel()
-          let fee;
-          let otherProtocolsBestResultAmount;
-          if(this.bestResultsPerProtocol[2]) {
-            otherProtocolsBestResultAmount = this.bestResultsPerProtocol[2]['resultOfSwaps']
-          }
-          if(this.bestResultsPerProtocol[4]) {
-            if(this.bestResultsPerProtocol[4]['resultOfSwaps'] > otherProtocolsBestResultAmount) {
-              otherProtocolsBestResultAmount = this.bestResultsPerProtocol[4]['resultOfSwaps']
-            }
-          }
-          if(otherProtocolsBestResultAmount) {
-            fee = this.vipLevels[this.userVipLevel]['commission'] * (this.selectedSwapPath['resultOfSwaps'] - otherProtocolsBestResultAmount) / 100
-          } else {
-            fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[this.userVipLevel]['tradingFee'] / 100
-          }
-          this.selectedSwapPath['resultOfSwaps'] -= fee
-          this.selectedSwapPath['netUsdResultOfSwaps'] = new BigNumber(this.selectedSwapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[this.selectedSwapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[this.selectedSwapPath['to_id']]['decimals'])).minus(this.selectedSwapPath['gas_in_usd'])
+      this.querySwapSimulation = async(fromAmountFormatted, fromId, poolId) => {
+        if (this.simulationSwapResults[poolId] == undefined) {
+          this.simulationSwapResults[poolId] = {}
         }
-      }
+        if (this.simulationSwapResults[poolId][fromId] == undefined) {
+          this.simulationSwapResults[poolId][fromId] = {}
+        }
+        // If this exact trade has been done before, return the result
+        if (this.simulationSwapResults[poolId][fromId][fromAmountFormatted]) {
+          return this.simulationSwapResults[poolId][fromId][fromAmountFormatted]
+        }
+        let fromCryptoAddress = this.cryptocurrencies[fromId]['smart_contract']['address']
+        let fromCryptoCodeHash = this.cryptocurrencies[fromId]['smart_contract']['data_hash']
+        let pool = this.tradePairs[poolId]
+        let protocolIdentifier = pool['protocol']['identifier']
+        let swapMsg;
+        if (protocolIdentifier == 'secret_swap') {
+          swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
+        } else if (protocolIdentifier == 'sienna') {
+          swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: ''}}, amount: fromAmountFormatted}}}
+        } else {
+          return fromAmountFormatted
+        }
+        try {
+          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
+          this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
+          return result['return_amount']
+        } catch(error) {
+          swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
 
-      this.renderTable = () => {
-        this.resetTable()
-        if(this.bestResultsPerProtocol[0]) {
-          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[0]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[0]['to_id']]['decimals'])
-          let gasInUsd = parseFloat(this.bestResultsPerProtocol[0]['gas_in_usd']).toFixed(2)
-          let netUsdResult = parseFloat(this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']).toFixed(2)
-          $('#btn-best-result td:nth-child(2)').text(formattedAmount)
-          $('#btn-best-result td:nth-child(3)').text(gasInUsd)
-          $('#btn-best-result td:nth-child(4)').text(netUsdResult)
+          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
+          this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
+          return result['return_amount']
         }
-        if(this.bestResultsPerProtocol[2]) {
-          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[2]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[2]['to_id']]['decimals'])
-          let gasInUsd = parseFloat(this.bestResultsPerProtocol[2]['gas_in_usd']).toFixed(2)
-          let netUsdResult = parseFloat(this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']).toFixed(2)
-          $('#secret-swap-best-result td:nth-child(2)').text(formattedAmount)
-          $('#secret-swap-best-result td:nth-child(3)').text(gasInUsd)
-          $('#secret-swap-best-result td:nth-child(4)').text(netUsdResult)
-        }
-        if(this.bestResultsPerProtocol[4]) {
-          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[4]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[4]['to_id']]['decimals'])
-          let gasInUsd = parseFloat(this.bestResultsPerProtocol[4]['gas_in_usd']).toFixed(2)
-          let netUsdResult = parseFloat(this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']).toFixed(2)
-          $('#sienna-best-result td:nth-child(2)').text(formattedAmount)
-          $('#sienna-best-result td:nth-child(3)').text(gasInUsd)
-          $('#sienna-best-result td:nth-child(4)').text(netUsdResult)
-        }
-      }
-
-      this.resetTable = () => {
-        $('#results tbody td:nth-child(2)').text('-')
-        $('#results tbody td:nth-child(3)').text('-')
-        $('#results tbody td:nth-child(4)').text('-')
       }
 
       this.renderResults = (from_id, to_id) => {
@@ -480,82 +412,31 @@ $(document).ready(function(){
         })
       }
 
-      this.fillForm = () => {
-        let toId = this.selectedSwapPath['to_id']
-        let toCryptocurrency = this.cryptocurrencies[toId]
-        let fmt = {
-          decimalSeparator: '.',
-          groupSeparator: '',
-          secondaryGroupSize: toCryptocurrency['decimals']
+      this.renderTable = () => {
+        this.resetTable()
+        if(this.bestResultsPerProtocol[0]) {
+          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[0]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[0]['to_id']]['decimals'])
+          let gasInUsd = parseFloat(this.bestResultsPerProtocol[0]['gas_in_usd']).toFixed(2)
+          let netUsdResult = parseFloat(this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']).toFixed(2)
+          $('#btn-best-result td:nth-child(2)').text(formattedAmount)
+          $('#btn-best-result td:nth-child(3)').text(gasInUsd)
+          $('#btn-best-result td:nth-child(4)').text(netUsdResult)
         }
-        document.secretNetworkDexAggregatorForm.estimateAmount.value = document.humanizeStringNumberFromSmartContract(this.selectedSwapPath['resultOfSwaps'], toCryptocurrency['decimals'], fmt)
-        $('#to-usd-price').text('~ $' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.estimateAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
-        let slippage = Math.round(new BigNumber(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(this.selectedSwapPath['resultOfSwaps']) / 100)
-        let minAmount = new BigNumber(this.selectedSwapPath['resultOfSwaps']) - slippage
-        document.secretNetworkDexAggregatorForm.minAmount.value = document.humanizeStringNumberFromSmartContract(minAmount, toCryptocurrency['decimals'], fmt)
-        $('#min-acceptable-amount-usd-price').text('~ $' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
-      }
-
-      this.extractSwapToId = function(fromId, tradePairId) {
-        let x;
-        this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
-          if (cryptoPool['cryptocurrency_id'] != Number(fromId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
-            x = cryptoPool['cryptocurrency_id']
-          }
-        })
-        return x
-      }
-
-      this.getResultOfSwaps = async(swapPath, currentQueryCount) => {
-        let fromId = swapPath['from_id']
-        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        let fromCryptoDecimals = this.cryptocurrencies[fromId]['decimals']
-        let fromAmountFormatted = new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()
-        for (const poolId of swapPath['swap_path_as_array']) {
-          if(currentQueryCount == this.queryCount) {
-            fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
-            fromId = this.extractSwapToId(fromId, poolId)
-          }
+        if(this.bestResultsPerProtocol[2]) {
+          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[2]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[2]['to_id']]['decimals'])
+          let gasInUsd = parseFloat(this.bestResultsPerProtocol[2]['gas_in_usd']).toFixed(2)
+          let netUsdResult = parseFloat(this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']).toFixed(2)
+          $('#secret-swap-best-result td:nth-child(2)').text(formattedAmount)
+          $('#secret-swap-best-result td:nth-child(3)').text(gasInUsd)
+          $('#secret-swap-best-result td:nth-child(4)').text(netUsdResult)
         }
-        if(currentQueryCount == this.queryCount) {
-          return fromAmountFormatted
-        }
-        return '0'
-      }
-
-      this.querySwapSimulation = async(fromAmountFormatted, fromId, poolId) => {
-        if (this.simulationSwapResults[poolId] == undefined) {
-          this.simulationSwapResults[poolId] = {}
-        }
-        if (this.simulationSwapResults[poolId][fromId] == undefined) {
-          this.simulationSwapResults[poolId][fromId] = {}
-        }
-        // If this exact trade has been done before, return the result
-        if (this.simulationSwapResults[poolId][fromId][fromAmountFormatted]) {
-          return this.simulationSwapResults[poolId][fromId][fromAmountFormatted]
-        }
-        let fromCryptoAddress = this.cryptocurrencies[fromId]['smart_contract']['address']
-        let fromCryptoCodeHash = this.cryptocurrencies[fromId]['smart_contract']['data_hash']
-        let pool = this.tradePairs[poolId]
-        let protocolIdentifier = pool['protocol']['identifier']
-        let swapMsg;
-        if (protocolIdentifier == 'secret_swap') {
-          swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
-        } else if (protocolIdentifier == 'sienna') {
-          swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: ''}}, amount: fromAmountFormatted}}}
-        } else {
-          return fromAmountFormatted
-        }
-        try {
-          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
-          this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
-          return result['return_amount']
-        } catch(error) {
-          swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
-
-          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
-          this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
-          return result['return_amount']
+        if(this.bestResultsPerProtocol[4]) {
+          let formattedAmount = document.humanizeStringNumberFromSmartContract(this.bestResultsPerProtocol[4]['resultOfSwaps'], this.cryptocurrencies[this.bestResultsPerProtocol[4]['to_id']]['decimals'])
+          let gasInUsd = parseFloat(this.bestResultsPerProtocol[4]['gas_in_usd']).toFixed(2)
+          let netUsdResult = parseFloat(this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']).toFixed(2)
+          $('#sienna-best-result td:nth-child(2)').text(formattedAmount)
+          $('#sienna-best-result td:nth-child(3)').text(gasInUsd)
+          $('#sienna-best-result td:nth-child(4)').text(netUsdResult)
         }
       }
 
@@ -587,6 +468,131 @@ $(document).ready(function(){
         this.swapPaths = {};
         document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
         document.secretNetworkDexAggregatorForm.minAmount.value = ''
+      }
+
+      this.resetTable = () => {
+        $('#results tbody td:nth-child(2)').text('-')
+        $('#results tbody td:nth-child(3)').text('-')
+        $('#results tbody td:nth-child(4)').text('-')
+      }
+
+      this.setClient = (gas) => {
+        let gasParams = {
+            exec: {
+              amount: [{ amount: gas, denom: 'uscrt' }],
+              gas: gas,
+            },
+          }
+        this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+      }
+
+      this.setUserVipLevel = async() => {
+        // Set users vip level
+        try {
+          let params = {
+            balance: {
+              address: this.address,
+              key: await window.keplr.getSecret20ViewingKey(this.chainId, this.buttcoinContractAddress)
+            }
+          }
+          let balance_response = await this.client.queryContractSmart(this.buttcoinContractAddress, params);
+          let balance = balance_response["balance"]["amount"]
+          balance = Number(balance)
+          if (balance >= 100_000_000_000) {
+            this.userVipLevel = 5
+          } else if(balance >= 50_000_000_000) {
+            this.userVipLevel = 4
+          } else if(balance >= 25_000_000_000) {
+            this.userVipLevel = 3
+          } else if(balance >= 12_500_000_000) {
+            this.userVipLevel = 2
+          } else if(balance >= 6_250_000_000) {
+            this.userVipLevel = 1
+          } else {
+            this.userVipLevel = 0
+          }
+        } catch(err) {
+          this.userVipLevel = 0
+          console.error(err)
+        } finally {
+          console.log(this.userVipLevel)
+        }
+      }
+
+      this.toggleConfig = async() => {
+        while (!this.wrapPaths) {
+          await this.delay(500)
+        }
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
+        if(this.wrapPaths[fromId] == toId) {
+          $("#cog-container").addClass('d-none')
+          $("#slippage-container").addClass('d-none')
+        } else {
+          $("#cog-container").removeClass('d-none')
+          $("#slippage-container").removeClass('d-none')
+        }
+      }
+
+      this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix) => {
+        let $walletBalance = $(selectorPrefix + '-balance')
+        let $walletBalanceLink = $(selectorPrefix + '-balance-link')
+        let $walletBalanceLoading = $(selectorPrefix + '-balance-loading')
+        let $walletBalanceViewButton = $(selectorPrefix + '-balance-view-button')
+        let balance
+        let cryptoAddress;
+        let cryptocurrency = this.cryptocurrencies[cryptocurrencyId];
+        let updateWalletBalanceStillValid = true
+        $walletBalance.addClass('d-none')
+        $walletBalanceLoading.removeClass('d-none')
+        $walletBalanceViewButton.addClass('d-none')
+        try {
+          if (cryptocurrency['smart_contract']) {
+            cryptoAddress = cryptocurrency['smart_contract']['address']
+            let key = await window.keplr.getSecret20ViewingKey(this.chainId, cryptoAddress)
+            // If they have the key, replace the button with the balance
+            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: this.address, key: key } })
+            balance = balanceResponse['balance']['amount']
+          } else {
+            let accountDetails = await this.client.getAccount(this.address)
+            accountDetails['balance'].forEach(function(balanceDetails) {
+              if (cryptocurrency['denom'] == balanceDetails['denom']) {
+                balance = balanceDetails['amount']
+              }
+            })
+            if (balance == undefined) {
+              balance = '0'
+            }
+          }
+          if (selectorPrefix == '.from') {
+            if (cryptocurrencyId != $('#from').val()) {
+              updateWalletBalanceStillValid = false
+            }
+          } else {
+            if (cryptocurrencyId != $('#to').val()) {
+              updateWalletBalanceStillValid = false
+            }
+          }
+          if (updateWalletBalanceStillValid) {
+            let balanceFormatted = document.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
+            $walletBalance.text(balanceFormatted)
+            $walletBalance.removeClass('d-none')
+            $walletBalanceViewButton.addClass('d-none')
+          }
+        } catch(err) {
+          if (updateWalletBalanceStillValid) {
+            console.log(err)
+            // If they don't have a viewing key, show the view balance button and hide the balance
+            $walletBalance.addClass('d-none')
+            $walletBalanceViewButton.removeClass('d-none')
+          }
+        } finally {
+          if (updateWalletBalanceStillValid) {
+            $walletBalanceLoading.addClass('d-none')
+            $walletBalanceViewButton.find('.loading').addClass('d-none')
+            $walletBalanceLink.removeClass('d-none')
+          }
+        }
       }
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
@@ -730,16 +736,6 @@ $(document).ready(function(){
           }
         }
       };
-
-      this.setClient = (gas) => {
-        let gasParams = {
-            exec: {
-              amount: [{ amount: gas, denom: 'uscrt' }],
-              gas: gas,
-            },
-          }
-        this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
-      }
 
       this.getAndSetCryptocurrenciesAndTradePairs()
     }
