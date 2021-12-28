@@ -138,6 +138,7 @@ $(document).ready(function(){
         $('#from-usd-price').text('~ $' + (this.cryptocurrencies[fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
       });
       $("#from").change(function(){
+        this.toggleConfig()
         this.updateWalletBalance($('#from').val(), '.from')
         this.getEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
@@ -156,6 +157,7 @@ $(document).ready(function(){
         }
       }.bind(this));
       $("#to").change(function(){
+        this.toggleConfig()
         this.updateWalletBalance($('#to').val(), '.to')
         this.getEstimate()
       }.bind(this));
@@ -221,6 +223,21 @@ $(document).ready(function(){
         }
       }
 
+      this.toggleConfig = async() => {
+        while (!this.wrapPaths) {
+          await this.delay(500)
+        }
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
+        if(this.wrapPaths[fromId] == toId) {
+          $("#cog-container").addClass('d-none')
+          $("#slippage-container").addClass('d-none')
+        } else {
+          $("#cog-container").removeClass('d-none')
+          $("#slippage-container").removeClass('d-none')
+        }
+      }
+
       this.delay = async(ms) => {
         return new Promise(resolve => {
             setTimeout(() => { resolve('') }, ms);
@@ -239,10 +256,8 @@ $(document).ready(function(){
         }
         if (Number(fromAmount) > 0) {
           if(this.wrapPaths[fromId] == toId) {
-            $("#slippage-container").addClass('d-none')
             document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
           } else {
-            $("#slippage-container").removeClass('d-none')
             setTimeout(function(){
               if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
                 this.getSwapPaths(fromId, toId, fromAmount)
