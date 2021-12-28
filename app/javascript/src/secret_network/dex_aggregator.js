@@ -17,33 +17,33 @@ $(document).ready(function(){
       this.userVipLevel = 0;
       this.vipLevels = {
         0: {
-          tradingFee: 5,
-          tradingFeeBinance: 0.1
+          commission: 5,
+          tradingFee: 0.1
         },
         1: {
           minAmount: 6_250,
-          tradingFee: 4,
-          tradingFeeBinance: 0.08
+          commission: 4,
+          tradingFee: 0.08
         },
         2: {
           minAmount: 12_500,
-          tradingFee: 3,
-          tradingFeeBinance: 0.06
+          commission: 3,
+          tradingFee: 0.06
         },
         3: {
           minAmount: 25_000,
-          tradingFee: 2,
-          tradingFeeBinance: 0.04
+          commission: 2,
+          tradingFee: 0.04
         },
         4: {
           minAmount: 50_000,
-          tradingFee: 1,
-          tradingFeeBinance: 0.2
+          commission: 1,
+          tradingFee: 0.2
         },
         5: {
           minAmount: 100_000,
-          tradingFee: 0,
-          tradingFeeBinance: 0
+          commission: 0,
+          tradingFee: 0
         }
       }
 
@@ -296,7 +296,6 @@ $(document).ready(function(){
         try {
           $('#status-container').removeClass('d-none')
           $('#status-container').find('.loading').removeClass('d-none')
-          $('#results').removeClass('d-none')
           $('#status').text('Getting swap paths')
           let tokenFromId = from_id;
           let tokenToId = to_id;
@@ -349,6 +348,7 @@ $(document).ready(function(){
               this.renderTable()
             }
           }
+          $('#results').removeClass('d-none')
         } catch(error) {
           document.showAlertDanger(error)
         } finally {
