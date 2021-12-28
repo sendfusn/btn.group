@@ -293,10 +293,13 @@ $(document).ready(function(){
       }
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
+        let submitButtonSelector = '#submit-button'
+        let $submitButton = $(submitButtonSelector)
         try {
-          $('#status-container').removeClass('d-none')
-          $('#status-container').find('.loading').removeClass('d-none')
-          $('#status').text('Getting swap paths')
+          $submitButton.prop("disabled", true);
+          $submitButton.find('.loading').removeClass('d-none')
+          $submitButton.find('.ready').addClass('d-none')
+          $submitButton.find('.loading #status').text('Getting swap paths')
           let tokenFromId = from_id;
           let tokenToId = to_id;
           if (this.wrapPaths[from_id] && this.cryptocurrencies[this.wrapPaths[from_id]]['smart_contract']) {
@@ -315,7 +318,7 @@ $(document).ready(function(){
           this.renderResults(from_id, to_id)
           for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
             if(currentQueryCount == this.queryCount) {
-              $('#status').text('Getting results of swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
+              $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
               let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
               swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
               swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[swapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[swapPath['to_id']]['decimals'])).minus(swapPath['gas_in_usd'])
@@ -354,8 +357,9 @@ $(document).ready(function(){
         } catch(error) {
           document.showAlertDanger(error)
         } finally {
-          $('#status').text('Ready')
-          $('#status-container').find('.loading').addClass('d-none')
+          $submitButton.prop("disabled", false);
+          $submitButton.find('.loading').addClass('d-none')
+          $submitButton.find('.ready').removeClass('d-none')
         }
       }
 
@@ -544,7 +548,6 @@ $(document).ready(function(){
         document.secretNetworkDexAggregatorForm.fromAmount.value = ''
         document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
         document.secretNetworkDexAggregatorForm.minAmount.value = ''
-        $('#status-container').addClass('d-none')
         $("#swap-paths").html('')
         $('#results').addClass('d-none')
         $('#results').find('.loading').removeClass('d-none')
@@ -586,6 +589,7 @@ $(document).ready(function(){
           $submitButton.prop("disabled", true);
           $submitButton.find('.loading').removeClass('d-none')
           $submitButton.find('.ready').addClass('d-none')
+          $submitButton.find('.loading #status').text('Loading...')
           let contract;
           let handleMsg;
           let sentFunds = []
@@ -620,6 +624,7 @@ $(document).ready(function(){
           $submitButton.prop("disabled", true);
           $submitButton.find('.loading').removeClass('d-none')
           $submitButton.find('.ready').addClass('d-none')
+          $submitButton.find('.loading #status').text('Loading...')
           let currentFromId = fromId
           let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
           minAmount = document.formatHumanizedNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
