@@ -17,34 +17,58 @@
                   .collapse.mt-2#aboutCollapse
                     .card.card-default.bg-theme-light
                       .card-block
-                        %h6 Requirements
+                        %p DeFi / DEX aggregator offering the best token swap rates on the Secret network.
+                        %h5 VIP levels
+                        %table.table.table-striped.table-bordered
+                          %thead
+                            %tr
+                              %th Level
+                              %th BUTT balance
+                              %th Commission *
+                              %th Trading fee *
+                          %tbody
+                            %tr
+                              %td VIP 0
+                              %td < 6,250
+                              %td 5%
+                              %td 0.1%
+                            %tr
+                              %td VIP 1
+                              %td >= 6,250 BUTT
+                              %td 4%
+                              %td 0.08%
+                            %tr
+                              %td VIP 2
+                              %td >= 12,500 BUTT
+                              %td 3%
+                              %td 0.06%
+                            %tr
+                              %td VIP 3
+                              %td >= 25,000 BUTT
+                              %td 2%
+                              %td 0.04%
+                            %tr
+                              %td VIP 4
+                              %td >= 50,000 BUTT
+                              %td 1%
+                              %td 0.02%
+                            %tr
+                              %td VIP 5
+                              %td >= 100,000 BUTT
+                              %td 0%
+                              %td 0%
                         %p
-                          1.
-                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                          *
+                          %b Commission
+                          is applied on the difference between btn.group's best offer and the other procols' best offer.
                           %br
-                          2. SCRT for gas, if setting a viewing key
-
-                        %h6 What is it?
-                        %p This is a burn address smart contract on the Secret network. Anyone can send any Secret network token here and set a viewing key for that token, for this smart contract address. It has no admin functionality so it is completely decentralized.
-
-                        %h6 Why it was created
-                        %p We wanted to send some BUTT to a burn address and realised that there wasn't anywhere to send it to, and even if we did, nobody could see it.
-
-                        %h6 How to use
-                        %p
-                          1. Send tokens to contract.
+                          *
+                          %b Trading fee
+                          is only applied when other protocols do not offer a swap path.
                           %br
-                          2. Set viewing key for token if required.
+                          * VIP 5 will gain access to swap path analytics.
                           %br
-                          3. Query token.
-
-                        %h6 References
-                        %p
-                          1.
-                          = link_to 'github - mount-doom', 'https://github.com/btn-group/mount-doom', target: '_blank', rel: 'noopener'
-                          %br
-                          2.
-                          = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+                          * We are working on increasing search speeds based on VIP levels.
                   %hr
                   %form{ name: 'secretNetworkDexAggregatorForm' }
                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
