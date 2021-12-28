@@ -229,7 +229,7 @@ $(document).ready(function(){
 
       this.getEstimate = async() => {
         this.queryCount += 1;
-        this.reset()
+        this.resetBeforeEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
@@ -509,7 +509,23 @@ $(document).ready(function(){
         }
       }
 
-      this.reset = () => {
+      this.resetAfterSwap = () => {
+        document.secretNetworkDexAggregatorForm.fromAmount.value = ''
+        document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
+        document.secretNetworkDexAggregatorForm.minAmount.value = ''
+        $('#status-container').addClass('d-none')
+        $("#swap-paths").html('')
+        $('#results').addClass('d-none')
+        $('#results').find('.loading').removeClass('d-none')
+        $('#from-usd-price').text('')
+        $('#min-acceptable-amount-usd-price').text('')
+        $('#to-usd-price').text('')
+        this.updateWalletBalance($('#from').val(), '.from')
+        this.updateWalletBalance($('#to').val(), '.to')
+        this.setUserVipLevel()
+      }
+
+      this.resetBeforeEstimate = () => {
         $('#results').addClass('d-none')
         $('#results').find('.loading').removeClass('d-none')
         $('#min-acceptable-amount-usd-price').text('')
@@ -556,8 +572,7 @@ $(document).ready(function(){
           try {
             this.setClient(String(this.gasWrap));
             let response = await this.client.execute(contract, handleMsg, '', sentFunds)
-            document.secretNetworkDexAggregatorForm.fromAmount.value = ''
-            document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
+            this.resetAfterSwap()
             document.showAlertSuccess(successMessage);
           } catch(error) {
             document.showAlertDanger(error)
@@ -652,12 +667,8 @@ $(document).ready(function(){
               returnAmount = estimateAmount
             }
             returnAmount = document.humanizeStringNumberFromSmartContract(returnAmount, this.cryptocurrencies[toId]['decimals'])
-            window.test = response
             document.showAlertSuccess("Amount received " + returnAmount);
-            document.secretNetworkDexAggregatorForm.fromAmount.value = ''
-            document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
-            document.secretNetworkDexAggregatorForm.minAmount.value = ''
-            $("#swap-paths").html('')
+            this.resetAfterSwap()
           } catch(error) {
             document.showAlertDanger(error)
           } finally {
