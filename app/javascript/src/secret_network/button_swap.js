@@ -261,9 +261,8 @@ $(document).ready(function(){
       }
 
       this.getSwapPaths = async(from_id, to_id, fromAmount) => {
-        let submitButtonSelector = '#submit-button'
-        let $submitButton = $(submitButtonSelector)
         let currentQueryCount = this.queryCount;
+        let $submitButton = $('#submit-button')
         try {
           $submitButton.prop("disabled", true);
           $submitButton.find('.loading').removeClass('d-none')
@@ -289,32 +288,9 @@ $(document).ready(function(){
               $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
               let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
               swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
-              swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[swapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[swapPath['to_id']]['decimals'])).minus(swapPath['gas_in_usd'])
-              if (swapPath['protocol_id'] == 2) {
-                if (this.bestResultsPerProtocol[2]) {
-                  if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[2]['netUsdResultOfSwaps']) {
-                    this.bestResultsPerProtocol[2] = swapPath
-                  }
-                } else {
-                  this.bestResultsPerProtocol[2] = swapPath
-                }
-              } else if (swapPath['protocol_id'] == 4) {
-                if (this.bestResultsPerProtocol[4]) {
-                  if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[4]['netUsdResultOfSwaps']) {
-                    this.bestResultsPerProtocol[4] = swapPath
-                  }
-                } else {
-                  this.bestResultsPerProtocol[4] = swapPath
-                }
-              } else {
-                if (this.bestResultsPerProtocol[0]) {
-                  if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[0]['netUsdResultOfSwaps']) {
-                    this.bestResultsPerProtocol[0] = swapPath
-                  }
-                } else {
-                  this.bestResultsPerProtocol[0] = swapPath
-                }
-              }
+              let toCryptocurrency = this.cryptocurrencies[swapPath['to_id']]
+              swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(toCryptocurrency['price'])).dividedBy(new BigNumber("10").pow(toCryptocurrency['decimals'])).minus(swapPath['gas_in_usd'])
+              this.setBestResultForProtocol(swapPath)
               this.renderResults(from_id, to_id)
             }
           }
@@ -487,6 +463,20 @@ $(document).ready(function(){
         $('#results tbody td:nth-child(2)').text('-')
         $('#results tbody td:nth-child(3)').text('-')
         $('#results tbody td:nth-child(4)').text('-')
+      }
+
+      this.setBestResultForProtocol = (swapPath) => {
+        let protocolId = 0;
+        if (swapPath['protocol_id']) {
+          protocolId = swapPath['protocol_id']
+        }
+        if (this.bestResultsPerProtocol[protocolId]) {
+          if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[protocolId]['netUsdResultOfSwaps']) {
+            this.bestResultsPerProtocol[protocolId] = swapPath
+          }
+        } else {
+          this.bestResultsPerProtocol[protocolId] = swapPath
+        }
       }
 
       this.setClient = (gas) => {
