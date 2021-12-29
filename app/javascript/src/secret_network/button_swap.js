@@ -144,7 +144,7 @@ $(document).ready(function(){
           } else {
             fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[this.userVipLevel]['tradingFee'] / 100
           }
-          this.selectedSwapPath['resultOfSwaps'] -= fee
+          this.selectedSwapPath['resultOfSwaps'] = Math.round(this.selectedSwapPath['resultOfSwaps'] - fee)
           this.setNetUsdResultOfSwaps(this.selectedSwapPath)
         }
       }
