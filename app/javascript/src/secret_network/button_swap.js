@@ -12,7 +12,7 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.gasWrap = 40000;
+      this.gasWrap = 60000;
       this.queryCount = 0;
       this.userVipLevel = 0;
       this.vipLevels = {
@@ -571,6 +571,7 @@ $(document).ready(function(){
               balance = '0'
             }
           }
+          cryptocurrency['balance'] = balance
           if (selectorPrefix == '.from') {
             if (cryptocurrencyId != $('#from').val()) {
               updateWalletBalanceStillValid = false
@@ -609,11 +610,15 @@ $(document).ready(function(){
         }
 
         let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let fromCryptocurrency = this.cryptocurrencies[fromId]
+        let fromBalance = fromCryptocurrency['balance']
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
-        fromAmount = document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[fromId]['decimals'])
-        estimateAmount = document.formatHumanizedNumberForSmartContract(estimateAmount, this.cryptocurrencies[toId]['decimals'])
+        let toCryptocurrency = this.cryptocurrencies[toId]
+        let toBalance = toCryptocurrency['balance']
+        fromAmount = document.formatHumanizedNumberForSmartContract(fromAmount, fromCryptocurrency['decimals'])
+        estimateAmount = document.formatHumanizedNumberForSmartContract(estimateAmount, toCryptocurrency['decimals'])
         let submitButtonSelector = '#submit-button'
         let $submitButton = $(submitButtonSelector)
         $submitButton.prop("disabled", true);
@@ -626,14 +631,14 @@ $(document).ready(function(){
         let successMessage;
         try {
           if (this.wrapPaths[fromId] == toId) {
-            if(this.cryptocurrencies[fromId]['smart_contract']) {
-              contract = this.cryptocurrencies[fromId]['smart_contract']['address']
+            if(fromCryptocurrency['smart_contract']) {
+              contract = fromCryptocurrency['smart_contract']['address']
               handleMsg = { redeem: { amount: fromAmount } };
               successMessage = 'Unwrapped'
             } else {
-              contract = this.cryptocurrencies[toId]['smart_contract']['address']
+              contract = toCryptocurrency['smart_contract']['address']
               handleMsg = { deposit: {} };
-              sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
+              sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
               successMessage = 'Wrapped'
             }
             this.setClient(String(this.gasWrap));
@@ -646,7 +651,7 @@ $(document).ready(function(){
             let gas = 0
             let initNativeFromToken;
             // when from token is native
-            if(this.cryptocurrencies[fromId]['smart_contract'] == undefined) {
+            if(fromCryptocurrency['smart_contract'] == undefined) {
               let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
               initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
               gas += this.gasWrap
@@ -669,7 +674,7 @@ $(document).ready(function(){
             // when to token is native
             if (this.wrapPaths[currentFromId] == toId) {
               let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
-              hop['redeem_denom'] = this.cryptocurrencies[toId]['denom']
+              hop['redeem_denom'] = toCryptocurrency['denom']
               hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
               gas += this.gasWrap
             }
@@ -684,13 +689,13 @@ $(document).ready(function(){
               routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address }
             }
             let routeMsgEncoded = Buffer.from(JSON.stringify(routeMessage)).toString('base64')
-            if (this.cryptocurrencies[fromId]['smart_contract']) {
-              contract = this.cryptocurrencies[fromId]['smart_contract']['address']
+            if (fromCryptocurrency['smart_contract']) {
+              contract = fromCryptocurrency['smart_contract']['address']
               handleMsg = { send: { amount: fromAmount, recipient: recipient, msg: routeMsgEncoded } }
             } else {
               contract = this.dexAggregatorSmartContractAddress
               handleMsg = { receive: { amount: fromAmount, from: this.address, msg: routeMsgEncoded } }
-              sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
+              sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
             }
             this.setClient(String(gas));
             let response = await this.client.execute(contract, handleMsg, '', sentFunds)
@@ -703,12 +708,29 @@ $(document).ready(function(){
             if(new BigNumber(estimateAmount) < new BigNumber(returnAmount)) {
               returnAmount = estimateAmount
             }
-            successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, this.cryptocurrencies[toId]['decimals'])
+            successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
           }
           document.showAlertSuccess(successMessage);
           this.resetAfterSwap()
         } catch(error) {
-          document.showAlertDanger(error)
+          // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
+          // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
+          if (error.message.includes('timed out waiting for tx to be included in a block')) {
+            // Wait 5 seconds and if balance of the to and from token has changed... Success
+            await this.delay(5000)
+            this.updateWalletBalance(fromId, '.from')
+            this.updateWalletBalance(toId, '.to')
+            if (this.cryptocurrencies[fromId]['balance'] != fromBalance && this.cryptocurrencies[toId]['balance'] != toBalance) {
+              document.showAlertSuccess("Swap successful");
+              this.resetAfterSwap()
+            } else {
+              document.showAlertDanger("Timeout error. Please check your wallet to see if transaction went through. Otherwise try with more gas.")
+            }
+          } else if(error.message.includes('account sequence mismatch')) {
+            document.showAlertDanger("Please try again. We're trying to fix this bug.")
+          } else {
+            document.showAlertDanger(error)
+          }
         } finally {
           $submitButton.prop("disabled", false);
           $submitButton.find('.loading').addClass('d-none')
