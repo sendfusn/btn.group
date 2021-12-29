@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
             }
           },
           dex_aggregator: {
-            name: 'DEX aggregator',
+            name: 'Button Swap',
             show_in_navbar: true,
             show_link: true,
             status: 'Live',

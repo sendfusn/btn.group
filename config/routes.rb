@@ -27,7 +27,8 @@ Rails.application.routes.draw do
     get 'block_locker' => 'pages#block_locker'
     get 'butt_lode' => 'pages#butt_lode'
     get 'buttcoin/circulating_supply', defaults: { format: 'json' }
-    get 'dex_aggregator' => 'pages#dex_aggregator'
+    get 'button_swap' => 'pages#button_swap'
+    get 'dex_aggregator' => 'pages#button_swap'
     get 'mount_doom' => 'pages#mount_doom'
     get 'password_manager' => 'pages#password_manager'
     get 'pools' => 'pages#pools'

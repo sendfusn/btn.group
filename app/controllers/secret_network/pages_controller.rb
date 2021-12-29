@@ -12,7 +12,7 @@ module SecretNetwork
       @head_title = 'Block locker | Secret network | btn.group'
     end
 
-    def dex_aggregator
+    def button_swap
       cryptocurrency_ids = Pool.trade_pair
                                .enabled
                                .joins(:smart_contract)
@@ -28,9 +28,9 @@ module SecretNetwork
       else
         Cryptocurrency.find_by(symbol: 'SCRT', official: true).id
       end
-      @head_description = 'DEX aggregator for Secret network.'
+      @head_description = 'DeFi / DEX aggregator offering the best token swap rates on the Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png'
-      @head_title = 'DEX aggregator | Secret network | btn.group'
+      @head_title = 'Button Swap | Secret network | btn.group'
     end
 
     def butt_lode; end

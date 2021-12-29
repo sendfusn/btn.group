@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
 $(document).ready(function(){
-  if($("#secret-network-dex-aggregator").length) {
+  if($("#secret-network-button-swap").length) {
     window.onload = async () => {
       this.address;
       this.cryptocurrencies = {}
