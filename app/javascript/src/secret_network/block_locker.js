@@ -1,6 +1,5 @@
 $(document).ready(function(){
   if($("#secret-network-block-locker").length) {
-    document.activateKeplr()
     // Listeners
     $('input[type=radio][name=interactionType]').on('change', function() {
       resetInputs();
@@ -51,6 +50,7 @@ $(document).ready(function(){
     })
 
     window.onload = async () => {
+      document.activateKeplr()
       this.address;
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';

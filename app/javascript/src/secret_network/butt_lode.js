@@ -1,7 +1,7 @@
 $(document).ready(function(){
   if($("#secret-network-butt-lode").length) {
-    document.activateKeplr()
     window.onload = async () => {
+      document.activateKeplr()
       this.admin;
       this.buttcoinBalance;
       this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";

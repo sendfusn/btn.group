@@ -1,6 +1,5 @@
 $(document).ready(function(){
   if($("#secret-network-password-manager").length) {
-    document.activateKeplr()
     var calculateGas = function(minGas, dataLength) {
       let gasBuffer = 50_000
       let gas = minGas + gasBuffer
@@ -25,6 +24,7 @@ $(document).ready(function(){
     })
 
     window.onload = () => {
+      document.activateKeplr()
       this.addressAliasAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w';
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';

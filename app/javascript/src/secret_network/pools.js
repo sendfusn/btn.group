@@ -2,8 +2,8 @@ import BigNumber from "bignumber.js";
 
 $(document).ready(function(){
   if($("#secret-network-pools").length) {
-    document.activateKeplr()
     window.onload = async () => {
+      document.activateKeplr()
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);

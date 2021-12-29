@@ -1,6 +1,5 @@
 $(document).ready(function(){
   if($("#secret-network-address-alias").length) {
-    document.activateKeplr()
     var myWidget = cloudinary.createUploadWidget({
       cloudName: 'hv5cxagki',
       cropping: true,
@@ -28,6 +27,7 @@ $(document).ready(function(){
     }, false);
 
     window.onload = () => {
+      document.activateKeplr()
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
       this.contractAddress = document.featureContractAddress(this.environment);

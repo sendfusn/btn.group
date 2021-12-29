@@ -1,6 +1,5 @@
 $(document).ready(function(){
   if($("#secret-network-mount-doom").length) {
-    document.activateKeplr()
     getAndSetSmartContracts(1)
     function getAndSetSmartContracts(blockchainId) {
       document.smartContracts = {}
@@ -31,6 +30,7 @@ $(document).ready(function(){
     }
 
     window.onload = async () => {
+      document.activateKeplr()
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
         $nftsContainer = $('#nfts-container')

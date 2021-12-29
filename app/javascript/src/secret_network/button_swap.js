@@ -2,8 +2,8 @@ import BigNumber from "bignumber.js";
 
 $(document).ready(function(){
   if($("#secret-network-button-swap").length) {
-    document.activateKeplr()
     window.onload = async () => {
+      document.activateKeplr()
       this.address;
       this.cryptocurrencies = {}
       this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";

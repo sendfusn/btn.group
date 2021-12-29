@@ -1,7 +1,7 @@
 $(document).ready(function(){
   if($("#secret-network-smart-contract-interface").length) {
-    document.activateKeplr()
     window.onload = async () => {
+      document.activateKeplr()
       let paramCount = 0;
       $('#add-new-param').click(function(event){
         event.preventDefault();
