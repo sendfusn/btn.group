@@ -214,9 +214,6 @@ $(document).ready(function(){
             this.wrapPaths[tokenId] = nativeId
           }
         })
-        window.tradePairs = this.tradePairs;
-        window.cryptocurrencies = this.cryptocurrencies;
-        window.wrapPaths = this.wrapPaths;
         this.updateWalletBalance($('#from').val(), '.from')
         this.updateWalletBalance($('#to').val(), '.to')
       }
@@ -603,99 +600,76 @@ $(document).ready(function(){
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
+        if (this.wrapPaths[fromId] != toId && !this.selectedSwapPath) {
+          return
+        }
+
         let fromId = document.secretNetworkDexAggregatorForm.from.value
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
         let toId = document.secretNetworkDexAggregatorForm.to.value
         fromAmount = document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[fromId]['decimals'])
         estimateAmount = document.formatHumanizedNumberForSmartContract(estimateAmount, this.cryptocurrencies[toId]['decimals'])
-        if (this.wrapPaths[fromId] == toId) {
-          let submitButtonSelector = '#submit-button'
-          let $submitButton = $(submitButtonSelector)
-          $submitButton.prop("disabled", true);
-          $submitButton.find('.loading').removeClass('d-none')
-          $submitButton.find('.ready').addClass('d-none')
-          $submitButton.find('.loading #status').text('Loading...')
-          let contract;
-          let handleMsg;
-          let sentFunds = []
-          let successMessage;
-          if(this.cryptocurrencies[fromId]['smart_contract']) {
-            contract = this.cryptocurrencies[fromId]['smart_contract']['address']
-            handleMsg = { redeem: { amount: fromAmount } };
-            successMessage = 'Unwrapped'
-          } else {
-            contract = this.cryptocurrencies[toId]['smart_contract']['address']
-            handleMsg = { deposit: {} };
-            sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
-            successMessage = 'Wrapped'
-          }
-          try {
+        let submitButtonSelector = '#submit-button'
+        let $submitButton = $(submitButtonSelector)
+        $submitButton.prop("disabled", true);
+        $submitButton.find('.loading').removeClass('d-none')
+        $submitButton.find('.ready').addClass('d-none')
+        $submitButton.find('.loading #status').text('Loading...')
+        let contract;
+        let handleMsg;
+        let sentFunds = []
+        let successMessage;
+        try {
+          if (this.wrapPaths[fromId] == toId) {
+            if(this.cryptocurrencies[fromId]['smart_contract']) {
+              contract = this.cryptocurrencies[fromId]['smart_contract']['address']
+              handleMsg = { redeem: { amount: fromAmount } };
+              successMessage = 'Unwrapped'
+            } else {
+              contract = this.cryptocurrencies[toId]['smart_contract']['address']
+              handleMsg = { deposit: {} };
+              sentFunds = [{ "denom": this.cryptocurrencies[fromId]['denom'], "amount": fromAmount }]
+              successMessage = 'Wrapped'
+            }
             this.setClient(String(this.gasWrap));
             let response = await this.client.execute(contract, handleMsg, '', sentFunds)
-            this.resetAfterSwap()
-            document.showAlertSuccess(successMessage);
-          } catch(error) {
-            document.showAlertDanger(error)
-          } finally {
-            // Show ready ui
-            $submitButton.prop("disabled", false);
-            $submitButton.find('.loading').addClass('d-none')
-            $submitButton.find('.ready').removeClass('d-none')
-          }
-        } else if (this.selectedSwapPath) {
-          let submitButtonSelector = '#submit-button'
-          let $submitButton = $(submitButtonSelector)
-          $submitButton.prop("disabled", true);
-          $submitButton.find('.loading').removeClass('d-none')
-          $submitButton.find('.ready').addClass('d-none')
-          $submitButton.find('.loading #status').text('Loading...')
-          let currentFromId = fromId
-          let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
-          minAmount = document.formatHumanizedNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
-          let hops = []
-          let gas = 0
-          let initNativeFromToken;
-          if(this.cryptocurrencies[fromId]['smart_contract'] == undefined) {
-            let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
-            initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
-            gas += this.gasWrap
-          }
-          gas += this.selectedSwapPath['gas']
-          this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
-            let tradePair = this.tradePairs[tradePairId]
-            let fromToken;
-            if(initNativeFromToken && hops.length == 0) {
-              fromToken = initNativeFromToken
-              currentFromId = this.wrapPaths[currentFromId]
-            } else {
-              fromToken = {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}
+          } else {
+            let currentFromId = fromId
+            let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
+            minAmount = document.formatHumanizedNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
+            let hops = []
+            let gas = 0
+            let initNativeFromToken;
+            // when from token is native
+            if(this.cryptocurrencies[fromId]['smart_contract'] == undefined) {
+              let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
+              initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
+              gas += this.gasWrap
             }
-            let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: fromToken}
-            hops.push(hop)
-            let changed = false
-            tradePair['cryptocurrency_pools'].forEach(function(cp) {
-              if(cp['cryptocurrency_role'] == 'deposit' && cp['cryptocurrency_id'] != currentFromId && !changed) {
-                currentFromId = cp['cryptocurrency_id']
-                changed = true
+            gas += this.selectedSwapPath['gas']
+            this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
+              let tradePair = this.tradePairs[tradePairId]
+              let fromToken;
+              if(initNativeFromToken && hops.length == 0) {
+                fromToken = initNativeFromToken
+                currentFromId = this.wrapPaths[currentFromId]
+              } else {
+                fromToken = {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}
               }
+              let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: fromToken}
+              hops.push(hop)
+              currentFromId = this.extractSwapToId(currentFromId, tradePairId)
             })
-          })
-          let hop = {from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
-          if (currentFromId != toId) {
-            let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
-            hop['redeem_denom'] = this.cryptocurrencies[toId]['denom']
-            hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
-            gas += this.gasWrap
-          }
-          hops.push(hop)
-          // when single hop
-          // when from token is native
-          // when to token is native
-          // when multi hop and from and to tokens are smart contract tokens
-          // build the message
-          try {
-            let contract;
+            let hop = {from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
+            // when to token is native
+            if (this.wrapPaths[currentFromId] == toId) {
+              let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
+              hop['redeem_denom'] = this.cryptocurrencies[toId]['denom']
+              hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
+              gas += this.gasWrap
+            }
+            hops.push(hop)
             let recipient;
             let routeMessage;
             if (hops.length == 1) {
@@ -706,8 +680,6 @@ $(document).ready(function(){
               routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address }
             }
             let routeMsgEncoded = Buffer.from(JSON.stringify(routeMessage)).toString('base64')
-            let handleMsg;
-            let sentFunds = []
             if (this.cryptocurrencies[fromId]['smart_contract']) {
               contract = this.cryptocurrencies[fromId]['smart_contract']['address']
               handleMsg = { send: { amount: fromAmount, recipient: recipient, msg: routeMsgEncoded } }
@@ -727,17 +699,16 @@ $(document).ready(function(){
             if(new BigNumber(estimateAmount) < new BigNumber(returnAmount)) {
               returnAmount = estimateAmount
             }
-            returnAmount = document.humanizeStringNumberFromSmartContract(returnAmount, this.cryptocurrencies[toId]['decimals'])
-            document.showAlertSuccess("Amount received " + returnAmount);
-            this.resetAfterSwap()
-          } catch(error) {
-            document.showAlertDanger(error)
-          } finally {
-            // Show ready ui
-            $submitButton.prop("disabled", false);
-            $submitButton.find('.loading').addClass('d-none')
-            $submitButton.find('.ready').removeClass('d-none')
+            successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, this.cryptocurrencies[toId]['decimals'])
           }
+          document.showAlertSuccess(successMessage);
+          this.resetAfterSwap()
+        } catch(error) {
+          document.showAlertDanger(error)
+        } finally {
+          $submitButton.prop("disabled", false);
+          $submitButton.find('.loading').addClass('d-none')
+          $submitButton.find('.ready').removeClass('d-none')
         }
       };
 
