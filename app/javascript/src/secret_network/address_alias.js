@@ -26,7 +26,7 @@ $(document).ready(function(){
       evt.preventDefault();
     }, false);
 
-    window.onload = () => {
+    window.onload = async() => {
       document.activateKeplr()
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';

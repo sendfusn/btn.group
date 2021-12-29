@@ -23,7 +23,7 @@ $(document).ready(function(){
       document.querySelectorAll("a[href^='#tab-2-1-2']")[0].click()
     })
 
-    window.onload = () => {
+    window.onload = async () => {
       document.activateKeplr()
       this.addressAliasAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w';
       this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
