@@ -39,8 +39,7 @@ import '../src/secret_network/transactions'
 Rails.start()
 ActiveStorage.start()
 
-// === LISTENERS ===
-$(document).ready(function(){
+document.activateKeplr = function() {
   if($(".keplr-wallet").length) {
     $('.header-nav-toggle .wallet-container').removeClass('d-none')
     $('#header-menu .wallet-container').addClass('d-lg-block')
@@ -90,12 +89,9 @@ $(document).ready(function(){
         }
       })
     })
- 
-    setTimeout(function(){
-      $(".keplr-wallet-button").first().click()
-    }, 1500);
+    $(".keplr-wallet-button").first().click()
   }
-})
+}
 
 // === FUNCTIONS ===
 document.featureContractAddress = function(environment) {

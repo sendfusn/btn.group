@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-block-locker").length) {
+    document.activateKeplr()
     // Listeners
     $('input[type=radio][name=interactionType]').on('change', function() {
       resetInputs();

@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-smart-contract-interface").length) {
+    document.activateKeplr()
     window.onload = async () => {
       let paramCount = 0;
       $('#add-new-param').click(function(event){

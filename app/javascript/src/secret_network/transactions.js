@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
+    document.activateKeplr()
     initListeners()
     getAndSetSmartContracts(1)
     getAndSetCryptocurrencies(1)

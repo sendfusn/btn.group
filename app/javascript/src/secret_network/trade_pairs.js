@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-trade-pairs").length) {
+    document.activateKeplr()
     // === LISTENERS ===
     window.onload = async () => {
       this.tradePairs = []

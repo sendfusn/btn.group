@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-mount-doom").length) {
+    document.activateKeplr()
     getAndSetSmartContracts(1)
     function getAndSetSmartContracts(blockchainId) {
       document.smartContracts = {}

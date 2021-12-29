@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-address-alias").length) {
+    document.activateKeplr()
     var myWidget = cloudinary.createUploadWidget({
       cloudName: 'hv5cxagki',
       cropping: true,

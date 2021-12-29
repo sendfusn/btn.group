@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-butt-lode").length) {
+    document.activateKeplr()
     window.onload = async () => {
       this.admin;
       this.buttcoinBalance;

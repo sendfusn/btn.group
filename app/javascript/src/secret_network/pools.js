@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 
 $(document).ready(function(){
   if($("#secret-network-pools").length) {
+    document.activateKeplr()
     window.onload = async () => {
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);

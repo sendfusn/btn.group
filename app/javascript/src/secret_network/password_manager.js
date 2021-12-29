@@ -1,5 +1,6 @@
 $(document).ready(function(){
   if($("#secret-network-password-manager").length) {
+    document.activateKeplr()
     var calculateGas = function(minGas, dataLength) {
       let gasBuffer = 50_000
       let gas = minGas + gasBuffer
