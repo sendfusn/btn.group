@@ -246,9 +246,11 @@ $(document).ready(function(){
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromCryptoDecimals = this.cryptocurrencies[fromId]['decimals']
         let fromAmountFormatted = new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()
+        swapPath['simulationResults'] = []
         for (const poolId of swapPath['swap_path_as_array']) {
           if(currentQueryCount == this.queryCount) {
             fromAmountFormatted = await this.querySwapSimulation(fromAmountFormatted, fromId, poolId);
+            swapPath['simulationResults'].push(fromAmountFormatted)
             fromId = this.extractSwapToId(fromId, poolId)
           }
         }
@@ -375,15 +377,18 @@ $(document).ready(function(){
         $("#swap-paths").html('')
         this.swapPaths[from_id][to_id].sort((a, b) => b.netUsdResultOfSwaps - a.netUsdResultOfSwaps).forEach((swapPath, index) => {
           if (this.userVipLevel == 5) {
-            let x = '<div class="card mt-2" id="' + swapPath['id'] + '">' + '<div>Swap path:</div>'
+            let swapPathId = swapPath['id']
+            let x = '<div class="card mt-2" id="' + swapPathId + '">' + '<div>Swap path: #' + swapPathId + '</div>'
             let currentCryptoId = swapPath['from_id']
             let currentCryptoSymbol = swapPath['from']['symbol']
+            // Wrapping
             if(this.cryptocurrencies[from_id]['smart_contract'] == undefined) {
               x = x + '<div>' + this.cryptocurrencies[from_id]['symbol'] + ' == wrap ==> ' + this.cryptocurrencies[this.wrapPaths[from_id]]['symbol'] + '</div>'
               currentCryptoId = this.wrapPaths[from_id]
               currentCryptoSymbol = this.cryptocurrencies[this.wrapPaths[from_id]]['symbol']
             }
-            swapPath['swap_path_as_array'].forEach((tradePairId) => {
+            // Swapping
+            swapPath['swap_path_as_array'].forEach((tradePairId, index) => {
               let protocolName = this.tradePairs[tradePairId]['protocol']['name']
               let xId = currentCryptoId
               this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
@@ -391,22 +396,27 @@ $(document).ready(function(){
                   x = x + '<div>' + currentCryptoSymbol
                   currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
                   currentCryptoId = cryptoPool['cryptocurrency_id']
-                  x = x + ' == ' + protocolName + ' ==> ' + currentCryptoSymbol + '</div>'
+                  x = x + ' == ' + protocolName + ' ==>'
+                  let usdPrice;
+                  if (swapPath['simulationResults']) {
+                    let simulationResult = swapPath['simulationResults'][index]
+                    let simulationResultHumanized = document.humanizeStringNumberFromSmartContract(simulationResult, this.cryptocurrencies[currentCryptoId]['decimals'])
+                    x = x + ' ' + simulationResultHumanized
+                    usdPrice = document.humanizeStringNumberFromSmartContract(simulationResult * cryptoPool['cryptocurrency']['price'], this.cryptocurrencies[currentCryptoId]['decimals'], 2)
+                  }
+                  x = x + ' ' + currentCryptoSymbol
+                  if (usdPrice) {
+                    x = x + ' / $' + usdPrice
+                  }
+                  x = x + '</div>'
                 }
               })
             })
-            if (currentCryptoId != to_id) {
+            // Unwrapping
+            if (this.wrapPaths[currentCryptoId] == to_id) {
               x = x + '<div>' + this.cryptocurrencies[currentCryptoId]['symbol'] + ' == unwrap ==> ' + this.cryptocurrencies[this.wrapPaths[currentCryptoId]]['symbol'] + '</div>'
             }
-            x = x + '<div class="result">Result: <b>Loading...</b></div>'
             $("#swap-paths").append(x)
-            if (swapPath['resultOfSwaps'] != undefined) {
-              if (swapPath['resultOfSwaps'] == '0') {
-                $('#' + swapPath['id']).remove()
-              } else {
-                $('#' + swapPath['id']).find('.result b').text(document.humanizeStringNumberFromSmartContract(swapPath['resultOfSwaps'], this.cryptocurrencies[to_id]['decimals']))
-              }
-            }
           }
           if(index == 0 && swapPath['resultOfSwaps']) {
             this.selectedSwapPath = swapPath
