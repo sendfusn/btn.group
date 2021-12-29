@@ -145,8 +145,13 @@ $(document).ready(function(){
             fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[this.userVipLevel]['tradingFee'] / 100
           }
           this.selectedSwapPath['resultOfSwaps'] -= fee
-          this.selectedSwapPath['netUsdResultOfSwaps'] = new BigNumber(this.selectedSwapPath['resultOfSwaps']).times(new BigNumber(this.cryptocurrencies[this.selectedSwapPath['to_id']]['price'])).dividedBy(new BigNumber("10").pow(this.cryptocurrencies[this.selectedSwapPath['to_id']]['decimals'])).minus(this.selectedSwapPath['gas_in_usd'])
+          this.setNetUsdResultOfSwaps(this.selectedSwapPath)
         }
+      }
+
+      this.setNetUsdResultOfSwaps = (swapPath) => {
+        let toCryptocurrency = this.cryptocurrencies[swapPath['to_id']]
+        swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(toCryptocurrency['price'])).dividedBy(new BigNumber("10").pow(toCryptocurrency['decimals'])).minus(swapPath['gas_in_usd'])
       }
 
       this.delay = async(ms) => {
@@ -245,7 +250,7 @@ $(document).ready(function(){
         let fromId = swapPath['from_id']
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromCryptoDecimals = this.cryptocurrencies[fromId]['decimals']
-        let fromAmountFormatted = new BigNumber(fromAmount.replace(/,/g, '')).times(new BigNumber("10").pow(fromCryptoDecimals)).toFixed()
+        let fromAmountFormatted = document.formatHumanizedNumberForSmartContract(fromAmount, fromCryptoDecimals)
         swapPath['simulationResults'] = []
         for (const poolId of swapPath['swap_path_as_array']) {
           if(currentQueryCount == this.queryCount) {
@@ -288,8 +293,7 @@ $(document).ready(function(){
               $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
               let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
               swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
-              let toCryptocurrency = this.cryptocurrencies[swapPath['to_id']]
-              swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(toCryptocurrency['price'])).dividedBy(new BigNumber("10").pow(toCryptocurrency['decimals'])).minus(swapPath['gas_in_usd'])
+              this.setNetUsdResultOfSwaps(swapPath)
               this.setBestResultForProtocol(swapPath)
               this.renderResults(from_id, to_id)
             }
