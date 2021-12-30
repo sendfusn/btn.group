@@ -34,7 +34,7 @@ class Pool < ApplicationRecord
   end
 
   after_update do |pool|
-    pool_swap_paths.destroy_all if pool.category == 'trade_pair' && !pool.enabled && pool.enabled_changed?
+    pool.swap_paths.destroy_all if pool.category == 'trade_pair' && !pool.enabled && pool.enabled_changed?
   end
 
   # === INSTANCE METHODS ===
