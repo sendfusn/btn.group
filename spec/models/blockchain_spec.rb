@@ -13,5 +13,20 @@ RSpec.describe Blockchain, type: :model do
 
   describe 'VALIDATIONS' do
     it { should validate_presence_of(:identifier) }
+
+    context 'when a blockchain exists' do
+      before { create(:blockchain) }
+
+      it 'invalidates duplicate identifiers' do
+        new_blockchain = build(:blockchain, identifier: described_class.first.identifier)
+        expect(new_blockchain.valid?).to be false
+      end
+
+      it 'validates unique identifiers' do
+        identifier = (described_class.identifiers.values - [described_class.first.identifier]).sample
+        new_blockchain = build(:blockchain, identifier: identifier)
+        expect(new_blockchain.valid?).to be true
+      end
+    end
   end
 end
