@@ -1,5 +1,5 @@
 !!!
-%html.js{ lang: 'eng' }
+%html.h-100.js{ lang: 'eng' }
   %head
     %title= head_title
     %meta{ charset: 'utf-8' }
@@ -22,9 +22,9 @@
 
     -# === CLOUDINARY WIDGET ===
     %script{ src: 'https://widget.cloudinary.com/v2.0/global/all.js', type: 'text/javascript' }
-  %body.nk-body.body-wider.theme-dark.mode-onepage
-    .nk-wrap
-      %header.nk-header.page-header.is-transparent.is-shrink#header
+  %body.h-100.nk-body.body-wider.theme-dark.mode-onepage
+    .nk-wrap.h-100
+      %header.nk-header.page-header.is-transparent.is-shrink.h-100#header
         / Header @s
         .header-main
           .container
@@ -81,44 +81,45 @@
                         %li.menu-item= link_to 'See all', features_path, class: 'menu-link nav-link'
                     %li.menu-item= link_to 'Roadmap', roadmap_path, class: 'menu-link nav-link'
         = yield
-        %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
-          %section.section.section-m.tc-light.tc-light-alt.bg-transparent
-            .container
-              .nk-block.block-footer
-                .row.justify-content-between
-                  .col-lg-9.col-md-8
-                    .wgs.wgs-menu
-                      %h6.wgs-title.text-white About
-                      .wgs-body
-                        %ul.wgs-links.wgs-links-s3
-                          %li= link_to 'Brand assets', brand_assets_path, class: 'd-inline'
-                          %li= link_to 'Features', features_path, class: 'd-inline'
-                          %li= link_to 'Roadmap', roadmap_path, class: 'd-inline'
-                  .col-lg-3.col-md-4
-                    .wgs.wgs-text
-                      .wgs-body
-                        %h6.wgs-title.text-white Join our community
-                        .wgs-subscribe.wgs-subscribe-s2
-                          %ul.social.pt-2
-                            %li
-                              = mail_to 'support@btn.group', class: 'd-inline' do
-                                %em.social-icon.far.fa-envelope
-                            %li
-                              = link_to 'https://www.github.com/btn-group', target: '_blank', rel: 'noopener' do
-                                %em.social-icon.fab.fa-github
-                            %li
-                              = link_to 'https://discord.gg/fxTbthnzFW', target: '_blank', rel: 'noopener' do
-                                %em.social-icon.fab.fa-discord
-                            %li
-                              = link_to 'https://t.me/btn_group', target: '_blank', rel: 'noopener' do
-                                %em.social-icon.fab.fa-telegram
-                            %li
-                              = link_to 'https://twitter.com/BtnGroup', target: '_blank', rel: 'noopener' do
-                                %em.social-icon.fab.fa-twitter
-                .footer-bottom.pdt-r
-                  .copyright-text.copyright-text-s1.text-center.text-sm-left.text-lg-center
-                    %p
-                      © btn.group, 2021
+        - unless @hide_footer
+          %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
+            %section.section.section-m.tc-light.tc-light-alt.bg-transparent
+              .container
+                .nk-block.block-footer
+                  .row.justify-content-between
+                    .col-lg-9.col-md-8
+                      .wgs.wgs-menu
+                        %h6.wgs-title.text-white About
+                        .wgs-body
+                          %ul.wgs-links.wgs-links-s3
+                            %li= link_to 'Brand assets', brand_assets_path, class: 'd-inline'
+                            %li= link_to 'Features', features_path, class: 'd-inline'
+                            %li= link_to 'Roadmap', roadmap_path, class: 'd-inline'
+                    .col-lg-3.col-md-4
+                      .wgs.wgs-text
+                        .wgs-body
+                          %h6.wgs-title.text-white Join our community
+                          .wgs-subscribe.wgs-subscribe-s2
+                            %ul.social.pt-2
+                              %li
+                                = mail_to 'support@btn.group', class: 'd-inline' do
+                                  %em.social-icon.far.fa-envelope
+                              %li
+                                = link_to 'https://www.github.com/btn-group', target: '_blank', rel: 'noopener' do
+                                  %em.social-icon.fab.fa-github
+                              %li
+                                = link_to 'https://discord.gg/fxTbthnzFW', target: '_blank', rel: 'noopener' do
+                                  %em.social-icon.fab.fa-discord
+                              %li
+                                = link_to 'https://t.me/btn_group', target: '_blank', rel: 'noopener' do
+                                  %em.social-icon.fab.fa-telegram
+                              %li
+                                = link_to 'https://twitter.com/BtnGroup', target: '_blank', rel: 'noopener' do
+                                  %em.social-icon.fab.fa-twitter
+                  .footer-bottom.pdt-r
+                    .copyright-text.copyright-text-s1.text-center.text-sm-left.text-lg-center
+                      %p
+                        © btn.group, 2021
 / JavaScript
 %script{ src: '/ico-crypto-html-v1.9.3/main-html/assets/js/jquery.bundle.js?ver=1930' }
 %script{ src: '/ico-crypto-html-v1.9.3/main-html/assets/js/scripts.js?ver=1930' }

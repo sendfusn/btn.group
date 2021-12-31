@@ -31,6 +31,7 @@ module SecretNetwork
       @head_description = 'DeFi / DEX aggregator offering the best token swap rates on the Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png'
       @head_title = 'Button Swap | Secret network | btn.group'
+      @hide_footer = true
     end
 
     def butt_lode; end
