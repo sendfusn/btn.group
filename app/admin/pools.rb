@@ -16,6 +16,8 @@ ActiveAdmin.register Pool do
     actions
   end
 
+  filter :enabled
+
   # === FORM ===
   form do |f|
     f.inputs do

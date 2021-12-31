@@ -95,14 +95,14 @@ class Pool < ApplicationRecord
 
   private
 
-  def pseudo_wrap_pool?
-    return unless trade_pair?
-    return unless cryptocurrency_pools.deposit.count == 2
+    def pseudo_wrap_pool?
+      return unless trade_pair?
+      return unless cryptocurrency_pools.deposit.count == 2
 
-    token_count = 0
-    cryptocurrency_pools.deposit.each do |cp|
-      token_count += 1 if cp.cryptocurrency.smart_contract.present?
+      token_count = 0
+      cryptocurrency_pools.deposit.each do |cp|
+        token_count += 1 if cp.cryptocurrency.smart_contract.present?
+      end
+      token_count == 1
     end
-    token_count == 1
-  end
 end
