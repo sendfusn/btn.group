@@ -432,6 +432,15 @@ $(document).ready(function(){
           $('#sienna-best-result td:nth-child(3)').text(gasInUsd)
           $('#sienna-best-result td:nth-child(4)').text(netUsdResult)
         }
+        if(this.selectedSwapPath) {
+          if(this.selectedSwapPath['protocol_id'] == 2) {
+            $('#secret-swap-best-result').addClass('text-success')
+          } else if (this.selectedSwapPath['protocol_id'] == 4) {
+            $('#sienna-best-result').addClass('text-success')
+          } else {
+            $('#btn-best-result').addClass('text-success')
+          }
+        }
       }
 
       this.resetAfterSwap = () => {
@@ -468,6 +477,9 @@ $(document).ready(function(){
         $('#results tbody td:nth-child(2)').text('-')
         $('#results tbody td:nth-child(3)').text('-')
         $('#results tbody td:nth-child(4)').text('-')
+        $('#btn-best-result').removeClass('text-success')
+        $('#secret-swap-best-result').removeClass('text-success')
+        $('#sienna-best-result').removeClass('text-success')
       }
 
       this.setBestResultForProtocol = (swapPath) => {
