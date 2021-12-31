@@ -18,7 +18,7 @@ document.secretNetworkSigningClient = function(environment, walletAddress, gasPa
 document.secretNetworkChainId = function(environment) {
   let chainId = 'secret-4'
   if (environment == 'staging') {
-    chainId = 'pulsar-1'
+    chainId = 'pulsar-2'
   };
   return chainId
 }
