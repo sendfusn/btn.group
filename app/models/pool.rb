@@ -17,6 +17,7 @@ class Pool < ApplicationRecord
   scope :enabled, lambda { where(enabled: true) }
 
   # === VALIDATIONS ===
+  validates :enabled, presence: true, if: :pseudo_wrap_pool?
   validates :smart_contract_id, uniqueness: true
 
   # === CALLBACKS ===
@@ -90,5 +91,18 @@ class Pool < ApplicationRecord
       total_locked += cp.cryptocurrency.amount_with_decimals(cp.amount) * cp.cryptocurrency.price
     end
     update!(total_locked: total_locked)
+  end
+
+  private
+
+  def pseudo_wrap_pool?
+    return unless trade_pair?
+    return unless cryptocurrency_pools.deposit.count == 2
+
+    token_count = 0
+    cryptocurrency_pools.deposit.each do |cp|
+      token_count += 1 if cp.cryptocurrency.smart_contract.present?
+    end
+    token_count == 1
   end
 end
