@@ -44,9 +44,14 @@ Metrics/BlockLength:
     # - 'config/routes.rb'
     # - 'app/admin/*'
 
-
 RSpec/ImplicitExpect:
   EnforcedStyle: should
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
