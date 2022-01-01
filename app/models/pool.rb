@@ -110,6 +110,6 @@ class Pool < ApplicationRecord
     def trade_pair_without_liquidity?
       return unless trade_pair?
 
-      cryptocurrency_pools.deposit.where.not(amount: '0') != 2
+      cryptocurrency_pools.deposit.where.not(amount: '0').count != 2
     end
 end
