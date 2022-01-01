@@ -16,6 +16,7 @@ class CreateSwapPathsForCryptoJob < ApplicationJob
                               .trade_pair
                               .joins(:cryptocurrency_pools)
                               .where(cryptocurrency_pools: { cryptocurrency_role: :deposit, cryptocurrency_id: current_cryptocurrency_id })
+                              .where.not(cryptocurrency_pools: { amount: '0' })
                               .pluck(:id)
                               .uniq
 
