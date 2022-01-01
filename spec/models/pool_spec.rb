@@ -33,5 +33,15 @@ RSpec.describe Pool, type: :model do
 
       it { should validate_presence_of(:enabled) }
     end
+
+    context 'when pool is #trade_pair_without_liquidity?' do
+      subject { pool }
+
+      before do
+        allow(pool).to receive(:trade_pair_without_liquidity?).and_return(true)
+      end
+
+      it { should validate_absence_of(:enabled) }
+    end
   end
 end

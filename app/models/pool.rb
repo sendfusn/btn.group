@@ -17,6 +17,7 @@ class Pool < ApplicationRecord
   scope :enabled, lambda { where(enabled: true) }
 
   # === VALIDATIONS ===
+  validates :enabled, absence: true, if: :trade_pair_without_liquidity?
   validates :enabled, presence: true, if: :pseudo_wrap_pool?
   validates :smart_contract_id, uniqueness: true
 
@@ -104,5 +105,11 @@ class Pool < ApplicationRecord
         token_count += 1 if cp.cryptocurrency.smart_contract.present?
       end
       token_count == 1
+    end
+
+    def trade_pair_without_liquidity?
+      return unless trade_pair?
+
+      cryptocurrency_pools.deposit.where.not(amount: '0') != 2
     end
 end
