@@ -27,11 +27,9 @@
   %body.h-100.nk-body.body-wider.theme-dark.mode-onepage
     .nk-wrap.h-100
       %header.nk-header.page-header.is-transparent.is-shrink.h-100#header
-        / Header @s
         .header-main
           .container
             .header-wrap
-              / Logo @s
               .header-logo.logo
                 = link_to root_path, class: 'logo-link' do
                   = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 36, dpr: 2,  fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-none d-sm-inline', style: 'height: 36px;')
@@ -43,7 +41,7 @@
                   .toggle-line
                     %span
               / Menu @s
-              .header-navbar.header-navbar-s2
+              .header-navbar
                 %nav.header-menu.justify-content-between#header-menu
                   %ul.menu
                     %li.menu-item
