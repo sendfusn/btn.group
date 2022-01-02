@@ -37,16 +37,6 @@
                   %h3.text-white.d-inline btn.group
               / Menu Toogle @s
               .header-nav-toggle
-                .wallet-container.float-left.d-none
-                  %button.btn.btn-primary.btn-md.no-change.keplr-wallet-button
-                    .d-none.loading
-                      %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                      %em Loading...
-                    .ready
-                      = cl_image_tag('logos/b8thbiihwftyjolgjjz2_dhy5mr', height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'height: 20px;', class: 'mr-1')
-                      Connect wallet
-                  -# .wallet-details.btn.btn-round.btn-info.btn-md.d-none
-                  -#   .content.overflow-hidden{ style: 'text-overflow: ellipsis; max-width: 155px; cursor: text !important;' }
                 %a.navbar-toggle{ 'data-menu-toggle' => 'header-menu', href: '#' }
                   .toggle-line
                     %span
