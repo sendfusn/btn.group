@@ -7,9 +7,11 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+// JQuery
+import 'jquery'
 // BigNumber.js
 import BigNumber from "bignumber.js";
-// BOOTSTRAP & jquery IS DEFINED AT BOTTOM OF APPLICATION.HTML.HAML
+// LODASH
 import 'lodash'
 // DATATABLES
 import 'datatables.net-bs4'
@@ -17,6 +19,7 @@ import 'datatables.net-buttons-bs4'
 import 'datatables.net-buttons/js/buttons.html5.js'
 
 // APP
+import '../src/ico_crypto'
 import '../src/application/_environment_switch'
 
 // NEAR
