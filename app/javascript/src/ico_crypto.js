@@ -661,20 +661,6 @@ $(document).ready(function(){
       };
     NioApp.components.docReady.push(NioApp.Plugins.flexslider);
     
-    // Select2 !Plugin @v1.0
-    NioApp.Plugins.select2 = function () {
-      var $select = $(".select");
-      if ($select.exists()) {
-        $select.each(function(){
-          var $self = $(this),
-                      _theme = ($self.data('select2-theme')) ? $self.data('select2-theme') : 'bordered',
-                      _place = ($self.data('select2-placehold')) ? $self.data('select2-placehold') : 'Select an option';
-          $self.select2({ placeholder: _place, theme: "default select-" + _theme });
-        });
-          }
-    };
-    NioApp.components.docReady.push(NioApp.Plugins.select2);
-      
     // Parallax !Plugin @v1.0
     NioApp.Plugins.parallax = function () {
       var $parallax = $("[data-parallax]");
