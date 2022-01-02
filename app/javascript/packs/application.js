@@ -7,6 +7,9 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+// Popper.js
+import 'popper.js';
+import 'bootstrap';
 // BigNumber.js
 import BigNumber from "bignumber.js";
 // LODASH
