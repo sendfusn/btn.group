@@ -43,16 +43,16 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
     return unless (pool_smart_contract = SmartContract.find_by(address: pool_json['pool_address']))
 
     pool = Pool.find_or_initialize_by(smart_contract_id: pool_smart_contract.id)
+    locked_amount_in_usd = pool_json['total_locked'].to_i * pool_json['inc_token']['price'].to_f / 10**pool_json['inc_token']['decimals']
     pool.update!(category: 'farm',
                  deadline: pool_json['deadline'].to_i,
                  pending_rewards: pool_json['pending_rewards'].to_i,
                  protocol: Protocol.find_by(identifier: :secret_swap),
-                 total_locked: pool_json['total_locked'].to_i)
+                 total_locked: locked_amount_in_usd)
     # EthereumBridgeFrontend/blob/master/src/components/Earn/EarnRow/index.tsx
     time_remaining_in_seconds = (pool.deadline - 128_730) * 6.22 + 1_632_380_505 - Time.zone.now.to_i
     price_of_rewards = pool_json['rewards_token']['price'].to_f
     pending_rewards_in_usd = pool.pending_rewards * price_of_rewards / 1_000_000
-    locked_amount_in_usd = pool.total_locked * pool_json['inc_token']['price'].to_f / 10**pool_json['inc_token']['decimals']
     if locked_amount_in_usd.positive?
       apr = pending_rewards_in_usd * 100 * 31_540_000 / locked_amount_in_usd / time_remaining_in_seconds
       if apr.positive?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_26_043049) do
+ActiveRecord::Schema.define(version: 2022_01_02_224935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 2021_12_26_043049) do
     t.bigint "smart_contract_id"
     t.decimal "deadline", precision: 40
     t.decimal "pending_rewards", precision: 40
-    t.decimal "total_locked", precision: 40
+    t.decimal "total_locked", precision: 15, scale: 2
     t.decimal "apr", precision: 30, scale: 10
     t.decimal "apy", precision: 30, scale: 10
     t.bigint "pool_id"

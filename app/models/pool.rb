@@ -2,6 +2,8 @@
 
 class Pool < ApplicationRecord
   # === ASSOCIATIONS ===
+  # A yield optimizer pool can belong to one farm pool
+  # and a farm pool can have many yield optimizer pools
   belongs_to :pool, optional: true
   belongs_to :protocol, optional: true
   belongs_to :smart_contract
