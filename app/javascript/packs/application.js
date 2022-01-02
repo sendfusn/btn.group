@@ -15,7 +15,6 @@ import 'lodash'
 import 'datatables.net-bs4'
 import 'datatables.net-buttons-bs4'
 import 'datatables.net-buttons/js/buttons.html5.js'
-
 // APP
 import '../src/ico_crypto'
 import '../src/application/_environment_switch'
