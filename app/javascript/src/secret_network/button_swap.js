@@ -360,14 +360,16 @@ $(document).ready(function(){
         this.swapPaths[from_id][to_id].sort((a, b) => b.netUsdResultOfSwaps - a.netUsdResultOfSwaps).forEach((swapPath, index) => {
           if (this.userVipLevel == 5) {
             let swapPathId = swapPath['id']
-            let x = '<div class="card mt-2" id="' + swapPathId + '">' + '<div>Swap path: #' + swapPathId + '</div>'
+            let x = '<div class="card mt-2" id="' + swapPathId + '">' + '<b>Swap path: #' + swapPathId + '</b>'
             let currentCryptoId = swapPath['from_id']
             let currentCryptoSymbol = swapPath['from']['symbol']
+            x = x + '<table class="table"><tbody>'
             // Wrapping
             if(this.cryptocurrencies[from_id]['smart_contract'] == undefined) {
-              x = x + '<div>' + this.cryptocurrencies[from_id]['symbol'] + ' == wrap ==> ' + this.cryptocurrencies[this.wrapPaths[from_id]]['symbol'] + '</div>'
               currentCryptoId = this.wrapPaths[from_id]
               currentCryptoSymbol = this.cryptocurrencies[this.wrapPaths[from_id]]['symbol']
+              x = x + this.generateSwapPathRowAsString(this.cryptocurrencies[from_id]['symbol'], 'wrap', currentCryptoSymbol)
+
             }
             // Swapping
             swapPath['swap_path_as_array'].forEach((tradePairId, index) => {
@@ -375,36 +377,39 @@ $(document).ready(function(){
               let xId = currentCryptoId
               this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
                 if (cryptoPool['cryptocurrency_id'] != Number(xId) && cryptoPool['cryptocurrency_role'] == 'deposit') {
-                  x = x + '<div>' + currentCryptoSymbol
+                  let fromCurrentSymbol = currentCryptoSymbol
                   currentCryptoSymbol = cryptoPool['cryptocurrency']['symbol']
                   currentCryptoId = cryptoPool['cryptocurrency_id']
-                  x = x + ' == ' + protocolName + ' ==>'
-                  let usdPrice;
+                  let resultString = ''
                   if (swapPath['simulationResults']) {
+                    let usdPrice;
                     let simulationResult = swapPath['simulationResults'][index]
-                    let simulationResultHumanized = document.humanizeStringNumberFromSmartContract(simulationResult, this.cryptocurrencies[currentCryptoId]['decimals'])
-                    x = x + ' ' + simulationResultHumanized
+                    resultString = document.humanizeStringNumberFromSmartContract(simulationResult, this.cryptocurrencies[currentCryptoId]['decimals'])
                     usdPrice = document.humanizeStringNumberFromSmartContract(simulationResult * cryptoPool['cryptocurrency']['price'], this.cryptocurrencies[currentCryptoId]['decimals'], 2)
+                    if (usdPrice) {
+                      resultString = resultString + ' / $' + usdPrice
+                    }
                   }
-                  x = x + ' ' + currentCryptoSymbol
-                  if (usdPrice) {
-                    x = x + ' / $' + usdPrice
-                  }
-                  x = x + '</div>'
+                  x = x + this.generateSwapPathRowAsString(fromCurrentSymbol, protocolName, currentCryptoSymbol, resultString)
                 }
               })
             })
             // Unwrapping
             if (this.wrapPaths[currentCryptoId] == to_id) {
-              x = x + '<div>' + this.cryptocurrencies[currentCryptoId]['symbol'] + ' == unwrap ==> ' + this.cryptocurrencies[this.wrapPaths[currentCryptoId]]['symbol'] + '</div>'
+              x = x + this.generateSwapPathRowAsString(this.cryptocurrencies[currentCryptoId]['symbol'], 'unwrap', this.cryptocurrencies[to_id]['symbol'])
             }
+            x = x + '</tbody></table></div>'
             $("#swap-paths").append(x)
           }
           if(index == 0 && swapPath['resultOfSwaps']) {
             this.selectedSwapPath = swapPath
-            $('#' + this.selectedSwapPath['id']).addClass('bg-success')
+            $('#' + this.selectedSwapPath['id']).addClass('bg-theme-accent-alt')
           }
         })
+      }
+
+      this.generateSwapPathRowAsString = function(fromSymbol, via, toSymbol, result = '') {
+        return '<tr><td class="table-des">' + fromSymbol + '</td><td class="table-des">' + via + '</td><td class="table-des">' + toSymbol + '</td><td class="table-des">' + result + '</td></tr>'
       }
 
       this.renderTable = () => {
