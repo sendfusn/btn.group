@@ -5,107 +5,107 @@
         .row.justify-content-center
           .col-xl-6.col-lg-9
             .card.mt-3
-              .card-body
-                %h3= features[:secret_network][:features][:address_alias][:name]
-                %p.mb-0
-                  %b Blockchain:
-                  = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                  = features[:secret_network][:name].to_s
-                = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:address_alias][:contracts][:production], staging_contract: nil
-                %button.btn.btn-sm.btn-theme-dark.mt-1{ 'aria-controls' => 'exampleCollapseExample', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#exampleCollapseExample' }
-                  Instructions / Requirements
-                .collapse.mt-2#exampleCollapseExample
-                  .card.card-default.bg-theme-light
-                    .card-block
-                      %h6 Requirements
-                      %p
-                        1.
-                        = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-                        %br
-                        2. SCRT for gas
-                        %br
-                        3. BUTT to create alias.
-                      %h6 Why it was created
-                      %p We wanted an easy way to find an address. We wanted to provide a way for users to easily associate an address with somebody.
-                      %h6 Notes
-                      %p
-                        * This contract is not private.
-                        %br
-                        * Only one alias possible per address.
-                        %br
-                        * Alias is stored in lower case.
-                        %br
-                        * BUTT sent to contract during create is sent to BUTT lode.
-                        %br
-                        * We plan to integrate this with our transactions page & wherever else applicable.
-                      %h6 References
-                      %p
-                        1.
-                        = link_to 'github - Address alias', 'https://github.com/btn-group/address-alias', target: '_blank', rel: 'noopener'
-                        %br
-                        2.
-                        = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
-                %hr
-                %ul.nav.tab-nav.tab-nav-btn
-                  %li
-                    %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Search
-                  %li
-                    %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Create
-                .tab-content
-                  .tab-pane.fade.active.show#tab-2-1
-                    %form{ name: 'aliasSearchForm' }
-                      .form-group
-                        %label.control-label Search by
-                        .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                          %label.btn.btn-light.btn-md
-                            %input#address{ name: 'searchType', type: 'radio', value: 'address' } Address
-                          %label.btn.btn-md.btn-light
-                            %input{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
-                      .form-group
-                        %input.form-control.text-lowercase.w-100{ name: 'searchValue', required: true, autocomplete: 'off' }
-                      %button.btn.btn-grad-alt.w-100.mt-3#search-button{ type: 'submit' }
-                        .d-none#loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        #ready
-                          Search
-                  .tab-pane.fade#tab-2-2
-                    %form{ name: 'aliasCreateForm' }
-                      .form-group
-                        %label{ for: 'alias' } Alias
-                        %input.form-control.text-lowercase.w-100#alias{ name: 'alias', required: true }
-                      .form-group
-                        %label{ for: 'avatar-url' } Avatar url
-                        %button.btn.btn-light.btn-sm.ml-2.border#cloudinary-upload-widget Upload image
-                        %input.form-control.w-100#avatar-url{ name: 'avatarUrl' }
-                      %button.btn.btn-grad-alt.w-100.mt-3#create-button{ type: 'submit' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          Create
-                    %hr
+              %h3
+                = features[:secret_network][:features][:address_alias][:name]
+                %button.btn.btn-auto.btn-icon.btn-info.btn-play-icon-s2.float-right{ 'aria-controls' => 'exampleCollapseExample', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#exampleCollapseExample' }
+                  %em.fa.fa-info
+              %p.mb-0
+                %b Blockchain:
+                = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                = features[:secret_network][:name].to_s
+              .collapse.mt-2#exampleCollapseExample
+                .card.card-default.bg-theme-light
+                  .card-block
+                    = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:address_alias][:contracts][:production], staging_contract: nil
+                    %h6 Requirements
                     %p
-                      * To change alias, delete your current alias first.
+                      1.
+                      = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
                       %br
-                      * Cost to create alias = 1 BUTT + ~gas(SCRT)
+                      2. SCRT for gas
                       %br
-                      * You can get BUTT from
-                      = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
+                      3. BUTT to create alias.
+                    %h6 Why it was created
+                    %p We wanted an easy way to find an address. We wanted to provide a way for users to easily associate an address with somebody.
+                    %h6 Notes
+                    %p
+                      * This contract is not private.
                       %br
-                      * Uploaded images are stored on
-                      = link_to 'cloudinary.', 'https://cloudinary.com/', target: '_blank', rel: 'noopener'
-                      This is centralized and we are exploring decentralized options. If you want to avoid this, please enter your own avatar url.
-        .row.justify-content-center#secret-network-address-alias-profile
-          .col-xl-6.col-lg-9
-            .card.bg-light.my-3.d-none#result-container
-              .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
-                #result-value
-                %form{ name: 'aliasDeleteForm' }
-                  %button.btn.btn-danger.w-100.mt-3.btn-md.d-none#delete-button{ type: 'submit' }
-                    .d-none#delete-loading
-                      %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                      %em Loading...
-                    #delete-ready
-                      Delete
+                      * Only one alias possible per address.
+                      %br
+                      * Alias is stored in lower case.
+                      %br
+                      * BUTT sent to contract during create is sent to BUTT lode.
+                      %br
+                      * We plan to integrate this with our transactions page & wherever else applicable.
+                    %h6 References
+                    %p
+                      1.
+                      = link_to 'github - Address alias', 'https://github.com/btn-group/address-alias', target: '_blank', rel: 'noopener'
+                      %br
+                      2.
+                      = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+              %hr
+              %ul.nav.tab-nav.tab-nav-btn
+                %li
+                  %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Search
+                %li
+                  %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Create
+              .tab-content
+                .tab-pane.fade.active.show#tab-2-1
+                  %form{ name: 'aliasSearchForm' }
+                    .form-group
+                      %label.control-label Search by
+                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                        %label.btn.btn-light.btn-md
+                          %input#address{ name: 'searchType', type: 'radio', value: 'address' } Address
+                        %label.btn.btn-md.btn-light
+                          %input{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
+                    .form-group
+                      %input.form-control.text-lowercase.w-100{ name: 'searchValue', required: true, autocomplete: 'off' }
+                    %button.btn.btn-grad-alt.w-100.mt-3#search-button{ type: 'submit' }
+                      .d-none#loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      #ready
+                        Search
+                .tab-pane.fade#tab-2-2
+                  %form{ name: 'aliasCreateForm' }
+                    .form-group
+                      %label{ for: 'alias' } Alias
+                      %input.form-control.text-lowercase.w-100#alias{ name: 'alias', required: true }
+                    .form-group
+                      %label{ for: 'avatar-url' } Avatar url
+                      %button.btn.btn-light.btn-sm.ml-2.border#cloudinary-upload-widget Upload image
+                      %input.form-control.w-100#avatar-url{ name: 'avatarUrl' }
+                    %button.btn.btn-grad-alt.w-100.mt-3#create-button{ type: 'submit' }
+                      .d-none.loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      .ready
+                        Create
+                  %hr
+                  %p
+                    * To change alias, delete your current alias first.
+                    %br
+                    * Cost to create alias = 1 BUTT + ~gas(SCRT)
+                    %br
+                    * You can get BUTT from
+                    = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
+                    %br
+                    * Uploaded images are stored on
+                    = link_to 'cloudinary.', 'https://cloudinary.com/', target: '_blank', rel: 'noopener'
+                    This is centralized and we are exploring decentralized options. If you want to avoid this, please enter your own avatar url.
+      .row.justify-content-center#secret-network-address-alias-profile
+        .col-xl-6.col-lg-9
+          .card.bg-light.my-3.d-none#result-container
+            .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
+              #result-value
+              %form{ name: 'aliasDeleteForm' }
+                %button.btn.btn-danger.w-100.mt-3.btn-md.d-none#delete-button{ type: 'submit' }
+                  .d-none#delete-loading
+                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                    %em Loading...
+                  #delete-ready
+                    Delete
   .nk-ovm.shape-e
