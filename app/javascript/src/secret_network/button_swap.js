@@ -79,6 +79,7 @@ $(document).ready(function(){
       $(document).on('keplr_connected', async(evt) => {
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
+        this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
       })
       $('#flip-token').click(function(event){
         let fromId = document.secretNetworkDexAggregatorForm.from.value
@@ -126,10 +127,9 @@ $(document).ready(function(){
       }.bind(this));
 
       // === Functions ===
-      this.applyFee = async() => {
+      this.applyFee = () => {
         // If selectedSwapPath and there's no protocolId
         if (this.selectedSwapPath && !this.selectedSwapPath['protocol_id']) {
-          this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
           let fee;
           let otherProtocolsBestResultAmount;
           if(this.bestResultsPerProtocol[2]) {
