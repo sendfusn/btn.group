@@ -589,16 +589,16 @@ $(document).ready(function(){
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
+        let fromId = document.secretNetworkDexAggregatorForm.from.value
+        let toId = document.secretNetworkDexAggregatorForm.to.value
         if (this.wrapPaths[fromId] != toId && !this.selectedSwapPath) {
           return
         }
 
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
         let fromCryptocurrency = this.cryptocurrencies[fromId]
         let fromBalance = fromCryptocurrency['balance']
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
         let toCryptocurrency = this.cryptocurrencies[toId]
         let toBalance = toCryptocurrency['balance']
         fromAmount = document.formatHumanizedNumberForSmartContract(fromAmount, fromCryptocurrency['decimals'])
