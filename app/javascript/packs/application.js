@@ -44,9 +44,6 @@ ActiveStorage.start()
 
 document.activateKeplr = function() {
   if($(".keplr-wallet").length) {
-    $('.header-nav-toggle .wallet-container').removeClass('d-none')
-    $('#header-menu .wallet-container').addClass('d-lg-block')
-
     window.addEventListener("keplr_keystorechange", () => {
       window.location.reload()
     })
@@ -79,8 +76,11 @@ document.activateKeplr = function() {
           $('.keplr-wallet-button').addClass('d-none')
           $(document).trigger('keplr_connected', {});
           let accounts = await window.keplrOfflineSigner.getAccounts()
+          let address = accounts[0].address
           $('.wallet-details').removeClass('d-none')
-          $('.wallet-details .content').text(accounts[0].address)
+          $('.wallet-address').text(address)
+          let client = document.secretNetworkSigningClient('production', address, {})
+          document.getAndSetUserVipLevel(address, client)
         }
         catch(err) {
           document.showAlertDanger(err)

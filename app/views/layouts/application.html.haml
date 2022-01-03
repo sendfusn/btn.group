@@ -39,8 +39,19 @@
               .header-navbar
                 %nav.header-menu.justify-content-between#header-menu
                   %ul.menu
-                    %li.menu-item
-                      .wallet-container.d-none
+                    %li.menu-item.has-sub.position-static
+                      %a.menu-link.nav-link.menu-toggle.d-none.wallet-details{ href: '#' }
+                        %em.fa.fa-user-circle
+                      %ul.menu-sub.p-0.wallet-details.d-none.popover{ style: 'right: 0; left: inherit; max-width: inherit;' }
+                        .popover-body
+                          %h6.address-alias.mb-0
+                          .wallet-address
+                          .vip-level-container
+                            .tc-warning
+                              %em.fa.fa-gem
+                              VIP:
+                              %span#vip-level
+                      .wallet-container
                         %button.btn.btn-primary.btn-md.no-change.keplr-wallet-button
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -48,8 +59,6 @@
                           .ready
                             = cl_image_tag('logos/b8thbiihwftyjolgjjz2_dhy5mr', height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'height: 20px;', class: 'mr-1')
                             Connect wallet
-                        .wallet-details.btn.btn-round.btn-md.no-change.d-none{ style: 'cursor: text !important;' }
-                          .content.overflow-hidden.text-lowercase#navbar-wallet-address{ style: 'text-overflow: ellipsis; max-width: auto;' }
                     %li.menu-item.has-sub
                       %a.menu-link.nav-link.menu-toggle{ href: '#' }
                         Features

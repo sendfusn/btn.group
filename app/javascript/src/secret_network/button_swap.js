@@ -79,7 +79,6 @@ $(document).ready(function(){
       $(document).on('keplr_connected', async(evt) => {
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
-        this.setUserVipLevel()
       })
       $('#flip-token').click(function(event){
         let fromId = document.secretNetworkDexAggregatorForm.from.value
@@ -127,10 +126,10 @@ $(document).ready(function(){
       }.bind(this));
 
       // === Functions ===
-      this.applyFee = () => {
+      this.applyFee = async() => {
         // If selectedSwapPath and there's no protocolId
         if (this.selectedSwapPath && !this.selectedSwapPath['protocol_id']) {
-          this.setUserVipLevel()
+          this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
           let fee;
           let otherProtocolsBestResultAmount;
           if(this.bestResultsPerProtocol[2]) {
@@ -461,7 +460,6 @@ $(document).ready(function(){
         $('#to-usd-price').text('')
         this.updateWalletBalance($('#from').val(), '.from')
         this.updateWalletBalance($('#to').val(), '.to')
-        this.setUserVipLevel()
       }
 
       this.resetBeforeEstimate = () => {
@@ -510,39 +508,6 @@ $(document).ready(function(){
             },
           }
         this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
-      }
-
-      this.setUserVipLevel = async() => {
-        // Set users vip level
-        try {
-          let params = {
-            balance: {
-              address: this.address,
-              key: await window.keplr.getSecret20ViewingKey(this.chainId, this.buttcoinContractAddress)
-            }
-          }
-          let balance_response = await this.client.queryContractSmart(this.buttcoinContractAddress, params);
-          let balance = balance_response["balance"]["amount"]
-          balance = Number(balance)
-          if (balance >= 100_000_000_000) {
-            this.userVipLevel = 5
-          } else if(balance >= 50_000_000_000) {
-            this.userVipLevel = 4
-          } else if(balance >= 25_000_000_000) {
-            this.userVipLevel = 3
-          } else if(balance >= 12_500_000_000) {
-            this.userVipLevel = 2
-          } else if(balance >= 6_250_000_000) {
-            this.userVipLevel = 1
-          } else {
-            this.userVipLevel = 0
-          }
-        } catch(err) {
-          this.userVipLevel = 0
-          console.error(err)
-        } finally {
-          console.log(this.userVipLevel)
-        }
       }
 
       this.toggleConfig = async() => {
@@ -731,6 +696,10 @@ $(document).ready(function(){
           }
           document.showAlertSuccess(successMessage);
           this.resetAfterSwap()
+          // Update vip levels if swap involves BUTT
+          if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
+            this.userVipLevel = document.getAndSetUserVipLevel(this.address, this.client)
+          }
         } catch(error) {
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
