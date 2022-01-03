@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
           },
           buttcoin: {
             name: 'Buttcoin (BUTT)',
-            show_in_navbar: false,
+            show_in_navbar: true,
             show_link: true,
             status: 'Live',
             contracts: {
@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
           },
           butt_lode: {
             name: 'BUTT lode',
-            show_in_navbar: false,
+            show_in_navbar: true,
             show_link: true,
             status: 'Live',
             contracts: {
