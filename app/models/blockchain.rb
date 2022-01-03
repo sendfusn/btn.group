@@ -2,6 +2,7 @@
 
 class Blockchain < ApplicationRecord
   # === ASSOCIATIONS ===
+  has_many :cryptocurrencies, dependent: :restrict_with_exception
   has_many :smart_contracts, dependent: :restrict_with_exception
 
   # === ENUMS ===

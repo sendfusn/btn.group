@@ -11,7 +11,6 @@ class Cryptocurrency < ApplicationRecord
   delegate :address, to: :smart_contract, allow_nil: true
 
   # === SCOPES ===
-  scope :secret_network, lambda { where(blockchain: Blockchain.find_by(identifier: 'secret_network')) }
   scope :tradeable, lambda {
     joins(:cryptocurrency_pools)
       .where(cryptocurrency_pools: { cryptocurrency_role: 'deposit' })
@@ -20,6 +19,7 @@ class Cryptocurrency < ApplicationRecord
   }
 
   # === VALIDATIONS ===
+  validates :decimals, presence: true
   validates :decimals, numericality: { greater_than_or_equal_to: 0 }
   validates :price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :smart_contract_id, uniqueness: { allow_nil: true }
@@ -27,17 +27,12 @@ class Cryptocurrency < ApplicationRecord
 
   # === CALLBACKS ===
   after_save do |c|
-    c.pools.trade_pair.each(&:update_total_locked) if c.price.present? && c.price_changed?
+    c.pools.each(&:update_total_locked) if c.price.present? && c.saved_change_to_price?
   end
 
   before_save do |cryptocurrency|
-    cryptocurrency.coin_gecko_id = cryptocurrency.coin_gecko_id&.downcase
-    cryptocurrency.symbol = cryptocurrency.symbol.upcase
-  end
-
-  # === CLASS METHODS ===
-  def self.buttcoin
-    find_by(symbol: 'BUTT', official: true)
+    cryptocurrency.coin_gecko_id&.downcase!
+    cryptocurrency.symbol.upcase!
   end
 
   # === INSTANCE METHODS ===
@@ -45,9 +40,8 @@ class Cryptocurrency < ApplicationRecord
     amount_with_decimals(amount) * price
   end
 
+  # Leaving out the guard clause for decimals abset so we can see the error
   def amount_with_decimals(amount)
-    return 0.0 if decimals.nil?
-
     amount.to_d / 10**decimals
   end
 
