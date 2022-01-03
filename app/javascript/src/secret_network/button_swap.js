@@ -9,6 +9,7 @@ $(document).ready(function(){
       this.cryptocurrencies = {}
       this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
+      this.fromAmountInputSelector = '#from-amount-input'
       this.tradePairs = {}
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
@@ -53,17 +54,19 @@ $(document).ready(function(){
             $balanceViewButton.find('.loading').removeClass('d-none')
             $balanceViewButton.find('.ready').addClass('d-none')
             let cryptoId;
+            let inputToClickFillTo;
             let selectorPrefix;
             if (value == '.from-balance-view-button') {
               cryptoId = $('#from').val()
               selectorPrefix = '.from'
+              inputToClickFillTo = this.fromAmountInputSelector
             } else {
               cryptoId = $('#to').val()
               selectorPrefix = '.to'
             }
             try {
               await window.keplr.suggestToken(this.chainId, this.cryptocurrencies[cryptoId]['smart_contract']['address']);
-              this.updateWalletBalance(cryptoId, selectorPrefix);
+              this.updateWalletBalance(cryptoId, selectorPrefix, inputToClickFillTo);
               $balanceViewButton.addClass('d-none')
             } catch(err) {
               document.showAlertDanger(err)
@@ -89,13 +92,13 @@ $(document).ready(function(){
         document.secretNetworkDexAggregatorForm.to.value = fromId
         document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
         document.secretNetworkDexAggregatorForm.minAmount.value = ''
-        this.updateWalletBalance($('#from').val(), '.from')
+        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
         this.updateWalletBalance($('#to').val(), '.to')
         $('#from-usd-price').text('')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
       }.bind(this))
-      $("#from-amount-input").on("input", async(evt) => {
+      $(this.fromAmountInputSelector).on("input", async(evt) => {
         await this.getEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
@@ -103,7 +106,7 @@ $(document).ready(function(){
       });
       $("#from").change(function(){
         this.toggleConfig()
-        this.updateWalletBalance($('#from').val(), '.from')
+        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
         this.getEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
         let fromId = document.secretNetworkDexAggregatorForm.from.value
@@ -220,7 +223,7 @@ $(document).ready(function(){
             this.wrapPaths[tokenId] = nativeId
           }
         })
-        this.updateWalletBalance($('#from').val(), '.from')
+        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
         this.updateWalletBalance($('#to').val(), '.to')
       }
 
@@ -458,7 +461,7 @@ $(document).ready(function(){
         $('#from-usd-price').text('')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
-        this.updateWalletBalance($('#from').val(), '.from')
+        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
         this.updateWalletBalance($('#to').val(), '.to')
       }
 
@@ -525,7 +528,7 @@ $(document).ready(function(){
         }
       }
 
-      this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix) => {
+      this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix, inputToClickFillTo = undefined) => {
         let $walletBalance = $(selectorPrefix + '-balance')
         let $walletBalanceLink = $(selectorPrefix + '-balance-link')
         let $walletBalanceLoading = $(selectorPrefix + '-balance-loading')
@@ -567,6 +570,14 @@ $(document).ready(function(){
           }
           if (updateWalletBalanceStillValid) {
             let balanceFormatted = document.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
+            if (inputToClickFillTo) {
+              $walletBalance.off("click");
+              $walletBalance.attr('href', '#');
+              $walletBalance.click(function(e) {
+                e.preventDefault()
+                $(inputToClickFillTo).val(balanceFormatted.replace(/,/g, '')).trigger('input')
+              })
+            }
             $walletBalance.text(balanceFormatted)
             $walletBalance.removeClass('d-none')
             $walletBalanceViewButton.addClass('d-none')
@@ -706,7 +717,7 @@ $(document).ready(function(){
           if (error.message.includes('timed out waiting for tx to be included in a block')) {
             // Wait 5 seconds and if balance of the to and from token has changed... Success
             await this.delay(5000)
-            this.updateWalletBalance(fromId, '.from')
+            this.updateWalletBalance(fromId, '.from', this.fromAmountInputSelector)
             this.updateWalletBalance(toId, '.to')
             if (this.cryptocurrencies[fromId]['balance'] != fromBalance && this.cryptocurrencies[toId]['balance'] != toBalance) {
               document.showAlertSuccess("Swap successful");
