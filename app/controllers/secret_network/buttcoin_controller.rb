@@ -4,7 +4,10 @@ require 'rest-client'
 
 module SecretNetwork
   class ButtcoinController < ApplicationController
-    def index; end
+    def index
+      @head_description = 'The native token of btn.group.'
+      @head_title = 'Buttcoin (BUTT) | Secret network | btn.group'
+    end
 
     def circulating_supply
       response = RestClient.get 'https://api.secretapi.io/blocks/latest'
