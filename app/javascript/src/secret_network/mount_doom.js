@@ -31,6 +31,11 @@ $(document).ready(function(){
 
     window.onload = async () => {
       document.activateKeplr()
+      this.environment = 'production'
+      this.chainId = document.secretNetworkChainId(this.environment)
+      this.client = document.secretNetworkClient(this.environment);
+      this.contractAddress = document.featureContractAddress(this.environment);
+
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
         $nftsContainer = $('#nfts-container')
@@ -39,23 +44,17 @@ $(document).ready(function(){
         changeSubmitButtonToLoading()
         document.hideAllAlerts();
         try {
-          // Set environment
-          let environment = 'production';
-          let chainId = document.secretNetworkChainId(environment)
-          let client =  document.secretNetworkClient(environment);
-          let contractAddress = document.featureContractAddress(environment);
-          let httpUrl = document.secretNetworkHttpUrl(environment)
           let tokenAddress = document.mountDoomQueryForm.tokenAddress.value;
           let tokenType = document.mountDoomQueryForm.tokenType.value;
           if (tokenType == 'nft') {
             // Get the transactions for that token
             let params = {
               transaction_history: {
-                address: contractAddress,
+                address: this.contractAddress,
                 viewing_key: "DoTheRightThing.",
               }
             }
-            let transactions_response = await client.queryContractSmart(tokenAddress, params);
+            let transactions_response = await this.client.queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -69,7 +68,7 @@ $(document).ready(function(){
                       token_id: value['token_id'],
                     }
                   }
-                  let nftInfoResponse = await client.queryContractSmart(tokenAddress, params);
+                  let nftInfoResponse = await this.client.queryContractSmart(tokenAddress, params);
                   let imageUrl;
                   let nftName;
                   console.log(nftInfoResponse)
@@ -98,7 +97,7 @@ $(document).ready(function(){
                   document.showAlertDanger(err)
                 }
               })();
-            })
+            }.bind(this))
           } else {
             // Reset transactions table and balance
             $transactionsTableBody = $('#transactions-table-body');
@@ -106,19 +105,19 @@ $(document).ready(function(){
             $("#balance").text('')
             $($('th')[2]).text('Amount')
             // Get the token info
-            let token_info_response = await client.queryContractSmart(tokenAddress, { token_info: {} });
+            let token_info_response = await this.client.queryContractSmart(tokenAddress, { token_info: {} });
             let token_decimals = token_info_response["token_info"]["decimals"]
             let token_symbol = token_info_response["token_info"]["symbol"]
             // Get the transactions for that token
             let params = {
               transfer_history: {
-                address: contractAddress,
+                address: this.contractAddress,
                 key: "DoTheRightThing.",
                 page: 0,
                 page_size: 1000
               }
             }
-            let transactions_response = await client.queryContractSmart(tokenAddress, params);
+            let transactions_response = await this.client.queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -134,10 +133,10 @@ $(document).ready(function(){
               transactionsTableBodyContent += 'id: #' + value['id'] + '</td><td>'
               // Description & Amount
               let amount = value['coins']['amount']
-              amount = applyDecimals(amount, token_decimals)
+              amount = document.applyDecimals(amount, token_decimals)
               let description = '<a href="'
               let descriptionAddress;
-              if (contractAddress != value['receiver']) {
+              if (this.contractAddress != value['receiver']) {
                 amount *= -1
                 descriptionAddress = value['receiver']
               } else {
@@ -151,20 +150,20 @@ $(document).ready(function(){
               }
               transactionsTableBodyContent += description + '</td><td>'
               transactionsTableBodyContent += parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }) + '</td></tr>'
-            })
+            }.bind(this))
             transactionsTableBodyContent += '</tr>'
             $transactionsTableBody.html(transactionsTableBodyContent)
             // Add token symbol next to amount header
             $($('th')[2]).text('Amount' + ' (' + token_symbol + ')')
 
             // Get the balance for the token
-            let msg = { balance:{ address: contractAddress, key: "DoTheRightThing." } };
-            let balance_response = await client.queryContractSmart(tokenAddress, msg)
+            let msg = { balance:{ address: this.contractAddress, key: "DoTheRightThing." } };
+            let balance_response = await this.client.queryContractSmart(tokenAddress, msg)
             if (balance_response["viewing_key_error"]) {
               throw balance_response["viewing_key_error"]["msg"]
             }
             // Display results
-            $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
+            $('#balance').text(document.applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
             $('#transactions-container').removeClass('d-none')
           }
         }
@@ -181,12 +180,6 @@ $(document).ready(function(){
         changeSubmitButtonToLoading()
         document.hideAllAlerts();
         try {
-          // Set environment
-          let environment = 'production'
-          let chainId = document.secretNetworkChainId(environment)
-          let client =  document.secretNetworkClient(environment);
-          let contractAddress = document.featureContractAddress(environment);
-          let httpUrl = document.secretNetworkHttpUrl(environment)
           let tokenAddress = document.mountDoomSetViewingKeyForm.tokenAddress.value;
           let contractHash = document.mountDoomSetViewingKeyForm.contractHash.value;
           let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
@@ -198,10 +191,10 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(chainId);
+                await window.keplr.enable(this.chainId);
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(chainId);
+                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
                 let gasParams = {
@@ -210,7 +203,7 @@ $(document).ready(function(){
                       gas: '50000',
                     },
                   }
-                client = document.secretNetworkSigningClient(environment, this.address, gasParams)
+                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               } catch (error) {
                 console.error(error)
               }
@@ -219,7 +212,7 @@ $(document).ready(function(){
             }
           }
 
-          result = await client.execute(contractAddress, msg)
+          result = await this.client.execute(this.contractAddress, msg)
           document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
         }
         catch(err) {
@@ -229,10 +222,6 @@ $(document).ready(function(){
           changeSubmitButtonToReady()
         }
       };
-    }
-
-    function applyDecimals(amount, decimals) {
-      return amount / parseFloat("1" + '0'.repeat(decimals))
     }
   };
 });

@@ -98,6 +98,10 @@ document.activateKeplr = function() {
 }
 
 // === FUNCTIONS ===
+document.applyDecimals = function(amount, decimals) {
+  return amount / parseFloat("1" + '0'.repeat(decimals))
+}
+
 document.featureContractAddress = function(environment) {
   let contractAddress
   if (environment == 'staging') {
