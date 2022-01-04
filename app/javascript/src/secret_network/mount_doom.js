@@ -86,10 +86,10 @@ $(document).ready(function(){
                     imageUrl = nftInfoResponse['nft_info']['extension']['media'][0]['url']
                     nftName = nftInfoResponse['nft_info']['extension']['name']
                   }
-                  nftsContainerHtml += '<div class="col-sm-6 col-lg-4 mb-4"><div class="card"><div class="card-body">'
+                  nftsContainerHtml += '<div class="col-sm-6 col-lg-4 mb-4"><div class="card">'
                   nftsContainerHtml += '<img class="w-100" src="' + imageUrl + '">'
-                  nftsContainerHtml += '<h5>' + nftName + '</h5>'
-                  nftsContainerHtml += '</div></div></div>'
+                  nftsContainerHtml += '<h5 class="title title-sm mt-2">' + nftName + '</h5>'
+                  nftsContainerHtml += '</div></div>'
                   $nftsContainer.html(nftsContainerHtml)
                   $nftsContainer.removeClass('d-none')
                 }
