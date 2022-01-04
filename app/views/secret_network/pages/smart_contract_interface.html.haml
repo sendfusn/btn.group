@@ -1,53 +1,52 @@
-.header-banner.bg-theme-grad-s2.keplr-wallet#secret-network-smart-contract-interface
-  .nk-banner
+.h-100.header-banner.keplr-wallet#secret-network-smart-contract-interface
+  .nk-banner.pb-5
     .banner.banner-page
-      .mt-3.w-100
+      .mt-3.mt-lg-5.w-100
         .container
-          .row.mb-5
-            .col-lg-12
+          .row.justify-content-center
+            .col-lg-10
               .card
-                .card-body
-                  = render 'features_header', blockchain: :secret_network, feature: :smart_contract_interface, show_environment_switch: true
-                  .collapse.mt-2#exampleCollapseExample
-                    .card.card-default.bg-theme-light
-                      .card-block
-                        %h6 Requirements
-                        %p
-                          1.
-                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-                          %br
-                          2. SCRT for gas, if performing a handle function.
-                  %hr
-                  %form{ name: 'secretNetworkSmartContractInterfaceForm' }
-                    .form-group
-                      %label.control-label Interaction type
-                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light.btn-md
-                          %input#handle{ name: 'interactionType', type: 'radio', value: 'handle' } Handle
-                        %label.btn.btn-md.btn-light
-                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } Query
-                    .form-group
-                      %label.form-label{ for: 'contract-address' } Contract address
-                      %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
-                    .form-group
-                      .row
-                        .col-md-6
-                          %label.form-label{ for: 'function-name' } Function name
-                          %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
-                    #params-container
-                    .form-group
-                      .text-center
-                        %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
-                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
-                      .d-none#loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      #ready
-                        Submit
-                    %p.mt-3
-                      %b * When calling handle functions, please update gas fee as required.
-              .card.my-3.d-none#result-container
-                .card-body
+                = render 'features_header', blockchain: :secret_network, feature: :smart_contract_interface, show_environment_switch: true
+                .collapse.mt-2#exampleCollapseExample
+                  .card.card-default.bg-theme-light
+                    .card-block
+                      %h6 Requirements
+                      %p
+                        1.
+                        = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                        %br
+                        2. SCRT for gas, if performing a handle function.
+                %hr
+                %form{ name: 'secretNetworkSmartContractInterfaceForm' }
+                  .form-group
+                    %label.control-label Interaction type
+                    .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                      %label.btn.btn-light.btn-md
+                        %input#handle{ name: 'interactionType', type: 'radio', value: 'handle' } Handle
+                      %label.btn.btn-md.btn-light
+                        %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } Query
+                  .form-group
+                    %label.form-label{ for: 'contract-address' } Contract address
+                    %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
+                  .form-group
+                    .row
+                      .col-md-6
+                        %label.form-label{ for: 'function-name' } Function name
+                        %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+                  #params-container
+                  .form-group
+                    .text-center
+                      %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
+                  %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
+                    .d-none#loading
+                      %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                      %em Loading...
+                    #ready
+                      Submit
+                  %p.mt-3
+                    %b * When calling handle functions, please update gas fee as required.
+              .card.bg-light.mt-3.d-none#result-container
+                .card-body.bg-white.border
                   %h3 Result
-                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
-  .nk-ovm.shape-q
+                  %code.d-none#result-value
+  .nk-ovm.shape-g
