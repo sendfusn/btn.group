@@ -4,8 +4,8 @@ $(document).ready(function(){
       let paramCount = 0;
       $('#add-new-param').click(function(event){
         event.preventDefault();
-        $('#params-container').append('<div class="param-container"><hr><div class="row"><div class="col-8 mb-3"><label class="form-label" for="param-' + paramCount + '-key">Key</label><input autocomplete="off" class="form-control" id="param-' + paramCount + '-key"></div><div class="col-4 text-right"><a href="#" class="icon ti ti-close"></a></div><div class="col-8 mb-3"><label class="form-label" for="param-' + paramCount + '-value">Value</label><input autocomplete="off" class="form-control" id="param-' + paramCount + '-value"></div><div class="col-4 mb-3"><label class="form-label" for="param-' + paramCount + '-type">Type</label><select class="form-control" id="param-' + paramCount + '-type"><option value="raw">raw</option><option selected value="string">text / string</option></select></div></div></div>');
-        $(".param-container .ti-close").click(function(){
+        $('#params-container').append('<div class="param-container"><hr><div class="row"><div class="col-8"><div class="field-item"><label class="field-label" for="param-' + paramCount + '-key">Key</label><input autocomplete="off" class="input-bordered" id="param-' + paramCount + '-key"></div></div><div class="col-4 text-right"><a href="#" class="fa fa-times"></a></div><div class="col-8"><div class="field-item"><label class="field-label" for="param-' + paramCount + '-value">Value</label><input autocomplete="off" class="input-bordered" id="param-' + paramCount + '-value"></div></div><div class="col-4"><div class="field-item"><label class="field-label" for="param-' + paramCount + '-type">Type</label><select class="input-bordered" id="param-' + paramCount + '-type"><option value="raw">raw</option><option selected value="string">text / string</option></select></div></div></div></div>');
+        $(".param-container .fa-times").click(function(){
           this.closest('.param-container').remove();
         })
         paramCount++;

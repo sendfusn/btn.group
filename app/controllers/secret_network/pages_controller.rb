@@ -4,9 +4,7 @@ module SecretNetwork
   class PagesController < ApplicationController
     before_action :authenticate_admin_user!, only: %i[trade_pairs]
 
-    def address_alias
-      @hide_footer = true
-    end
+    def address_alias; end
 
     def block_locker
       @head_description = 'Never lose your blockchain keys. Decentralized, immutable and affordable way to store your blockchain keys on the Secret network.'
@@ -33,7 +31,6 @@ module SecretNetwork
       @head_description = 'DeFi / DEX aggregator offering the best token swap rates on the Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png'
       @head_title = 'Button Swap | Secret network | btn.group'
-      @hide_footer = true
     end
 
     def butt_lode; end
@@ -66,7 +63,9 @@ module SecretNetwork
       @head_title = 'Transactions | Secret network | btn.group'
     end
 
-    def why_some_of_our_contracts_are_not_private; end
+    def why_some_of_our_contracts_are_not_private
+      @show_footer = true
+    end
 
     def head_description
       @head_description || 'Buttcoin, block locker, yield optimizer and other blockchain solutions on the Secret and NEAR networks.'

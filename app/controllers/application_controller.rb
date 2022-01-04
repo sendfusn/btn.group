@@ -3,13 +3,20 @@
 class ApplicationController < ActionController::Base
   helper_method :features, :head_description, :head_image, :head_link, :head_title, :logo_cloudinary_public_id
 
-  def brand_assets; end
+  def brand_assets
+    @show_footer = true
+  end
 
-  def home; end
+  def home
+    @show_footer = true
+  end
 
-  def roadmap; end
+  def roadmap
+    @show_footer = true
+  end
 
   def features
+    @show_footer = true
     {
       near: {
         cloudinary_public_id: 'logos/icon_nm_yirtpt',

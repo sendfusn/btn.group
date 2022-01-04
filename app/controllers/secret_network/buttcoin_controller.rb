@@ -5,6 +5,7 @@ require 'rest-client'
 module SecretNetwork
   class ButtcoinController < ApplicationController
     def index
+      @show_footer = true
       @head_description = 'The native token of btn.group.'
       @head_title = 'Buttcoin (BUTT) | Secret network | btn.group'
     end

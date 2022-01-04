@@ -73,7 +73,7 @@
                                     = cl_image_tag(features[blockchain_symbol][:cloudinary_public_id], width: 14, height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
                                     = feature_value[:name]
         = yield
-        - unless @hide_footer
+        - if @show_footer
           %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
             %section.section.section-m.tc-light.tc-light-alt.bg-transparent
               .container
