@@ -72,6 +72,7 @@ $(document).ready(function(){
                   let nftInfoResponse = await client.queryContractSmart(tokenAddress, params);
                   let imageUrl;
                   let nftName;
+                  console.log(nftInfoResponse)
                   if (nftInfoResponse['nft_info']['token_uri']) {
                     let result = await $.ajax({
                       url: nftInfoResponse['nft_info']['token_uri'],
@@ -79,8 +80,11 @@ $(document).ready(function(){
                     })
                     imageUrl = result['image']
                     nftName = result['name']
-                  } else {
+                  } else if(nftInfoResponse['nft_info']['extension']['image']) {
                     imageUrl = nftInfoResponse['nft_info']['extension']['image']
+                    nftName = nftInfoResponse['nft_info']['extension']['name']
+                  } else {
+                    imageUrl = nftInfoResponse['nft_info']['extension']['media'][0]['url']
                     nftName = nftInfoResponse['nft_info']['extension']['name']
                   }
                   nftsContainerHtml += '<div class="col-sm-6 col-lg-4 mb-4"><div class="card"><div class="card-body">'
@@ -178,7 +182,7 @@ $(document).ready(function(){
         document.hideAllAlerts();
         try {
           // Set environment
-          let environment = document.featureEnvironment();
+          let environment = 'production'
           let chainId = document.secretNetworkChainId(environment)
           let client =  document.secretNetworkClient(environment);
           let contractAddress = document.featureContractAddress(environment);
