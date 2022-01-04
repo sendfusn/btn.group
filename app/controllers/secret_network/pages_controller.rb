@@ -4,7 +4,9 @@ module SecretNetwork
   class PagesController < ApplicationController
     before_action :authenticate_admin_user!, only: %i[trade_pairs]
 
-    def address_alias; end
+    def address_alias
+      @hide_footer = true
+    end
 
     def block_locker
       @head_description = 'Never lose your blockchain keys. Decentralized, immutable and affordable way to store your blockchain keys on the Secret network.'
