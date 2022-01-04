@@ -1,102 +1,102 @@
-.header-banner.bg-theme-grad-s2.keplr-wallet#secret-network-butt-lode
-  .nk-banner
+.header-banner.keplr-wallet#secret-network-butt-lode
+  .nk-banner.pb-5
     .banner.banner-page
       .mt-3.mb-5.w-100
         .container
           .row
             .col-12
               .card
-                .card-body
-                  = cl_image_tag 'secret_network/butt_lode/butt_lode_e6e5dm', crop: :scale, dpr: 2, fetch_format: :auto, style: 'width: 100%;', class: 'mb-3'
-                  = render 'features_header', blockchain: :secret_network, feature: :butt_lode, show_environment_switch: false
-                  = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:butt_lode][:contracts][:production], staging_contract: nil
-                  .collapse.mt-2#exampleCollapseExample
-                    .card.card-default.bg-theme-light
-                      .card-block
-                        %h6 Requirements
-                        %p
-                          1.
-                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-                          %br
-                          2. SCRT for gas
-                          %br
-                          3. Have an admin or nominated admin role to call functions.
-                        %h6 Why it was created
-                        %p We needed a contract to send the BUTT made from our apps and dapps. The intention is to use the BUTT to incentivize liquidity providers. It had to be a smart contract with the parameters that would give the community a good amount of time to consider our choices.
-                        = cl_image_tag 'secret_network/butt_lode/Screen_Shot_2021-11-17_at_9.53.47_am_cx9yhs', crop: :scale, dpr: 2, fetch_format: :auto, class: 'mb-3'
-                        %h6 Design choices
-                        %p The smart contract only allows one receivable address and one admin at a time. The receivable address can be changed, but there is a 5 day delay. Currently the admin is a member of btn.group, but in the future, this can be changed to a smart contract so that changes can be put to a vote.
+                = cl_image_tag 'secret_network/butt_lode/butt_lode_e6e5dm', crop: :scale, dpr: 2, fetch_format: :auto, style: 'width: 100%;', class: 'mb-3'
+                = render 'features_header', blockchain: :secret_network, feature: :butt_lode, show_environment_switch: false
+                .collapse.mt-2#exampleCollapseExample
+                  .card.card-default.bg-theme-light
+                    .card-block
+                      = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:butt_lode][:contracts][:production], staging_contract: nil
+                      %h6 Requirements
+                      %p
+                        1.
+                        = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                        %br
+                        2. SCRT for gas
+                        %br
+                        3. Have an admin or nominated admin role to call functions.
+                      %h6 Why it was created
+                      %p We needed a contract to send the BUTT made from our apps and dapps. The intention is to use the BUTT to incentivize liquidity providers. It had to be a smart contract with the parameters that would give the community a good amount of time to consider our choices.
+                      = cl_image_tag 'secret_network/butt_lode/Screen_Shot_2021-11-17_at_9.53.47_am_cx9yhs', crop: :scale, dpr: 2, fetch_format: :auto, class: 'mb-3'
+                      %h6 Design choices
+                      %p The smart contract only allows one receivable address and one admin at a time. The receivable address can be changed, but there is a 5 day delay. Currently the admin is a member of btn.group, but in the future, this can be changed to a smart contract so that changes can be put to a vote.
 
-                        %h6 References
-                        %p
-                          1.
-                          = link_to 'github - BUTT lode', 'https://github.com/btn-group/butt-lode', target: '_blank', rel: 'noopener'
-                          %br
-                          2.
-                          = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
-                  %hr
-                  %ul.nav.tab-nav.tab-nav-btn
-                    %li
-                      %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Config
-                    %li
-                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Send
-                    %li
-                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-3' } Nominate
-                    %li
-                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-4' } Change
-                  .tab-content
-                    .tab-pane.fade.active.show#tab-2-1
-                      %table.table.table-bordered
-                        %tbody
-                          %tr
-                            %td.table-head Admin
-                            %td.table-des#admin-table-data Loading...
-                          %tr
-                            %td.table-head Admin change allowed from
-                            %td.table-des#admin-change-allowed-from-table-data Loading...
-                          %tr
-                            %td.table-head BUTT balance
-                            %td.table-des#butt-balance-table-data Loading...
-                          %tr
-                            %td.table-head New admin nomination
-                            %td.table-des#new-admin-nomination-table-data Loading...
-                          %tr
-                            %td.table-head New receivable address nomination
-                            %td.table-des#new-receivable-address-nomination-table-data Loading...
-                          %tr
-                            %td.table-head Receivable address
-                            %td.table-des#receivable-address-table-data Loading...
-                          %tr
-                            %td.table-head Receivable address change allowed from
-                            %td.table-des#receivable-address-change-allowed-from-table-data Loading...
-                          %tr
-                            %td.table-head Time delay
-                            %td.table-des 432,000 seconds (5 days)
-                          %tr
-                            %td.table-head Viewing key
-                            %td.table-des DoTheRightThing.
-                    .tab-pane.fade#tab-2-2
-                      %b
-                        %i * This can only be called by the admin
-                      %form{ name: 'buttLodeSendForm' }
-                        .form-group
-                          %label.control-label Receivable address
-                          %input.form-control.w-100{ name: 'receivableAddress', disabled: true }
-                        .form-group
-                          %label.control-label{ for: 'buttcoin-amount' } Amount
-                          %input.form-control.w-100#buttcoin-amount{ name: 'amount' }
-                        %button.btn.btn-primary.btn-md.mt-3#butt-lode-send-button{ type: 'submit' }
-                          .d-none#butt-lode-send-button-loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          #butt-lode-send-button-ready
-                            Submit
-                    .tab-pane.fade#tab-2-3
-                      %b
-                        %i * WIP
-                      -# %form{ name: 'buttLodeNominateForm' }
-                    .tab-pane.fade#tab-2-4
-                      %b
-                        %i * WIP
-                      -# %h3.title.title-md * Only for admin / nominated new admin
-                      -# %form{ name: 'buttLodeChangeForm' }
+                      %h6 References
+                      %p
+                        1.
+                        = link_to 'github - BUTT lode', 'https://github.com/btn-group/butt-lode', target: '_blank', rel: 'noopener'
+                        %br
+                        2.
+                        = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+                %hr
+                %ul.nav.tab-nav.tab-nav-btn
+                  %li
+                    %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Config
+                  %li
+                    %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Send
+                  %li
+                    %a{ 'data-toggle' => 'tab', :href => '#tab-2-3' } Nominate
+                  %li
+                    %a{ 'data-toggle' => 'tab', :href => '#tab-2-4' } Change
+                .tab-content
+                  .tab-pane.fade.active.show#tab-2-1
+                    %table.table.table-bordered
+                      %tbody
+                        %tr
+                          %td.table-head Admin
+                          %td.table-des#admin-table-data Loading...
+                        %tr
+                          %td.table-head Admin change allowed from
+                          %td.table-des#admin-change-allowed-from-table-data Loading...
+                        %tr
+                          %td.table-head BUTT balance
+                          %td.table-des#butt-balance-table-data Loading...
+                        %tr
+                          %td.table-head New admin nomination
+                          %td.table-des#new-admin-nomination-table-data Loading...
+                        %tr
+                          %td.table-head New receivable address nomination
+                          %td.table-des#new-receivable-address-nomination-table-data Loading...
+                        %tr
+                          %td.table-head Receivable address
+                          %td.table-des#receivable-address-table-data Loading...
+                        %tr
+                          %td.table-head Receivable address change allowed from
+                          %td.table-des#receivable-address-change-allowed-from-table-data Loading...
+                        %tr
+                          %td.table-head Time delay
+                          %td.table-des 432,000 seconds (5 days)
+                        %tr
+                          %td.table-head Viewing key
+                          %td.table-des DoTheRightThing.
+                  .tab-pane.fade#tab-2-2
+                    %b
+                      %i * This can only be called by the admin
+                    %form{ name: 'buttLodeSendForm' }
+                      .form-group
+                        %label.control-label Receivable address
+                        %input.form-control.w-100{ name: 'receivableAddress', disabled: true }
+                      .form-group
+                        %label.control-label{ for: 'buttcoin-amount' } Amount
+                        %input.form-control.w-100#buttcoin-amount{ name: 'amount' }
+                      %button.btn.btn-primary.btn-md.mt-3#butt-lode-send-button{ type: 'submit' }
+                        .d-none#butt-lode-send-button-loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        #butt-lode-send-button-ready
+                          Submit
+                  .tab-pane.fade#tab-2-3
+                    %b
+                      %i * WIP
+                    -# %form{ name: 'buttLodeNominateForm' }
+                  .tab-pane.fade#tab-2-4
+                    %b
+                      %i * WIP
+                    -# %h3.title.title-md * Only for admin / nominated new admin
+                    -# %form{ name: 'buttLodeChangeForm' }
+  .nk-ovm.shape-a
