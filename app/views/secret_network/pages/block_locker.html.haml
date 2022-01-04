@@ -1,7 +1,7 @@
-.header-banner.bg-theme-grad-s2.keplr-wallet#secret-network-block-locker
-  .nk-banner
+.header-banner.keplr-wallet#secret-network-block-locker
+  .nk-banner.pb-5
     .banner.banner-page
-      .mt-3.w-100
+      .mt-3.mb-5.w-100
         .container
           .row.mb-3
             .col-12
@@ -13,97 +13,96 @@
           .row
             .col-12
               .card
-                .card-body
-                  = render 'features_header', blockchain: :secret_network, feature: :block_locker, show_environment_switch: false
-                  = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:block_locker][:contracts][:production], staging_contract: nil
-                  .collapse.mt-2#exampleCollapseExample
-                    .card.card-default.bg-theme-light
-                      .card-block
-                        = cl_image_tag 'secret_network/block_locker/bl2_ep4ctq', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
-                        %h6 Requirements
-                        %p
-                          1.
-                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-                          %br
-                          2. SCRT for gas
-                          %br
-                          3. BUTT for creating, updating and unlocking a locker.
-                        %h6 Why it was created
-                        %p A friend of ours bought some SCRT, transferred it to her Keplr wallet and wrote the mnemonic phrase in her notebook. Her hard drive died and she accidentally threw her notebook in the trash when she moved houses. There are countless stories like this where people have lost life changing fortunes in the trash.
+                = render 'features_header', blockchain: :secret_network, feature: :block_locker, show_environment_switch: false
+                .collapse.mt-2#exampleCollapseExample
+                  .card.card-default.bg-theme-light
+                    .card-block
+                      = cl_image_tag 'secret_network/block_locker/bl2_ep4ctq', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
+                      = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:block_locker][:contracts][:production], staging_contract: nil
+                      %h6 Requirements
+                      %p
+                        1.
+                        = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                        %br
+                        2. SCRT for gas
+                        %br
+                        3. BUTT for creating, updating and unlocking a locker.
+                      %h6 Why it was created
+                      %p A friend of ours bought some SCRT, transferred it to her Keplr wallet and wrote the mnemonic phrase in her notebook. Her hard drive died and she accidentally threw her notebook in the trash when she moved houses. There are countless stories like this where people have lost life changing fortunes in the trash.
 
-                        %h6 btn.group's solution: Block locker
-                        %p Our solution is to leverage blockchain, specifically the Secret network, to provide a way for users to store private important data like this, in an encrypted format that can be accessed anywhere, and can’t be lost. This can be achieved at the fraction of a cost of physical solutions, which can be lost or stolen anyways.
+                      %h6 btn.group's solution: Block locker
+                      %p Our solution is to leverage blockchain, specifically the Secret network, to provide a way for users to store private important data like this, in an encrypted format that can be accessed anywhere, and can’t be lost. This can be achieved at the fraction of a cost of physical solutions, which can be lost or stolen anyways.
 
-                        %h6 Instructions
-                        %p
-                          1. Store your important data, a passphrase and up to 3 addresses that can unlock your locker.
-                          %br
-                          2. Double check the contents of your locker via "VIEW (WHEN LOCKED)".
-                          %br
-                          3. When required, ask an owner of address that you specified in step 1, to unlock your locker.
-                          %br
-                          4. When unlocked, get the contents of your locker via "VIEW (WHEN UNLOCKED)".
+                      %h6 Instructions
+                      %p
+                        1. Store your important data, a passphrase and up to 3 addresses that can unlock your locker.
+                        %br
+                        2. Double check the contents of your locker via "VIEW (WHEN LOCKED)".
+                        %br
+                        3. When required, ask an owner of address that you specified in step 1, to unlock your locker.
+                        %br
+                        4. When unlocked, get the contents of your locker via "VIEW (WHEN UNLOCKED)".
 
-                        %h6 Extra notes
-                        %p
-                          1. Every 555th BUTT sent into the contract will send 555 BUTT to the user.
-                          %br
-                          2. Creating, updating and unlocking can't be confirmed on chain. It will just look like a user has interacted with the BUTT contract.
-                          %br
-                          3. Viewing a locker, when locked, can be confirmed on chain.
-                        %h6 References
-                        %p
-                          1.
-                          = link_to 'github - block-locker', 'https://github.com/btn-group/block-locker', target: '_blank', rel: 'noopener'
-                          %br
-                          2.
-                          = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
-                  %hr
-                  %form{ name: 'blockLockerForm' }
-                    .form-group
-                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light
-                          %input#handle-create-or-update{ name: 'interactionType', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update
-                        %label.btn.btn-light
-                          %input#handle-unlock{ name: 'interactionType', type: 'radio', value: 'handleUnlock' } Unlock
-                        %label.btn.btn-light
-                          %input#handle-view{ name: 'interactionType', type: 'radio', value: 'handleViewLocker' } View (when locked)
-                        %label.btn.btn-light
-                          %input#query-view{ name: 'interactionType', type: 'radio', value: 'queryViewLocker' } View (when unlocked)
-                    .form-group.d-none#wallet-address-form-group
-                      %label.control-label Wallet address
-                      %input.form-control.w-100#wallet-address{ name: 'walletAddress', autocomplete: 'off' }
-                    .form-group#content-form-group
-                      %label.control-label{ for: 'content' } Content
-                      %textarea.form-control.w-100#content{ name: 'content', autocomplete: 'off', rows: 5 }
-                    .form-group#passphrase-form-group
-                      %label.control-label{ for: 'passphrase' } Passphrase
-                      %input.form-control.w-100#passphrase{ name: 'passphrase', autocomplete: 'off' }
-                    .form-group#whitelisted-address-1-form-group
-                      %label.control-label{ for: 'whitelisted-address-1' } Whitelisted address 1
-                      %input.form-control.w-100#whitelisted-address-1{ name: 'whitelistedAddress1', autocomplete: 'off' }
-                    .form-group#whitelisted-address-2-form-group
-                      %label.control-label{ for: 'whitelisted-address-2' } Whitelisted address 2
-                      %input.form-control.w-100#whitelisted-address-2{ name: 'whitelistedAddress2', autocomplete: 'off' }
-                    .form-group#whitelisted-address-3-form-group
-                      %label.control-label{ for: 'whitelisted-address-3' } Whitelisted address 3
-                      %input.form-control.w-100#whitelisted-address-3{ name: 'whitelistedAddress3', autocomplete: 'off' }
-                    %button.btn.btn-primary.btn-md.mt-3#submit-button{ type: 'submit' }
-                      .d-none#loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      #ready
-                        Submit
-                  %hr
-                  * Cost to create, update or unlock a locker = 1 BUTT + ~gas(SCRT)
-                  %br
-                  * Cost to view the locker when locked = ~gas(SCRT)
-                  %br
-                  * Cost to view the locker when unlocked = FREE
-                  %br
-                  * You can get BUTT from
-                  = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
+                      %h6 Extra notes
+                      %p
+                        1. Every 555th BUTT sent into the contract will send 555 BUTT to the user.
+                        %br
+                        2. Creating, updating and unlocking can't be confirmed on chain. It will just look like a user has interacted with the BUTT contract.
+                        %br
+                        3. Viewing a locker, when locked, can be confirmed on chain.
+                      %h6 References
+                      %p
+                        1.
+                        = link_to 'github - block-locker', 'https://github.com/btn-group/block-locker', target: '_blank', rel: 'noopener'
+                        %br
+                        2.
+                        = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+                %hr
+                %form{ name: 'blockLockerForm' }
+                  .form-group
+                    .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                      %label.btn.btn-light
+                        %input#handle-create-or-update{ name: 'interactionType', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update
+                      %label.btn.btn-light
+                        %input#handle-unlock{ name: 'interactionType', type: 'radio', value: 'handleUnlock' } Unlock
+                      %label.btn.btn-light
+                        %input#handle-view{ name: 'interactionType', type: 'radio', value: 'handleViewLocker' } View (when locked)
+                      %label.btn.btn-light
+                        %input#query-view{ name: 'interactionType', type: 'radio', value: 'queryViewLocker' } View (when unlocked)
+                  .form-group.d-none#wallet-address-form-group
+                    %label.control-label Wallet address
+                    %input.form-control.w-100#wallet-address{ name: 'walletAddress', autocomplete: 'off' }
+                  .form-group#content-form-group
+                    %label.control-label{ for: 'content' } Content
+                    %textarea.form-control.w-100#content{ name: 'content', autocomplete: 'off', rows: 5 }
+                  .form-group#passphrase-form-group
+                    %label.control-label{ for: 'passphrase' } Passphrase
+                    %input.form-control.w-100#passphrase{ name: 'passphrase', autocomplete: 'off' }
+                  .form-group#whitelisted-address-1-form-group
+                    %label.control-label{ for: 'whitelisted-address-1' } Whitelisted address 1
+                    %input.form-control.w-100#whitelisted-address-1{ name: 'whitelistedAddress1', autocomplete: 'off' }
+                  .form-group#whitelisted-address-2-form-group
+                    %label.control-label{ for: 'whitelisted-address-2' } Whitelisted address 2
+                    %input.form-control.w-100#whitelisted-address-2{ name: 'whitelistedAddress2', autocomplete: 'off' }
+                  .form-group#whitelisted-address-3-form-group
+                    %label.control-label{ for: 'whitelisted-address-3' } Whitelisted address 3
+                    %input.form-control.w-100#whitelisted-address-3{ name: 'whitelistedAddress3', autocomplete: 'off' }
+                  %button.btn.btn-primary.btn-md.mt-3#submit-button{ type: 'submit' }
+                    .d-none#loading
+                      %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                      %em Loading...
+                    #ready
+                      Submit
+                %hr
+                * Cost to create, update or unlock a locker = 1 BUTT + ~gas(SCRT)
+                %br
+                * Cost to view the locker when locked = ~gas(SCRT)
+                %br
+                * Cost to view the locker when unlocked = FREE
+                %br
+                * You can get BUTT from
+                = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
               .card.my-3.d-none#result-container
-                .card-body
-                  %h3 Result
-                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                %h3 Result
+                %pre.p-1.m-1.alert.alert-success.d-none#result-value
+  .nk-ovm.shape-a
