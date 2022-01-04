@@ -6,79 +6,77 @@
           .row
             .col-12
               .card
-                .card-body
-                  = cl_image_tag 'secret_network/mount_doom/mt_doom_biwkdj', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
-                  = render 'features_header', blockchain: :secret_network, feature: :mount_doom, show_environment_switch: false
-                  = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:mount_doom][:contracts][:production], staging_contract: nil
-                  .collapse.mt-2#exampleCollapseExample
-                    .card.card-default.bg-theme-light
-                      .card-block
-                        %h6 Requirements
-                        %p
-                          1.
-                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-                          %br
-                          2. SCRT for gas, if setting a viewing key
+                = render 'features_header', blockchain: :secret_network, feature: :mount_doom, show_environment_switch: false
+                .collapse.mt-2#exampleCollapseExample
+                  .card.card-default.bg-theme-light
+                    .card-block
+                      = cl_image_tag 'secret_network/mount_doom/mt_doom_biwkdj', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
+                      %h6 Requirements
+                      %p
+                        1.
+                        = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                        %br
+                        2. SCRT for gas, if setting a viewing key
 
-                        %h6 What is it?
-                        %p This is a burn address smart contract on the Secret network. Anyone can send any Secret network token here and set a viewing key for that token, for this smart contract address. It has no admin functionality so it is completely decentralized.
+                      %h6 What is it?
+                      %p This is a burn address smart contract on the Secret network. Anyone can send any Secret network token here and set a viewing key for that token, for this smart contract address. It has no admin functionality so it is completely decentralized.
 
-                        %h6 Why it was created
-                        %p We wanted to send some BUTT to a burn address and realised that there wasn't anywhere to send it to, and even if we did, nobody could see it.
+                      %h6 Why it was created
+                      %p We wanted to send some BUTT to a burn address and realised that there wasn't anywhere to send it to, and even if we did, nobody could see it.
 
-                        %h6 How to use
-                        %p
-                          1. Send tokens to contract.
-                          %br
-                          2. Set viewing key for token if required.
-                          %br
-                          3. Query token.
+                      %h6 How to use
+                      %p
+                        1. Send tokens to contract.
+                        %br
+                        2. Set viewing key for token if required.
+                        %br
+                        3. Query token.
 
-                        %h6 References
-                        %p
-                          1.
-                          = link_to 'github - mount-doom', 'https://github.com/btn-group/mount-doom', target: '_blank', rel: 'noopener'
-                          %br
-                          2.
-                          = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
-                  %hr
-                  %ul.nav.tab-nav.tab-nav-btn
-                    %li
-                      %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Query
-                    %li
-                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Set viewing key
-                  .tab-content
-                    .tab-pane.fade.active.show#tab-2-1
-                      %form{ name: 'mountDoomQueryForm' }
-                        .form-group
-                          .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                            %label.btn.btn-light.btn-md
-                              %input{ name: 'tokenType', type: 'radio', value: 'nft', checked: true } NFT
-                            %label.btn.btn-md.btn-light
-                              %input{ name: 'tokenType', type: 'radio', value: 'snip-20' } SNIP-20
-                        .form-group
-                          %label.control-label Token Address
-                          %input.form-control.w-100{ name: 'tokenAddress', required: true, autocomplete: 'off' }
-                        %button.btn.btn-primary.btn-md{ type: 'submit' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            Submit
-                    .tab-pane.fade#tab-2-2
-                      %form{ name: 'mountDoomSetViewingKeyForm' }
-                        .form-group
-                          %label.control-label Token address
-                          %input.form-control.w-100{ name: 'tokenAddress', required: true, autocomplete: 'off' }
-                        .form-group
-                          %label.control-label Contract hash
-                          %input.form-control.w-100{ name: 'contractHash', autocomplete: 'off', required: true }
-                        %button.btn.btn-primary.btn-md{ type: 'submit' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            Submit
+                      %h6 References
+                      %p
+                        1.
+                        = link_to 'github - mount-doom', 'https://github.com/btn-group/mount-doom', target: '_blank', rel: 'noopener'
+                        %br
+                        2.
+                        = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+                %hr
+                %ul.nav.tab-nav.tab-nav-btn
+                  %li
+                    %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Query
+                  %li
+                    %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Set viewing key
+                .tab-content
+                  .tab-pane.fade.active.show#tab-2-1
+                    %form{ name: 'mountDoomQueryForm' }
+                      .form-group
+                        .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
+                          %label.btn.btn-light.btn-md
+                            %input{ name: 'tokenType', type: 'radio', value: 'nft', checked: true } NFT
+                          %label.btn.btn-md.btn-light
+                            %input{ name: 'tokenType', type: 'radio', value: 'snip-20' } SNIP-20
+                      .form-group
+                        %label.control-label Token Address
+                        %input.form-control.w-100{ name: 'tokenAddress', required: true, autocomplete: 'off' }
+                      %button.btn.btn-primary.btn-md{ type: 'submit' }
+                        .d-none.loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        .ready
+                          Submit
+                  .tab-pane.fade#tab-2-2
+                    %form{ name: 'mountDoomSetViewingKeyForm' }
+                      .form-group
+                        %label.control-label Token address
+                        %input.form-control.w-100{ name: 'tokenAddress', required: true, autocomplete: 'off' }
+                      .form-group
+                        %label.control-label Contract hash
+                        %input.form-control.w-100{ name: 'contractHash', autocomplete: 'off', required: true }
+                      %button.btn.btn-primary.btn-md{ type: 'submit' }
+                        .d-none.loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        .ready
+                          Submit
           .row.mt-4.d-none#transactions-container
             .col-12
               .card

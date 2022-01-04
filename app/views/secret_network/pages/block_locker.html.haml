@@ -14,12 +14,12 @@
             .col-12
               .card
                 .card-body
-                  = cl_image_tag 'secret_network/block_locker/bl2_ep4ctq', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
                   = render 'features_header', blockchain: :secret_network, feature: :block_locker, show_environment_switch: false
                   = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:block_locker][:contracts][:production], staging_contract: nil
                   .collapse.mt-2#exampleCollapseExample
                     .card.card-default.bg-theme-light
                       .card-block
+                        = cl_image_tag 'secret_network/block_locker/bl2_ep4ctq', width: 333, crop: :scale, dpr: 2, fetch_format: :auto
                         %h6 Requirements
                         %p
                           1.

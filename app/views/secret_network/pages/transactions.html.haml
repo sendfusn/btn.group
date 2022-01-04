@@ -6,99 +6,99 @@
           .row.mb-5
             .col-12
               .card
-                .card-body
-                  = cl_image_tag 'secret_network/transactions/transaction_rough_j8coyp', crop: :scale, dpr: 2, fetch_format: :auto, width: 230
-                  = render 'features_header', blockchain: :secret_network, feature: :transactions, show_environment_switch: false
-                  %p
-                    * Viewing SNIP-20 transactions is live. Regular transactions and improved ui/ux in development.
-                  .collapse.mt-2#exampleCollapseExample
+                = render 'features_header', blockchain: :secret_network, feature: :transactions, show_environment_switch: false
+                .collapse.mt-2#exampleCollapseExample
+                  .card.card-default.bg-theme-light
+                    .card-block
+                      = cl_image_tag 'secret_network/transactions/transaction_rough_j8coyp', crop: :scale, dpr: 2, fetch_format: :auto, width: 230
+                      %h6 Requirements
+                      %p
+                        1.
+                        = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                        if you would like to use the convenience buttons provided.
+                        %br
+                        2. At least 555 BUTT, held in the account you are querying, if you want to see more than the latest 10 transactions.
+                      %h6 References
+                      %p
+                        1.
+                        = link_to 'https://github.com/SecretFoundation/SNIPs/blob/master/SNIP-20.md', target: '_blank', rel: 'noopener'
+                        %br
+                        2.
+                        = link_to 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+                %hr
+                %form{ name: 'secretNetworkTransactionsForm' }
+                  .form-group
+                    %label.form-label{ for: 'contract-address' } Token contract address
+                    = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.where(official: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).where.not(coin_gecko_id: nil).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
+                  %hr{ style: 'border-style: dashed;' }
+                  .form-group
+                    .load-wallet-link
+                      %span.load-wallet.d-none
+                      %button.btn.btn-light.btn-md.mb-3.border.w-100#load-address-from-keplr-wallet-button{ type: 'button' }
+                        .d-none.loading
+                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                          %em Loading...
+                        .ready
+                          Load from Keplr
+                    %label.form-label{ for: 'address' } Wallet address
+                    %input.form-control#address{ name: 'address' }
+                  .row
+                    .col-lg-6
+                      .form-group#viewing-key-container
+                        %label.form-label{ for: 'viewing-key' } Viewing key
+                        %span.load-viewing-key-link.d-none
+                          %span.load-viewing-key.d-none
+                          %button.btn.btn-light.btn-sm.ml-2.mb-1.border#load-viewing-key-from-keplr-button{ type: 'button' }
+                            .d-none.loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .ready
+                              Create
+                        .input-group
+                          %input.form-control.border-right-0#viewing-key-input{ type: 'password', required: true, spellcheck: false, autocorrect: 'off', autocapitalize: 'off', autocomplete: 'off', name: 'viewingKey' }
+                          .input-group-append
+                            %span.input-group-text.bg-white.border-left-0
+                              %i.fa.fa-eye
+                  .row
+                    .col-6.col-md-3
+                      .form-group
+                        %label.form-label{ for: 'page-size' } Show
+                        %select.form-control#page-size{ name: 'pageSize' }
+                          %option{ value: 10 } 10
+                          %option{ value: 50, selected: true } 50
+                          %option{ value: 100 } 100
+                          %option{ value: 1000 } 1000
+                    .col-6.col-md-3
+                      .form-group
+                        %label.form-label{ for: 'page' } Page
+                        %input.form-control#page{ type: 'number', name: 'page', value: '1', min: 1 }
+                  %button.btn.btn-primary.btn-md.mt-2#search-button{ type: 'submit' }
+                    .d-none#loading
+                      %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                      %em Loading...
+                    #ready
+                      Search
+                  .d-none.my-4#pay-wall
                     .card.card-default.bg-theme-light
                       .card-block
-                        %h6 Requirements
                         %p
-                          1.
-                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-                          if you would like to use the convenience buttons provided.
-                          %br
-                          2. At least 555 BUTT, held in the account you are querying, if you want to see more than the latest 10 transactions.
-                        %h6 References
-                        %p
-                          1.
-                          = link_to 'https://github.com/SecretFoundation/SNIPs/blob/master/SNIP-20.md', target: '_blank', rel: 'noopener'
-                          %br
-                          2.
-                          = link_to 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
-                  %hr
-                  %form{ name: 'secretNetworkTransactionsForm' }
-                    .form-group
-                      %label.form-label{ for: 'contract-address' } Token contract address
-                      = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.where(official: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).where.not(coin_gecko_id: nil).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
-                    %hr{ style: 'border-style: dashed;' }
-                    .form-group
-                      .load-wallet-link
-                        %span.load-wallet.d-none
-                        %button.btn.btn-light.btn-md.mb-3.border.w-100#load-address-from-keplr-wallet-button{ type: 'button' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            Load from Keplr
-                      %label.form-label{ for: 'address' } Wallet address
-                      %input.form-control#address{ name: 'address' }
-                    .row
-                      .col-lg-6
-                        .form-group#viewing-key-container
-                          %label.form-label{ for: 'viewing-key' } Viewing key
-                          %span.load-viewing-key-link.d-none
-                            %span.load-viewing-key.d-none
-                            %button.btn.btn-light.btn-sm.ml-2.mb-1.border#load-viewing-key-from-keplr-button{ type: 'button' }
-                              .d-none.loading
-                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                                %em Loading...
-                              .ready
-                                Create
-                          .input-group
-                            %input.form-control.border-right-0#viewing-key-input{ type: 'password', required: true, spellcheck: false, autocorrect: 'off', autocapitalize: 'off', autocomplete: 'off', name: 'viewingKey' }
-                            .input-group-append
-                              %span.input-group-text.bg-white.border-left-0
-                                %i.fa.fa-eye
-                    .row
-                      .col-6.col-md-3
-                        .form-group
-                          %label.form-label{ for: 'page-size' } Show
-                          %select.form-control#page-size{ name: 'pageSize' }
-                            %option{ value: 10 } 10
-                            %option{ value: 50, selected: true } 50
-                            %option{ value: 100 } 100
-                            %option{ value: 1000 } 1000
-                      .col-6.col-md-3
-                        .form-group
-                          %label.form-label{ for: 'page' } Page
-                          %input.form-control#page{ type: 'number', name: 'page', value: '1', min: 1 }
-                    %button.btn.btn-primary.btn-md.mt-2#search-button{ type: 'submit' }
-                      .d-none#loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      #ready
-                        Search
-                    .d-none.my-4#pay-wall
-                      .card.card-default.bg-theme-light
-                        .card-block
-                          %p
-                            %h6 You do not have full access.
-                            Only your 10 most recent transactions will be displayed.
-                            %br To get full access, please hold at least 555 Buttcoin (BUTT) in the wallet address you are querying.
-                  %h6.mt-4
-                    Balance:
-                    %span#balance
-                  .table-responsive
-                    %table.table.table-striped.table-bordered
-                      %thead
-                        %tr
-                          %th{ style: 'min-width: 150px !important;' }
-                          %th Description
-                          %th Amount
-                      %tbody#transactions-table-body
+                          %h6 You do not have full access.
+                          Only your 10 most recent transactions will be displayed.
+                          %br To get full access, please hold at least 555 Buttcoin (BUTT) in the wallet address you are querying.
+                %h6.mt-4
+                  Balance:
+                  %span#balance
+                .table-responsive
+                  %table.table.table-striped.table-bordered
+                    %thead
+                      %tr
+                        %th{ style: 'min-width: 150px !important;' }
+                        %th Description
+                        %th Amount
+                    %tbody#transactions-table-body
 
-                  %p * Minting transactions are not included (e.g. receiving tokens via the bridge etc)
+                %p
+                  * Minting transactions are not included (e.g. receiving tokens via the bridge etc)
+                  %br
+                  * Viewing SNIP-20 transactions is live. Regular transactions and improved ui/ux in development.
   .nk-ovm.shape-q
