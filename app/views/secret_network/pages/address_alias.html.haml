@@ -6,14 +6,7 @@
           .row.justify-content-center
             .col-xl-6.col-lg-7.col-md-9.col-sm-10
               .card.my-3
-                %h3.title.title-md.mb-0
-                  = features[:secret_network][:features][:address_alias][:name]
-                  %button.btn.btn-auto.btn-icon.btn-info.btn-play-icon-s2.float-right{ 'aria-controls' => 'exampleCollapseExample', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#exampleCollapseExample' }
-                    %em.fa.fa-info
-                %p.mb-0
-                  %b Blockchain:
-                  = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                  = features[:secret_network][:name].to_s
+                = render 'features_header', blockchain: :secret_network, feature: :address_alias, show_environment_switch: false
                 .collapse.mt-2#exampleCollapseExample
                   .card.card-default.bg-theme-light
                     .card-block

@@ -7,12 +7,16 @@
             .col-lg-12
               .card
                 .card-body
-                  %h3= features[:secret_network][:features][:smart_contract_interface][:name]
-                  %p.mb-0
-                    %b Blockchain:
-                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                    = features[:secret_network][:name].to_s
-                  = render 'environment_switch'
+                  = render 'features_header', blockchain: :secret_network, feature: :smart_contract_interface, show_environment_switch: true
+                  .collapse.mt-2#exampleCollapseExample
+                    .card.card-default.bg-theme-light
+                      .card-block
+                        %h6 Requirements
+                        %p
+                          1.
+                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                          %br
+                          2. SCRT for gas, if performing a handle function.
                   %hr
                   %form{ name: 'secretNetworkSmartContractInterfaceForm' }
                     .form-group
