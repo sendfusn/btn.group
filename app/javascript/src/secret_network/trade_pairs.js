@@ -55,7 +55,6 @@ $(document).ready(function(){
             let asset_1_address;
             let asset_0_amount;
             let asset_1_amount;
-            let enabled;
             if (protocolIdentifier == 'sienna') {
               asset_0_address = result['pair_info'][
               'pair']['token_0']['custom_token']['contract_addr']
@@ -75,23 +74,6 @@ $(document).ready(function(){
                 asset_1_address = ''
               }
               asset_1_amount = result['assets'][1]['amount']
-            }
-            if (Number(asset_0_amount) > 0 && Number(asset_1_amount) > 0 && asset_0_address.length > 0 && asset_1_address.length > 0) {
-              enabled = true
-            } else {
-              enabled = false
-            }
-            console.log(tradePair)
-            console.log(tradePair['enabled'])
-            console.log(enabled)
-            console.log(tradePair['enabled'] != enabled)
-            if (tradePair['enabled'] != enabled) {
-              let updateResult = await $.ajax({
-                url: '/pools/' + tradePair['id'],
-                type: 'put',
-                data: { pool: { enabled: enabled } },
-                dataType: 'json'
-              })
             }
             for (let cp of tradePair['cryptocurrency_pools']) {
               if (cp['cryptocurrency_role'] == 'deposit') {
