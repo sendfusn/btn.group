@@ -76,7 +76,7 @@ $(document).ready(function(){
               }
               asset_1_amount = result['assets'][1]['amount']
             }
-            if ((Number(asset_0_amount) + Number(asset_1_amount) > 0) && asset_0_address.length > 0 && asset_1_address.length > 0) {
+            if (Number(asset_0_amount) > 0 && Number(asset_1_amount) > 0 && asset_0_address.length > 0 && asset_1_address.length > 0) {
               enabled = true
             } else {
               enabled = false
