@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_02_224935) do
+ActiveRecord::Schema.define(version: 2022_01_05_021355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -140,6 +140,8 @@ ActiveRecord::Schema.define(version: 2022_01_02_224935) do
     t.integer "swap_count", null: false
     t.decimal "maximum_tradeable_value", precision: 15, scale: 2
     t.bigint "protocol_id"
+    t.decimal "arbitrage_amount", precision: 40
+    t.decimal "arbitrage_profit", precision: 15, scale: 2
     t.index ["from_id", "to_id"], name: "index_swap_paths_on_from_id_and_to_id"
     t.index ["from_id"], name: "index_swap_paths_on_from_id"
     t.index ["protocol_id"], name: "index_swap_paths_on_protocol_id"
