@@ -26,7 +26,7 @@ class Pool < ApplicationRecord
   # === CALLBACKS ===
   after_save do |pool|
     if pool.category == 'trade_pair' && pool.enabled
-      if pool.enabled_changed?
+      if pool.saved_change_to_enabled?
         CreateSwapPathsJob.perform_later
         CreateArbitragePathsJob.perform_later('BUTT')
         CreateArbitragePathsJob.perform_later('SBNB(BSC)')
@@ -34,12 +34,12 @@ class Pool < ApplicationRecord
         CreateArbitragePathsJob.perform_later('SWBTC')
         CreateArbitragePathsJob.perform_later('SXMR')
       end
-      SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.total_locked_changed?
+      SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.saved_change_to_total_locked?
     end
   end
 
   after_update do |pool|
-    pool.swap_paths.destroy_all if pool.category == 'trade_pair' && !pool.enabled && pool.enabled_changed?
+    pool.swap_paths.destroy_all if pool.category == 'trade_pair' && !pool.enabled && pool.saved_change_to_enabled?
   end
 
   # === INSTANCE METHODS ===
