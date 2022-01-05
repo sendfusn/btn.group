@@ -2,6 +2,7 @@
 
 class FindArbitrageOpportunitiesJob < ApplicationJob
   def perform(cryptocurrency_id)
+    return
     c = Cryptocurrency.find(cryptocurrency_id)
     swap_paths = SwapPath.where(from_id: cryptocurrency_id, to_id: cryptocurrency_id)
     return if swap_paths.blank?
@@ -10,7 +11,7 @@ class FindArbitrageOpportunitiesJob < ApplicationJob
     current_amount = c_ten_dollars_amount
     current_amount_as_usd = c.amount_as_usd(current_amount)
     largest_maximum_tradeable_value = swap_paths.order(:maximum_tradeable_value).last.maximum_tradeable_value
-    swap_paths.each { |sp| sp.update!(arbitrage_amount: 0, arbitrage_profit: 0) }
+    # swap_paths.each { |sp| sp.update!(arbitrage_amount: 0, arbitrage_profit: 0) }
     while largest_maximum_tradeable_value > current_amount_as_usd
       swap_paths.where('maximum_tradeable_value > ?', current_amount_as_usd)
                 .each do |sp|
