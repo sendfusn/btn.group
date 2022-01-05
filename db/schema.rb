@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_05_045825) do
+ActiveRecord::Schema.define(version: 2022_01_05_061340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_045825) do
     t.bigint "blockchain_id"
     t.string "denom"
     t.string "coin_gecko_id"
+    t.boolean "currently_finding_arbitrage_opportunities"
     t.index ["blockchain_id"], name: "index_cryptocurrencies_on_blockchain_id"
     t.index ["coin_gecko_id"], name: "index_cryptocurrencies_on_coin_gecko_id"
     t.index ["smart_contract_id", "symbol"], name: "index_cryptocurrencies_on_smart_contract_id_and_symbol", unique: true

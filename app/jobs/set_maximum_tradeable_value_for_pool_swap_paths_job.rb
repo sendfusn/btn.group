@@ -6,9 +6,9 @@ class SetMaximumTradeableValueForPoolSwapPathsJob < ApplicationJob
     return if psp.nil?
 
     SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool_id, psp.id)
-    if psp.swap_path.present?
-      mtv = psp.swap_path.pools.order(:total_locked).first.total_locked
-      psp.swap_path.update(maximum_tradeable_value: mtv)
+    if (swap_path = psp.swap_path)
+      mtv = swap_path.pools.order(:total_locked).first.total_locked
+      swap_path.update(maximum_tradeable_value: mtv) if mtv != swap_path.maximum_tradeable_value
     else
       psp.destroy
     end
