@@ -4,6 +4,7 @@ class SetMaximumTradeableValueForPoolSwapPathsJob < ApplicationJob
   def perform(pool_id, pool_swap_path_id)
     pool = Pool.find(pool_id)
     psp = PoolSwapPath.where(pool_id: pool_id).where('id > ?', pool_swap_path_id).order(:id).first
+    pool.update!(next_swap_path_to_set_maximum_tradeable_value_to: psp.swap_path_id) if pool.next_swap_path_to_set_maximum_tradeable_value_to.nil?
     return if pool.next_swap_path_to_set_maximum_tradeable_value_to != psp.swap_path_id
 
     swap_path = psp.swap_path
