@@ -26,7 +26,7 @@ class CryptocurrencyPool < ApplicationRecord
       if cp.cryptocurrency.price.present? && !(Sidekiq::ScheduledSet.new.any? do |job|
                                                  job.item['wrapped'] == 'FindArbitrageOpportunitiesJob' && job.args[0]['arguments'].first == cp.cryptocurrency_id
                                                end) && (cp.cryptocurrency.amount_as_usd(difference) > 100)
-        FindArbitrageOpportunitiesJob.set(wait_until: Time.current + 5.minutes).perform_later(cp.cryptocurrency_id)
+        FindArbitrageOpportunitiesJob.set(wait_until: Time.current + 5.seconds).perform_later(cp.cryptocurrency_id)
       end
     end
   end

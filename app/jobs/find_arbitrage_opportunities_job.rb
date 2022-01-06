@@ -11,7 +11,7 @@ class FindArbitrageOpportunitiesJob < ApplicationJob
                 job.item['wrapped'] == 'SetBestArbitrageOpportunityForSwapPathJob' && job.args[0]['arguments'].first == sp.id
               end
 
-      SetBestArbitrageOpportunityForSwapPathJob.set(wait_until: Time.current + 5.minutes).perform_later(sp.id)
+      SetBestArbitrageOpportunityForSwapPathJob.set(wait_until: Time.current + 5.seconds).perform_later(sp.id)
     end
   end
 end
