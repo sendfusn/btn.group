@@ -21,9 +21,13 @@ class CryptocurrencyPool < ApplicationRecord
     if cp.deposit? && cp.amount.present? && cp.saved_change_to_amount?
       cp.pool.update_total_locked
       cp.pool.update!(enabled: false) if cp.pool.trade_pair? && cp.amount.to_i.zero?
-      FindArbitrageOpportunitiesJob.set(wait_until: Time.current + 1.minute).perform_later(cp.cryptocurrency_id) unless Sidekiq::ScheduledSet.new.any? do |job|
-                                                                                                                          job.item['wrapped'] == 'FindArbitrageOpportunitiesJob' && job.args[0]['arguments'].first == cp.cryptocurrency_id
-                                                                                                                        end
+      difference = cp.saved_change_to_amount.first.to_i - cp.saved_change_to_amount.second.to_i
+      difference *= -1 unless difference.positive?
+      return if Sidekiq::ScheduledSet.new.any? do |job|
+                  job.item['wrapped'] == 'FindArbitrageOpportunitiesJob' && job.args[0]['arguments'].first == cp.cryptocurrency_id
+                end
+
+      FindArbitrageOpportunitiesJob.set(wait_until: Time.current + 5.minutes).perform_later(cp.cryptocurrency_id) if cp.cryptocurrency.amount_as_usd(difference) > 100
     end
   end
 end
