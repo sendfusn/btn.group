@@ -28,11 +28,9 @@ class Pool < ApplicationRecord
     if pool.category == 'trade_pair' && pool.enabled
       if pool.saved_change_to_enabled?
         CreateSwapPathsJob.perform_later
-        CreateArbitragePathsJob.perform_later('BUTT')
-        CreateArbitragePathsJob.perform_later('SBNB(BSC)')
-        CreateArbitragePathsJob.perform_later('SSCRT')
-        CreateArbitragePathsJob.perform_later('SWBTC')
-        CreateArbitragePathsJob.perform_later('SXMR')
+        CryptocurrencyPool.deposit.pluck(:cryptocurrency_id).uniq.each do |c_id|
+          CreateArbitragePathsJob.perform_later(Cryptocurrency.find(c_id).symbol)
+        end
       end
       SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.saved_change_to_total_locked?
     end
