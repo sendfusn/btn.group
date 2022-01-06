@@ -35,9 +35,6 @@ class SwapPath < ApplicationRecord
 
     arbitrage_amount = 0
     arbitrage_profit = -555
-    c_ten_dollars_amount = 10 / from.price * 10**from.decimals
-    current_amount = c_ten_dollars_amount
-    current_amount_as_usd = from.amount_as_usd(current_amount)
     largest_range_of_pools = 0
     swap_path_as_array.each do |pool_id|
       asset_1_value = 0
@@ -53,13 +50,16 @@ class SwapPath < ApplicationRecord
       end
       largest_range_of_pools = price_difference if price_difference > largest_range_of_pools
     end
+    interval_amount = largest_range_of_pools / 20 / from.price * 10**from.decimals
+    current_amount = interval_amount
+    current_amount_as_usd = from.amount_as_usd(current_amount)
     while maximum_tradeable_value > current_amount_as_usd && largest_range_of_pools > current_amount_as_usd
       net_profit = net_result_as_usd(simulate_swaps(current_amount)) - current_amount_as_usd
       if net_profit > arbitrage_profit
         arbitrage_amount = current_amount
         arbitrage_profit = net_profit
       end
-      current_amount += c_ten_dollars_amount
+      current_amount += interval_amount
       current_amount_as_usd = from.amount_as_usd(current_amount)
     end
     update!(arbitrage_amount: arbitrage_amount, arbitrage_profit: arbitrage_profit)
