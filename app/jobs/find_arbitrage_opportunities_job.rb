@@ -2,13 +2,12 @@
 
 class FindArbitrageOpportunitiesJob < ApplicationJob
   def perform(cryptocurrency_id)
-    c = Cryptocurrency.find(cryptocurrency_id)
-    return if c.currently_finding_arbitrage_opportunities
-
-    c.update!(currently_finding_arbitrage_opportunities: true)
     SwapPath.where(from_id: cryptocurrency_id, to_id: cryptocurrency_id)
             .where('maximum_tradeable_value > ?', 50)
-            .each(&:set_optimal_arbitrage_details)
-    c.update!(currently_finding_arbitrage_opportunities: false)
+            .each do |sp|
+              SetBestArbitrageOpportunityForSwapPathJob.set(wait_until: Time.current + 1.minute).perform_later(sp.id) unless Sidekiq::ScheduledSet.new.any? do |job|
+                                                                                                                                job.item['wrapped'] == 'SetBestArbitrageOpportunityForSwapPathJob' && job.args[0]['arguments'].first == sp.id
+                                                                                                                              end
+            end
   end
 end
