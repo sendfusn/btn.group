@@ -2,6 +2,9 @@
 
 class SetBestArbitrageOpportunityForSwapPathJob < ApplicationJob
   def perform(swap_path_id)
-    SwapPath.find(swap_path_id).set_optimal_arbitrage_details
+    sp = SwapPath.find(swap_path_id)
+    return if sp.updated_at > Time.current - 30.minutes
+
+    sp.set_optimal_arbitrage_details
   end
 end
