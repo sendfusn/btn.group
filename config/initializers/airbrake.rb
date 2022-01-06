@@ -56,6 +56,10 @@ if Rails.env.production?
     # c.blocklist_keys = Rails.application.config.filter_parameters
   end
 
+  Airbrake.add_filter do |notice|
+    notice.ignore! if notice[:errors].any? { |error| error[:type] == 'SignalException' }
+  end
+
   # A filter that collects request body information. Enable it if you are sure you
   # don't send sensitive information to Airbrake in your body (such as passwords).
   # https://github.com/airbrake/airbrake#requestbodyfilter
