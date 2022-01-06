@@ -2,7 +2,7 @@
 
 ActiveAdmin.register SwapPath do
   actions :index
-  config.sort_order = "arbitrage_profit_desc"
+  config.sort_order = 'arbitrage_profit_desc'
 
   index do
     id_column
