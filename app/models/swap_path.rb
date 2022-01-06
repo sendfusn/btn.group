@@ -30,6 +30,41 @@ class SwapPath < ApplicationRecord
     Cryptocurrency.find(to_id).amount_as_usd(result_amount) - gas_in_usd
   end
 
+  def set_optimal_arbitrage_details
+    return if from_id != to_id
+
+    arbitrage_amount = 0
+    arbitrage_profit = -555
+    c_ten_dollars_amount = 10 / from.price * 10**from.decimals
+    current_amount = c_ten_dollars_amount
+    current_amount_as_usd = from.amount_as_usd(current_amount)
+    largest_range_of_pools = 0
+    swap_path_as_array.each do |pool_id|
+      asset_1_value = 0
+      asset_2_value = 0
+      Pool.find(pool_id).cryptocurrency_pools.deposit.each_with_index do |cp, index|
+        asset_1_value = cp.cryptocurrency.amount_as_usd(cp.amount) if index.zero?
+        asset_2_value = cp.cryptocurrency.amount_as_usd(cp.amount) if index.positive?
+      end
+      price_difference = if asset_1_value > asset_2_value
+        asset_1_value - asset_2_value
+      else
+        asset_2_value - asset_1_value
+      end
+      largest_range_of_pools = price_difference if price_difference > largest_range_of_pools
+    end
+    while maximum_tradeable_value > current_amount_as_usd && largest_range_of_pools > current_amount_as_usd
+      net_profit = net_result_as_usd(simulate_swaps(current_amount)) - current_amount_as_usd
+      if net_profit > arbitrage_profit
+        arbitrage_amount = current_amount
+        arbitrage_profit = net_profit
+      end
+      current_amount += c_ten_dollars_amount
+      current_amount_as_usd = from.amount_as_usd(current_amount)
+    end
+    update!(arbitrage_amount: arbitrage_amount, arbitrage_profit: arbitrage_profit)
+  end
+
   def simulate_swaps(amount)
     current_from_id = from_id
     swap_path_as_array.each do |pool_id|
