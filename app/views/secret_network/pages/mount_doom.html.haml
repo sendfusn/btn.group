@@ -49,16 +49,20 @@
                 .tab-content
                   .tab-pane.fade.active.show#tab-2-1
                     %form{ name: 'mountDoomQueryForm' }
-                      .form-group
-                        .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                          %label.btn.btn-light.btn-md
-                            %input{ name: 'tokenType', type: 'radio', value: 'nft', checked: true } NFT
-                          %label.btn.btn-md.btn-light
-                            %input{ name: 'tokenType', type: 'radio', value: 'snip-20' } SNIP-20
-                      .form-group
-                        %label.control-label Token Address
-                        %input.form-control.w-100{ name: 'tokenAddress', required: true, autocomplete: 'off' }
-                      %button.btn.btn-primary.btn-md{ type: 'submit' }
+                      %ul.d-flex.flex-wrap.gutter-30px
+                        %li.mb-3
+                          .field-wrap
+                            %input.input-radio#nft{ name: 'tokenType', type: 'radio', value: 'nft', checked: true }
+                            %label{ for: 'nft' } NFT
+                        %li.mb-3
+                          .field-wrap
+                            %input.input-radio#snip-20{ name: 'tokenType', type: 'radio', value: 'snip-20' }
+                            %label{ for: 'snip-20' } SNIP-20
+                      .field-item
+                        %label.field-label Token Address
+                        .field-wrap
+                          %input.input-bordered{ name: 'tokenAddress', required: true, autocomplete: 'off' }
+                      %button.btn.btn-grad{ type: 'submit' }
                         .d-none.loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
@@ -66,13 +70,15 @@
                           Submit
                   .tab-pane.fade#tab-2-2
                     %form{ name: 'mountDoomSetViewingKeyForm' }
-                      .form-group
-                        %label.control-label Token address
-                        %input.form-control.w-100{ name: 'tokenAddress', required: true, autocomplete: 'off' }
-                      .form-group
-                        %label.control-label Contract hash
-                        %input.form-control.w-100{ name: 'contractHash', autocomplete: 'off', required: true }
-                      %button.btn.btn-primary.btn-md{ type: 'submit' }
+                      .field-item
+                        %label.field-label Token Address
+                        .field-wrap
+                          %input.input-bordered{ name: 'tokenAddress', required: true, autocomplete: 'off' }
+                      .field-item
+                        %label.field-label Contract hash
+                        .field-wrap
+                          %input.input-bordered{ name: 'contractHash', autocomplete: 'off', required: true }
+                      %button.btn.btn-grad{ type: 'submit' }
                         .d-none.loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
