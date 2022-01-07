@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         defaults: { format: 'json' }
 
   # SITE PAGES
+  get 'arbitrage' => 'application#arbitrage'
   get 'brand_assets' => 'application#brand_assets'
   get 'roadmap' => 'application#roadmap'
   root 'application#home'

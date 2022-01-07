@@ -1,9 +1,7 @@
 $(document).ready(function(){
   if($("#secret-network-trade-pairs").length) {
-    document.activateKeplr()
     // === LISTENERS ===
     window.onload = async () => {
-      document.activateKeplr()
       this.tradePairs = []
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);

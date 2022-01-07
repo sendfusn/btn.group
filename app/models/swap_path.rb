@@ -26,6 +26,12 @@ class SwapPath < ApplicationRecord
   end
 
   # === Instance methods ===
+  def arbitrage_amount_formatted
+    return 0 if arbitrage_amount.zero?
+
+    from.amount_with_decimals(arbitrage_amount)
+  end
+
   def net_result_as_usd(result_amount)
     Cryptocurrency.find(to_id).amount_as_usd(result_amount) - gas_in_usd
   end
