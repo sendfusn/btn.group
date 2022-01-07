@@ -52,6 +52,7 @@ class SwapPathsController < ApplicationController
         @swap_paths = SwapPath.where('arbitrage_amount > ?', 0)
                               .order(arbitrage_profit: :desc)
                               .limit(50)
+        @swap_paths.each(&:set_optimal_arbitrage_details)
       else
         @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
                               .where('maximum_tradeable_value >= ?', maximum_tradeable_amount)
