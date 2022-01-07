@@ -1,38 +1,38 @@
-.header-banner.bg-theme-grad-s2#home
-  .nk-banner
-    .banner.banner-fs.banner-single.banner-s1.banner-s1-overlay
-      .banner-wrap
-        .container
-          .row.align-items-center.justify-content-center.justify-content-lg-between.gutter-vr-60px
-            .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
-              .token-status.token-status-s3.round.bg-theme.tc-light
-                .token-info.token-info-s1
-                  .token-info-item-s1.team
-                    = link_to secret_network_button_swap_path do
-                      = cl_image_tag('secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png', gravity: 'center', height: 247, width: 371, crop: 'crop')
-                .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
-                  = link_to 'Get $BUTT now', secret_network_button_swap_path, class: 'btn btn-md btn-grad w-100'
-            .col-lg-6.col-xl-6.text-center.text-lg-left
-              .banner-caption.tc-light
-                .cpn-head.mt-0
-                  %h1.title.title-thin.title-xl-2 We develop software for blockchain.
-                .cpn-text.cpn-text-s2
-                  %p.lead-s2.lead-light Simplicity, transparency and communication are key.
-                .cpn-social
-                  %h4.title-xs CURRENTLY BUILDING ON
-                  %ul.social
-                    %li
-                      = link_to 'https://near.org/', target: '_blank', rel: 'noopener' do
-                        %em.social-icon.fab
-                          = cl_image_tag('logos/icon_wht_nm_xnjxrm', width: 20, crop: :scale, dpr: 2, fetch_format: :auto, class: 'p-1')
-                        %span NEAR
-                    %li
-                      = link_to 'http://scrt.network', target: '_blank', rel: 'noopener' do
-                        %em.social-icon.fab
-                          = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 20, crop: :scale, dpr: 2, fetch_format: :auto)
-                        %span Secret Network
-
-  .nk-ovm.shape-q
+- content_for :header_banner do
+  .header-banner.bg-theme-grad-s2#home
+    .nk-banner
+      .banner.banner-fs.banner-single.banner-s1.banner-s1-overlay
+        .banner-wrap
+          .container
+            .row.align-items-center.justify-content-center.justify-content-lg-between.gutter-vr-60px
+              .col-lg-6.col-xl-5.col-md-8.col-sm-9.order-last
+                .token-status.token-status-s3.round.bg-theme.tc-light
+                  .token-info.token-info-s1
+                    .token-info-item-s1.team
+                      = link_to secret_network_button_swap_path do
+                        = cl_image_tag('secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png', gravity: 'center', height: 247, width: 371, crop: 'crop')
+                  .token-action.token-action-s2.flex-wrap.flex-sm-nowrap
+                    = link_to 'Get $BUTT now', secret_network_button_swap_path, class: 'btn btn-md btn-grad w-100'
+              .col-lg-6.col-xl-6.text-center.text-lg-left
+                .banner-caption.tc-light
+                  .cpn-head.mt-0
+                    %h1.title.title-thin.title-xl-2 We develop software for blockchain.
+                  .cpn-text.cpn-text-s2
+                    %p.lead-s2.lead-light Simplicity, transparency and communication are key.
+                  .cpn-social
+                    %h4.title-xs CURRENTLY BUILDING ON
+                    %ul.social
+                      %li
+                        = link_to 'https://near.org/', target: '_blank', rel: 'noopener' do
+                          %em.social-icon.fab
+                            = cl_image_tag('logos/icon_wht_nm_xnjxrm', width: 20, crop: :scale, dpr: 2, fetch_format: :auto, class: 'p-1')
+                          %span NEAR
+                      %li
+                        = link_to 'http://scrt.network', target: '_blank', rel: 'noopener' do
+                          %em.social-icon.fab
+                            = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 20, crop: :scale, dpr: 2, fetch_format: :auto)
+                          %span Secret Network
+    .nk-ovm.shape-q
 %main.nk-pages
   %section.section.bg-light#home-features
     .container

@@ -1,1338 +1,1339 @@
-.header-banner.keplr-wallet#secret-network-pools
-  .nk-banner
-    .banner.banner-page
-      .mt-3.w-100
-        .container
-          .row.mb-3
-            .col-12
-              .alert.alert-warning-alt
-                %p
-                  * Warning! These pools are not private. This is by design. Click
-                  = link_to 'here', secret_network_why_some_of_our_contracts_are_not_private_path
-                  to find out why.
-                  %br
-                  * Using smart contracts, tokens, and crypto is always a risk. DYOR before investing.
-          .row.mb-3
-            .col-12
-              .card
-                %h3= features[:secret_network][:features][:pools][:name]
-                %p.mb-0
-                  %b Blockchain:
-                  = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                  = features[:secret_network][:name].to_s
-          .row.mb-5
-            .col-12#pools
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Profit distributor
-                  .col-md-6
-                    %span.mr-1 Deposit BUTT
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
+- content_for :header_banner do
+  .header-banner.keplr-wallet#secret-network-pools
+    .nk-banner
+      .banner.banner-page
+        .mt-3.w-100
+          .container
+            .row.mb-3
+              .col-12
+                .alert.alert-warning-alt
+                  %p
+                    * Warning! These pools are not private. This is by design. Click
+                    = link_to 'here', secret_network_why_some_of_our_contracts_are_not_private_path
+                    to find out why.
                     %br
-                    %span.mr-1 Earn SEFI
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                  .col-md-6
-                    TVL:
-                    %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-total-shares Loading...
-                    %br
-                    Claimable SEFI:
-                    %button.btn.btn-light.btn-xxs.ml-2.mb-1.border#claim-sefi{ type: 'button' }
-                      .d-none.loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      .ready
-                        .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Connect wallet
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-loading.d-none Loading...
-                    %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-link
-                      %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-view-button.d-none{ type: 'button' }
+                    * Using smart contracts, tokens, and crypto is always a risk. DYOR before investing.
+            .row.mb-3
+              .col-12
+                .card
+                  %h3= features[:secret_network][:features][:pools][:name]
+                  %p.mb-0
+                    %b Blockchain:
+                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                    = features[:secret_network][:name].to_s
+            .row.mb-5
+              .col-12#pools
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Profit distributor
+                    .col-md-6
+                      %span.mr-1 Deposit BUTT
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
+                      %br
+                      %span.mr-1 Earn SEFI
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
+                    .col-md-6
+                      TVL:
+                      %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-total-shares Loading...
+                      %br
+                      Claimable SEFI:
+                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border#claim-sefi{ type: 'button' }
                         .d-none.loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
                         .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text BUTT
-                      %button.btn.btn-primary.btn-rg.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button{ type: 'submit' }
-                        .d-none.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Connect wallet
-                    %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text BUTT
-                      %button.btn.btn-primary.btn-rg.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button{ type: 'submit' }
-                        .d-none.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Connect wallet
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-loading.d-none Loading...
+                      %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-link
+                        %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text BUTT
+                        %button.btn.btn-primary.btn-rg.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button{ type: 'submit' }
+                          .d-none.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Connect wallet
+                      %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text BUTT
+                        %button.btn.btn-primary.btn-rg.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button{ type: 'submit' }
+                          .d-none.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * Rewards are claimed every time you deposit or withdraw.
+                -# .card.mb-3
+                -#   .card-body
+                -#     .row
+                -#       .col-12
+                -#         %h5 Profit distributor
+                -#       .col-md-6
+                -#         %span.mr-1
+                -#           Deposit
+                -#           = link_to 'BUTT-sXMR', 'https://app.secretswap.io/pool#Provide', target: '_blank', rel: 'noopener'
+                -#         %span
+                -#           %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
+                -#         %span
+                -#           %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596036/logos/sXMR_iztynh.png' }
+                -#         %br
+                -#         %span.mr-1 Earn BUTT
+                -#         %span
+                -#           %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
+                -#       .col-md-6
+                -#         TVL:
+                -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-total-shares Loading...
+                -#         %br
+                -#         Claimable BUTT:
+                -#         %button.btn.btn-light.ml-2.mb-1.border.btn-xxs#claim-profit-distributor-b-butt{ type: 'button' }
+                -#           .d-none.loading
+                -#             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                -#             %em Loading...
+                -#           .ready
+                -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable Connect wallet
+                -#     .row
+                -#       .col-12
+                -#         %hr
+                -#       .col-md-6.mb-3.mb-lg-0
+                -#         Depositable:
+                -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-loading.d-none Loading...
+                -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-link
+                -#           %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance Connect wallet
+                -#           %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-view-button.d-none{ type: 'button' }
+                -#             .d-none.loading
+                -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                -#               %em Loading...
+                -#             .ready
+                -#               .fas.fa-search.mr-1
+                -#               View
+                -#         %form{ name: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzanDepositForm' }
+                -#           .input-group.mb-3
+                -#             %input.form-control{ autocomplete: 'off', name: 'amount' }
+                -#             .input-group-append
+                -#               %span.input-group-text BUTT
+                -#           %button.btn.btn-primary.btn-rg.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button{ type: 'submit' }
+                -#             .d-none.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button-loading
+                -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                -#               %em Loading...
+                -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button-ready Deposit
+                -#       .col-md-6
+                -#         Withdrawable:
+                -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-user-shares Connect wallet
+                -#         %form{ name: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzanWithdrawForm' }
+                -#           .input-group.mb-3
+                -#             %input.form-control{ autocomplete: 'off', name: 'amount' }
+                -#             .input-group-append
+                -#               %span.input-group-text BUTT
+                -#           %button.btn.btn-primary.btn-rg.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-withdraw-button{ type: 'submit' }
+                -#             .d-none.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-withdraw-button-loading
+                -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                -#               %em Loading...
+                -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-withdraw-button-ready Withdraw
+                -#   .col-12
+                -#     %hr
+                -#     * Please use the gas recommended for deposits and withdrawals.
+                -#     %br
+                -#     * Rewards are claimed every time you deposit or withdraw.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Farm
+                    .col-md-6
+                      %span.mr-1
+                        Deposit
+                        = link_to 'BUTT-sWBTC', 'https://app.secretswap.io/pool#Provide', target: '_blank', rel: 'noopener'
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595984/logos/wbtc_ethereum_iaxwlw.svg' }
                       %br
-                      * Rewards are claimed every time you deposit or withdraw.
-              -# .card.mb-3
-              -#   .card-body
-              -#     .row
-              -#       .col-12
-              -#         %h5 Profit distributor
-              -#       .col-md-6
-              -#         %span.mr-1
-              -#           Deposit
-              -#           = link_to 'BUTT-sXMR', 'https://app.secretswap.io/pool#Provide', target: '_blank', rel: 'noopener'
-              -#         %span
-              -#           %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
-              -#         %span
-              -#           %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596036/logos/sXMR_iztynh.png' }
-              -#         %br
-              -#         %span.mr-1 Earn BUTT
-              -#         %span
-              -#           %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
-              -#       .col-md-6
-              -#         TVL:
-              -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-total-shares Loading...
-              -#         %br
-              -#         Claimable BUTT:
-              -#         %button.btn.btn-light.ml-2.mb-1.border.btn-xxs#claim-profit-distributor-b-butt{ type: 'button' }
-              -#           .d-none.loading
-              -#             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-              -#             %em Loading...
-              -#           .ready
-              -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable Connect wallet
-              -#     .row
-              -#       .col-12
-              -#         %hr
-              -#       .col-md-6.mb-3.mb-lg-0
-              -#         Depositable:
-              -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-loading.d-none Loading...
-              -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-link
-              -#           %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance Connect wallet
-              -#           %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-view-button.d-none{ type: 'button' }
-              -#             .d-none.loading
-              -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-              -#               %em Loading...
-              -#             .ready
-              -#               .fas.fa-search.mr-1
-              -#               View
-              -#         %form{ name: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzanDepositForm' }
-              -#           .input-group.mb-3
-              -#             %input.form-control{ autocomplete: 'off', name: 'amount' }
-              -#             .input-group-append
-              -#               %span.input-group-text BUTT
-              -#           %button.btn.btn-primary.btn-rg.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button{ type: 'submit' }
-              -#             .d-none.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button-loading
-              -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-              -#               %em Loading...
-              -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button-ready Deposit
-              -#       .col-md-6
-              -#         Withdrawable:
-              -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-user-shares Connect wallet
-              -#         %form{ name: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzanWithdrawForm' }
-              -#           .input-group.mb-3
-              -#             %input.form-control{ autocomplete: 'off', name: 'amount' }
-              -#             .input-group-append
-              -#               %span.input-group-text BUTT
-              -#           %button.btn.btn-primary.btn-rg.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-withdraw-button{ type: 'submit' }
-              -#             .d-none.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-withdraw-button-loading
-              -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-              -#               %em Loading...
-              -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-withdraw-button-ready Withdraw
-              -#   .col-12
-              -#     %hr
-              -#     * Please use the gas recommended for deposits and withdrawals.
-              -#     %br
-              -#     * Rewards are claimed every time you deposit or withdraw.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Farm
-                  .col-md-6
-                    %span.mr-1
-                      Deposit
-                      = link_to 'BUTT-sWBTC', 'https://app.secretswap.io/pool#Provide', target: '_blank', rel: 'noopener'
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595984/logos/wbtc_ethereum_iaxwlw.svg' }
-                    %br
-                    %span.mr-1 Earn BUTT
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
-                  .col-md-6
-                    TVL:
-                    %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-total-shares Loading...
-                    %br
-                    APR: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id).apr}%
-                    %br
-                    Claimable BUTT:
-                    %button.btn.btn-light.btn-xxs.ml-2.mb-1.border#claim-butt{ type: 'button' }
-                      .d-none.loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      .ready
-                        .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Connect wallet
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-loading.d-none Loading...
-                    %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-link
-                      %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-view-button.d-none{ type: 'button' }
+                      %span.mr-1 Earn BUTT
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
+                    .col-md-6
+                      TVL:
+                      %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-total-shares Loading...
+                      %br
+                      APR: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id).apr}%
+                      %br
+                      Claimable BUTT:
+                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border#claim-butt{ type: 'button' }
                         .d-none.loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
                         .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text BUTT-sWBTC
-                      %button.btn.btn-primary.btn-rg.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button{ type: 'submit' }
-                        .d-none.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Connect wallet
-                    %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text BUTT-sWBTC
-                      %button.btn.btn-primary.btn-rg.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button{ type: 'submit' }
-                        .d-none.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Connect wallet
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-loading.d-none Loading...
+                      %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-link
+                        %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text BUTT-sWBTC
+                        %button.btn.btn-primary.btn-rg.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button{ type: 'submit' }
+                          .d-none.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Connect wallet
+                      %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text BUTT-sWBTC
+                        %button.btn.btn-primary.btn-rg.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button{ type: 'submit' }
+                          .d-none.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * Rewards are claimed every time you deposit or withdraw.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 SEFI
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
                       %br
-                      * Rewards are claimed every time you deposit or withdraw.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 SEFI
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-loading.d-none Loading...
-                    %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-link
-                      %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvfDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI
-                      %button.btn.btn-primary.btn-rg.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button{ type: 'submit' }
-                        .d-none.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-user-shares Connect wallet
-                    %form{ name: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvfWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI
-                      %button.btn.btn-primary.btn-rg.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button{ type: 'submit' }
-                        .d-none.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-total-shares Loading...
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf').id).apy}%
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sSCRT-SEFI
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-loading.d-none Loading...
-                    %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-link
-                      %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0vDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-SEFI
-                      %button.btn.btn-primary.btn-rg.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button{ type: 'submit' }
-                        .d-none.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-user-shares Connect wallet
-                    %form{ name: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0vWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-SEFI
-                      %button.btn.btn-primary.btn-rg.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button{ type: 'submit' }
-                        .d-none.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      Rewards to process:
+                      %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-loading.d-none Loading...
+                      %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-link
+                        %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvfDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI
+                        %button.btn.btn-primary.btn-rg.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button{ type: 'submit' }
+                          .d-none.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-user-shares Connect wallet
+                      %form{ name: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvfWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI
+                        %button.btn.btn-primary.btn-rg.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button{ type: 'submit' }
+                          .d-none.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sSCRT-SEFI
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-total-shares Loading...
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 SEFI-sXMR
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596036/logos/sXMR_iztynh.png' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-loading.d-none Loading...
-                    %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-link
-                      %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmjDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sXMR
-                      %button.btn.btn-primary.btn-rg.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button{ type: 'submit' }
-                        .d-none.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-user-shares Connect wallet
-                    %form{ name: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmjWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sXMR
-                      %button.btn.btn-primary.btn-rg.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button{ type: 'submit' }
-                        .d-none.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v').id).apy}%
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      Rewards to process:
+                      %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-loading.d-none Loading...
+                      %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-link
+                        %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0vDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-SEFI
+                        %button.btn.btn-primary.btn-rg.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button{ type: 'submit' }
+                          .d-none.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-user-shares Connect wallet
+                      %form{ name: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0vWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-SEFI
+                        %button.btn.btn-primary.btn-rg.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button{ type: 'submit' }
+                          .d-none.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 SEFI-sXMR
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596036/logos/sXMR_iztynh.png' }
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 SEFI-sUSDC(ETH)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595641/logos/usdc_ethereum_zmeckb.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-loading.d-none Loading...
-                    %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-link
-                      %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jnDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sUSDC(ETH)
-                      %button.btn.btn-primary.btn-rg.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button{ type: 'submit' }
-                        .d-none.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-user-shares Connect wallet
-                    %form{ name: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jnWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sUSDC(ETH)
-                      %button.btn.btn-primary.btn-rg.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button{ type: 'submit' }
-                        .d-none.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-total-shares Loading...
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj').id).apy}%
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sSCRT-sUSDT(ETH)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596087/logos/usdt_ethereum_i3ugyu.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-loading.d-none Loading...
-                    %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-link
-                      %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5zDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sUSDT(ETH)
-                      %button.btn.btn-primary.btn-rg.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button{ type: 'submit' }
-                        .d-none.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-user-shares Connect wallet
-                    %form{ name: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5zWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sUSDT(ETH)
-                      %button.btn.btn-primary.btn-rg.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button{ type: 'submit' }
-                        .d-none.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      Rewards to process:
+                      %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-loading.d-none Loading...
+                      %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-link
+                        %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmjDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sXMR
+                        %button.btn.btn-primary.btn-rg.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button{ type: 'submit' }
+                          .d-none.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-user-shares Connect wallet
+                      %form{ name: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmjWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sXMR
+                        %button.btn.btn-primary.btn-rg.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button{ type: 'submit' }
+                          .d-none.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 SEFI-sUSDC(ETH)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595641/logos/usdc_ethereum_zmeckb.svg' }
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-total-shares Loading...
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sSCRT-sETH(ETH)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596133/logos/eth_ethereum_kydccv.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-loading.d-none Loading...
-                    %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-link
-                      %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzkuDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sETH(ETH)
-                      %button.btn.btn-primary.btn-rg.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button{ type: 'submit' }
-                        .d-none.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-user-shares Connect wallet
-                    %form{ name: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzkuWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sETH(ETH)
-                      %button.btn.btn-primary.btn-rg.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button{ type: 'submit' }
-                        .d-none.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn').id).apy}%
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      Rewards to process:
+                      %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-loading.d-none Loading...
+                      %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-link
+                        %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jnDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sUSDC(ETH)
+                        %button.btn.btn-primary.btn-rg.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button{ type: 'submit' }
+                          .d-none.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-user-shares Connect wallet
+                      %form{ name: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jnWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sUSDC(ETH)
+                        %button.btn.btn-primary.btn-rg.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button{ type: 'submit' }
+                          .d-none.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sSCRT-sUSDT(ETH)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596087/logos/usdt_ethereum_i3ugyu.svg' }
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sSCRT-sWBTC(ETH)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595984/logos/wbtc_ethereum_iaxwlw.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-loading.d-none Loading...
-                    %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-link
-                      %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79vDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sWBTC(ETH)
-                      %button.btn.btn-primary.btn-rg.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button{ type: 'submit' }
-                        .d-none.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-user-shares Connect wallet
-                    %form{ name: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79vWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sWBTC(ETH)
-                      %button.btn.btn-primary.btn-rg.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button{ type: 'submit' }
-                        .d-none.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-total-shares Loading...
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z').id).apy}%
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sSCRT-sBNB(BSC)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595943/logos/bnb_binance_aiq4vc.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-sm-5
-                    TVL:
-                    %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-loading.d-none Loading...
-                    %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-link
-                      %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxpDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sBNB(BSC)
-                      %button.btn.btn-primary.btn-rg.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button{ type: 'submit' }
-                        .d-none.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-user-shares Connect wallet
-                    %form{ name: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxpWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sBNB(BSC)
-                      %button.btn.btn-primary.btn-rg.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-withdraw-button{ type: 'submit' }
-                        .d-none.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      Rewards to process:
+                      %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-loading.d-none Loading...
+                      %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-link
+                        %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5zDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sUSDT(ETH)
+                        %button.btn.btn-primary.btn-rg.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button{ type: 'submit' }
+                          .d-none.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-user-shares Connect wallet
+                      %form{ name: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5zWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sUSDT(ETH)
+                        %button.btn.btn-primary.btn-rg.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button{ type: 'submit' }
+                          .d-none.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sSCRT-sETH(ETH)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596133/logos/eth_ethereum_kydccv.svg' }
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-total-shares Loading...
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sSCRT-sDOT(BSC)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595891/logos/dot_binance_fbebkt.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-sm-5
-                    TVL:
-                    %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-loading.d-none Loading...
-                    %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-link
-                      %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242cDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sDOT(BSC)
-                      %button.btn.btn-primary.btn-rg.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button{ type: 'submit' }
-                        .d-none.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-user-shares Connect wallet
-                    %form{ name: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242cWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sSCRT-sDOT(BSC)
-                      %button.btn.btn-primary.btn-rg.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button{ type: 'submit' }
-                        .d-none.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku').id).apy}%
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      Rewards to process:
+                      %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-loading.d-none Loading...
+                      %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-link
+                        %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzkuDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sETH(ETH)
+                        %button.btn.btn-primary.btn-rg.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button{ type: 'submit' }
+                          .d-none.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-user-shares Connect wallet
+                      %form{ name: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzkuWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sETH(ETH)
+                        %button.btn.btn-primary.btn-rg.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button{ type: 'submit' }
+                          .d-none.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sSCRT-sWBTC(ETH)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595984/logos/wbtc_ethereum_iaxwlw.svg' }
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sUSDC(ETH)-sUSDC(BSC)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595641/logos/usdc_ethereum_zmeckb.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595682/logos/usdc_binance_rrssfw.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-loading.d-none Loading...
-                    %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-link
-                      %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravqlDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sUSDC(ETH)-sUSDC(BSC)
-                      %button.btn.btn-primary.btn-rg.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button{ type: 'submit' }
-                        .d-none.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-user-shares Connect wallet
-                    %form{ name: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravqlWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sUSDC(ETH)-sUSDC(BSC)
-                      %button.btn.btn-primary.btn-rg.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-withdraw-button{ type: 'submit' }
-                        .d-none.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-total-shares Loading...
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v').id).apy}%
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sETH(ETH)-sWBTC
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596133/logos/eth_ethereum_kydccv.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595984/logos/wbtc_ethereum_iaxwlw.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-loading.d-none Loading...
-                    %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-link
-                      %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajmDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sETH(ETH)-sWBTC
-                      %button.btn.btn-primary.btn-rg.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-deposit-button{ type: 'submit' }
-                        .d-none.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-user-shares Connect wallet
-                    %form{ name: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajmWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sETH(ETH)-sWBTC
-                      %button.btn.btn-primary.btn-rg.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button{ type: 'submit' }
-                        .d-none.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      Rewards to process:
+                      %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-loading.d-none Loading...
+                      %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-link
+                        %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79vDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sWBTC(ETH)
+                        %button.btn.btn-primary.btn-rg.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button{ type: 'submit' }
+                          .d-none.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-user-shares Connect wallet
+                      %form{ name: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79vWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sWBTC(ETH)
+                        %button.btn.btn-primary.btn-rg.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button{ type: 'submit' }
+                          .d-none.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sSCRT-sBNB(BSC)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595943/logos/bnb_binance_aiq4vc.svg' }
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-sm-5
+                      TVL:
+                      %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-total-shares Loading...
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 sETH(BSC)-sETH(ETH)
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1637617595/logos/eth_binance_avspq4.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596133/logos/eth_ethereum_kydccv.svg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-loading.d-none Loading...
-                    %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-link
-                      %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82DepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sETH(BSC)-sETH(ETH)
-                      %button.btn.btn-primary.btn-rg.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-deposit-button{ type: 'submit' }
-                        .d-none.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-user-shares Connect wallet
-                    %form{ name: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82WithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text sETH(BSC)-sETH(ETH)
-                      %button.btn.btn-primary.btn-rg.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button{ type: 'submit' }
-                        .d-none.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp').id).apy}%
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      Rewards to process:
+                      %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-loading.d-none Loading...
+                      %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-link
+                        %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxpDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sBNB(BSC)
+                        %button.btn.btn-primary.btn-rg.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button{ type: 'submit' }
+                          .d-none.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-user-shares Connect wallet
+                      %form{ name: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxpWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sBNB(BSC)
+                        %button.btn.btn-primary.btn-rg.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-withdraw-button{ type: 'submit' }
+                          .d-none.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sSCRT-sDOT(BSC)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595823/logos/sscrt_wdpndr.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595891/logos/dot_binance_fbebkt.svg' }
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 SEFI-sATOM
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638482829/logos/atom_h7bs1n.jpg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-loading.d-none Loading...
-                    %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-link
-                      %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6DepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sATOM
-                      %button.btn.btn-primary.btn-rg.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-deposit-button{ type: 'submit' }
-                        .d-none.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-user-shares Connect wallet
-                    %form{ name: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6WithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sATOM
-                      %button.btn.btn-primary.btn-rg.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button{ type: 'submit' }
-                        .d-none.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-sm-5
+                      TVL:
+                      %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-total-shares Loading...
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c').id).apy}%
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 SEFI-sLUNA
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638488389/logos/luna_cvymyp.png' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-loading.d-none Loading...
-                    %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-link
-                      %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87DepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sLUNA
-                      %button.btn.btn-primary.btn-rg.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-deposit-button{ type: 'submit' }
-                        .d-none.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-user-shares Connect wallet
-                    %form{ name: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87WithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sLUNA
-                      %button.btn.btn-primary.btn-rg.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button{ type: 'submit' }
-                        .d-none.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      Rewards to process:
+                      %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-loading.d-none Loading...
+                      %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-link
+                        %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242cDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sDOT(BSC)
+                        %button.btn.btn-primary.btn-rg.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button{ type: 'submit' }
+                          .d-none.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-user-shares Connect wallet
+                      %form{ name: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242cWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sSCRT-sDOT(BSC)
+                        %button.btn.btn-primary.btn-rg.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button{ type: 'submit' }
+                          .d-none.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sUSDC(ETH)-sUSDC(BSC)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595641/logos/usdc_ethereum_zmeckb.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595682/logos/usdc_binance_rrssfw.svg' }
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-total-shares Loading...
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 SEFI-sOSMO
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638491688/logos/osmo_mqevq2.jpg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-loading.d-none Loading...
-                    %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-link
-                      %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzwwDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sOSMO
-                      %button.btn.btn-primary.btn-rg.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-deposit-button{ type: 'submit' }
-                        .d-none.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-user-shares Connect wallet
-                    %form{ name: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzwwWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sOSMO
-                      %button.btn.btn-primary.btn-rg.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button{ type: 'submit' }
-                        .d-none.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql').id).apy}%
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      Rewards to process:
+                      %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-loading.d-none Loading...
+                      %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-link
+                        %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravqlDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sUSDC(ETH)-sUSDC(BSC)
+                        %button.btn.btn-primary.btn-rg.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button{ type: 'submit' }
+                          .d-none.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-user-shares Connect wallet
+                      %form{ name: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravqlWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sUSDC(ETH)-sUSDC(BSC)
+                        %button.btn.btn-primary.btn-rg.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-withdraw-button{ type: 'submit' }
+                          .d-none.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sETH(ETH)-sWBTC
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596133/logos/eth_ethereum_kydccv.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595984/logos/wbtc_ethereum_iaxwlw.svg' }
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-              .card.mb-3
-                .row
-                  .col-12
-                    %h5 Yield optimizer
-                  .col-md-6
-                    %div Deposit & Earn
-                    %span.mr-1 SEFI-sDVPN
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    %span
-                      %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638494764/logos/dvpn_czuwte.jpg' }
-                    %br
-                    %span via
-                    %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                  .col-md-6
-                    TVL:
-                    %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-total-shares Loading...
-                    %br
-                    APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs').id).apy}%
-                    %br
-                    Rewards to process:
-                    %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-rewards-to-process Loading...
-                    %span SEFI
-                .row
-                  .col-12
-                    %hr
-                  .col-md-6.mb-3.mb-lg-0
-                    Depositable:
-                    %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-loading.d-none Loading...
-                    %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-link
-                      %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance Connect wallet
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-view-button.d-none{ type: 'button' }
-                        .d-none.loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .ready
-                          .fas.fa-search.mr-1
-                          View
-                    %form{ name: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rsDepositForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sDVPN
-                      %button.btn.btn-primary.btn-rg.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-deposit-button{ type: 'submit' }
-                        .d-none.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-deposit-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-deposit-button-ready Deposit
-                  .col-md-6
-                    Withdrawable:
-                    %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-user-shares Connect wallet
-                    %form{ name: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rsWithdrawForm' }
-                      .input-group.mb-3
-                        %input.form-control{ autocomplete: 'off', name: 'amount' }
-                        .input-group-append
-                          %span.input-group-text SEFI-sDVPN
-                      %button.btn.btn-primary.btn-rg.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-withdraw-button{ type: 'submit' }
-                        .d-none.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-withdraw-button-loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-withdraw-button-ready Withdraw
-                  .col-12
-                    %hr
-                    %p
-                      * Please use the gas recommended for deposits and withdrawals.
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-total-shares Loading...
                       %br
-                      * 5% of yield sent to profit distributor, see contract above.
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm').id).apy}%
                       %br
-                      * Rewards are reinvested every time a user deposits or withdraws.
-  .nk-ovm.shape-q
+                      Rewards to process:
+                      %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-loading.d-none Loading...
+                      %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-link
+                        %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajmDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sETH(ETH)-sWBTC
+                        %button.btn.btn-primary.btn-rg.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-deposit-button{ type: 'submit' }
+                          .d-none.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-user-shares Connect wallet
+                      %form{ name: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajmWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sETH(ETH)-sWBTC
+                        %button.btn.btn-primary.btn-rg.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button{ type: 'submit' }
+                          .d-none.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 sETH(BSC)-sETH(ETH)
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1637617595/logos/eth_binance_avspq4.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636596133/logos/eth_ethereum_kydccv.svg' }
+                      %br
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-total-shares Loading...
+                      %br
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82').id).apy}%
+                      %br
+                      Rewards to process:
+                      %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-loading.d-none Loading...
+                      %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-link
+                        %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82DepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sETH(BSC)-sETH(ETH)
+                        %button.btn.btn-primary.btn-rg.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-deposit-button{ type: 'submit' }
+                          .d-none.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-user-shares Connect wallet
+                      %form{ name: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82WithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text sETH(BSC)-sETH(ETH)
+                        %button.btn.btn-primary.btn-rg.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button{ type: 'submit' }
+                          .d-none.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 SEFI-sATOM
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638482829/logos/atom_h7bs1n.jpg' }
+                      %br
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-total-shares Loading...
+                      %br
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6').id).apy}%
+                      %br
+                      Rewards to process:
+                      %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-loading.d-none Loading...
+                      %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-link
+                        %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6DepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sATOM
+                        %button.btn.btn-primary.btn-rg.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-deposit-button{ type: 'submit' }
+                          .d-none.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-user-shares Connect wallet
+                      %form{ name: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6WithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sATOM
+                        %button.btn.btn-primary.btn-rg.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button{ type: 'submit' }
+                          .d-none.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 SEFI-sLUNA
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638488389/logos/luna_cvymyp.png' }
+                      %br
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-total-shares Loading...
+                      %br
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87').id).apy}%
+                      %br
+                      Rewards to process:
+                      %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-loading.d-none Loading...
+                      %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-link
+                        %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87DepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sLUNA
+                        %button.btn.btn-primary.btn-rg.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-deposit-button{ type: 'submit' }
+                          .d-none.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-user-shares Connect wallet
+                      %form{ name: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87WithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sLUNA
+                        %button.btn.btn-primary.btn-rg.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button{ type: 'submit' }
+                          .d-none.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 SEFI-sOSMO
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638491688/logos/osmo_mqevq2.jpg' }
+                      %br
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-total-shares Loading...
+                      %br
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww').id).apy}%
+                      %br
+                      Rewards to process:
+                      %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-loading.d-none Loading...
+                      %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-link
+                        %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzwwDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sOSMO
+                        %button.btn.btn-primary.btn-rg.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-deposit-button{ type: 'submit' }
+                          .d-none.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-user-shares Connect wallet
+                      %form{ name: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzwwWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sOSMO
+                        %button.btn.btn-primary.btn-rg.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button{ type: 'submit' }
+                          .d-none.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+                .card.mb-3
+                  .row
+                    .col-12
+                      %h5 Yield optimizer
+                    .col-md-6
+                      %div Deposit & Earn
+                      %span.mr-1 SEFI-sDVPN
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
+                      %span
+                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1638494764/logos/dvpn_czuwte.jpg' }
+                      %br
+                      %span via
+                      %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
+                    .col-md-6
+                      TVL:
+                      %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-total-shares Loading...
+                      %br
+                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs').id).apy}%
+                      %br
+                      Rewards to process:
+                      %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-rewards-to-process Loading...
+                      %span SEFI
+                  .row
+                    .col-12
+                      %hr
+                    .col-md-6.mb-3.mb-lg-0
+                      Depositable:
+                      %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-loading.d-none Loading...
+                      %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-link
+                        %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance Connect wallet
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-view-button.d-none{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            .fas.fa-search.mr-1
+                            View
+                      %form{ name: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rsDepositForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sDVPN
+                        %button.btn.btn-primary.btn-rg.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-deposit-button{ type: 'submit' }
+                          .d-none.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-deposit-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-deposit-button-ready Deposit
+                    .col-md-6
+                      Withdrawable:
+                      %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-user-shares Connect wallet
+                      %form{ name: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rsWithdrawForm' }
+                        .input-group.mb-3
+                          %input.form-control{ autocomplete: 'off', name: 'amount' }
+                          .input-group-append
+                            %span.input-group-text SEFI-sDVPN
+                        %button.btn.btn-primary.btn-rg.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-withdraw-button{ type: 'submit' }
+                          .d-none.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-withdraw-button-loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-withdraw-button-ready Withdraw
+                    .col-12
+                      %hr
+                      %p
+                        * Please use the gas recommended for deposits and withdrawals.
+                        %br
+                        * 5% of yield sent to profit distributor, see contract above.
+                        %br
+                        * Rewards are reinvested every time a user deposits or withdraws.
+    .nk-ovm.shape-q

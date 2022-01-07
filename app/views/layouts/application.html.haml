@@ -26,88 +26,43 @@
     %script{ src: 'https://widget.cloudinary.com/v2.0/global/all.js', type: 'text/javascript' }
   %body.h-100.nk-body.body-wider.theme-dark.mode-onepage
     .nk-wrap.h-100
-      %header.nk-header.page-header.is-transparent.is-shrink.h-100#header
-        .header-main
-          %div{ class: @navbar_container_fluid ? 'container-fluid' : 'container' }
-            .header-wrap
-              .header-logo.logo
-                = link_to root_path, class: 'logo-link' do
-                  = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 36, dpr: 2,  fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-none d-sm-inline', style: 'height: 36px;')
-                  = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 24, dpr: 2,  fetch_format: :auto, quality: :auto, class: 'align-top mr-2 d-inline d-sm-none', style: 'height: 24px;')
-                  %h3.text-white.d-inline btn.group
-              / Menu @s
-              .header-navbar
-                %nav.header-menu.justify-content-between#header-menu
-                  %ul.menu
-                    %li.menu-item
-                      .wallet-container.d-none
-                        %button.btn.btn-primary.btn-md.no-change.keplr-wallet-button
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            = cl_image_tag('logos/b8thbiihwftyjolgjjz2_dhy5mr', height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'height: 20px;', class: 'mr-1')
-                            Connect wallet
-                    %li.menu-item.has-sub.position-static
-                      %a.menu-link.nav-link.menu-toggle.d-none.wallet-details{ href: '#' }
-                        %em.fa.fa-user-circle
-                      %ul.menu-sub.p-0.wallet-details.d-none.popover{ style: 'right: 0; left: inherit; max-width: inherit;' }
-                        .popover-body
-                          %h6.address-alias.mb-0
-                          .wallet-address
-                          .vip-level-container
-                            .tc-warning
-                              %em.fa.fa-gem
-                              VIP:
-                              %span#vip-level
-                    %li.menu-item.has-sub
-                      %a.menu-link.nav-link.menu-toggle{ href: '#' }
-                        Features
-                      %ul.menu-sub.menu-drop{ style: 'right: 0; left: inherit;' }
-                        - features.each do |blockchain_symbol, blockchain_object|
-                          - blockchain_object[:features].each do |feature_key, feature_value|
-                            - if feature_value[:show_in_navbar] && feature_value[:show_link]
-                              %li.menu-item
-                                = link_to "/#{blockchain_symbol}/#{feature_key}", class: 'menu-link nav-link' do
-                                  .d-block
-                                    = cl_image_tag(features[blockchain_symbol][:cloudinary_public_id], width: 14, height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'vertical-align: text-top;', class: 'mr-1')
-                                    = feature_value[:name]
-        = yield
-        - if @show_footer
-          %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
-            %section.section.section-m.tc-light.tc-light-alt.bg-transparent
-              .container
-                .nk-block.block-footer
-                  .row.justify-content-between
-                    .col-lg-9.col-md-8
-                      .wgs.wgs-menu
-                        %h6.wgs-title.text-white About
-                        .wgs-body
-                          %ul.wgs-links.wgs-links-s3
-                            %li= link_to 'Brand assets', brand_assets_path, class: 'd-inline'
-                            %li= link_to 'Roadmap', roadmap_path, class: 'd-inline'
-                    .col-lg-3.col-md-4
-                      .wgs.wgs-text
-                        .wgs-body
-                          %h6.wgs-title.text-white Join our community
-                          .wgs-subscribe.wgs-subscribe-s2
-                            %ul.social.pt-2
-                              %li
-                                = mail_to 'support@btn.group', class: 'd-inline' do
-                                  %em.social-icon.far.fa-envelope
-                              %li
-                                = link_to 'https://www.github.com/btn-group', target: '_blank', rel: 'noopener' do
-                                  %em.social-icon.fab.fa-github
-                              %li
-                                = link_to 'https://discord.gg/fxTbthnzFW', target: '_blank', rel: 'noopener' do
-                                  %em.social-icon.fab.fa-discord
-                              %li
-                                = link_to 'https://t.me/btn_group', target: '_blank', rel: 'noopener' do
-                                  %em.social-icon.fab.fa-telegram
-                              %li
-                                = link_to 'https://twitter.com/BtnGroup', target: '_blank', rel: 'noopener' do
-                                  %em.social-icon.fab.fa-twitter
-                  .footer-bottom.pdt-r
-                    .copyright-text.copyright-text-s1.text-center.text-sm-left.text-lg-center
-                      %p
-                        © btn.group, 2021
+      = render 'header'
+      = yield
+      - if @show_footer
+        %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
+          %section.section.section-m.tc-light.tc-light-alt.bg-transparent
+            .container
+              .nk-block.block-footer
+                .row.justify-content-between
+                  .col-lg-9.col-md-8
+                    .wgs.wgs-menu
+                      %h6.wgs-title.text-white About
+                      .wgs-body
+                        %ul.wgs-links.wgs-links-s3
+                          %li= link_to 'Brand assets', brand_assets_path, class: 'd-inline'
+                          %li= link_to 'Roadmap', roadmap_path, class: 'd-inline'
+                  .col-lg-3.col-md-4
+                    .wgs.wgs-text
+                      .wgs-body
+                        %h6.wgs-title.text-white Join our community
+                        .wgs-subscribe.wgs-subscribe-s2
+                          %ul.social.pt-2
+                            %li
+                              = mail_to 'support@btn.group', class: 'd-inline' do
+                                %em.social-icon.far.fa-envelope
+                            %li
+                              = link_to 'https://www.github.com/btn-group', target: '_blank', rel: 'noopener' do
+                                %em.social-icon.fab.fa-github
+                            %li
+                              = link_to 'https://discord.gg/fxTbthnzFW', target: '_blank', rel: 'noopener' do
+                                %em.social-icon.fab.fa-discord
+                            %li
+                              = link_to 'https://t.me/btn_group', target: '_blank', rel: 'noopener' do
+                                %em.social-icon.fab.fa-telegram
+                            %li
+                              = link_to 'https://twitter.com/BtnGroup', target: '_blank', rel: 'noopener' do
+                                %em.social-icon.fab.fa-twitter
+                .footer-bottom.pdt-r
+                  .copyright-text.copyright-text-s1.text-center.text-sm-left.text-lg-center
+                    %p
+                      © btn.group, 2021
