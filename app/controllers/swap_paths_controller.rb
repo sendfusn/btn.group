@@ -48,7 +48,7 @@ class SwapPathsController < ApplicationController
     end
 
     def set_swap_paths
-      if params['arbitrage'] == 'true'
+      if params['arbitrage'] == 'true' || arbitrage?
         @swap_paths = SwapPath.where('arbitrage_amount > ?', 0)
                               .order(arbitrage_profit: :desc)
                               .limit(50)
@@ -65,7 +65,7 @@ class SwapPathsController < ApplicationController
                               .order(maximum_tradeable_value: :desc)
                               .order(:swap_count)
         @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
-        @swap_paths = @swap_paths.limit(500) unless arbitrage?
+        @swap_paths = @swap_paths.limit(50)
       end
     end
 end
