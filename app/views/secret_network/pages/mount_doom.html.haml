@@ -64,13 +64,6 @@
                 .card-block
                   = cl_image_tag 'secret_network/mount_doom/mt_doom_biwkdj', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
                   = render 'secret_network_feature_contracts', production_contract: features[:secret_network][:features][:mount_doom][:contracts][:production], staging_contract: nil
-                  %h6 Requirements
-                  %p
-                    1.
-                    = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-                    %br
-                    2. SCRT for gas, if setting a viewing key
-
                   %h6 What is it?
                   %p This is a burn address smart contract on the Secret network. Anyone can send any Secret network token here and set a viewing key for that token, for this smart contract address. It has no admin functionality so it is completely decentralized.
 
@@ -84,6 +77,13 @@
                     2. Set viewing key for token if required.
                     %br
                     3. Query token.
+
+                  %h6 Requirements
+                  %p
+                    1.
+                    = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                    %br
+                    2. SCRT for gas, if setting a viewing key
 
                   %h6 References
                   %p
