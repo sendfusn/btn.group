@@ -52,7 +52,13 @@ class SwapPathsController < ApplicationController
         @swap_paths = SwapPath.where('arbitrage_amount > ?', 0)
                               .order(arbitrage_profit: :desc)
                               .limit(50)
-        @swap_paths.each(&:set_optimal_arbitrage_details)
+        @swap_paths.each do |sp|
+          next if Sidekiq::ScheduledSet.new.any? do |job|
+            job.item['wrapped'] == 'SetBestArbitrageOpportunityForSwapPathJob' && job.args[0]['arguments'].first == sp.id
+          end
+
+          SetBestArbitrageOpportunityForSwapPathJob.set(wait_until: Time.current + 5.seconds).perform_later(sp.id)
+        end
       else
         @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
                               .where('maximum_tradeable_value >= ?', maximum_tradeable_amount)
