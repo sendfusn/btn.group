@@ -1,5 +1,16 @@
 $(document).ready(function(){
   if($("#secret-network-mount-doom").length) {
+    // Listeners 
+    $('input[type=radio][name=tokenType]').change(function() {
+        if (this.value == 'nft') {
+          $('#fungibleTokenAddress').addClass('d-none')
+          $('#nonFungibleTokenAddress').removeClass('d-none')
+        } else if (this.value == 'snip-20') {
+          $('#fungibleTokenAddress').removeClass('d-none')
+          $('#nonFungibleTokenAddress').addClass('d-none')
+        }
+    });
+
     getAndSetSmartContracts(1)
     function getAndSetSmartContracts(blockchainId) {
       document.smartContracts = {}
@@ -35,6 +46,7 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId(this.environment)
       this.client = document.secretNetworkClient(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
+      this.nftAddresses = ['secret19syw637nl4rws0t9j5ku208wy8s2tvwqvyyhvu', 'secret1upc2jq8flv88x30ghzsc3lgd50ppd359fasxhu', 'secret1y8f9m90palcyugr0wmfj5jusg3jxhhhrns9efr', 'secret1fse2a04thwn4d22hjxr857csmuyjf0v2gjw36w']
 
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
@@ -44,9 +56,9 @@ $(document).ready(function(){
         changeSubmitButtonToLoading()
         document.hideAllAlerts();
         try {
-          let tokenAddress = document.mountDoomQueryForm.tokenAddress.value;
           let tokenType = document.mountDoomQueryForm.tokenType.value;
           if (tokenType == 'nft') {
+            let tokenAddress = document.mountDoomQueryForm.nonFungibleTokenAddress.value;
             // Get the transactions for that token
             let params = {
               transaction_history: {
@@ -99,6 +111,7 @@ $(document).ready(function(){
               })();
             }.bind(this))
           } else {
+            let tokenAddress = document.mountDoomQueryForm.fungibleTokenAddress.value;
             // Reset transactions table and balance
             $transactionsTableBody = $('#transactions-table-body');
             $transactionsTableBody.html('')

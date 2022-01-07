@@ -28,9 +28,14 @@
                           %input.input-radio#snip-20{ name: 'tokenType', type: 'radio', value: 'snip-20' }
                           %label{ for: 'snip-20' } SNIP-20
                     .field-item
+                      %label.field-label Token
+                      .field-wrap
+                        = select_tag 'fungibleTokenAddress', options_from_collection_for_select(Cryptocurrency.where(official: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).where.not(coin_gecko_id: nil).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'input-bordered d-none'
+                        = select_tag 'nonFungibleTokenAddress', options_from_collection_for_select(Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'input-bordered'
+                    .field-item.d-none
                       %label.field-label Token Address
                       .field-wrap
-                        %input.input-bordered{ name: 'tokenAddress', required: true, autocomplete: 'off' }
+                        %input.input-bordered.d-none{ name: 'otherTokenAddress', autocomplete: 'off' }
                     %button.btn.btn-grad{ type: 'submit' }
                       .d-none.loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }

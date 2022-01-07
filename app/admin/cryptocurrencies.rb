@@ -7,12 +7,24 @@ ActiveAdmin.register Cryptocurrency do
   # # === MENU ===
   # menu parent: 'Crypto'
 
-  # # === INDEX ===
-  # index do
-  #   column :identifier
-  #   column :name
-  #   actions
-  # end
+  # === INDEX ===
+  index do
+    selectable_column
+    id_column
+    column :symbol
+    column :name
+    column :blockchain
+    column :decimals
+    column :price
+    column :denom
+    column :smart_contract
+    column :official
+    column :coin_gecko_id
+    column :nft
+    column :created_at
+    column :updated_at
+    actions
+  end
 
   # filter :identifier
   # filter :name
@@ -36,10 +48,11 @@ ActiveAdmin.register Cryptocurrency do
       f.input :price
       f.input :coin_gecko_id
       f.input :official
+      f.input :nft
     end
     f.actions
   end
 
   # === PERMIT PARAMS ===
-  permit_params :blockchain_id, :coin_gecko_id, :smart_contract_id, :decimals, :name, :symbol, :price, :official
+  permit_params :blockchain_id, :coin_gecko_id, :smart_contract_id, :decimals, :name, :symbol, :price, :official, :nft
 end

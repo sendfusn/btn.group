@@ -46,7 +46,7 @@ class Cryptocurrency < ApplicationRecord
   end
 
   def label_formatted
-    "#{symbol} / #{name} / #{address}"
+    "#{symbol} | #{address}"
   end
 
   def label_formatted_for_dex_aggregator_select
