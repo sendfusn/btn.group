@@ -27,7 +27,7 @@ class SwapPath < ApplicationRecord
 
   # === Instance methods ===
   def arbitrage_amount_formatted
-    return 0 if arbitrage_amount.zero?
+    return 0 if arbitrage_amount.nil? || arbitrage_amount.zero?
 
     from.amount_with_decimals(arbitrage_amount)
   end
