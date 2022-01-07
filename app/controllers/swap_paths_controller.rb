@@ -37,6 +37,8 @@ class SwapPathsController < ApplicationController
   private
 
     def arbitrage?
+      return if params['from_id'].blank? || params['to_id'].blank?
+
       params['from_id'] == params['to_id']
     end
 
