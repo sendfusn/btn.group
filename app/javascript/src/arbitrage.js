@@ -28,6 +28,9 @@ $(document).ready(function(){
         this.datatable.draw();
         if (Number(result[0]['arbitrage_profit']) >= 10) {
           $('.odd').first().addClass('bg-success')
+          if($('#audio-alerts').prop('checked')) {
+            $('#bird-audio')[0].play()
+          }
         }
       }
 
