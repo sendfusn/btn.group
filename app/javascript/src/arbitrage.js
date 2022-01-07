@@ -14,7 +14,7 @@ $(document).ready(function(){
         ordering: false,
         paging: false,
         rowId: function(a) {
-          return 'position_' + a['position'];
+          return 'position_' + a['id'];
         },
       });
 
@@ -26,6 +26,9 @@ $(document).ready(function(){
         this.datatable.clear()
         this.datatable.rows.add(result);
         this.datatable.draw();
+        if (Number(result[0]['arbitrage_profit']) >= 10) {
+          $('.odd').first().addClass('bg-success')
+        }
       }
 
       setInterval(function () {
