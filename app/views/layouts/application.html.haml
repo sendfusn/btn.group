@@ -28,7 +28,7 @@
     .nk-wrap.h-100
       %header.nk-header.page-header.is-transparent.is-shrink.h-100#header
         .header-main
-          .container
+          %div{ class: @navbar_container_fluid ? 'container-fluid' : 'container' }
             .header-wrap
               .header-logo.logo
                 = link_to root_path, class: 'logo-link' do

@@ -36,6 +36,7 @@ module SecretNetwork
     def butt_lode; end
 
     def mount_doom
+      @navbar_container_fluid = true
       @head_description = 'Burn contract for Secret network tokens.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/mount_doom/mt_doom_biwkdj.png'
       @head_title = 'Mount Doom | Secret network | btn.group'
