@@ -4,7 +4,11 @@ module SecretNetwork
   class PagesController < ApplicationController
     before_action :authenticate_admin_user!, only: %i[trade_pairs]
 
-    def address_alias; end
+    def address_alias
+      @head_description = 'Create an alias for your Secret Network wallet address.'
+      @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/address_alias/wallet_jkkqa4.png'
+      @head_title = 'Address alias | Secret network | btn.group'
+    end
 
     def block_locker
       @head_description = 'Never lose your blockchain keys. Decentralized, immutable and affordable way to store your blockchain keys on the Secret network.'
