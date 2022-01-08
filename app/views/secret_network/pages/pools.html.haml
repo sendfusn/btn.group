@@ -1,26 +1,45 @@
 - content_for :header_banner do
   .header-banner.keplr-wallet#secret-network-pools
-    .nk-banner
-      .banner.banner-page
-        .mt-3.w-100
-          .container
-            .row.mb-3
-              .col-12
-                .alert.alert-warning-alt
+    .nk-ovm.shape-q
+%main.nk-pages
+  %section.bg-light.pt-4
+    .container-fluid
+      .nk-block.nk-block-blog
+        .row
+          .col-lg-4.col-xl-3
+            .sidebar.mr-lg-4.mb-4
+              = render 'features_header', blockchain: :secret_network, feature: :pools, show_environment_switch: false
+              %hr
+          .col-lg-8.col-xl-9
+            .collapse.mb-4#exampleCollapseExample
+              .card.card-default
+                .alert.alert-warning-alt.mb-3
                   %p
                     * Warning! These pools are not private. This is by design. Click
                     = link_to 'here', secret_network_why_some_of_our_contracts_are_not_private_path
                     to find out why.
                     %br
                     * Using smart contracts, tokens, and crypto is always a risk. DYOR before investing.
-            .row.mb-3
-              .col-12
-                .card
-                  %h3= features[:secret_network][:features][:pools][:name]
-                  %p.mb-0
-                    %b Blockchain:
-                    = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
-                    = features[:secret_network][:name].to_s
+                    %br
+                    * Please use the gas recommended for deposits and withdrawals.
+                    %br
+                    * Rewards are claimed every time you deposit or withdraw.
+                    %br
+                    * 5% of yield from yield optimizers sent to profit distributor.
+                .card-block
+                  = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
+                  %h6.mt-4 What is it?
+                  %p This is a collection of profit distributor, farm and yield optimizer pools.
+                  %h6 Requirements
+                  %p
+                    1.
+                    = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                    %br
+                    2. SCRT for gas
+                  %h6 References
+                  %p
+                    1.
+                    = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
             .row.mb-5
               .col-12#pools
                 .card.mb-3
@@ -84,12 +103,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * Rewards are claimed every time you deposit or withdraw.
                 -# .card.mb-3
                 -#   .card-body
                 -#     .row
@@ -156,11 +169,6 @@
                 -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                 -#               %em Loading...
                 -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-withdraw-button-ready Withdraw
-                -#   .col-12
-                -#     %hr
-                -#     * Please use the gas recommended for deposits and withdrawals.
-                -#     %br
-                -#     * Rewards are claimed every time you deposit or withdraw.
                 .card.mb-3
                   .row
                     .col-12
@@ -228,12 +236,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * Rewards are claimed every time you deposit or withdraw.
                 .card.mb-3
                   .row
                     .col-12
@@ -293,14 +295,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -362,14 +356,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -431,14 +417,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -500,14 +478,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -569,14 +539,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -638,14 +600,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -707,14 +661,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -776,14 +722,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -845,14 +783,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -914,14 +844,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -983,14 +905,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -1052,14 +966,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -1121,14 +1027,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -1190,14 +1088,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -1259,14 +1149,6 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
                 .card.mb-3
                   .row
                     .col-12
@@ -1328,12 +1210,3 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-withdraw-button-ready Withdraw
-                    .col-12
-                      %hr
-                      %p
-                        * Please use the gas recommended for deposits and withdrawals.
-                        %br
-                        * 5% of yield sent to profit distributor, see contract above.
-                        %br
-                        * Rewards are reinvested every time a user deposits or withdraws.
-    .nk-ovm.shape-q

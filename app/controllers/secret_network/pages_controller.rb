@@ -48,7 +48,12 @@ module SecretNetwork
       @head_title = 'Password manager | Secret network | btn.group'
     end
 
-    def pools; end
+    def pools
+      @navbar_container_fluid = true
+      @head_description = 'Farm, yield optimizer and profit sharing pools by btn.group on the Secret Network.'
+      @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls.png'
+      @head_title = 'Pools | Secret network | btn.group'
+    end
 
     def smart_contract_interface
       @head_description = 'Web interface for Secret network smart contracts.'
