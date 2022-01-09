@@ -49,16 +49,19 @@
                   .tab-content
                     .tab-pane.fade.active.show#tab-2-1
                       %form{ name: 'aliasSearchForm' }
-                        .form-group
-                          %label.control-label Search by
-                          .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                            %label.btn.btn-light.btn-md
-                              %input#address{ name: 'searchType', type: 'radio', value: 'address' } Address
-                            %label.btn.btn-md.btn-light
-                              %input{ name: 'searchType', type: 'radio', value: 'alias', checked: true } Alias
-                        .form-group
-                          %input.form-control.text-lowercase.w-100{ name: 'searchValue', required: true, autocomplete: 'off' }
-                        %button.btn.btn-grad-alt.w-100.mt-3#search-button{ type: 'submit' }
+                        %label.field-label Search by
+                        %ul.d-flex.flex-wrap.gutter-30px
+                          %li.mb-3
+                            .field-wrap
+                              %input.input-radio#address{ name: 'searchType', type: 'radio', value: 'address' }
+                              %label{ for: 'address' } Address
+                          %li.mb-3
+                            .field-wrap
+                              %input.input-radio#alias-input{ name: 'searchType', type: 'radio', value: 'alias', checked: true }
+                              %label{ for: 'alias-input' } Alias
+                        .field-item
+                          %input.input-bordered.text-lowercase.w-100{ name: 'searchValue', required: true, autocomplete: 'off' }
+                        %button.btn.btn-grad.w-100#search-button{ type: 'submit' }
                           .d-none#loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
@@ -66,14 +69,14 @@
                             Search
                     .tab-pane.fade#tab-2-2
                       %form{ name: 'aliasCreateForm' }
-                        .form-group
-                          %label{ for: 'alias' } Alias
-                          %input.form-control.text-lowercase.w-100#alias{ name: 'alias', required: true }
-                        .form-group
-                          %label{ for: 'avatar-url' } Avatar url
+                        .field-item
+                          %label.field-label{ for: 'alias' } Alias
+                          %input.input-bordered.text-lowercase.w-100#alias{ name: 'alias', required: true }
+                        .field-item
+                          %label.field-label{ for: 'avatar-url' } Avatar url
                           %button.btn.btn-light.btn-sm.ml-2.border#cloudinary-upload-widget Upload image
-                          %input.form-control.w-100#avatar-url{ name: 'avatarUrl' }
-                        %button.btn.btn-grad-alt.w-100.mt-3#create-button{ type: 'submit' }
+                          %input.input-bordered.w-100#avatar-url{ name: 'avatarUrl' }
+                        %button.btn.btn-grad.w-100#create-button{ type: 'submit' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
@@ -86,7 +89,7 @@
                         * Cost to create alias = 1 BUTT + ~gas(SCRT)
                         %br
                         * You can get BUTT from
-                        = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
+                        = link_to 'Button Swap', secret_network_button_swap_path
                         %br
                         * Uploaded images are stored on
                         = link_to 'cloudinary.', 'https://cloudinary.com/', target: '_blank', rel: 'noopener'
