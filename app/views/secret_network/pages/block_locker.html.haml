@@ -46,11 +46,7 @@
 
                         %h6 Extra notes
                         %p
-                          1. Every 555th BUTT sent into the contract will send 555 BUTT to the user.
-                          %br
-                          2. Creating, updating and unlocking can't be confirmed on chain. It will just look like a user has interacted with the BUTT contract.
-                          %br
-                          3. Viewing a locker, when locked, can be confirmed on chain.
+                          * Every 555th BUTT sent into the contract will send 555 BUTT to the user.
                         %h6 References
                         %p
                           1.
@@ -59,50 +55,81 @@
                           2.
                           = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
                   %hr
-                  %form{ name: 'blockLockerForm' }
-                    .form-group
-                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light
-                          %input#handle-create-or-update{ name: 'interactionType', type: 'radio', value: 'handleCreateOrUpdate', checked: true } Create or update
-                        %label.btn.btn-light
-                          %input#handle-unlock{ name: 'interactionType', type: 'radio', value: 'handleUnlock' } Unlock
-                        %label.btn.btn-light
-                          %input#handle-view{ name: 'interactionType', type: 'radio', value: 'handleViewLocker' } View (when locked)
-                        %label.btn.btn-light
-                          %input#query-view{ name: 'interactionType', type: 'radio', value: 'queryViewLocker' } View (when unlocked)
-                    .form-group.d-none#wallet-address-form-group
-                      %label.control-label Wallet address
-                      %input.form-control.w-100#wallet-address{ name: 'walletAddress', autocomplete: 'off' }
-                    .form-group#content-form-group
-                      %label.control-label{ for: 'content' } Content
-                      %textarea.form-control.w-100#content{ name: 'content', autocomplete: 'off', rows: 5 }
-                    .form-group#passphrase-form-group
-                      %label.control-label{ for: 'passphrase' } Passphrase
-                      %input.form-control.w-100#passphrase{ name: 'passphrase', autocomplete: 'off' }
-                    .form-group#whitelisted-address-1-form-group
-                      %label.control-label{ for: 'whitelisted-address-1' } Whitelisted address 1
-                      %input.form-control.w-100#whitelisted-address-1{ name: 'whitelistedAddress1', autocomplete: 'off' }
-                    .form-group#whitelisted-address-2-form-group
-                      %label.control-label{ for: 'whitelisted-address-2' } Whitelisted address 2
-                      %input.form-control.w-100#whitelisted-address-2{ name: 'whitelistedAddress2', autocomplete: 'off' }
-                    .form-group#whitelisted-address-3-form-group
-                      %label.control-label{ for: 'whitelisted-address-3' } Whitelisted address 3
-                      %input.form-control.w-100#whitelisted-address-3{ name: 'whitelistedAddress3', autocomplete: 'off' }
-                    %button.btn.btn-primary.btn-md.mt-3#submit-button{ type: 'submit' }
-                      .d-none#loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      #ready
-                        Submit
+                  %ul.nav.tab-nav.tab-nav-btn
+                    %li
+                      %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Create or update
+                    %li
+                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Unlock
+                    %li
+                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-3' } View (when locked)
+                    %li
+                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-4' } View (when unlocked)
+                  .tab-content
+                    .tab-pane.fade.active.show#tab-2-1
+                      %form{ name: 'blockLockerCreateOrUpdateForm' }
+                        .field-item
+                          %label.field-label Content
+                          %textarea.input-bordered.input-textarea.w-100{ name: 'content', autocomplete: 'off', rows: 5 }
+                        .field-item
+                          %label.field-label Passphrase
+                          %input.input-bordered.w-100{ name: 'passphrase', autocomplete: 'off' }
+                        .field-item
+                          %label.field-label Whitelisted address 1
+                          %input.input-bordered.w-100{ name: 'whitelistedAddress1', autocomplete: 'off' }
+                        .field-item
+                          %label.field-label{ for: 'whitelisted-address-2' } Whitelisted address 2
+                          %input.input-bordered.w-100{ name: 'whitelistedAddress2', autocomplete: 'off' }
+                        .field-item
+                          %label.field-label{ for: 'whitelisted-address-3' } Whitelisted address 3
+                          %input.input-bordered.w-100{ name: 'whitelistedAddress3', autocomplete: 'off' }
+                        %button.btn.btn-grad.submit-button{ type: 'submit' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            Submit
+                    .tab-pane.fade#tab-2-2
+                      %form{ name: 'blockLockerUnlockForm' }
+                        .field-item
+                          %label.field-label Wallet address
+                          %input.input-bordered.w-100{ name: 'walletAddress', autocomplete: 'off' }
+                        %button.btn.btn-grad.submit-button{ type: 'submit' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            Submit
+                    .tab-pane.fade#tab-2-3
+                      %form{ name: 'blockLockerViewWhenLockedForm' }
+                        .field-item
+                          %label.field-label Wallet address
+                          %input.input-bordered.w-100{ name: 'walletAddress', autocomplete: 'off', disabled: true }
+                        %button.btn.btn-grad.submit-button{ type: 'submit' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            Submit
+                    .tab-pane.fade#tab-2-4
+                      %form{ name: 'blockLockerViewWhenUnlockedForm' }
+                        .field-item
+                          %label.field-label Wallet address
+                          %input.input-bordered.w-100{ name: 'walletAddress', autocomplete: 'off' }
+                        .field-item
+                          %label.field-label{ for: 'passphrase' } Passphrase
+                          %input.input-bordered.w-100{ name: 'passphrase', autocomplete: 'off' }
+                        %button.btn.btn-grad.submit-button{ type: 'submit' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            Submit
                   %hr
-                  * Cost to create, update or unlock a locker = 1 BUTT + ~gas(SCRT)
-                  %br
-                  * Cost to view the locker when locked = ~gas(SCRT)
-                  %br
-                  * Cost to view the locker when unlocked = FREE
-                  %br
-                  * You can get BUTT from
-                  = link_to 'Secret Swap', 'https://app.secretswap.io/swap'
+                  %p
+                    * Cost to create, update or unlock a locker = 1 BUTT + ~gas(SCRT)
+                    %br
+                    * You can get BUTT from
+                    = link_to 'Button Swap', secret_network_button_swap_path
                 .card.my-3.d-none#result-container
                   %h3 Result
                   %pre.p-1.m-1.alert.alert-success.d-none#result-value
