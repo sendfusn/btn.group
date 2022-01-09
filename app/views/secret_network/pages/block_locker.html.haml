@@ -130,7 +130,8 @@
                     %br
                     * You can get BUTT from
                     = link_to 'Button Swap', secret_network_button_swap_path
-                .card.my-3.d-none#result-container
+                .card.bg-light.my-3.d-none#result-container
                   %h3 Result
-                  %pre.p-1.m-1.alert.alert-success.d-none#result-value
+                  .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
+                    %pre.d-none#result-value
     .nk-ovm.shape-a
