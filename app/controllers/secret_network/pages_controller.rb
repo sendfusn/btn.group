@@ -65,7 +65,9 @@ module SecretNetwork
       @head_title = 'Smart contract interface | Secret network | btn.group'
     end
 
-    def trade_pairs; end
+    def trade_pairs
+      @head_title = 'Trade pairs | Secret network | btn.group'
+    end
 
     def transactions
       @head_description = 'Transactions viewer for Secret network tokens.'

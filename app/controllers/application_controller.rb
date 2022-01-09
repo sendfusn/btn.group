@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_admin_user!, only: :arbitrage
   helper_method :features, :head_description, :head_image, :head_link, :head_title, :logo_cloudinary_public_id
 
-  def arbitrage; end
+  def arbitrage
+    @head_title = 'Arbitrage | btn.group'
+  end
 
   def brand_assets
     @show_footer = true
