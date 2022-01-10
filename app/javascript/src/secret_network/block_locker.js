@@ -17,15 +17,24 @@ $(document).ready(function(){
         document.blockLockerViewWhenLockedForm.walletAddress.value = this.address
       })
 
-      document.blockLockerCreateOrUpdateForm.onsubmit = async (e) => {
-        e.preventDefault()
+      this.disableForm = function() {
         $(".submit-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
         $(".loading").removeClass("d-none")
         $(".ready").addClass("d-none")
-        let handleMsg;
-        let result;
         document.hideAllAlerts();
+      }
+
+      this.enableForm = function() {
+        $(".submit-button").prop("disabled", false);
+        $(".loading").addClass("d-none")
+        $(".ready").removeClass("d-none")
+      }
+
+      document.blockLockerCreateOrUpdateForm.onsubmit = async (e) => {
+        e.preventDefault()
+        this.disableForm()
+        let handleMsg;
         try {
           if (!window.getOfflineSigner || !window.keplr) {
             throw("Please install keplr extension")
@@ -71,28 +80,22 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "Locker updated."
-          result = await this.client.execute(contractAddressToExecute, handleMsg)
+          await this.client.execute(contractAddressToExecute, handleMsg)
+          document.showAlertSuccess(resultText)
+          $(e.target)[0].reset()
         }
         catch(err) {
           document.showAlertDanger(err)
         }
         finally {
-          // Enable form
-          $(".submit-button").prop("disabled", false);
-          $(".loading").addClass("d-none")
-          $(".ready").removeClass("d-none")
+          this.enableForm()
         }
       };
 
       document.blockLockerUnlockForm.onsubmit = async (e) => {
         e.preventDefault()
-        $(".submit-button").prop("disabled", true);
-        $("#result-container").addClass("d-none");
-        $(".loading").removeClass("d-none")
-        $(".ready").addClass("d-none")
+        this.disableForm()
         let handleMsg;
-        let result;
-        document.hideAllAlerts();
         try {
           if (!window.getOfflineSigner || !window.keplr) {
             throw("Please install keplr extension")
@@ -118,29 +121,23 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
-          result = await this.client.execute(contractAddressToExecute, handleMsg)
+          await this.client.execute(contractAddressToExecute, handleMsg)
           document.showAlertSuccess(resultText)
+          $(e.target)[0].reset()
         }
         catch(err) {
           document.showAlertDanger(err)
         }
         finally {
-          // Enable form
-          $(".submit-button").prop("disabled", false);
-          $(".loading").addClass("d-none")
-          $(".ready").removeClass("d-none")
+          this.enableForm()
         }
       };
 
       document.blockLockerViewWhenLockedForm.onsubmit = async (e) => {
         e.preventDefault()
-        $(".submit-button").prop("disabled", true);
-        $("#result-container").addClass("d-none");
-        $(".loading").removeClass("d-none")
-        $(".ready").addClass("d-none")
+        this.disableForm()
         let handleMsg;
         let result;
-        document.hideAllAlerts();
         try {
           if (!window.getOfflineSigner || !window.keplr) {
             throw("Please install keplr extension")
@@ -169,7 +166,6 @@ $(document).ready(function(){
           result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           result = JSON.parse(resultText)
           // Display results
-          $("#result-value").removeClass("d-none");
           $("#result-value").html(document.prettyPrintJSON(result));
           $("#result-container").removeClass("d-none");
           $('html, body').animate({
@@ -180,27 +176,19 @@ $(document).ready(function(){
           document.showAlertDanger(err)
         }
         finally {
-          // Enable form
-          $(".submit-button").prop("disabled", false);
-          $(".loading").addClass("d-none")
-          $(".ready").removeClass("d-none")
+          this.enableForm()
         }
       };
 
       document.blockLockerViewWhenUnlockedForm.onsubmit = async (e) => {
         e.preventDefault()
-        $(".submit-button").prop("disabled", true);
-        $("#result-container").addClass("d-none");
-        $(".loading").removeClass("d-none")
-        $(".ready").addClass("d-none")
+        this.disableForm()
         let handleMsg;
         let result;
-        document.hideAllAlerts();
         try {
           handleMsg = { user_locker: { address: document.blockLockerViewWhenUnlockedForm.walletAddress.value, passphrase: document.blockLockerViewWhenUnlockedForm.passphrase.value } };
           result = await this.client.queryContractSmart(this.contractAddress, handleMsg)
           // Display results
-          $("#result-value").removeClass("d-none");
           $("#result-value").html(document.prettyPrintJSON(result));
           $("#result-container").removeClass("d-none");
           $('html, body').animate({
@@ -211,10 +199,7 @@ $(document).ready(function(){
           document.showAlertDanger(err)
         }
         finally {
-          // Enable form
-          $(".submit-button").prop("disabled", false);
-          $(".loading").addClass("d-none")
-          $(".ready").removeClass("d-none")
+          this.enableForm()
         }
       };
     }
