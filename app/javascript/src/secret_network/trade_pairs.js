@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js";
+
 $(document).ready(function(){
   if($("#secret-network-trade-pairs").length) {
     // === LISTENERS ===
@@ -11,9 +13,8 @@ $(document).ready(function(){
       this.datatable = window.$('#trade-pairs-table').DataTable({
         columns: [
             { data: 'poolId', title: "ID" },
-            { data: 'poolAddress', title: "Trade pair" },
-            { data: 'crypto0Address', title: "Crypto 0" },
-            { data: 'crypto1Address', title: "Crypto 1" },
+            { data: 'crypto0Symbol', title: "Crypto 0" },
+            { data: 'crypto1Symbol', title: "Crypto 1" },
             { data: 'crypto0Amount', title: "Crypto 0 amount" },
             { data: 'crypto1Amount', title: "Crypto 1 amount" },
         ],
@@ -35,11 +36,13 @@ $(document).ready(function(){
         for (const el of this.tradePairs) {
           await this.queryPoolFromBlockchain(el);
         }
-        location.reload()
+        setTimeout(function(){
+          location.reload()
+        }, 60_000);
       }
 
       this.queryPoolFromBlockchain = async(tradePair) => {
-        if (tradePair['protocol']) {
+        if (tradePair['protocol'] && tradePair['cryptocurrency_pools'].length) {
           let protocolIdentifier = tradePair['protocol']['identifier']
           let address = tradePair['smart_contract']['address']
           let msg = { pool: {} };
@@ -51,8 +54,20 @@ $(document).ready(function(){
             let result = await this.client.queryContractSmart(address, msg);
             let asset_0_address;
             let asset_1_address;
+            let asset_0_symbol;
+            let asset_1_symbol;
             let asset_0_amount;
             let asset_1_amount;
+            tradePair['cryptocurrency_pools'].forEach((cryptocurrencyPool) => {
+              if (cryptocurrencyPool['cryptocurrency_role'] == 'deposit') {
+                let cryptocurrency = cryptocurrencyPool['cryptocurrency']
+                if (asset_0_symbol) {
+                  asset_1_symbol = cryptocurrency['symbol']
+                } else {
+                  asset_0_symbol = cryptocurrency['symbol']
+                }
+              }
+            })
             if (protocolIdentifier == 'sienna') {
               asset_0_address = result['pair_info'][
               'pair']['token_0']['custom_token']['contract_addr']
@@ -80,8 +95,10 @@ $(document).ready(function(){
                 if (cryptocurrency['smart_contract']) {
                   if (asset_0_address == cryptocurrency['smart_contract']['address']) {
                     amount = asset_0_amount
+                    asset_0_amount = new BigNumber(asset_0_amount).dividedBy(new BigNumber("10").pow(cryptocurrency['decimals'])).times(cryptocurrency['price']).toFormat(2)
                   } else if (asset_1_address == cryptocurrency['smart_contract']['address']) {
                     amount = asset_1_amount
+                    asset_1_amount = new BigNumber(asset_1_amount).dividedBy(new BigNumber("10").pow(cryptocurrency['decimals'])).times(cryptocurrency['price']).toFormat(2)
                   }
                 } else {
                   if (asset_0_address == undefined) {
@@ -102,14 +119,14 @@ $(document).ready(function(){
                     document.showAlertDanger(error)
                   }
                 }
+
               }
             }
 
             tradePairForDataTable['poolId'] = tradePair['id']
-            tradePairForDataTable['poolAddress'] = address
-            tradePairForDataTable['crypto0Address'] = asset_0_address
+            tradePairForDataTable['crypto0Symbol'] = asset_0_symbol
             tradePairForDataTable['crypto0Amount'] = asset_0_amount
-            tradePairForDataTable['crypto1Address'] = asset_1_address
+            tradePairForDataTable['crypto1Symbol'] = asset_1_symbol
             tradePairForDataTable['crypto1Amount'] = asset_1_amount
             this.tradePairsFormatted.unshift(tradePairForDataTable)
             this.datatable.clear()

@@ -66,6 +66,7 @@ module SecretNetwork
     end
 
     def trade_pairs
+      @navbar_container_fluid = true
       @head_title = 'Trade pairs | Secret network | btn.group'
     end
 
