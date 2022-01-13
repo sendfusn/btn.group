@@ -15,11 +15,13 @@ $(document).ready(function(){
             { data: 'poolId', title: "ID" },
             { data: 'crypto0Symbol', title: "Crypto 0" },
             { data: 'crypto1Symbol', title: "Crypto 1" },
-            { data: 'crypto0Amount', title: "Crypto 0 amount" },
-            { data: 'crypto1Amount', title: "Crypto 1 amount" },
+            { data: 'crypto0Amount', title: "Crypto 0 ($)" },
+            { data: 'crypto1Amount', title: "Crypto 1 ($)" },
+            { data: 'difference', title: "Difference ($)" },
         ],
         dom: '<"top"i>frtp',
-        ordering: false,
+        ordering: true,
+        order: [[5, 'desc']],
         paging: false,
         rowId: function(a) {
           return 'position_' + a['position'];
@@ -58,9 +60,13 @@ $(document).ready(function(){
             let asset_1_symbol;
             let asset_0_amount;
             let asset_1_amount;
+            let coinGeckoIdsPresent = true;
             tradePair['cryptocurrency_pools'].forEach((cryptocurrencyPool) => {
               if (cryptocurrencyPool['cryptocurrency_role'] == 'deposit') {
                 let cryptocurrency = cryptocurrencyPool['cryptocurrency']
+                if (!cryptocurrency['coin_gecko_id']) {
+                  coinGeckoIdsPresent = false
+                }
                 if (asset_0_symbol) {
                   asset_1_symbol = cryptocurrency['symbol']
                 } else {
@@ -68,6 +74,9 @@ $(document).ready(function(){
                 }
               }
             })
+            if (!coinGeckoIdsPresent) {
+              return
+            }
             if (protocolIdentifier == 'sienna') {
               asset_0_address = result['pair_info'][
               'pair']['token_0']['custom_token']['contract_addr']
@@ -95,10 +104,10 @@ $(document).ready(function(){
                 if (cryptocurrency['smart_contract']) {
                   if (asset_0_address == cryptocurrency['smart_contract']['address']) {
                     amount = asset_0_amount
-                    asset_0_amount = new BigNumber(asset_0_amount).dividedBy(new BigNumber("10").pow(cryptocurrency['decimals'])).times(cryptocurrency['price']).toFormat(2)
+                    asset_0_amount = new BigNumber(asset_0_amount).dividedBy(new BigNumber("10").pow(cryptocurrency['decimals'])).times(cryptocurrency['price'])
                   } else if (asset_1_address == cryptocurrency['smart_contract']['address']) {
                     amount = asset_1_amount
-                    asset_1_amount = new BigNumber(asset_1_amount).dividedBy(new BigNumber("10").pow(cryptocurrency['decimals'])).times(cryptocurrency['price']).toFormat(2)
+                    asset_1_amount = new BigNumber(asset_1_amount).dividedBy(new BigNumber("10").pow(cryptocurrency['decimals'])).times(cryptocurrency['price'])
                   }
                 } else {
                   if (asset_0_address == undefined) {
@@ -124,10 +133,11 @@ $(document).ready(function(){
             }
 
             tradePairForDataTable['poolId'] = tradePair['id']
+            tradePairForDataTable['difference'] = asset_0_amount.minus(asset_1_amount).toFormat(2)
             tradePairForDataTable['crypto0Symbol'] = asset_0_symbol
-            tradePairForDataTable['crypto0Amount'] = asset_0_amount
+            tradePairForDataTable['crypto0Amount'] = asset_0_amount.toFormat(2)
             tradePairForDataTable['crypto1Symbol'] = asset_1_symbol
-            tradePairForDataTable['crypto1Amount'] = asset_1_amount
+            tradePairForDataTable['crypto1Amount'] = asset_1_amount.toFormat(2)
             this.tradePairsFormatted.unshift(tradePairForDataTable)
             this.datatable.clear()
             this.datatable.rows.add(this.tradePairsFormatted);
