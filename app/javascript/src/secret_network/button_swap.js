@@ -10,6 +10,8 @@ $(document).ready(function(){
       this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
       this.fromAmountInputSelector = '#from-amount-input'
+      this.fromId = 515;
+      this.toId = 351;
       this.tradePairs = {}
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
@@ -17,6 +19,7 @@ $(document).ready(function(){
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.gasWrap = 60000;
       this.queryCount = 0;
+      this.tokenModalFor;
       this.userVipLevel = 0;
       this.vipLevels = {
         0: {
@@ -57,11 +60,11 @@ $(document).ready(function(){
             let inputToClickFillTo;
             let selectorPrefix;
             if (value == '.from-balance-view-button') {
-              cryptoId = $('#from').val()
+              cryptoId = this.fromId
               selectorPrefix = '.from'
               inputToClickFillTo = this.fromAmountInputSelector
             } else {
-              cryptoId = $('#to').val()
+              cryptoId = this.toId
               selectorPrefix = '.to'
             }
             try {
@@ -85,15 +88,15 @@ $(document).ready(function(){
         this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
       })
       $('#flip-token').click(function(event){
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId =document.secretNetworkDexAggregatorForm.to.value
-        document.secretNetworkDexAggregatorForm.from.value = toId
+        let fromId = this.fromId
+        let toId = this.toId
+        this.fromId = toId
         document.secretNetworkDexAggregatorForm.fromAmount.value = ''
-        document.secretNetworkDexAggregatorForm.to.value = fromId
+        this.toId = fromId
         document.secretNetworkDexAggregatorForm.estimateAmount.value = ''
         document.secretNetworkDexAggregatorForm.minAmount.value = ''
-        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
-        this.updateWalletBalance($('#to').val(), '.to')
+        this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
+        this.updateWalletBalance(this.toId, '.to')
         $('#from-usd-price').text('')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
@@ -101,33 +104,42 @@ $(document).ready(function(){
       $(this.fromAmountInputSelector).on("input", async(evt) => {
         await this.getEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        $('#from-usd-price').text('~ $' + (this.cryptocurrencies[fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+        let fromId = this.fromId
+        $('#from-usd-price').text('$' + (this.cryptocurrencies[fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
       });
-      $("#from").change(function(){
-        this.toggleConfig()
-        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
-        this.getEstimate()
-        let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        $('#from-usd-price').text('~ $' + (this.cryptocurrencies[fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+      $("#from-token-button").click(function(){
+        this.tokenModalFor = 'from';
+      }.bind(this));
+      $("#to-token-button").click(function(){
+        this.tokenModalFor = 'to';
       }.bind(this));
       $("#slippage-tolerance").change(function(){
         let estimateAmount = document.secretNetworkDexAggregatorForm.estimateAmount.value
         if (Number(estimateAmount) > 0) {
-          let toId = document.secretNetworkDexAggregatorForm.to.value
+          let toId = this.toId
           let toCryptocurrencyDecimals = this.cryptocurrencies[toId]['decimals']
           let slippage = Number(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(estimateAmount) / 100
           let minAmount = new BigNumber(estimateAmount - slippage).toFormat(toCryptocurrencyDecimals)
           document.secretNetworkDexAggregatorForm.minAmount.value = parseFloat(minAmount.replace(/,/g, ''))
-          $('#min-acceptable-amount-usd-price').text('~ $' + (this.cryptocurrencies[toId]['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+          $('#min-acceptable-amount-usd-price').text('$' + (this.cryptocurrencies[toId]['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
         }
       }.bind(this));
-      $("#to").change(function(){
+      $('li.bg-white').click(function(event){
+        $('.modal').modal('hide');
+        if(this.tokenModalFor == 'from') {
+          this.fromId = event['currentTarget']['dataset']['cryptocurrencyId']
+          this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
+          let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
+          $('#from-usd-price').text('$' + (this.cryptocurrencies[this.fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+          $('#from-token-button').text(this.cryptocurrencies[this.fromId]['symbol'])
+        } else {
+          this.toId = event['currentTarget']['dataset']['cryptocurrencyId']
+          this.updateWalletBalance(this.toId, '.to')
+          $('#to-token-button').text(this.cryptocurrencies[this.toId]['symbol'])
+        }
         this.toggleConfig()
-        this.updateWalletBalance($('#to').val(), '.to')
         this.getEstimate()
-      }.bind(this));
+      }.bind(this))
 
       // === Functions ===
       this.applyFee = () => {
@@ -183,11 +195,11 @@ $(document).ready(function(){
           secondaryGroupSize: toCryptocurrency['decimals']
         }
         document.secretNetworkDexAggregatorForm.estimateAmount.value = document.humanizeStringNumberFromSmartContract(this.selectedSwapPath['resultOfSwaps'], toCryptocurrency['decimals'], fmt)
-        $('#to-usd-price').text('~ $' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.estimateAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+        $('#to-usd-price').text('$' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.estimateAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
         let slippage = Math.round(new BigNumber(document.secretNetworkDexAggregatorForm.slippageTolerance.value) * new BigNumber(this.selectedSwapPath['resultOfSwaps']) / 100)
         let minAmount = new BigNumber(this.selectedSwapPath['resultOfSwaps']) - slippage
         document.secretNetworkDexAggregatorForm.minAmount.value = document.humanizeStringNumberFromSmartContract(minAmount, toCryptocurrency['decimals'], fmt)
-        $('#min-acceptable-amount-usd-price').text('~ $' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+        $('#min-acceptable-amount-usd-price').text('$' + (toCryptocurrency['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
       }
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
@@ -223,16 +235,16 @@ $(document).ready(function(){
             this.wrapPaths[tokenId] = nativeId
           }
         })
-        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
-        this.updateWalletBalance($('#to').val(), '.to')
+        this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
+        this.updateWalletBalance(this.toId, '.to')
       }
 
       this.getEstimate = async() => {
         this.queryCount += 1;
         this.resetBeforeEstimate()
         let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
+        let fromId = this.fromId
+        let toId = this.toId
         $("#swap-paths").html('')
         while (!this.wrapPaths) {
           await this.delay(500)
@@ -242,7 +254,7 @@ $(document).ready(function(){
             document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
           } else {
             setTimeout(function(){
-              if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == document.secretNetworkDexAggregatorForm.from.value && toId == document.secretNetworkDexAggregatorForm.to.value) {
+              if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == this.fromId && toId == this.toId) {
                 this.getSwapPaths(fromId, toId, fromAmount)
               }
             }.bind(this), 1500);
@@ -461,8 +473,8 @@ $(document).ready(function(){
         $('#from-usd-price').text('')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
-        this.updateWalletBalance($('#from').val(), '.from', this.fromAmountInputSelector)
-        this.updateWalletBalance($('#to').val(), '.to')
+        this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
+        this.updateWalletBalance(this.toId, '.to')
       }
 
       this.resetBeforeEstimate = () => {
@@ -517,9 +529,7 @@ $(document).ready(function(){
         while (!this.wrapPaths) {
           await this.delay(500)
         }
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
-        if(this.wrapPaths[fromId] == toId) {
+        if(this.wrapPaths[this.fromId] == this.toId) {
           $("#cog-container").addClass('d-none')
           $("#slippage-container").addClass('d-none')
         } else {
@@ -560,11 +570,11 @@ $(document).ready(function(){
           }
           cryptocurrency['balance'] = balance
           if (selectorPrefix == '.from') {
-            if (cryptocurrencyId != $('#from').val()) {
+            if (cryptocurrencyId != this.fromId) {
               updateWalletBalanceStillValid = false
             }
           } else {
-            if (cryptocurrencyId != $('#to').val()) {
+            if (cryptocurrencyId != this.toId) {
               updateWalletBalanceStillValid = false
             }
           }
@@ -600,8 +610,8 @@ $(document).ready(function(){
 
       document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
         e.preventDefault()
-        let fromId = document.secretNetworkDexAggregatorForm.from.value
-        let toId = document.secretNetworkDexAggregatorForm.to.value
+        let fromId = this.fromId
+        let toId = this.toId
         if (this.wrapPaths[fromId] != toId && !this.selectedSwapPath) {
           return
         }
@@ -736,6 +746,12 @@ $(document).ready(function(){
           $submitButton.find('.ready').removeClass('d-none')
         }
       };
+
+      var options = {
+        valueNames: [ 'address', 'symbol' ]
+      };
+
+      var hackerList = new List('hacker-list', options);
 
       this.getAndSetCryptocurrenciesAndTradePairs()
     }

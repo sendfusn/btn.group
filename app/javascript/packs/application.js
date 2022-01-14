@@ -18,6 +18,7 @@ import 'lodash'
 import 'datatables.net-bs4'
 import 'datatables.net-buttons-bs4'
 import 'datatables.net-buttons/js/buttons.html5.js'
+
 // APP
 import '../src/application/_environment_switch'
 import '../src/arbitrage'

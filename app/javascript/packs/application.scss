@@ -95,3 +95,50 @@
     border-style: dashed;
   }
 }
+
+// === Secret network Button Swap ===
+#secret-network-button-swap {
+  .amount-input {
+    background: transparent;
+    border: 0;
+    font-size: 28px;
+  }
+
+  .amount-input:focus {
+    box-shadow: 0 0 0 0 !important;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+#buttonSwap {
+  .list {
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .list li a {
+    color: black; /* Add a black text color */
+    margin-top: -1px; /* Prevent double borders */
+    padding: 6px 12px; /* Add some padding */
+    text-decoration: none; /* Remove default text underline */
+    font-size: 18px; /* Increase the font-size */
+    display: block; /* Make it into a block element to fill the whole list */
+  }
+
+  .list li a:hover:not(.header) {
+    background-color: #eee; /* Add a hover effect to all links, except for headers */
+  }
+}
