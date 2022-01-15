@@ -8,23 +8,13 @@ class SwapPathsController < ApplicationController
     unless params['arbitrage'] == 'true'
       top_swap_paths = []
       @swap_paths.each do |sp|
-        if params['from_amount']
-          result_amount = sp.simulate_swaps(params['from_amount'])
-          net_usd_outcome = sp.to.amount_as_usd(result_amount) - sp.gas_in_usd
-        else
-          result_amount = sp.simulate_swaps_reverse(params['to_amount'])
-          net_usd_outcome = sp.from.amount_as_usd(result_amount) - sp.gas_in_usd
-        end
+        result_amount = sp.simulate_swaps(params['from_amount'])
+        net_usd_outcome = sp.net_result_as_usd(result_amount)
         top_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
       end
-      top_swap_paths = if params['from_amount']
-        top_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
-                      .reverse
-                      .map { |obj| obj[:swap_path_id] }[0..4]
-      else
-        top_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
-                      .map { |obj| obj[:swap_path_id] }[0..4]
-      end
+      top_swap_paths = top_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
+                                     .reverse
+                                     .map { |obj| obj[:swap_path_id] }[0..4]
       # If swap paths don't hold at least one sienna swap path with swap count one, add it.
       # We are only factoring in swap count one because sienna doesn't do routing.
       sienna_swap_path_id = SwapPath.find_by(from_id: params['from_id'], to_id: params['to_id'], protocol: Protocol.find_by(identifier: 'sienna'), swap_count: 1)&.id
@@ -32,23 +22,13 @@ class SwapPathsController < ApplicationController
       # If swap paths don't hold at least two secret swap paths, add the top two.
       top_secret_swap_paths = []
       @swap_paths.where(protocol: Protocol.find_by(identifier: 'secret_swap')).each do |sp|
-        if params['from_amount']
-          result_amount = sp.simulate_swaps(params['from_amount'])
-          net_usd_outcome = sp.to.amount_as_usd(result_amount) - sp.gas_in_usd
-        else
-          result_amount = sp.simulate_swaps_reverse(params['to_amount'])
-          net_usd_outcome = sp.from.amount_as_usd(result_amount) - sp.gas_in_usd
-        end
+        result_amount = sp.simulate_swaps(params['from_amount'])
+        net_usd_outcome = sp.net_result_as_usd(result_amount)
         top_secret_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
       end
-      top_secret_swap_paths = if params['from_amount']
-        top_secret_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
-                             .reverse
-                             .map { |obj| obj[:swap_path_id] }[0..1]
-      else
-        top_secret_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
-                             .map { |obj| obj[:swap_path_id] }[0..1]
-      end
+      top_secret_swap_paths = top_secret_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
+                                                   .reverse
+                                                   .map { |obj| obj[:swap_path_id] }[0..1]
       @swap_paths = SwapPath.where(id: top_swap_paths + top_secret_swap_paths)
     end
     render json: @swap_paths, methods: %i[arbitrage_amount_formatted gas gas_in_usd swap_path_as_array], include: { from: {}, to: {} }

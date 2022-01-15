@@ -32,6 +32,10 @@ class SwapPath < ApplicationRecord
     from.amount_with_decimals(arbitrage_amount)
   end
 
+  def net_result_as_usd(result_amount)
+    Cryptocurrency.find(to_id).amount_as_usd(result_amount) - gas_in_usd
+  end
+
   def set_optimal_arbitrage_details
     return if from_id != to_id
 
@@ -56,7 +60,7 @@ class SwapPath < ApplicationRecord
     current_amount = interval_amount
     current_amount_as_usd = from.amount_as_usd(current_amount)
     while maximum_tradeable_value > current_amount_as_usd && largest_range_of_pools > current_amount_as_usd
-      net_profit = to.amount_as_usd(simulate_swaps(current_amount)) - gas_in_usd - current_amount_as_usd
+      net_profit = net_result_as_usd(simulate_swaps(current_amount)) - current_amount_as_usd
       if net_profit > arbitrage_profit
         arbitrage_amount = current_amount
         arbitrage_profit = net_profit
@@ -72,16 +76,6 @@ class SwapPath < ApplicationRecord
     swap_path_as_array.each do |pool_id|
       pool = Pool.find(pool_id)
       amount = pool.simulate_swap(amount, current_from_id)[:return_amount]
-      current_from_id = pool.cryptocurrency_pools.deposit.where.not(cryptocurrency_id: current_from_id).first.cryptocurrency_id
-    end
-    amount
-  end
-
-  def simulate_swaps_reverse(amount)
-    current_from_id = to_id
-    swap_path_as_array.reverse_each do |pool_id|
-      pool = Pool.find(pool_id)
-      amount = pool.simulate_swap_reverse(amount, current_from_id)[:offer_amount]
       current_from_id = pool.cryptocurrency_pools.deposit.where.not(cryptocurrency_id: current_from_id).first.cryptocurrency_id
     end
     amount
