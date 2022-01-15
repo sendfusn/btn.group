@@ -72,17 +72,19 @@ class Pool < ApplicationRecord
     return unless cryptocurrency_pools.deposit.pluck(:cryptocurrency_id).include?(to_id)
 
     amount = amount.to_d
-    pool_from_amount = cryptocurrency_pools.deposit.where.not(cryptocurrency_id: to_id).first.amount.to_d
-    pool_to_amount = cryptocurrency_pools.find_by(cryptocurrency_id: to_id).amount.to_d
+    offer_pool = cryptocurrency_pools.deposit.where.not(cryptocurrency_id: to_id).first.amount.to_d
+    ask_pool = cryptocurrency_pools.find_by(cryptocurrency_id: to_id).amount.to_d
     commission_rate_nom = 3
     commission_rate_denom = 1_000
-    cp = pool_from_amount * pool_to_amount
+    cp = ask_pool * offer_pool
     one_minus_commission = 1 - (3.to_d / 1_000)
-    offer_amount = cp * (1.to_d / (pool_to_amount - amount * (1_000_000_000 / (1_000_000_000 * one_minus_commission)))) - pool_from_amount
+    offer_amount = cp * (1.to_d / (ask_pool - amount * (1_000_000_000 / (1_000_000_000 * one_minus_commission)))) - offer_pool
     before_commission_deduction = amount * (1_000_000_000 / (1_000_000_000 * one_minus_commission))
-    spread_amount = offer_amount * pool_to_amount / pool_from_amount - before_commission_deduction
+    spread_amount = offer_amount * ask_pool / offer_pool - before_commission_deduction
     commission_amount = before_commission_deduction * commission_rate_nom / commission_rate_denom
-    { offer_amount: offer_amount.to_i, spread_amount: spread_amount.to_i, commission_amount: commission_amount.to_i }
+    { offer_amount: offer_amount.to_i,
+      spread_amount: spread_amount.to_i,
+      commission_amount: commission_amount.to_i }
   end
 
   def update_total_locked
