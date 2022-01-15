@@ -85,7 +85,7 @@
                         = render 'secret_network/balance', selector_prefix: 'to'
                         .row.gutter-10px
                           .col-7.col-sm-8
-                            %input.amount-input.form-control.p-0#to-amount-input{ name: 'estimateAmount', placeholder: '0.0', type: 'number', min: '0', disabled: true, step: 'any' }
+                            %input.amount-input.form-control#to-amount-input{ name: 'toAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any', disabled: true }
                             #to-usd-price
                           .col-5.col-sm-4
                             %button.btn.btn-round.btn-md.border.btn-light.btn-auto.float-right#to-token-button{ 'data-target' => '#buttonSwap', 'data-toggle' => 'modal', type: 'button' }
