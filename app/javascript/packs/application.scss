@@ -99,6 +99,7 @@
 // === Secret network Button Swap ===
 #secret-network-button-swap {
   .amount-input {
+    -moz-appearance: textfield;
     background: transparent;
     border: 0;
     font-size: 28px;
@@ -113,11 +114,6 @@
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-  }
-
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
   }
 }
 
