@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_07_122938) do
+ActiveRecord::Schema.define(version: 2022_01_14_093243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -40,6 +40,17 @@ ActiveRecord::Schema.define(version: 2022_01_07_122938) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.string "attachable_type"
+    t.bigint "attachable_id"
+    t.string "url"
+    t.string "cloudinary_public_id"
+    t.integer "identifier"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable"
   end
 
   create_table "blockchains", force: :cascade do |t|

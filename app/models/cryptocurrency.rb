@@ -4,6 +4,7 @@ class Cryptocurrency < ApplicationRecord
   # === ASSOCIATIONS ===
   belongs_to :blockchain
   belongs_to :smart_contract, optional: true
+  has_many :attachments, dependent: :destroy, as: :attachable
   has_many :cryptocurrency_pools, dependent: :restrict_with_exception
   has_many :pools, through: :cryptocurrency_pools
 
