@@ -98,11 +98,15 @@
 
 // === Secret network Button Swap ===
 #secret-network-button-swap {
+  #to-amount-input {
+    background: #e9ecef;
+  }
+  
   .amount-input {
     -moz-appearance: textfield;
     background: transparent;
     border: 0;
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .amount-input:focus {

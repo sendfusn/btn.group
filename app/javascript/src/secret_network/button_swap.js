@@ -100,6 +100,8 @@ $(document).ready(function(){
         $('#from-usd-price').text('')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
+        $('#from-token-button').text(this.cryptocurrencies[this.fromId]['symbol'])
+        $('#to-token-button').text(this.cryptocurrencies[this.toId]['symbol'])
       }.bind(this))
       $(this.fromAmountInputSelector).on("input", async(evt) => {
         await this.getEstimate()
