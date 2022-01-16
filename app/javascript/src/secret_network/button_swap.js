@@ -100,8 +100,10 @@ $(document).ready(function(){
         $('#from-usd-price').text('')
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
-        $('#from-token-button').text(this.cryptocurrencies[this.fromId]['symbol'])
-        $('#to-token-button').text(this.cryptocurrencies[this.toId]['symbol'])
+        $('#from-token-button .symbol').text(this.cryptocurrencies[this.fromId]['symbol'])
+        $('#from-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.fromId]['attachments'][0]['cloudinary_public_id'])
+        $('#to-token-button .symbol').text(this.cryptocurrencies[this.toId]['symbol'])
+        $('#to-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.toId]['attachments'][0]['cloudinary_public_id'])
       }.bind(this))
       $(this.fromAmountInputSelector).on("input", async(evt) => {
         await this.getEstimate()
