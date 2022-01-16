@@ -157,4 +157,4 @@
                   - if cryptocurrency.attachments.first
                     .position-absolute{ style: 'top: 7px' }
                       = cl_image_tag(cryptocurrency.attachments.first.cloudinary_public_id, class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
-                  %b.symbol{style: 'color: #415076 !important; padding-left: 33px;'}= cryptocurrency.symbol
+                  %b.symbol{ style: 'color: #415076 !important; padding-left: 33px;' }= cryptocurrency.symbol
