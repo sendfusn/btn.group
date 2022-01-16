@@ -127,23 +127,32 @@ $(document).ready(function(){
         }
       }.bind(this));
       $('li.bg-white').click(function(event){
+        this.updateAfterTokenSelect(event)
+      }.bind(this))
+
+      // === Functions ===
+      this.updateAfterTokenSelect = async(event) => {
         $('.modal').modal('hide');
+        while (!this.wrapPaths) {
+          await this.delay(250)
+        }
         if(this.tokenModalFor == 'from') {
           this.fromId = event['currentTarget']['dataset']['cryptocurrencyId']
           this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
           let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
           $('#from-usd-price').text('$' + (this.cryptocurrencies[this.fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
-          $('#from-token-button').text(this.cryptocurrencies[this.fromId]['symbol'])
+          $('#from-token-button .symbol').text(this.cryptocurrencies[this.fromId]['symbol'])
+          $('#from-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.fromId]['attachments'][0]['cloudinary_public_id'])
         } else {
           this.toId = event['currentTarget']['dataset']['cryptocurrencyId']
           this.updateWalletBalance(this.toId, '.to')
-          $('#to-token-button').text(this.cryptocurrencies[this.toId]['symbol'])
+          $('#to-token-button .symbol').text(this.cryptocurrencies[this.toId]['symbol'])
+          $('#to-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.toId]['attachments'][0]['cloudinary_public_id'])
         }
         this.toggleConfig()
         this.getEstimate()
-      }.bind(this))
+      }
 
-      // === Functions ===
       this.applyFee = () => {
         // If selectedSwapPath and there's no protocolId
         if (this.selectedSwapPath && !this.selectedSwapPath['protocol_id']) {
@@ -249,7 +258,7 @@ $(document).ready(function(){
         let toId = this.toId
         $("#swap-paths").html('')
         while (!this.wrapPaths) {
-          await this.delay(500)
+          await this.delay(250)
         }
         if (Number(fromAmount) > 0) {
           if(this.wrapPaths[fromId] == toId) {
@@ -529,7 +538,7 @@ $(document).ready(function(){
 
       this.toggleConfig = async() => {
         while (!this.wrapPaths) {
-          await this.delay(500)
+          await this.delay(250)
         }
         if(this.wrapPaths[this.fromId] == this.toId) {
           $("#cog-container").addClass('d-none')

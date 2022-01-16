@@ -8,6 +8,6 @@ class PoolsController < ApplicationController
     @pools = @pools.where(enabled: true) if params['enabled'] == 'true'
     @pools = @pools.includes(:smart_contract)
                    .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
-    render json: @pools, include: { protocol: {}, smart_contract: {}, cryptocurrency_pools: { include: { cryptocurrency: { include: { smart_contract: {} } } } } }
+    render json: @pools, include: { protocol: {}, smart_contract: {}, cryptocurrency_pools: { include: { cryptocurrency: { include: { smart_contract: {}, attachments: {} } } } } }
   end
 end
