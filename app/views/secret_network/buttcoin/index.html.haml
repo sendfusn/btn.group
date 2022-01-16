@@ -49,14 +49,23 @@
                 %br
                 So far BUTT is used:
                 %br
-                \- to distribute the fees received from the
-                = link_to 'SEFI yield optimizers', secret_network_pools_path
-                %br
-                \- to provide full acess to our Secret network
-                = link_to 'transactions page', secret_network_transactions_path
+                \- as payment to create an
+                = link_to 'Address Alias', secret_network_address_alias_path
                 %br
                 \- as payment to use some of the features of
                 = link_to 'Block locker', secret_network_block_locker_path
+                %br
+                \- to reduce trading fees on
+                = link_to 'Button Swap', secret_network_button_swap_path
+                %br
+                \- as payment to use the
+                = link_to 'Password Manager', secret_network_password_manager_path
+                %br
+                \- to gain full access to our
+                = link_to 'Transactions page', secret_network_transactions_path
+                %br
+                \- to distribute the fees received from the
+                = link_to 'Yield Optimizer pools', secret_network_pools_path
               %h5 Tokenomics
               %p 28,000,006 total supply. Initially 100,000,000 was minted but 71,999,994 tokens were burnt. These tokens were burnt because once the Covaids lockdowns went into full swing, we stopped work for a while as we had more pressing matters to tend to. As time went on, understandably, investors requested that we get back to work as soon as possible. As an apology and a thank you to our initial investors, we decided to burn all tokens allocated to the team and a good chunk of the other tokens.
               %table.table.table-bordered
@@ -81,7 +90,7 @@
                     %td.table-des.font-weight-bold 100,000,000
             .tab-pane#tab-4-2
               %b
-                %i These are just a few paths to BUTT. Please message us/community at Discord or Telegram to discuess all options.
+                %i These are just a few paths to BUTT. Please message us/community at Discord or Telegram to discuss all options.
               %h5 SCRT -> BUTT
               %table.table.table-striped.table-bordered.mb-4
                 %thead
@@ -94,15 +103,9 @@
                   %tr
                     %td 1
                     %td SCRT
-                    %td sSCRT
-                    %td https://wallet.keplr.app/#/secret/secret-secret
-                  %tr
-                    %td 2
-                    %td sSCRT
                     %td BUTT
-                    %td https://app.secretswap.io/swap?inputCurrency=secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek&outputCurrency=secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt
+                    %td https://btn.group/secret_network/button_swap
               %h5 Monero (XMR) -> BUTT
-              * Wallet receiving bridged XMR must have SCRT in it.
               %table.table.table-striped.table-bordered.mb-4
                 %thead
                   %tr
@@ -119,15 +122,9 @@
                   %tr
                     %td 2
                     %td sXMR
-                    %td sSCRT
-                    %td https://app.secretswap.io/swap?inputCurrency=secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88&outputCurrency=secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek
-                  %tr
-                    %td 3
-                    %td sSCRT
                     %td BUTT
-                    %td https://app.secretswap.io/swap?inputCurrency=secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88&outputCurrency=secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek
+                    %td https://btn.group/secret_network/button_swap
               %h5 WBTC -> BUTT
-              * Wallet receiving bridged WBTC must have SCRT in it.
               %table.table.table-striped.table-bordered.mb-4
                 %thead
                   %tr
@@ -145,9 +142,8 @@
                     %td 2
                     %td sWBTC
                     %td BUTT
-                    %td https://app.secretswap.io/swap?inputCurrency=secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a&outputCurrency=secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt
+                    %td https://btn.group/secret_network/button_swap
               %h5 BNB -> BUTT
-              * Wallet receiving bridged BNB must have SCRT in it.
               %table.table.table-striped.table-bordered
                 %thead
                   %tr
@@ -164,13 +160,28 @@
                   %tr
                     %td 2
                     %td sBNB
-                    %td sWBTC
-                    %td https://app.secretswap.io/swap?inputCurrency=secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5&outputCurrency=secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a
-                  %tr
-                    %td 3
-                    %td sWBTC
                     %td BUTT
-                    %td https://app.secretswap.io/swap?inputCurrency=secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a&outputCurrency=secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt
+                    %td https://btn.group/secret_network/button_swap
+              %h5 ATOM -> BUTT
+              %p Other cryptocurrencies on the IBC this applies to are LUNA, OSMO, UST, DVPN with more to come.
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th
+                    %th from
+                    %th to
+                    %th url
+                %tbody
+                  %tr
+                    %td 1
+                    %td ATOM
+                    %td sATOM
+                    %td https://wrap.scrt.network/
+                  %tr
+                    %td 2
+                    %td sATOM
+                    %td BUTT
+                    %td https://btn.group/secret_network/button_swap
             .tab-pane#tab-4-3
               %table.table.table-striped.table-bordered
                 %thead
