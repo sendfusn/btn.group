@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
               production: 'secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5'
             }
           },
-          dex_aggregator: {
+          button_swap: {
             name: 'Button Swap',
             show_in_navbar: true,
             show_link: true,
