@@ -65,10 +65,11 @@ class SwapPathsController < ApplicationController
       else
         @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id'])
                               .where('maximum_tradeable_value >= ?', maximum_tradeable_amount)
-                              .order(maximum_tradeable_value: :desc)
-                              .order(:swap_count)
+        @swap_paths = SwapPath.where(from_id: params['from_id'], to_id: params['to_id']) if @swap_paths.empty?
         @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
-        @swap_paths = @swap_paths.limit(50)
+        @swap_paths = @swap_paths.order(maximum_tradeable_value: :desc)
+                                 .order(:swap_count)
+                                 .limit(50)
       end
     end
 end
