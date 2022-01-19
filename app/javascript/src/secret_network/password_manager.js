@@ -1,7 +1,7 @@
 $(document).ready(function(){
   if($("#secret-network-password-manager").length) {
     var calculateGas = function(minGas, dataLength) {
-      let gasBuffer = 50_000
+      let gasBuffer = 80_000
       let gas = minGas + gasBuffer
       gas += dataLength * 15
       return String(Math.ceil(gas / 100) * 100)
@@ -21,6 +21,11 @@ $(document).ready(function(){
 
     $("#set-key-button").click(function(e){
       document.querySelectorAll("a[href^='#tab-2-1-2']")[0].click()
+    })
+    $(document).on('keplr_connected', async(evt) => {
+      let accounts = await window.keplrOfflineSigner.getAccounts()
+      this.address = accounts[0].address;
+      this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
     })
 
     window.onload = async () => {
@@ -68,7 +73,7 @@ $(document).ready(function(){
         if(this.authentications[this.chosenPosition].revealed) {
           $('.reveal-button').addClass('d-none')
         } else {
-          if(this.addressOwnsAuthenthication(this.searchedAddress)) {
+          if(this.addressOwnsAuthentication(this.searchedAddress)) {
             $('.reveal-button').removeClass('d-none')
           } else {
             $('.reveal-button').addClass('d-none')
@@ -81,7 +86,7 @@ $(document).ready(function(){
         if(this.authentications[this.chosenPosition].revealed) {
           $('.reveal-button').addClass('d-none')
         } else {
-          if(this.addressOwnsAuthenthication(this.searchedAddress)) {
+          if(this.addressOwnsAuthentication(this.searchedAddress)) {
             $('.reveal-button').removeClass('d-none')
             $('#edit-button').removeClass('d-none')
           } else {
@@ -450,15 +455,17 @@ $(document).ready(function(){
           this.chosenPosition = e.currentTarget.parentNode.parentNode.id.split('_')[1]
           document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
         }.bind(this))
-        if(this.addressOwnsAuthenthication(address)) {
+        if(this.addressOwnsAuthentication(address)) {
           $('.edit-link').removeClass('d-none')
         } else {
           $('.edit-link').addClass('d-none')
         }
       }
 
-      this.addressOwnsAuthenthication = function(address) {
-        return address.length > 5 && address == $("#navbar-wallet-address").text()
+      this.addressOwnsAuthentication = function(address) {
+        console.log(address)
+        console.log(this.address)
+        return address.length > 5 && address == this.address
       }
     }
   };
