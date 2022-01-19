@@ -71,6 +71,7 @@ module SecretNetwork
     end
 
     def transactions
+      @navbar_container_fluid = true
       @head_description = 'Transactions viewer for Secret network tokens.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/transactions/transaction_rough_j8coyp.png'
       @head_title = 'Transactions | Secret network | btn.group'
