@@ -46,7 +46,7 @@ ActiveStorage.start()
 
 document.activateKeplr = function() {
   if($(".keplr-wallet").length) {
-    $('.wallet-container').removeClass('d-none')
+    $('.keplr-wallet-button').removeClass('d-none')
     window.addEventListener("keplr_keystorechange", () => {
       window.location.reload()
     })

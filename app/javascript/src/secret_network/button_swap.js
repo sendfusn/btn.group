@@ -84,6 +84,7 @@ $(document).ready(function(){
         })
       }.bind(this))
       $(document).on('keplr_connected', async(evt) => {
+        $('.balance-container').removeClass('d-none')
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
         this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)

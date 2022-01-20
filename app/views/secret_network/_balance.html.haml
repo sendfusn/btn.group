@@ -1,9 +1,12 @@
-.text-regular-sm
+= render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto'
+.balance-container.text-regular-sm.d-none
   Balance:
-  %span.d-none{ class: "#{selector_prefix}-balance-loading" } Loading...
+  %span{ class: "#{selector_prefix}-balance-loading" }
+    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+    %em Loading...
   %span{ class: "#{selector_prefix}-balance-link" }
     %span
-      %a{ class: "#{selector_prefix}-balance" } Connect wallet
+      %a{ class: "#{selector_prefix}-balance" }
     %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.btn-round.btn-auto.d-none{ type: 'button', class: "#{selector_prefix}-balance-view-button" }
       .d-none.loading
         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -11,3 +14,4 @@
       .ready
         .fas.fa-search.mr-1
         View
+

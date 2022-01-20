@@ -17,16 +17,8 @@
                 .field-item
                   %label.field-label{ for: 'address' }
                     %span.mr-2 Address
-                  %span.wallet-container.d-none
-                    %button.btn.btn-primary.btn-xxs.mb-1.border.btn-round.btn-auto.keplr-wallet-button{ type: 'button' }
-                      .d-none.loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      .ready
-                        = cl_image_tag('logos/b8thbiihwftyjolgjjz2_dhy5mr', height: 14, crop: :scale, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto, style: 'height: 20px;', class: 'mr-1')
-                        Connect wallet
+                  = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto'
                   %span.load-wallet-link.d-none
-                    %span.load-wallet.d-none
                     %button.btn.btn-primary.btn-xxs.mb-1.border.btn-round.btn-auto#load-from-keplr-button{ type: 'button' }
                       .d-none.loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
