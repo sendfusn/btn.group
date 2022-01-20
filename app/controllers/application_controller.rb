@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
   end
 
   def features
-    @show_footer = true
     {
       near: {
         cloudinary_public_id: 'logos/icon_nm_yirtpt',
