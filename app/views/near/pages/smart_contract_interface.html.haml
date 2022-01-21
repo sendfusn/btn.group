@@ -95,7 +95,8 @@
                         %input.input-bordered#contract-address{ name: 'contractAddress', required: true, placeholder: 'smart-contract-address123...' }
                     .field-item
                       %label.field-label{ for: 'function-name' } Function name
-                      %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+                      .field-wrap
+                        %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
                     #params-container
                     .row
                       .col-lg-12

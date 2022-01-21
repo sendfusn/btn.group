@@ -19,26 +19,30 @@
                           2. SCRT for gas, if performing a handle function.
                   %hr
                   %form{ name: 'secretNetworkSmartContractInterfaceForm' }
-                    .form-group
-                      %label.control-label Interaction type
-                      .btn-group.btn-group-toggle.d-block{ 'data-toggle' => 'buttons' }
-                        %label.btn.btn-light.btn-md
-                          %input#handle{ name: 'interactionType', type: 'radio', value: 'handle' } Handle
-                        %label.btn.btn-md.btn-light
-                          %input#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true } Query
-                    .form-group
-                      %label.form-label{ for: 'contract-address' } Contract address
-                      %input.form-control#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
-                    .form-group
-                      .row
-                        .col-md-6
-                          %label.form-label{ for: 'function-name' } Function name
-                          %input.form-control#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+                    %ul.d-flex.flex-wrap.gutter-30px
+                      %li.mb-3
+                        .field-wrap
+                          %input.input-radio#handle{ name: 'interactionType', type: 'radio', value: 'handle' }
+                          %label{ for: 'handle' } Handle
+                      %li.mb-3
+                        .field-wrap
+                          %input.input-radio#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true }
+                          %label{ for: 'query' } Query
+                    .field-item
+                      %label.field-label{ for: 'contract-address' } Contract address
+                      .field-wrap
+                        %input.input-bordered#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
+                    .field-item
+                      %label.field-label{ for: 'function-name' } Function name
+                      .field-wrap
+                        %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
                     #params-container
-                    .form-group
-                      .text-center
-                        %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
-                    %button.btn.btn-primary.btn-md#search-button{ type: 'submit' }
+                    .row
+                      .col-lg-12
+                        .field-item
+                          .text-center
+                            %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
+                    %button.btn.btn-grad#search-button{ type: 'submit' }
                       .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
