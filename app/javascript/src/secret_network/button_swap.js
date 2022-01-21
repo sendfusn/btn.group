@@ -69,7 +69,9 @@ $(document).ready(function(){
               selectorPrefix = '.to'
             }
             try {
-              await window.keplr.suggestToken(this.chainId, this.cryptocurrencies[cryptoId]['smart_contract']['address']);
+              if (this.cryptocurrencies['smart_contract']) {
+                await window.keplr.suggestToken(this.chainId, this.cryptocurrencies[cryptoId]['smart_contract']['address']);
+              }
               this.updateWalletBalance(cryptoId, selectorPrefix, inputToClickFillTo);
               $balanceViewButton.addClass('d-none')
             } catch(err) {
@@ -88,6 +90,8 @@ $(document).ready(function(){
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
         this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
+        this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
+        this.updateWalletBalance(this.toId, '.to')
       })
       $('#flip-token').click(function(event){
         let fromId = this.fromId
@@ -547,6 +551,10 @@ $(document).ready(function(){
       }
 
       this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix, inputToClickFillTo = undefined) => {
+        if (this.address == undefined) {
+          return
+        }
+
         let $walletBalance = $(selectorPrefix + '-balance')
         let $walletBalanceLink = $(selectorPrefix + '-balance-link')
         let $walletBalanceLoading = $(selectorPrefix + '-balance-loading')
