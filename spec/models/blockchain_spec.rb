@@ -24,9 +24,9 @@ RSpec.describe Blockchain, type: :model do
       end
 
       it 'validates unique identifiers' do
-        identifier = (described_class.identifiers.values - [described_class.first.identifier]).sample
+        identifier = described_class.identifiers.keys.sample
         new_blockchain = build(:blockchain, identifier: identifier)
-        expect(new_blockchain.valid?).to be true
+        expect(new_blockchain.valid?).to be described_class.find_by(identifier: identifier).nil?
       end
     end
   end
