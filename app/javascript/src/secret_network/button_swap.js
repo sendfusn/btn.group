@@ -137,9 +137,6 @@ $(document).ready(function(){
       // === Functions ===
       this.updateAfterTokenSelect = async(event) => {
         $('.modal').modal('hide');
-        while (!this.wrapPaths) {
-          await this.delay(250)
-        }
         if(this.tokenModalFor == 'from') {
           this.fromId = event['currentTarget']['dataset']['cryptocurrencyId']
           this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
@@ -263,9 +260,6 @@ $(document).ready(function(){
         let fromId = this.fromId
         let toId = this.toId
         $("#swap-paths").html('')
-        while (!this.wrapPaths) {
-          await this.delay(250)
-        }
         if (Number(fromAmount) > 0) {
           if(this.wrapPaths[fromId] == toId) {
             document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
@@ -543,9 +537,6 @@ $(document).ready(function(){
       }
 
       this.toggleConfig = async() => {
-        while (!this.wrapPaths) {
-          await this.delay(250)
-        }
         if(this.wrapPaths[this.fromId] == this.toId) {
           $("#cog-container").addClass('d-none')
           $("#slippage-container").addClass('d-none')
