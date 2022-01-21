@@ -26,12 +26,6 @@ module SecretNetwork
                                .pluck(:cryptocurrency_id)
                                .uniq
       @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).where.not(symbol: %w[ATOM DVPN LUNA OSMO UST]).order(:symbol)
-      @default_to_token_id = Cryptocurrency.find_by(symbol: 'BUTT', official: true).id
-      @default_from_token_id = if admin_user_signed_in?
-        @default_to_token_id
-      else
-        Cryptocurrency.find_by(symbol: 'SCRT', official: true).id
-      end
       @head_description = 'DeFi / DEX aggregator offering the best token swap rates on the Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png'
       @head_title = 'Button Swap | Secret network | btn.group'

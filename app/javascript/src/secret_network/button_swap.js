@@ -250,6 +250,8 @@ $(document).ready(function(){
             this.wrapPaths[tokenId] = nativeId
           }
         })
+        $('#loading-container').addClass('d-none')
+        $('form[name=secretNetworkDexAggregatorForm]').removeClass('d-none')
         this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
         this.updateWalletBalance(this.toId, '.to')
       }

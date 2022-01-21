@@ -64,7 +64,11 @@
                           %br
                           * We are working on increasing search speeds based on VIP levels.
                   %hr
-                  %form{ name: 'secretNetworkDexAggregatorForm' }
+                  #loading-container
+                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                    %b
+                      %em Loading trade pairs...
+                  %form.d-none{ name: 'secretNetworkDexAggregatorForm' }
                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
                       .form-group.mb-0
                         = render 'secret_network/balance', selector_prefix: 'from'
