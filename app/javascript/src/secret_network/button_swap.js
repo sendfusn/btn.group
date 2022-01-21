@@ -332,7 +332,7 @@ $(document).ready(function(){
             $('#results').removeClass('d-none')
           }
         } catch(error) {
-          if(currentQueryCount == this.queryCount) {
+          if(currentQueryCount == this.queryCount && error.status != 401) {
             document.showAlertDanger(error)
           }
         } finally {
