@@ -87,6 +87,7 @@ document.activateKeplr = function() {
         }
         catch(err) {
           document.showAlertDanger(err)
+          $(document).trigger('keplr_dismissed', {});
         }
         finally {
           $(".keplr-wallet-button").prop("disabled", false);
@@ -123,7 +124,8 @@ document.formatHumanizedNumberForSmartContract = function(humanizedNumber, decim
 }
 
 document.hideAllAlerts = function() {
-  $('.alert').addClass('d-none')
+  $('.alert-error').addClass('d-none')
+  $('.alert-success').addClass('d-none')
 };
 
 document.humanizeStringNumberFromSmartContract = function(stringNumber, decimals, toFormatDecimals = undefined) {

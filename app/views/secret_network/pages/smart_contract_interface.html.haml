@@ -2,10 +2,19 @@
   .h-100.header-banner.keplr-wallet#secret-network-smart-contract-interface
     .nk-banner.pb-5
       .banner.banner-page
-        .mt-3.mt-lg-5.w-100
+        .mt-3.w-100
           .container
             .row.justify-content-center
               .col-lg-10
+                .alert.alert-warning.d-none
+                  .text-base#loading-vip
+                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                    %em Getting your VIP level...
+                  #pay-wall
+                    %h4.title.title-sm.mb-0 You do not have full access.
+                    %p
+                      To enable using params, please upgrade to at least
+                      = link_to 'VIP level 1.', secret_network_buttcoin_index_path
                 .card
                   = render 'features_header', blockchain: :secret_network, feature: :smart_contract_interface, show_environment_switch: true
                   .collapse.mt-2#exampleCollapseExample
@@ -37,11 +46,8 @@
                       .field-wrap
                         %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
                     #params-container
-                    .row
-                      .col-lg-12
-                        .field-item
-                          .text-center
-                            %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
+                    .field-item.d-none#add-new-param-container
+                      %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
                     %button.btn.btn-grad#search-button{ type: 'submit' }
                       .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }

@@ -3,6 +3,14 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       let paramCount = 0;
+      this.address;
+      this.userVipLevel;
+      this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
+      this.environment = 'production';
+      this.chainId = document.secretNetworkChainId(this.environment);
+      this.client =  document.secretNetworkClient(this.environment);
+
+      // === LISTENERS ===
       $('#add-new-param').click(function(event){
         event.preventDefault();
         $('#params-container').append('<div class="param-container"><hr><div class="row"><div class="col-8"><div class="field-item"><label class="field-label" for="param-' + paramCount + '-key">Key</label><input autocomplete="off" class="input-bordered" id="param-' + paramCount + '-key"></div></div><div class="col-4 text-right"><a href="#" class="fa fa-times"></a></div><div class="col-8"><div class="field-item"><label class="field-label" for="param-' + paramCount + '-value">Value</label><input autocomplete="off" class="input-bordered" id="param-' + paramCount + '-value"></div></div><div class="col-4"><div class="field-item"><label class="field-label" for="param-' + paramCount + '-type">Type</label><select class="input-bordered" id="param-' + paramCount + '-type"><option value="raw">raw</option><option selected value="string">text / string</option></select></div></div></div></div>');
@@ -11,6 +19,28 @@ $(document).ready(function(){
         })
         paramCount++;
       });
+
+      $(document).on('keplr_connected', async(evt) => {
+        let accounts = await window.keplrOfflineSigner.getAccounts()
+        this.address = accounts[0].address;
+        $('.alert').removeClass('d-none')
+        $('#loading-vip').removeClass('d-none')
+        $('#pay-wall').addClass('d-none')
+        this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
+        $('#loading-vip').addClass('d-none')
+        if (this.userVipLevel == 0) {
+          $('#pay-wall').removeClass('d-none')
+        } else {
+          $('.alert').addClass('d-none')
+          $('#add-new-param-container').removeClass('d-none')
+        }
+      })
+
+      $(document).on('keplr_dismissed', async(evt) => {
+        $('.alert').removeClass('d-none')
+        $('#loading-vip').addClass('d-none')
+        $('#pay-wall').removeClass('d-none')
+      })
 
       document.secretNetworkSmartContractInterfaceForm.onsubmit = () => {
         // Disable form
@@ -30,25 +60,37 @@ $(document).ready(function(){
             let functionName = document.secretNetworkSmartContractInterfaceForm.functionName.value;
             let params = {};
             let last_key;
-            $('#params-container input, #params-container select').each(function(index){
-              if (index % 3 == 0) {
-                last_key = this.value;
-              } else if (index % 3 == 1) {
-                if (last_key.length) {
-                  if (this.value.length) {
-                    params[last_key] = this.value;
-                  }
-                }
+            if (this.address) {
+              this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
+              $('#loading-vip').addClass('d-none')
+              if (this.userVipLevel == 0) {
+                $('#pay-wall').removeClass('d-none')
               } else {
-                if (this.value == 'raw') {
+                $('.alert').addClass('d-none')
+                $('#add-new-param-container').removeClass('d-none')
+              }
+            }
+            if (this.userVipLevel > 0) {
+              $('#params-container input, #params-container select').each(function(index){
+                if (index % 3 == 0) {
+                  last_key = this.value;
+                } else if (index % 3 == 1) {
                   if (last_key.length) {
-                    if (params[last_key].length) {
-                      params[last_key] = JSON.parse(params[last_key])
+                    if (this.value.length) {
+                      params[last_key] = this.value;
+                    }
+                  }
+                } else {
+                  if (this.value == 'raw') {
+                    if (last_key.length) {
+                      if (params[last_key].length) {
+                        params[last_key] = JSON.parse(params[last_key])
+                      }
                     }
                   }
                 }
-              }
-            })
+              })
+            }
             let msg = { [functionName]: params }
 
             // Interact with smart contract
