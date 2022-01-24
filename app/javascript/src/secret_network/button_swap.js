@@ -69,7 +69,7 @@ $(document).ready(function(){
               selectorPrefix = '.to'
             }
             try {
-              if (this.cryptocurrencies['smart_contract']) {
+              if (this.cryptocurrencies[cryptoId]['smart_contract']) {
                 await window.keplr.suggestToken(this.chainId, this.cryptocurrencies[cryptoId]['smart_contract']['address']);
               }
               this.updateWalletBalance(cryptoId, selectorPrefix, inputToClickFillTo);
