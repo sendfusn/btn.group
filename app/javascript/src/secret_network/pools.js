@@ -816,6 +816,7 @@ $(document).ready(function(){
       }
 
       $(document).on('keplr_connected', async(evt) => {
+        $('.deposit-withdraw-forms-container').removeClass('d-none')
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
         this.updateUserInterface(false, true)

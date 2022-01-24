@@ -47,8 +47,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Profit distributor
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Profit distributor
+                    .col-md-6.text-regular-sm
                       %span.mr-1 Deposit BUTT
                       %span
                         %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
@@ -56,7 +56,7 @@
                       %span.mr-1 Earn SEFI
                       %span
                         %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-total-shares Loading...
                       %br
@@ -67,10 +67,10 @@
                           %em Loading...
                         .ready
                           .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Connect wallet
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-loading.d-none Loading...
                       %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-link
@@ -92,7 +92,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Connect wallet
                       %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszWithdrawForm' }
@@ -109,8 +109,8 @@
                 -#   .card-body
                 -#     .row
                 -#       .col-12
-                -#         %h5 Profit distributor
-                -#       .col-md-6
+                -#         %h5.title.title-sm.mb-1 Profit distributor
+                -#       .col-md-6.text-regular-sm
                 -#         %span.mr-1
                 -#           Deposit
                 -#           = link_to 'BUTT-sXMR', 'https://app.secretswap.io/pool#Provide', target: '_blank', rel: 'noopener'
@@ -122,7 +122,7 @@
                 -#         %span.mr-1 Earn BUTT
                 -#         %span
                 -#           %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
-                -#       .col-md-6
+                -#       .col-md-6.text-regular-sm
                 -#         TVL:
                 -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-total-shares Loading...
                 -#         %br
@@ -136,7 +136,7 @@
                 -#     .row
                 -#       .col-12
                 -#         %hr
-                -#       .col-md-6.mb-3.mb-lg-0
+                -#       .col-md-6.text-regular-sm.mb-3.mb-lg-0
                 -#         Depositable:
                 -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-loading.d-none Loading...
                 -#         %span.secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf-balance-link
@@ -158,7 +158,7 @@
                 -#               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                 -#               %em Loading...
                 -#             .secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-deposit-button-ready Deposit
-                -#       .col-md-6
+                -#       .col-md-6.text-regular-sm
                 -#         Withdrawable:
                 -#         %span.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-user-shares Connect wallet
                 -#         %form{ name: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzanWithdrawForm' }
@@ -174,8 +174,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Farm
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Farm
+                    .col-md-6.text-regular-sm
                       %span.mr-1
                         Deposit
                         = link_to 'BUTT-sWBTC', 'https://app.secretswap.io/pool#Provide', target: '_blank', rel: 'noopener'
@@ -187,11 +187,11 @@
                       %span.mr-1 Earn BUTT
                       %span
                         %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-total-shares Loading...
                       %br
-                      APR: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id).apr}%
+                      APR: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id).apr}%
                       %br
                       Claimable BUTT:
                       %button.btn.btn-light.btn-xxs.ml-2.mb-1.border#claim-butt{ type: 'button' }
@@ -200,10 +200,10 @@
                           %em Loading...
                         .ready
                           .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Connect wallet
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-loading.d-none Loading...
                       %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-link
@@ -225,7 +225,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Connect wallet
                       %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuWithdrawForm' }
@@ -241,8 +241,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 SEFI
                       %span
@@ -250,19 +250,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-loading.d-none Loading...
                       %span.secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt-balance-link
@@ -284,7 +284,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-user-shares Connect wallet
                       %form{ name: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvfWithdrawForm' }
@@ -300,8 +300,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-SEFI
                       %span
@@ -311,19 +311,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-loading.d-none Loading...
                       %span.secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025-balance-link
@@ -345,7 +345,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-user-shares Connect wallet
                       %form{ name: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0vWithdrawForm' }
@@ -361,8 +361,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sXMR
                       %span
@@ -372,19 +372,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-loading.d-none Loading...
                       %span.secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2-balance-link
@@ -406,7 +406,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-user-shares Connect wallet
                       %form{ name: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmjWithdrawForm' }
@@ -422,8 +422,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sUSDC(ETH)
                       %span
@@ -433,19 +433,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-loading.d-none Loading...
                       %span.secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr-balance-link
@@ -467,7 +467,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-user-shares Connect wallet
                       %form{ name: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jnWithdrawForm' }
@@ -483,8 +483,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sUSDT(ETH)
                       %span
@@ -494,19 +494,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-loading.d-none Loading...
                       %span.secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx-balance-link
@@ -528,7 +528,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-user-shares Connect wallet
                       %form{ name: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5zWithdrawForm' }
@@ -544,8 +544,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sETH(ETH)
                       %span
@@ -555,19 +555,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-loading.d-none Loading...
                       %span.secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54-balance-link
@@ -589,7 +589,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-user-shares Connect wallet
                       %form{ name: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzkuWithdrawForm' }
@@ -605,8 +605,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sWBTC(ETH)
                       %span
@@ -616,19 +616,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-loading.d-none Loading...
                       %span.secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv-balance-link
@@ -650,7 +650,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-user-shares Connect wallet
                       %form{ name: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79vWithdrawForm' }
@@ -666,8 +666,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sBNB(BSC)
                       %span
@@ -677,19 +677,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-loading.d-none Loading...
                       %span.secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe-balance-link
@@ -711,7 +711,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp-user-shares Connect wallet
                       %form{ name: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxpWithdrawForm' }
@@ -727,8 +727,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sSCRT-sDOT(BSC)
                       %span
@@ -738,19 +738,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-sm-5
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-loading.d-none Loading...
                       %span.secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw-balance-link
@@ -772,7 +772,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-user-shares Connect wallet
                       %form{ name: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242cWithdrawForm' }
@@ -788,8 +788,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sUSDC(ETH)-sUSDC(BSC)
                       %span
@@ -799,19 +799,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-loading.d-none Loading...
                       %span.secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg-balance-link
@@ -833,7 +833,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql-user-shares Connect wallet
                       %form{ name: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravqlWithdrawForm' }
@@ -849,8 +849,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sETH(ETH)-sWBTC
                       %span
@@ -860,19 +860,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-loading.d-none Loading...
                       %span.secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45-balance-link
@@ -894,7 +894,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-user-shares Connect wallet
                       %form{ name: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajmWithdrawForm' }
@@ -910,8 +910,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 sETH(BSC)-sETH(ETH)
                       %span
@@ -921,19 +921,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-loading.d-none Loading...
                       %span.secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu-balance-link
@@ -955,7 +955,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-user-shares Connect wallet
                       %form{ name: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82WithdrawForm' }
@@ -971,8 +971,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sATOM
                       %span
@@ -982,19 +982,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-loading.d-none Loading...
                       %span.secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u-balance-link
@@ -1016,7 +1016,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-user-shares Connect wallet
                       %form{ name: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6WithdrawForm' }
@@ -1032,8 +1032,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sLUNA
                       %span
@@ -1043,19 +1043,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-loading.d-none Loading...
                       %span.secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem-balance-link
@@ -1077,7 +1077,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-user-shares Connect wallet
                       %form{ name: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87WithdrawForm' }
@@ -1093,8 +1093,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sOSMO
                       %span
@@ -1104,19 +1104,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-loading.d-none Loading...
                       %span.secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu-balance-link
@@ -1138,7 +1138,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-user-shares Connect wallet
                       %form{ name: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzwwWithdrawForm' }
@@ -1154,8 +1154,8 @@
                 .card.mb-3
                   .row
                     .col-12
-                      %h5 Yield optimizer
-                    .col-md-6
+                      %h5.title.title-sm.mb-1 Yield optimizer
+                    .col-md-6.text-regular-sm
                       %div Deposit & Earn
                       %span.mr-1 SEFI-sDVPN
                       %span
@@ -1165,19 +1165,19 @@
                       %br
                       %span via
                       %a{ href: 'https://app.secretswap.io/earn', rel: 'noopener', target: '_blank' } Secret Swap
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       TVL:
                       %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-total-shares Loading...
                       %br
-                      APY: ~#{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs').id).apy}%
+                      APY: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs').id).apy}%
                       %br
                       Rewards to process:
                       %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-rewards-to-process Loading...
                       %span SEFI
-                  .row
+                  .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
-                    .col-md-6.mb-3.mb-lg-0
+                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
                       Depositable:
                       %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-loading.d-none Loading...
                       %span.secret1prxa3js02lys75a48hru944j5knszzr5tyehar-balance-link
@@ -1199,7 +1199,7 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-deposit-button-ready Deposit
-                    .col-md-6
+                    .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs-user-shares Connect wallet
                       %form{ name: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rsWithdrawForm' }
