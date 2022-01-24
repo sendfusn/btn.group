@@ -11,25 +11,27 @@
               = render 'features_header', blockchain: :secret_network, feature: :pools, show_environment_switch: false
               %hr
           .col-lg-8.col-xl-9
+            .alert.alert-warning
+              %h4.title.title-sm.mb-0
+                %span.fa.fa-exclamation-triangle
+                Warning
+              %p
+                These pools are not private. This is by design. Click
+                = link_to 'here', secret_network_why_some_of_our_contracts_are_not_private_path
+                to find out why.
             .collapse.mb-4#exampleCollapseExample
               .card.card-default
-                .alert.alert-warning.mb-3
+                .card-block
+                  = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
+                  %h6.mt-4 What is it?
                   %p
-                    * Warning! These pools are not private. This is by design. Click
-                    = link_to 'here', secret_network_why_some_of_our_contracts_are_not_private_path
-                    to find out why.
-                    %br
-                    * Using smart contracts, tokens, and crypto is always a risk. DYOR before investing.
+                    This is a collection of profit distributor, farm and yield optimizer pools. 
                     %br
                     * Please use the gas recommended for deposits and withdrawals.
                     %br
                     * Rewards are claimed every time you deposit or withdraw.
                     %br
                     * 5% of yield from yield optimizers sent to profit distributor.
-                .card-block
-                  = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
-                  %h6.mt-4 What is it?
-                  %p This is a collection of profit distributor, farm and yield optimizer pools.
                   %h6 Requirements
                   %p
                     1.
