@@ -12,7 +12,7 @@ class SecretSwapGetPairsJob < ApplicationJob
     response = RestClient.get 'https://api-bridge-mainnet.azurewebsites.net/secretswap_pairs',
                               { params: { page: 0, size: 1000 } }
     swap_pairs = JSON.parse(response.body)['pairs']
-    swap_pairs.find_each do |swap_pair|
+    swap_pairs.each do |swap_pair|
       process_swap_pair_json(swap_pair)
     end
   end

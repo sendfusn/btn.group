@@ -12,7 +12,7 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
     response = RestClient.get 'https://api-bridge-mainnet.azurewebsites.net/rewards',
                               { params: { page: 0, size: 1000 } }
     staking_pools = JSON.parse(response.body)['pools']
-    staking_pools.find_each do |staking_pool|
+    staking_pools.each do |staking_pool|
       process_pool_json(staking_pool)
     end
 
