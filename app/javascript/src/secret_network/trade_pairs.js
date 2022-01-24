@@ -38,7 +38,7 @@ $(document).ready(function(){
       }
 
       this.queryPoolFromBlockchain = async(tradePair) => {
-        if (tradePair['protocol']) {
+        if (tradePair['protocol'] && tradePair['cryptocurrency_pools'].length) {
           let protocolIdentifier = tradePair['protocol']['identifier']
           let address = tradePair['smart_contract']['address']
           let msg = { pool: {} };
