@@ -28,7 +28,7 @@ class Pool < ApplicationRecord
     if pool.category == 'trade_pair' && pool.enabled
       if pool.saved_change_to_enabled?
         CreateSwapPathsJob.perform_later
-        CryptocurrencyPool.deposit.pluck(:cryptocurrency_id).uniq.each do |c_id|
+        CryptocurrencyPool.deposit.pluck(:cryptocurrency_id).uniq.find_each do |c_id|
           CreateArbitragePathsJob.perform_later(Cryptocurrency.find(c_id).symbol)
         end
       end
@@ -69,7 +69,7 @@ class Pool < ApplicationRecord
 
   def update_total_locked
     total_locked = 0.0
-    cryptocurrency_pools.deposit.each do |cp|
+    cryptocurrency_pools.deposit.find_each do |cp|
       break if cp.amount.nil? || cp.cryptocurrency.price.nil? || cp.cryptocurrency.decimals.nil?
 
       total_locked += cp.cryptocurrency.amount_with_decimals(cp.amount) * cp.cryptocurrency.price
@@ -84,7 +84,7 @@ class Pool < ApplicationRecord
       return unless cryptocurrency_pools.deposit.count == 2
 
       token_count = 0
-      cryptocurrency_pools.deposit.each do |cp|
+      cryptocurrency_pools.deposit.find_each do |cp|
         token_count += 1 if cp.cryptocurrency.smart_contract.present?
       end
       token_count == 1

@@ -11,7 +11,7 @@ class SiennaGetPairsJob < ApplicationJob
   def perform
     response = RestClient.get 'https://ethereumbridgebackend.azurewebsites.net//secretswap_pairs/'
     swap_pairs = JSON.parse(response.body)['pairs']
-    swap_pairs.each do |swap_pair|
+    swap_pairs.find_each do |swap_pair|
       process_swap_pair_json(swap_pair)
     end
   end

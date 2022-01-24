@@ -13,7 +13,7 @@ class CalculateAprForYieldOptimizerBJob < ApplicationJob
     swbtc_address = 'secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a'
     response = RestClient.get 'https://api-bridge-mainnet.azurewebsites.net/secretswap_pools', { params: { page: 0, size: 1000 } }
     staking_pools = JSON.parse(response.body)['pools']
-    staking_pools.each do |staking_pool|
+    staking_pools.find_each do |staking_pool|
       asset_one = staking_pool['assets'][0]
       asset_two = staking_pool['assets'][1]
       next if asset_one['info']['token'].blank?

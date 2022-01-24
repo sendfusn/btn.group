@@ -17,7 +17,7 @@ class CryptoPricesJob < ApplicationJob
     response = RestClient.get "https://api.coingecko.com/api/v3/simple/price?ids=#{query_coin_gecko_ids_string}&vs_currencies=usd"
     response_as_json = JSON.parse(response.body)
     response_as_json.each do |coin_gecko_id, price|
-      Cryptocurrency.where(coin_gecko_id: coin_gecko_id).each do |c|
+      Cryptocurrency.where(coin_gecko_id: coin_gecko_id).find_each do |c|
         c.update!(price: price['usd'])
       end
     end

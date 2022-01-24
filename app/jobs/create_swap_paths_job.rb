@@ -8,7 +8,7 @@ class CreateSwapPathsJob < ApplicationJob
                              .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
                              .pluck(:cryptocurrency_id)
                              .uniq
-    cryptocurrency_ids.each do |from_id|
+    cryptocurrency_ids.find_each do |from_id|
       CreateSwapPathsForCryptoJob.perform_later(from_id)
     end
   end

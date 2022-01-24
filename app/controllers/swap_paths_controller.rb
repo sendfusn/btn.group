@@ -7,7 +7,7 @@ class SwapPathsController < ApplicationController
   def index
     unless params['arbitrage'] == 'true'
       top_swap_paths = []
-      @swap_paths.each do |sp|
+      @swap_paths.find_each do |sp|
         result_amount = sp.simulate_swaps(params['from_amount'])
         net_usd_outcome = sp.net_result_as_usd(result_amount)
         top_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })
@@ -21,7 +21,7 @@ class SwapPathsController < ApplicationController
       top_swap_paths.push(sienna_swap_path_id) if sienna_swap_path_id
       # If swap paths don't hold at least two secret swap paths, add the top two.
       top_secret_swap_paths = []
-      @swap_paths.where(protocol: Protocol.find_by(identifier: 'secret_swap')).each do |sp|
+      @swap_paths.where(protocol: Protocol.find_by(identifier: 'secret_swap')).find_each do |sp|
         result_amount = sp.simulate_swaps(params['from_amount'])
         net_usd_outcome = sp.net_result_as_usd(result_amount)
         top_secret_swap_paths.push({ swap_path_id: sp.id, result_amount: result_amount, net_usd_outcome: net_usd_outcome })

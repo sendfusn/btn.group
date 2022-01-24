@@ -28,7 +28,7 @@ class Cryptocurrency < ApplicationRecord
 
   # === CALLBACKS ===
   after_save do |c|
-    c.pools.each(&:update_total_locked) if c.price.present? && c.saved_change_to_price?
+    c.pools.find_each(&:update_total_locked) if c.price.present? && c.saved_change_to_price?
   end
 
   before_save do |cryptocurrency|
