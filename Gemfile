@@ -12,6 +12,8 @@ gem 'airbrake'
 gem 'bootsnap', '>= 1.4.6', require: false
 gem 'cloudinary'
 gem 'devise'
+# Barebones two-factor authentication with Devise
+gem 'devise-two-factor'
 # Provides Haml generators for Rails 4 etc
 gem 'haml-rails', '~> 2.0'
 # Foreign key migration generator for Rails (Using in Semaphore also)

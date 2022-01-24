@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :authenticate_admin_user!, only: :arbitrage
   helper_method :features, :head_description, :head_image, :head_link, :head_title, :logo_cloudinary_public_id
+
+  # === CALLBACKS ===
+  before_action :authenticate_admin_user!, only: :arbitrage
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def arbitrage
     @head_title = 'Arbitrage | btn.group'
@@ -142,5 +145,11 @@ class ApplicationController < ActionController::Base
 
   def logo_cloudinary_public_id
     'logos/button.group_logo_ecemui'
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:otp_attempt])
   end
 end
