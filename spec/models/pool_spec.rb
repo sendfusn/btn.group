@@ -15,7 +15,6 @@ RSpec.describe Pool, type: :model do
   end
 
   describe 'ENUMS' do
-    it { should define_enum_for(:swap_simulation_function_name).with_values(simulation: 0, swap_simulation: 1) }
     it { should define_enum_for(:category).with_values(farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3) }
   end
 
