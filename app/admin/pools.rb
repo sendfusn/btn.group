@@ -17,6 +17,9 @@ ActiveAdmin.register Pool do
   end
 
   filter :enabled
+  filter :smart_contract, collection: lambda {
+    Pool.includes(:smart_contract).map { |pool| [pool.smart_contract.address, pool.smart_contract.id] }
+  }
 
   # === FORM ===
   form do |f|
