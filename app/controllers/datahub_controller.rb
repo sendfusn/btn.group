@@ -10,7 +10,7 @@ class DatahubController < ApplicationController
   def index
     datahub_url = "https://secret-4--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}"
     path = request.fullpath.split('datahub').second
-    reverse_proxy datahub_url, path: path, headers: { 'HOST' => nil }, http: { read_timeout: 90, open_timeout: 90, write_timeout: 90 } do |config|
+    reverse_proxy datahub_url, path: path, headers: { 'HOST' => nil } do |config|
       # We got a 404!
       config.on_missing do |_code, _response|
         return redirect_to root_url
