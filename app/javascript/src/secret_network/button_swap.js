@@ -364,12 +364,10 @@ $(document).ready(function(){
         let pool = this.tradePairs[poolId]
         let protocolIdentifier = pool['protocol']['identifier']
         let swapMsg;
-        
-        if (pool['swap_simulation_function_name'] == 'simulation') {
-          swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
-        } else if (pool['swap_simulation_function_name'] == 'swap_simulation') {
-          swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: ''}}, amount: fromAmountFormatted}}}
-        } else if (protocolIdentifier == 'secret_swap') {
+        if (pool['downcase_data_hash_for_swap_simulation']) {
+          fromCryptoCodeHash = fromCryptoCodeHash.toLowerCase()
+        }
+        if (protocolIdentifier == 'secret_swap') {
           swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
         } else if (protocolIdentifier == 'sienna') {
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: ''}}, amount: fromAmountFormatted}}}
@@ -381,6 +379,8 @@ $(document).ready(function(){
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
         } catch(error) {
+          console.log(error)
+          console.log(pool)
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
 
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
