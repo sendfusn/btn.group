@@ -14,6 +14,7 @@ class Pool < ApplicationRecord
 
   # === ENUMS ===
   enum category: { farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3 }
+  enum swap_simulation_function_name: { simulation: 0, swap_simulation: 1 }
 
   # === SCOPES ===
   scope :enabled, lambda { where(enabled: true) }

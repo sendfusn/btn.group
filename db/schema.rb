@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_24_011547) do
+ActiveRecord::Schema.define(version: 2022_01_25_024703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2022_01_24_011547) do
     t.string "third_party_identifier"
     t.boolean "enabled", default: false
     t.integer "next_swap_path_to_set_maximum_tradeable_value_to"
+    t.integer "swap_simulation_function_name"
     t.index ["pool_id"], name: "index_pools_on_pool_id"
     t.index ["protocol_id"], name: "index_pools_on_protocol_id"
     t.index ["smart_contract_id"], name: "index_pools_on_smart_contract_id", unique: true
