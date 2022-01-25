@@ -551,7 +551,7 @@ $(document).ready(function(){
       }
 
       this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix, inputToClickFillTo = undefined) => {
-        if (this.address == undefined) {
+        if (!this.address || !this.cryptocurrencies) {
           return
         }
 
