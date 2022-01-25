@@ -14,7 +14,7 @@ class SwapPathsController < ApplicationController
       end
       top_swap_paths = top_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
                                      .reverse
-                                     .map { |obj| obj[:swap_path_id] }[0..4]
+                                     .map { |obj| obj[:swap_path_id] }[0..2]
       # If swap paths don't hold at least one sienna swap path with swap count one, add it.
       # We are only factoring in swap count one because sienna doesn't do routing.
       sienna_swap_path_id = SwapPath.find_by(from_id: params['from_id'], to_id: params['to_id'], protocol: Protocol.find_by(identifier: 'sienna'), swap_count: 1)&.id

@@ -364,6 +364,7 @@ $(document).ready(function(){
         let pool = this.tradePairs[poolId]
         let protocolIdentifier = pool['protocol']['identifier']
         let swapMsg;
+        console.log(pool)
         if (pool['downcase_data_hash_for_swap_simulation']) {
           fromCryptoCodeHash = fromCryptoCodeHash.toLowerCase()
         }
