@@ -9,7 +9,7 @@ class CalculateAprForYieldOptimizerBJob < ApplicationJob
   end
 
   def perform
-    buttcoin_address = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
+    button_address = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
     swbtc_address = 'secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a'
     response = RestClient.get 'https://api-bridge-mainnet.azurewebsites.net/secretswap_pools', { params: { page: 0, size: 1000 } }
     staking_pools = JSON.parse(response.body)['pools']
@@ -20,12 +20,12 @@ class CalculateAprForYieldOptimizerBJob < ApplicationJob
       next if asset_two['info']['token'].blank?
 
       token_addresses = [asset_one['info']['token']['contract_addr'], asset_two['info']['token']['contract_addr']]
-      next unless token_addresses.include?(buttcoin_address)
+      next unless token_addresses.include?(button_address)
       next unless token_addresses.include?(swbtc_address)
 
       asset_one_amount = asset_one['amount']
       asset_two_amount = asset_two['amount']
-      buttcoin_amount = if asset_one['info']['token']['contract_addr'] == buttcoin_address
+      buttcoin_amount = if asset_one['info']['token']['contract_addr'] == button_address
         asset_one_amount.to_i
       else
         asset_two_amount.to_i
