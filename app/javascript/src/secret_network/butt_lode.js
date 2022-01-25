@@ -3,8 +3,7 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       this.admin;
-      this.buttcoinBalance;
-      this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
+      this.buttonBalance;
       this.buttLodeAddress = 'secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5';
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
@@ -34,10 +33,10 @@ $(document).ready(function(){
         this.receivableAddress = result['receivable_address']
         $('input[name=receivableAddress]').first().val(this.receivableAddress)
         $('#receivable-address-table-data').text(this.receivableAddress)
-        let balance_response = await this.client.queryContractSmart(this.buttcoinContractAddress, { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } });
-        this.buttcoinBalance = applyDecimals(balance_response["balance"]["amount"], 6).toLocaleString('en', { minimumFractionDigits: 6 })
-        $('#butt-balance-table-data').text(this.buttcoinBalance)
-        $('#buttcoin-amount').val(this.buttcoinBalance)
+        let balance_response = await this.client.queryContractSmart(document.buttonAddress(), { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } });
+        this.buttonBalance = applyDecimals(balance_response["balance"]["amount"], 6).toLocaleString('en', { minimumFractionDigits: 6 })
+        $('#butt-balance-table-data').text(this.buttonBalance)
+        $('#buttcoin-amount').val(this.buttonBalance)
       } catch(err) {
         document.showAlertDanger(err)
       }
@@ -61,7 +60,7 @@ $(document).ready(function(){
           let amount = document['buttLodeSendForm'].amount.value;
           amount = amount.replace(/,/g, '');
           amount = (amount * Math.pow(10, 6)).toFixed(0)
-          let handleMsg = { send_token: { amount: amount, token: { address: this.buttcoinContractAddress, contract_hash: "F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288" } } }
+          let handleMsg = { send_token: { amount: amount, token: { address: document.buttonAddress(), contract_hash: "F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288" } } }
           let response = await this.client.execute(this.buttLodeAddress, handleMsg)
           document.showAlertSuccess("Send successful");
           document['buttLodeSendForm'].amount.value = ''
