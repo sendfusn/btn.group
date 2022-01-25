@@ -107,9 +107,9 @@ $(document).ready(function(){
         $('#min-acceptable-amount-usd-price').text('')
         $('#to-usd-price').text('')
         $('#from-token-button .symbol').text(this.cryptocurrencies[this.fromId]['symbol'])
-        $('#from-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.fromId]['attachments'][0]['cloudinary_public_id'])
+        $('#from-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.fromId]['attachments'][0]['cloudinary_public_id'])
         $('#to-token-button .symbol').text(this.cryptocurrencies[this.toId]['symbol'])
-        $('#to-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.toId]['attachments'][0]['cloudinary_public_id'])
+        $('#to-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.toId]['attachments'][0]['cloudinary_public_id'])
       }.bind(this))
       $(this.fromAmountInputSelector).on("input", async(evt) => {
         await this.getEstimate()
@@ -147,12 +147,12 @@ $(document).ready(function(){
           let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
           $('#from-usd-price').text('$' + (this.cryptocurrencies[this.fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
           $('#from-token-button .symbol').text(this.cryptocurrencies[this.fromId]['symbol'])
-          $('#from-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.fromId]['attachments'][0]['cloudinary_public_id'])
+          $('#from-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.fromId]['attachments'][0]['cloudinary_public_id'])
         } else {
           this.toId = event['currentTarget']['dataset']['cryptocurrencyId']
           this.updateWalletBalance(this.toId, '.to')
           $('#to-token-button .symbol').text(this.cryptocurrencies[this.toId]['symbol'])
-          $('#to-token-button .logo-avatar').attr('src', 'http://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.toId]['attachments'][0]['cloudinary_public_id'])
+          $('#to-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.toId]['attachments'][0]['cloudinary_public_id'])
         }
         this.toggleConfig()
         this.getEstimate()
