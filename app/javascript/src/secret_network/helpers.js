@@ -2,6 +2,10 @@ document.buttonAddress = function() {
   return 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
 }
 
+document.buttonDataHash = function() {
+  return 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'
+}
+
 document.getAndSetUserVipLevel = async(address, client) => {
   let chainId = document.secretNetworkChainId('production')
   let userVipLevel = 0
@@ -13,7 +17,7 @@ document.getAndSetUserVipLevel = async(address, client) => {
         key: await window.keplr.getSecret20ViewingKey(chainId, document.buttonAddress())
       }
     }
-    let balance_response = await client.queryContractSmart(document.buttonAddress(), params);
+    let balance_response = await client.queryContractSmart(document.buttonAddress(), params, undefined, document.buttonDataHash());
     let balance = balance_response["balance"]["amount"]
     balance = Number(balance)
     if (balance >= 100_000_000_000) {
