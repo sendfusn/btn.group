@@ -247,7 +247,6 @@ $(document).ready(function(){
           symbol: 'sXMR'
         }
       };
-      this.height = undefined;
       let protocols = {
         secret_swap: {
           name: 'Secret Swap',
@@ -498,7 +497,6 @@ $(document).ready(function(){
         if(!value['under_maintenance']) {
           document[value['address'] + 'DepositForm'].onsubmit = async (e) => {
             e.preventDefault()
-            this.height = undefined;
             this.retryCount = 0;
             this.setClient(value['deposit_gas']);
             $depositButton.prop("disabled", true);
@@ -549,7 +547,6 @@ $(document).ready(function(){
           let $withdrawButtonReady = $('.' + value['address'] + '-withdraw-button-ready')
           document[value['address'] + 'WithdrawForm'].onsubmit = async (e) => {
             e.preventDefault()
-            this.height = undefined;
             this.retryCount = 0;
             this.setClient(value['withdraw_gas']);
             $withdrawButton.prop("disabled", true);
@@ -614,20 +611,20 @@ $(document).ready(function(){
         this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
       }
 
-      this.updatePoolInterface = (pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false) => {
+      this.updatePoolInterface = (pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
         if (poolDetailsOnly) {
-          this.updateRewards(pool, afterTransaction)
+          this.updateRewards(pool, afterTransaction, height)
           this.updateTotalShares(pool)
         } else if (userDetailsOnly) {
           this.updateWalletBalance(pool['deposit_token'], pool)
-          this.updateRewards(pool, afterTransaction)
+          this.updateRewards(pool, afterTransaction, height)
           this.updateUserWithdrawable(pool)
           if (afterTransaction) {
             this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
           }
         } else {
           this.updateWalletBalance(pool['deposit_token'], pool)
-          this.updateRewards(pool, afterTransaction)
+          this.updateRewards(pool, afterTransaction, height)
           this.updateUserWithdrawable(pool)
           if (afterTransaction) {
             this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
@@ -636,14 +633,14 @@ $(document).ready(function(){
         }
       }
 
-      this.updateUserInterface = (poolDetailsOnly = false, userDetailsOnly = false) => {
+      this.updateUserInterface = async(poolDetailsOnly = false, userDetailsOnly = false) => {
+        let height = await this.client.getHeight();
         this.pools.forEach(function(pool, index) {
-          this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly)
+          this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)
         }.bind(this));
       }
 
       this.updateUserWithdrawable = async(pool) => {
-        let client = document.secretNetworkClient(this.environment);
         let $userShares = $('.' + pool['address'] + '-user-shares')
         let depositTokenSymbol = pool['deposit_token']['symbol']
 
@@ -652,14 +649,14 @@ $(document).ready(function(){
           let userResponse;
           let withdrawable = new BigNumber("0");
           if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-            userResponse = await client.queryContractSmart(pool.address, {user: {user_address: this.address}})
+            userResponse = await this.client.queryContractSmart(pool.address, {user: {user_address: this.address}})
             withdrawable = new BigNumber(userResponse['user']['shares'])
           } else {
-            userResponse = await client.queryContractSmart(pool.address, {user_info: {address: this.address}})
+            userResponse = await this.client.queryContractSmart(pool.address, {user_info: {address: this.address}})
             withdrawable = new BigNumber(userResponse['user_info']['shares'])
             if (pool.address != 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
               // Factor in rewards when you get the chance
-              let poolResponse = await client.queryContractSmart(pool.address, {pool: {}})
+              let poolResponse = await this.client.queryContractSmart(pool.address, {pool: {}})
               let incentivizedTokenTotal = new BigNumber(poolResponse['pool']['incentivized_token_total']);
               if (new BigNumber(poolResponse['pool']['shares_total']) > 0) {
                 withdrawable = withdrawable.multipliedBy(incentivizedTokenTotal).dividedBy(new BigNumber(poolResponse['pool']['shares_total']))
@@ -681,8 +678,7 @@ $(document).ready(function(){
         }
       }
 
-      this.updateRewards = async(pool, afterTransaction = false) => {
-        let client = document.secretNetworkClient(this.environment);
+      this.updateRewards = async(pool, afterTransaction = false, height = undefined) => {
         if (pool.farm_contract_address) {
           if (!pool.under_maintenance) {
             let $poolRewardsToProcess = $('.' + pool.address + '-rewards-to-process')
@@ -691,17 +687,16 @@ $(document).ready(function(){
             } else {
               try {
                 $poolRewardsToProcess.text('Loading...');
-                if (!this.height) {
-                  this.height = await client.getHeight();
+                if (!height) {
+                  height = await this.client.getHeight();
                 }
-                let response = await client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: this.height, key: "DoTheRightThing." }})
+                let response = await this.client.queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }})
                 $poolRewardsToProcess.text(document.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
               } catch(err) {
                 console.log(err)
                 if (this.retryCount < 5) {
                   setTimeout(function(){
                     this.retryCount += 1
-                    this.height = undefined
                     this.updateRewards(pool)
                   }.bind(this), 5000);
                 }
@@ -717,13 +712,13 @@ $(document).ready(function(){
               try {
                 $poolClaimable.text('Loading...');
                 if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-                  let response = await client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
+                  let response = await this.client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
                   $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['claimable_profit']['amount'], pool['reward_token']['decimals']))
                 } else {
-                  if (!this.height) {
-                    this.height = await client.getHeight();
+                  if (!height) {
+                    height = await this.client.getHeight();
                   }
-                  let response = await client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: this.height }})
+                  let response = await this.client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: height }})
                   $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['pending_buttcoin']['amount'], 6))
                 }
               } catch(err) {
@@ -734,7 +729,6 @@ $(document).ready(function(){
                   if (this.retryCount < 5) {
                     setTimeout(function(){
                       this.retryCount += 1
-                      this.height = undefined
                       this.updateRewards(pool)
                     }.bind(this), 5000);
                   }
@@ -750,17 +744,16 @@ $(document).ready(function(){
           let poolAddress = pool.address
           let depositTokenSymbol = pool['deposit_token']['symbol']
           let totalSharesSelector = '.' + poolAddress + '-total-shares'
-          let client = document.secretNetworkClient(this.environment);
           let humanizedStringNumberFromSmartContract;
           $(totalSharesSelector).text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || poolAddress == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-            let config = await client.queryContractSmart(poolAddress, {config: {}})
+            let config = await this.client.queryContractSmart(poolAddress, {config: {}})
             humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(config['config']['total_shares'], pool['deposit_token']['decimals'], 0)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
-            let response = await client.queryContractSmart(poolAddress, {pool: {}})
+            let response = await this.client.queryContractSmart(poolAddress, {pool: {}})
             humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(response['pool']['shares_total'], pool['deposit_token']['decimals'], 0)
           } else {
-            let responseTwo = await client.queryContractSmart(poolAddress, {pool: {}})
+            let responseTwo = await this.client.queryContractSmart(poolAddress, {pool: {}})
             humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(responseTwo['pool']['incentivized_token_total'], pool['deposit_token']['decimals'], 0)
           }
           $(totalSharesSelector).text(humanizedStringNumberFromSmartContract + ' ' + depositTokenSymbol)
@@ -771,7 +764,6 @@ $(document).ready(function(){
 
       this.updateWalletBalance = async(cryptocurrency, pool) => {
         let address = cryptocurrency['address']
-        let client = document.secretNetworkClient(this.environment);
         let $walletBalance = $('.' + address + '-balance')
         let $walletBalanceLink = $('.' + address + '-balance-link')
         let $walletBalanceLoading = $('.' + address + '-balance-loading')
@@ -781,7 +773,7 @@ $(document).ready(function(){
           $walletBalanceLoading.removeClass('d-none')
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, address)
           // If they have the key, replace the button with the balance
-          let balanceResponse = await client.queryContractSmart(address, { balance: { address: this.address, key: key } }, undefined, cryptocurrency['dataHash'])
+          let balanceResponse = await this.client.queryContractSmart(address, { balance: { address: this.address, key: key } }, undefined, cryptocurrency['dataHash'])
           let balanceFormatted = document.humanizeStringNumberFromSmartContract(balanceResponse['balance']['amount'], cryptocurrency['decimals'])
           $walletBalance.text(balanceFormatted)
           $walletBalance.removeClass('d-none')
