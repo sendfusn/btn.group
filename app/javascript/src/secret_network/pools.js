@@ -612,24 +612,18 @@ $(document).ready(function(){
       }
 
       this.updatePoolInterface = (pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
+        this.updateRewards(pool, afterTransaction, height)
         if (poolDetailsOnly) {
-          this.updateRewards(pool, afterTransaction, height)
           this.updateTotalShares(pool)
-        } else if (userDetailsOnly) {
-          this.updateWalletBalance(pool['deposit_token'], pool)
-          this.updateRewards(pool, afterTransaction, height)
-          this.updateUserWithdrawable(pool)
-          if (afterTransaction) {
-            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
-          }
         } else {
           this.updateWalletBalance(pool['deposit_token'], pool)
-          this.updateRewards(pool, afterTransaction, height)
           this.updateUserWithdrawable(pool)
           if (afterTransaction) {
             this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
           }
-          this.updateTotalShares(pool)
+          if (!userDetailsOnly) {
+            this.updateTotalShares(pool)
+          }
         }
       }
 
