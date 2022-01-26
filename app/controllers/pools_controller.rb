@@ -7,7 +7,7 @@ class PoolsController < ApplicationController
     @pools = Pool.where(category: :trade_pair)
     if params['enabled'] == 'true'
       @pools = @pools.where(enabled: true)
-    elsif Time.current.min < 5
+    elsif Time.current.min > 5
       pool_ids = CryptocurrencyPool.where('amount != ?', '0').pluck(:pool_id).uniq
       @pools = @pools.where(id: pool_ids)
     end
