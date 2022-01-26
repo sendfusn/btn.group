@@ -376,7 +376,7 @@ $(document).ready(function(){
           return fromAmountFormatted
         }
         try {
-          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
+          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg, undefined, pool['smart_contract']['data_hash'])
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
         } catch(error) {
@@ -384,7 +384,7 @@ $(document).ready(function(){
           console.log(pool)
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
 
-          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg)
+          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg, undefined, pool['smart_contract']['data_hash'])
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
         }
@@ -577,7 +577,7 @@ $(document).ready(function(){
             cryptoAddress = cryptocurrency['smart_contract']['address']
             let key = await window.keplr.getSecret20ViewingKey(this.chainId, cryptoAddress)
             // If they have the key, replace the button with the balance
-            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: this.address, key: key } })
+            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: this.address, key: key } }, undefined, cryptocurrency['smart_contract']['data_hash'])
             balance = balanceResponse['balance']['amount']
           } else {
             let accountDetails = await this.client.getAccount(this.address)
