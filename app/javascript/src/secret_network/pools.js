@@ -10,6 +10,7 @@ $(document).ready(function(){
       let cryptocurrencies = {
         butt: {
           address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
+          dataHash: 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288',
           decimals: 6,
           symbol: 'BUTT'
         },
@@ -17,6 +18,7 @@ $(document).ready(function(){
           address: 'secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl',
           asset_one: 'butt',
           asset_two: 'swbtc',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'BUTT-sWBTC'
         },
@@ -24,36 +26,43 @@ $(document).ready(function(){
           address: 'secret1any3nf7mays46ry4w7enrfqnk837yz9h2zqdrf',
           asset_one: 'butt',
           asset_two: 'sxmr',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'BUTT-sXMR'
         },
         satom: {
           address: 'secret14mzwd0ps5q277l20ly2q3aetqe3ev4m4260gf4',
+          dataHash: 'AD91060456344FC8D8E93C0600A3957B8158605C044B3BEF7048510B3157B807',
           decimals: 6,
           symbol: 'sATOM'
         },
         sbnb_bsc: {
           address: 'secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5',
+          dataHash: 'D0DB7128B8697419AD915C9FA2C2B2DA462634AB95CBB3CA187564A1275561CF',
           decimals: 18,
           symbol: 'sBNB(BSC)'
         },
         sdai_eth: {
           address: 'secret1vnjck36ld45apf8u4fedxd5zy7f5l92y3w5qwq',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sDAI'
         },
         sdot_bsc: {
           address: 'secret1px5mtmjh072znpez4fjpmxqsv3hpevdpyu9l4v',
+          dataHash: 'D0DB7128B8697419AD915C9FA2C2B2DA462634AB95CBB3CA187564A1275561CF',
           decimals: 18,
           symbol: 'sDOT(BSC)'
         },
         sdvpn: {
           address: 'secret1k8cge73c3nh32d4u0dsd5dgtmk63shtlrfscj5',
+          dataHash: 'AD91060456344FC8D8E93C0600A3957B8158605C044B3BEF7048510B3157B807',
           decimals: 6,
           symbol: 'sDVPN'
         },
         sefi: {
           address: 'secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt',
+          dataHash: 'C7FE67B243DFEDC625A28ADA303434D6F5A46A3086E7D2B5063A814E9F9A379D',
           decimals: 6,
           symbol: 'SEFI'
         },
@@ -61,6 +70,7 @@ $(document).ready(function(){
           address: 'secret1w8l6c4fgc4nj2nwxadpmza4kt44xzd72pjn29u',
           asset_one: 'sefi',
           asset_two: 'satom',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'SEFI-sATOM'
         },
@@ -68,6 +78,7 @@ $(document).ready(function(){
           address: 'secret1prxa3js02lys75a48hru944j5knszzr5tyehar',
           asset_one: 'sefi',
           asset_two: 'sdvpn',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'SEFI-sDVPN'
         },
@@ -75,6 +86,7 @@ $(document).ready(function(){
           address: 'secret1ff99syuvgpfj5pdg8vw88c6lz796lclvyu3hem',
           asset_one: 'sefi',
           asset_two: 'sluna',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'SEFI-sLUNA'
         },
@@ -82,6 +94,7 @@ $(document).ready(function(){
           address: 'secret13zae8r3zlms9e6f4gvy2252w2z5ffqxslu35wu',
           asset_one: 'sefi',
           asset_two: 'sosmo',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'SEFI-sOSMO'
         },
@@ -89,6 +102,7 @@ $(document).ready(function(){
           address: 'secret1mm7df4ygxwlfg0l70jrrkshlhtp8vv5n7hj9rr',
           asset_one: 'sefi',
           asset_two: 'susdc_eth',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'SEFI-sUSDC(ETH)'
         },
@@ -96,6 +110,7 @@ $(document).ready(function(){
           address: 'secret1xug4dc46sqlcaetm5c72qhjtedh05922uac9k2',
           asset_one: 'sefi',
           asset_two: 'sxmr',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'SEFI-sXMR'
         },
@@ -103,6 +118,7 @@ $(document).ready(function(){
           address: 'secret1c9ky0x6fj5gc0qw6tedxsng50mjl3szn7xhjeu',
           asset_one: 'seth_bsc',
           asset_two: 'seth_eth',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sETH(BSC)-sETH(ETH)'
         },
@@ -110,56 +126,67 @@ $(document).ready(function(){
           address: 'secret1nvqrwwr9942gn89nk44nf2nku6gr7u8tsg6z45',
           asset_one: 'seth_eth',
           asset_two: 'swbtc',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sETH(ETH)-sWBTC'
         },
         seth_bsc: {
           address: 'secret1m6a72200733a7jnm76xrznh9cpmt4kf5ql0a6t',
+          dataHash: 'D0DB7128B8697419AD915C9FA2C2B2DA462634AB95CBB3CA187564A1275561CF',
           decimals: 18,
           symbol: 'sETH(BSC)'
         },
         seth_eth: {
           address: 'secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sETH(ETH)'
         },
         sienna: {
           address: 'secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4',
+          dataHash: 'C1DC8261059FEE1DE9F1873CD1359CCD7A6BC5623772661FA3D55332EB652084',
           decimals: 18,
           symbol: 'SIENNA'
         },
         sluna: {
           address: 'secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw',
+          dataHash: 'AD91060456344FC8D8E93C0600A3957B8158605C044B3BEF7048510B3157B807',
           decimals: 6,
           symbol: 'sLUNA'
         },
         smana_eth: {
           address: 'secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sMANA(ETH)'
         },
         socean_eth: {
           address: 'secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sOCEAN(ETH)'
         },
         sosmo: {
           address: 'secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg',
+          dataHash: 'AD91060456344FC8D8E93C0600A3957B8158605C044B3BEF7048510B3157B807',
           decimals: 6,
           symbol: 'sOSMO'
         },
         srsr_eth: {
           address: 'secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sRSR(ETH)'
         },
         srune_eth: {
           address: 'secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sRUNE(ETH)'
         },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
+          dataHash: 'AF74387E276BE8874F07BEC3A87023EE49B0E7EBE08178C49D0A49C3C98ED60E',
           decimals: 6,
           symbol: 'sSCRT'
         },
@@ -167,6 +194,7 @@ $(document).ready(function(){
           address: 'secret1le3d0fgkrzd433fdnetdqslfxmugvg0tuaqspe',
           asset_one: 'sscrt',
           asset_two: 'sbnb_bsc',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-sBNB(BSC)'
         },
@@ -174,6 +202,7 @@ $(document).ready(function(){
           address: 'secret1mc656zt6g37u2ufqp2tw8kaj5jxpujylfzw8yw',
           asset_one: 'sscrt',
           asset_two: 'sdot_bsc',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-sDOT(BSC)'
         },
@@ -181,6 +210,7 @@ $(document).ready(function(){
           address: 'secret1709qy2smh0r7jjac0qxfgjsqn7zpvgthsdz025',
           asset_one: 'sscrt',
           asset_two: 'sefi',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-SEFI'
         },
@@ -188,6 +218,7 @@ $(document).ready(function(){
           address: 'secret17gja535zp09t9mlzzxndqqg4gzvhg0vsklhd54',
           asset_one: 'sscrt',
           asset_two: 'seth_eth',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-sETH(ETH)'
         },
@@ -195,6 +226,7 @@ $(document).ready(function(){
           address: 'secret1rldr66767a4gz3adkq2vgndwgnxlfqqae4fgen',
           asset_one: 'sscrt',
           asset_two: 'slink_eth',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-sLINK(ETH)'
         },
@@ -202,6 +234,7 @@ $(document).ready(function(){
           address: 'secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx',
           asset_one: 'sscrt',
           asset_two: 'susdt_eth',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-sUSDT(ETH)'
         },
@@ -209,21 +242,25 @@ $(document).ready(function(){
           address: 'secret1xxvqanj85m7dppplku5782cn9hl8askqd329sv',
           asset_one: 'sscrt',
           asset_two: 'swbtc',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-sWBTC(ETH)'
         },
         suni_eth: {
           address: 'secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sUNI(ETH)'
         },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
+          dataHash: 'D0DB7128B8697419AD915C9FA2C2B2DA462634AB95CBB3CA187564A1275561CF',
           decimals: 18,
           symbol: 'sUSDC(BSC)'
         },
         susdc_eth: {
           address: 'secret1h6z05y90gwm4sqxzhz4pkyp36cna9xtp7q0urv',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 6,
           symbol: 'sUSDC(ETH)'
         },
@@ -231,26 +268,31 @@ $(document).ready(function(){
           address: 'secret163e9frya0vqar70s4j3na94apf0cffl2rjgmgg',
           asset_one: 'susdc_eth',
           asset_two: 'susdc_bsc',
+          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sUSDC(ETH)-sUSDC(BSC)'
         },
         susdt_eth: {
           address: 'secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 6,
           symbol: 'sUSDT(ETH)'
         },
         swbtc: {
           address: 'secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 8,
           symbol: 'sWBTC'
         },
         sxmr: {
           address: 'secret19ungtd2c7srftqdwgq0dspwvrw63dhu79qxv88',
+          dataHash: '667A3DBEC9096DE530A5521A83E6090DF0956475BD4ACC8D05F382D4F8FFDD05',
           decimals: 12,
           symbol: 'sXMR'
         },
         syfi_eth: {
           address: 'secret15grq8y54tvc24j8hf8chunsdcr84fd3d30fvqv',
+          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
           decimals: 18,
           symbol: 'sYFI(ETH)'
         }
@@ -789,7 +831,7 @@ $(document).ready(function(){
           $walletBalanceLoading.removeClass('d-none')
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, address)
           // If they have the key, replace the button with the balance
-          let balanceResponse = await client.queryContractSmart(address, { balance: { address: this.address, key: key } })
+          let balanceResponse = await client.queryContractSmart(address, { balance: { address: this.address, key: key } }, undefined, cryptocurrency['dataHash'])
           let balanceFormatted = document.humanizeStringNumberFromSmartContract(balanceResponse['balance']['amount'], cryptocurrency['decimals'])
           $walletBalance.text(balanceFormatted)
           $walletBalance.removeClass('d-none')
