@@ -47,7 +47,7 @@ $(document).ready(function(){
           }
           let tradePairForDataTable = {}
           try {
-            let result = await this.client.queryContractSmart(address, msg);
+            let result = await this.client.queryContractSmart(address, msg, undefined, tradePair['smart_contract']['data_hash']);
             let asset_0_address;
             let asset_1_address;
             let asset_0_symbol;
