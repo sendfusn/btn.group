@@ -42,12 +42,6 @@ $(document).ready(function(){
           decimals: 18,
           symbol: 'sBNB(BSC)'
         },
-        sdai_eth: {
-          address: 'secret1vnjck36ld45apf8u4fedxd5zy7f5l92y3w5qwq',
-          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
-          decimals: 18,
-          symbol: 'sDAI'
-        },
         sdot_bsc: {
           address: 'secret1px5mtmjh072znpez4fjpmxqsv3hpevdpyu9l4v',
           dataHash: 'D0DB7128B8697419AD915C9FA2C2B2DA462634AB95CBB3CA187564A1275561CF',
@@ -154,35 +148,11 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'sLUNA'
         },
-        smana_eth: {
-          address: 'secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega',
-          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
-          decimals: 18,
-          symbol: 'sMANA(ETH)'
-        },
-        socean_eth: {
-          address: 'secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps',
-          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
-          decimals: 18,
-          symbol: 'sOCEAN(ETH)'
-        },
         sosmo: {
           address: 'secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg',
           dataHash: 'AD91060456344FC8D8E93C0600A3957B8158605C044B3BEF7048510B3157B807',
           decimals: 6,
           symbol: 'sOSMO'
-        },
-        srsr_eth: {
-          address: 'secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un',
-          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
-          decimals: 18,
-          symbol: 'sRSR(ETH)'
-        },
-        srune_eth: {
-          address: 'secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24',
-          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
-          decimals: 18,
-          symbol: 'sRUNE(ETH)'
         },
         sscrt: {
           address: 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek',
@@ -222,14 +192,6 @@ $(document).ready(function(){
           decimals: 6,
           symbol: 'sSCRT-sETH(ETH)'
         },
-        sscrt_slink_eth_lp: {
-          address: 'secret1rldr66767a4gz3adkq2vgndwgnxlfqqae4fgen',
-          asset_one: 'sscrt',
-          asset_two: 'slink_eth',
-          dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
-          decimals: 6,
-          symbol: 'sSCRT-sLINK(ETH)'
-        },
         sscrt_susdt_eth_lp: {
           address: 'secret1cgd6gcc4uyrxmzsmk4tpeta8auzcgwk4n5ngrx',
           asset_one: 'sscrt',
@@ -245,12 +207,6 @@ $(document).ready(function(){
           dataHash: 'EA3DF9D5E17246E4EF2F2E8071C91299852A07A84C4EB85007476338B7547CE8',
           decimals: 6,
           symbol: 'sSCRT-sWBTC(ETH)'
-        },
-        suni_eth: {
-          address: 'secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te',
-          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
-          decimals: 18,
-          symbol: 'sUNI(ETH)'
         },
         susdc_bsc: {
           address: 'secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg',
@@ -289,12 +245,6 @@ $(document).ready(function(){
           dataHash: '667A3DBEC9096DE530A5521A83E6090DF0956475BD4ACC8D05F382D4F8FFDD05',
           decimals: 12,
           symbol: 'sXMR'
-        },
-        syfi_eth: {
-          address: 'secret15grq8y54tvc24j8hf8chunsdcr84fd3d30fvqv',
-          dataHash: '2DA545EBC441BE05C9FA6338F3353F35AC02EC4B02454BC49B1A66F4B9866AED',
-          decimals: 18,
-          symbol: 'sYFI(ETH)'
         }
       };
       this.height = undefined;
