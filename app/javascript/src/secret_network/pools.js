@@ -262,6 +262,7 @@ $(document).ready(function(){
         // This has to be first position in array
         {
           address: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz',
+          dataHash: 'BF78E4C9A6E0563072D36DEF3D6C44FB2BD8FED15932A5ECAD4915200D728813',
           deposit_gas: '112500',
           deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
           deposit_token: cryptocurrencies['butt'],
@@ -272,6 +273,7 @@ $(document).ready(function(){
         // This has to be second position in array
         {
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
+          dataHash: 'A66AD14E31CBC2AB25B3A7B7085F0BC345E65C09649C49EA88CD77A4987AA0A5',
           deposit_gas: '262500',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['butt_swbtc_lp'],
@@ -282,6 +284,7 @@ $(document).ready(function(){
         // This has to be third position in array
         // {
         //   address: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan',
+        //   dataHash: '7A8DAAA2FC9A76F65DC1200D698B5132DF657C01551D55DE838A6457F3B4734D',
         //   deposit_gas: '112500',
         //   deposit_msg: 'eyJkZXBvc2l0Ijoge319',
         //   deposit_token: cryptocurrencies['butt_sxmr_lp'],
@@ -291,6 +294,7 @@ $(document).ready(function(){
         // },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
+          dataHash: '3D83E7A7A192A57198049481A74888B340D2B1C4F5A33A6083C3500FA53E05DC',
           deposit_gas: '400000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
@@ -302,6 +306,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6',
+          dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
           deposit_gas: '937500',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_satom_lp'],
@@ -313,6 +318,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87',
+          dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
           deposit_gas: '937500',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sluna_lp'],
@@ -324,6 +330,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww',
+          dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
           deposit_gas: '937500',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sosmo_lp'],
@@ -335,6 +342,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v',
+          dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
           deposit_gas: '937500',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sefi_lp'],
@@ -346,6 +354,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj',
+          dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
           deposit_gas: '937500',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sxmr_lp'],
@@ -357,6 +366,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn',
+          dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
           deposit_gas: '937500',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_susdc_eth_lp'],
@@ -368,6 +378,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z',
+          dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
           deposit_gas: '1125000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_susdt_eth_lp'],
@@ -379,6 +390,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku',
+          dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
           deposit_gas: '1125000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_seth_eth_lp'],
@@ -401,6 +413,7 @@ $(document).ready(function(){
         // },
         {
           address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp',
+          dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
           deposit_gas: '1125000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
@@ -423,6 +436,7 @@ $(document).ready(function(){
         // },
         {
           address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql',
+          dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
           deposit_gas: '1125000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
@@ -445,6 +459,7 @@ $(document).ready(function(){
         // },
         {
           address: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82',
+          dataHash: '7F2CD7ED1969D142BDCAC1F2AAEB9D1E5C0B11768C79B1C1DB8CB9557DB97D34',
           deposit_gas: '1050000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['seth_bsc_seth_eth_lp'],
@@ -456,6 +471,7 @@ $(document).ready(function(){
         },
         {
           address: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs',
+          dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
           deposit_gas: '1050000',
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sdvpn_lp'],
@@ -643,14 +659,14 @@ $(document).ready(function(){
           let userResponse;
           let withdrawable = new BigNumber("0");
           if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-            userResponse = await this.client.queryContractSmart(pool.address, {user: {user_address: this.address}})
+            userResponse = await this.client.queryContractSmart(pool.address, {user: {user_address: this.address}}, undefined, pool.dataHash)
             withdrawable = new BigNumber(userResponse['user']['shares'])
           } else {
-            userResponse = await this.client.queryContractSmart(pool.address, {user_info: {address: this.address}})
+            userResponse = await this.client.queryContractSmart(pool.address, {user_info: {address: this.address}}, undefined, pool.dataHash)
             withdrawable = new BigNumber(userResponse['user_info']['shares'])
             if (pool.address != 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
               // Factor in rewards when you get the chance
-              let poolResponse = await this.client.queryContractSmart(pool.address, {pool: {}})
+              let poolResponse = await this.client.queryContractSmart(pool.address, {pool: {}}, undefined, pool.dataHash)
               let incentivizedTokenTotal = new BigNumber(poolResponse['pool']['incentivized_token_total']);
               if (new BigNumber(poolResponse['pool']['shares_total']) > 0) {
                 withdrawable = withdrawable.multipliedBy(incentivizedTokenTotal).dividedBy(new BigNumber(poolResponse['pool']['shares_total']))
@@ -706,13 +722,13 @@ $(document).ready(function(){
               try {
                 $poolClaimable.text('Loading...');
                 if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-                  let response = await this.client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}})
+                  let response = await this.client.queryContractSmart(pool.address, {claimable_profit: { user_address: this.address}}, undefined, pool.dataHash)
                   $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['claimable_profit']['amount'], pool['reward_token']['decimals']))
                 } else {
                   if (!height) {
                     height = await this.client.getHeight();
                   }
-                  let response = await this.client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: height }})
+                  let response = await this.client.queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: height }}, undefined, pool.dataHash)
                   $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['pending_buttcoin']['amount'], 6))
                 }
               } catch(err) {
@@ -741,13 +757,13 @@ $(document).ready(function(){
           let humanizedStringNumberFromSmartContract;
           $(totalSharesSelector).text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || poolAddress == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-            let config = await this.client.queryContractSmart(poolAddress, {config: {}})
+            let config = await this.client.queryContractSmart(poolAddress, {config: {}}, undefined, pool.dataHash)
             humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(config['config']['total_shares'], pool['deposit_token']['decimals'], 0)
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
-            let response = await this.client.queryContractSmart(poolAddress, {pool: {}})
+            let response = await this.client.queryContractSmart(poolAddress, {pool: {}}, undefined, pool.dataHash)
             humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(response['pool']['shares_total'], pool['deposit_token']['decimals'], 0)
           } else {
-            let responseTwo = await this.client.queryContractSmart(poolAddress, {pool: {}})
+            let responseTwo = await this.client.queryContractSmart(poolAddress, {pool: {}}, undefined, pool.dataHash)
             humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(responseTwo['pool']['incentivized_token_total'], pool['deposit_token']['decimals'], 0)
           }
           $(totalSharesSelector).text(humanizedStringNumberFromSmartContract + ' ' + depositTokenSymbol)
