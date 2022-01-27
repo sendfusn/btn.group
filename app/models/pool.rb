@@ -28,7 +28,7 @@ class Pool < ApplicationRecord
     if pool.category == 'trade_pair' && pool.enabled
       if pool.saved_change_to_enabled?
         CreateSwapPathsJob.perform_later
-        CryptocurrencyPool.deposit.pluck(:cryptocurrency_id).uniq.find_each do |c_id|
+        CryptocurrencyPool.deposit.pluck(:cryptocurrency_id).uniq.each do |c_id|
           CreateArbitragePathsJob.perform_later(Cryptocurrency.find(c_id).symbol)
         end
       end
