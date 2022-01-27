@@ -640,18 +640,18 @@ $(document).ready(function(){
         this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
       }
 
-      this.updatePoolInterface = (pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
-        this.updateRewards(pool, afterTransaction, height)
+      this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
+        await this.updateRewards(pool, afterTransaction, height)
         if (poolDetailsOnly) {
-          this.updateTotalShares(pool)
+          await this.updateTotalShares(pool)
         } else {
-          this.updateWalletBalance(pool['deposit_token'], pool)
-          this.updateUserWithdrawable(pool)
+          await this.updateWalletBalance(pool['deposit_token'], pool)
+          await this.updateUserWithdrawable(pool)
           if (afterTransaction) {
-            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
+            await this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
           }
           if (!userDetailsOnly) {
-            this.updateTotalShares(pool)
+            await this.updateTotalShares(pool)
           }
         }
       }

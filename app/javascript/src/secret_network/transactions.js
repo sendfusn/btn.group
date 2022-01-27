@@ -1,10 +1,9 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     window.onload = async () => {
-      this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
-      this.client =  document.secretNetworkClient(this.environment);
+      this.client = document.secretNetworkClient(this.environment);
       this.userVipLevel = 0;
       document.activateKeplr()
       getAndSetSmartContracts(1)
