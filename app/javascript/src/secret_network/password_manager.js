@@ -25,15 +25,16 @@ $(document).ready(function(){
     $(document).on('keplr_connected', async(evt) => {
       let accounts = await window.keplrOfflineSigner.getAccounts()
       this.address = accounts[0].address;
-      this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
     })
 
     window.onload = async () => {
       document.activateKeplr()
       this.addressAliasAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w';
-      this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
+      this.addressAliasDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
       this.environment = 'production';
+      this.client = document.secretNetworkClient(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
+      this.contractAddressDataHash = 'F466CF15F3186F1816D4D6A4BCEE6998E512179E5DBA9F2922DCCA7640381217'
       this.chainId = document.secretNetworkChainId(this.environment)
       this.chosenPosition;
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
@@ -220,7 +221,7 @@ $(document).ready(function(){
             }
           }
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
-          let response = await this.client.execute(this.buttcoinAddress, handleMsg)
+          let response = await this.client.execute(document.buttonAddress(), handleMsg)
           let newAuthentication = {
             revealed: true
           } 
@@ -267,18 +268,17 @@ $(document).ready(function(){
         this.datatable.clear()
         $(".table-responsive").addClass("d-none");
         changeSubmitButtonToLoading()
-        let client = document.secretNetworkClient(this.environment);
         try {
           let searchType = document.passwordManagerSearchForm.searchType.value;
           this.searchedAddress = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
           if (searchType == 'alias') {
             let searchParams = { search_type: searchType, search_value: this.searchedAddress };
-            let result = await client.queryContractSmart(this.addressAliasAddress, { search: searchParams })
+            let result = await this.client.queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
             this.searchedAddress = result['attributes']['address']
           }
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
           let params = { address: this.searchedAddress, key: viewingKey };
-          let response = await client.queryContractSmart(this.contractAddress, { hints: params })
+          let response = await this.client.queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
           }
