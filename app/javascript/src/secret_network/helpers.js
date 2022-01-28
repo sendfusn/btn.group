@@ -51,7 +51,18 @@ document.secretNetworkClient = function(environment) {
   const {
     CosmWasmClient,
   } = require('secretjs');
-  return new CosmWasmClient(document.secretNetworkHttpUrl(environment))
+
+  if (environment == 'staging') {
+    if (!document.secretNetworkClientStaging) {
+      document.secretNetworkClientStaging = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
+    }
+    return document.secretNetworkClientStaging
+  } else {
+    if (!document.secretNetworkClientProduction) {
+      document.secretNetworkClientProduction = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
+    }
+    return document.secretNetworkClientProduction
+  }
 }
 
 document.secretNetworkHttpUrl = function(environment) {

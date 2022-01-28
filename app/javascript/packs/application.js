@@ -83,7 +83,7 @@ document.activateKeplr = function() {
           $('.wallet-details').removeClass('d-none')
           $('.wallet-address').text(address)
           let client = document.secretNetworkSigningClient('production', address, {})
-          document.getAndSetUserVipLevel(address, client)
+          await document.getAndSetUserVipLevel(address, client)
         }
         catch(err) {
           document.showAlertDanger(err)
