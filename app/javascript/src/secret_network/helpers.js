@@ -77,8 +77,19 @@ document.secretNetworkSigningClient = function(environment, walletAddress, gasPa
   const {
     SigningCosmWasmClient,
   } = require('secretjs');
+
   let chainId = document.secretNetworkChainId(environment)
   let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(environment))
   let keplrOfflineSigner = window.getOfflineSigner(chainId);
-  return new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
+  if (environment == 'staging') {
+    if (!document.secretNetworkSigningClientStaging) {
+      document.secretNetworkSigningClientStaging = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
+    }
+    return document.secretNetworkSigningClientStaging
+  } else {
+    if (!document.secretNetworkSigningClientProduction) {
+      document.secretNetworkSigningClientProduction = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
+    }
+    return document.secretNetworkSigningClientProduction
+  }
 }

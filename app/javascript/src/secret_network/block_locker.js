@@ -3,11 +3,10 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       this.address;
-      this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
-      this.client = document.secretNetworkClient(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
+      this.contractDataHash = '9EF097E81EAB5AEC8594F8860AE47ED859FB6363C836F63BF02F01BE58343D36'
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.keplrOfflineSigner;
 
@@ -48,7 +47,6 @@ $(document).ready(function(){
               throw("Please use the recent version of keplr extension")
             }
           }
-          let contractAddressToExecute = this.buttcoinAddress;
           let content = undefined;
           let passphrase = undefined;
           let resultText = "";
@@ -80,7 +78,7 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "Locker updated."
-          await this.client.execute(contractAddressToExecute, handleMsg)
+          await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
           document.showAlertSuccess(resultText)
           $(e.target)[0].reset()
         }
@@ -109,7 +107,6 @@ $(document).ready(function(){
               throw("Please use the recent version of keplr extension")
             }
           }
-          let contractAddressToExecute = this.buttcoinAddress;
           let resultText = "";
           confirm("Are you sure you want to unlock? Once unlocked, the current contents of the locker can be accessed with only the passphrase forever.")
           handleMsg = { send: { amount: "1000000", recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerUnlockForm.walletAddress.value } })).toString('base64') } };
@@ -121,7 +118,7 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
-          await this.client.execute(contractAddressToExecute, handleMsg)
+          await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
           document.showAlertSuccess(resultText)
           $(e.target)[0].reset()
         }
@@ -151,9 +148,7 @@ $(document).ready(function(){
               throw("Please use the recent version of keplr extension")
             }
           }
-          let contractAddressToExecute = this.buttcoinAddress;
           let resultText = "";
-          contractAddressToExecute = this.contractAddress;
           handleMsg = { get_user_locker: {} };
           let gasParams = {
               exec: {
@@ -162,7 +157,7 @@ $(document).ready(function(){
               },
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
-          result = await this.client.execute(contractAddressToExecute, handleMsg)
+          result = await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractDataHash)
           result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           result = JSON.parse(resultText)
           // Display results
@@ -187,7 +182,7 @@ $(document).ready(function(){
         let result;
         try {
           handleMsg = { user_locker: { address: document.blockLockerViewWhenUnlockedForm.walletAddress.value, passphrase: document.blockLockerViewWhenUnlockedForm.passphrase.value } };
-          result = await this.client.queryContractSmart(this.contractAddress, handleMsg)
+          result = await document.secretNetworkClient(this.environment).queryContractSmart(this.contractAddress, handleMsg, undefined, this.contractDataHash)
           // Display results
           $("#result-value").html(document.prettyPrintJSON(result));
           $("#result-container").removeClass("d-none");
