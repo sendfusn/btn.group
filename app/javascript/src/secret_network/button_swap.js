@@ -735,6 +735,7 @@ $(document).ready(function(){
             }
             this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
+            await this.delay(5_000)
             let returnAmount;
             response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
               if(attribute['key'] == 'return_amount') {
@@ -759,7 +760,7 @@ $(document).ready(function(){
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
           if (error.message.includes('timed out waiting for tx to be included in a block')) {
             // Wait 5 seconds and if balance of the to and from token has changed... Success
-            await this.delay(5000)
+            await this.delay(5_000)
             this.updateWalletBalance(fromId, '.from', this.fromAmountInputSelector)
             this.updateWalletBalance(toId, '.to')
             if (this.cryptocurrencies[fromId]['balance'] != fromBalance && this.cryptocurrencies[toId]['balance'] != toBalance) {
