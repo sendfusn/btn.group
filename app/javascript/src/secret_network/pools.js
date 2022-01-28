@@ -6,7 +6,6 @@ $(document).ready(function(){
       document.activateKeplr()
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
-      this.client = document.secretNetworkClient(this.environment);
       let cryptocurrencies = {
         butt: {
           address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
@@ -527,7 +526,13 @@ $(document).ready(function(){
           document[value['address'] + 'DepositForm'].onsubmit = async (e) => {
             e.preventDefault()
             this.retryCount = 0;
-            this.setClient(value['deposit_gas']);
+            let gasParams = {
+              exec: {
+                amount: [{ amount: value['deposit_gas'], denom: 'uscrt' }],
+                gas: value['deposit_gas'],
+              },
+            }
+            this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
             $depositButton.prop("disabled", true);
             $depositButtonLoading.removeClass("d-none")
             $depositButtonReady.addClass("d-none")
@@ -535,7 +540,7 @@ $(document).ready(function(){
               let amount = document[value['address'] + 'DepositForm'].amount.value;
               amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
               let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
-              let response = await this.client.execute(value['deposit_token']['address'], handleMsg)
+              let response = await this.client.execute(value['deposit_token']['address'], handleMsg, '', [], gasParams.exec, value['deposit_token']['dataHash'])
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
               this.updatePoolInterface(value, true)
@@ -577,7 +582,6 @@ $(document).ready(function(){
           document[value['address'] + 'WithdrawForm'].onsubmit = async (e) => {
             e.preventDefault()
             this.retryCount = 0;
-            this.setClient(value['withdraw_gas']);
             $withdrawButton.prop("disabled", true);
             $withdrawButtonLoading.removeClass("d-none")
             $withdrawButtonReady.addClass("d-none")
@@ -592,7 +596,14 @@ $(document).ready(function(){
               } else {
                 handleMsg = { withdraw: { incentivized_token_amount: amount } }
               }
-              let response = await this.client.execute(value['address'], handleMsg)
+              let gasParams = {
+                exec: {
+                  amount: [{ amount: value['withdraw_gas'], denom: 'uscrt' }],
+                  gas: value['withdraw_gas'],
+                },
+              }
+              this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+              let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
               document.showAlertSuccess("Withdraw successful");
               document[value['address'] + 'WithdrawForm'].amount.value = ''
               this.updatePoolInterface(value, true)
@@ -629,16 +640,6 @@ $(document).ready(function(){
           };
         }
       }.bind(this))
-
-      this.setClient = (gas) => {
-        let gasParams = {
-            exec: {
-              amount: [{ amount: gas, denom: 'uscrt' }],
-              gas: gas,
-            },
-          }
-        this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
-      }
 
       this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
         await this.updateRewards(pool, afterTransaction, height)
@@ -715,7 +716,7 @@ $(document).ready(function(){
               try {
                 $poolRewardsToProcess.text('Loading...');
                 if (!height) {
-                  height = await this.client.getHeight();
+                  height = await document.secretNetworkClient(this.environment).getHeight();
                 }
                 let response = await document.secretNetworkClient(this.environment).queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }}, undefined, pool.farm_contract_data_hash)
                 $poolRewardsToProcess.text(document.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
@@ -743,7 +744,7 @@ $(document).ready(function(){
                   $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['claimable_profit']['amount'], pool['reward_token']['decimals']))
                 } else {
                   if (!height) {
-                    height = await this.client.getHeight();
+                    height = await document.secretNetworkClient(this.environment).getHeight();
                   }
                   let response = await document.secretNetworkClient(this.environment).queryContractSmart(pool.address, {pending_buttcoin: { address: this.address, height: height }}, undefined, pool.dataHash)
                   $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['pending_buttcoin']['amount'], 6))
@@ -836,13 +837,19 @@ $(document).ready(function(){
       document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
         if (this.pools[0]['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
           let $claimSEFI = $('#claim-sefi')
-          this.setClient(this.pools[0]['deposit_gas']);
+          let gasParams = {
+            exec: {
+              amount: [{ amount: this.pools[0]['deposit_gas'], denom: 'uscrt' }],
+              gas: this.pools[0]['deposit_gas'],
+            },
+          }
+          this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           $claimSEFI.prop("disabled", true);
           $claimSEFI.find('.loading').removeClass("d-none")
           $claimSEFI.find('.ready').addClass("d-none")
           try {
             let handleMsg = { send: { amount: '0', recipient: this.pools[0]['address'], msg: this.pools[0]['deposit_msg'] } }
-            let response = await this.client.execute(this.pools[0]['deposit_token']['address'], handleMsg)
+            let response = await this.client.execute(this.pools[0]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[0]['deposit_token']['dataHash'])
             document.showAlertSuccess("Claim successful");
             $claimSEFI.find('.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable').text('0')
           }
@@ -860,13 +867,19 @@ $(document).ready(function(){
       document.querySelector('#claim-butt').addEventListener('click', async(evt) => {
         if (this.pools[1]['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
           let $claimBUTT = $('#claim-butt')
-          this.setClient(this.pools[1]['deposit_gas']);
+          let gasParams = {
+            exec: {
+              amount: [{ amount: this.pools[1]['deposit_gas'], denom: 'uscrt' }],
+              gas: this.pools[1]['deposit_gas'],
+            },
+          }
+          this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           $claimBUTT.prop("disabled", true);
           $claimBUTT.find('.loading').removeClass("d-none")
           $claimBUTT.find('.ready').addClass("d-none")
           try {
             let handleMsg = { send: { amount: '0', recipient: this.pools[1]['address'], msg: this.pools[1]['deposit_msg'] } }
-            let response = await this.client.execute(this.pools[1]['deposit_token']['address'], handleMsg)
+            let response = await this.client.execute(this.pools[1]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[1]['deposit_token']['dataHash'])
             document.showAlertSuccess("Claim successful");
             $claimBUTT.find('.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable').text('0')
           }
@@ -884,13 +897,19 @@ $(document).ready(function(){
       // document.querySelector('#claim-profit-distributor-b-butt').addEventListener('click', async(evt) => {
       //   if (this.pools[2]['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
       //     let $claimBUTT = $('#claim-profit-distributor-b-butt')
-      //     this.setClient(this.pools[2]['deposit_gas']);
+      //     let gasParams = {
+      //       exec: {
+      //         amount: [{ amount: this.pools[2]['deposit_gas'], denom: 'uscrt' }],
+      //         gas: this.pools[2]['deposit_gas'],
+      //       },
+      //     }
+      //     this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
       //     $claimBUTT.prop("disabled", true);
       //     $claimBUTT.find('.loading').removeClass("d-none")
       //     $claimBUTT.find('.ready').addClass("d-none")
       //     try {
       //       let handleMsg = { send: { amount: '0', recipient: this.pools[2]['address'], msg: this.pools[2]['deposit_msg'] } }
-      //       let response = await this.client.execute(this.pools[2]['deposit_token']['address'], handleMsg)
+      //       let response = await this.client.execute(this.pools[2]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[2]['deposit_token']['dataHash'])
       //       document.showAlertSuccess("Claim successful");
       //       $claimBUTT.find('.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable').text('0')
       //     }
