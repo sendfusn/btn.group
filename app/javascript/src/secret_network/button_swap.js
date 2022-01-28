@@ -144,8 +144,9 @@ $(document).ready(function(){
         if(this.tokenModalFor == 'from') {
           this.fromId = event['currentTarget']['dataset']['cryptocurrencyId']
           this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
+          document.secretNetworkDexAggregatorForm.fromAmount.value = 0
           let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
-          $('#from-usd-price').text('$' + (this.cryptocurrencies[this.fromId]['price'] * fromAmount).toLocaleString(undefined, { maximumFractionDigits: 2 }))
+          $('#from-usd-price').text('')
           $('#from-token-button .symbol').text(this.cryptocurrencies[this.fromId]['symbol'])
           $('#from-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/v1/' + this.cryptocurrencies[this.fromId]['attachments'][0]['cloudinary_public_id'])
         } else {
@@ -264,16 +265,14 @@ $(document).ready(function(){
         let fromId = this.fromId
         let toId = this.toId
         $("#swap-paths").html('')
-        if (Number(fromAmount) > 0) {
-          if(this.wrapPaths[fromId] == toId) {
-            document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
-          } else {
-            setTimeout(function(){
-              if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == this.fromId && toId == this.toId) {
-                this.getSwapPaths(fromId, toId, fromAmount)
-              }
-            }.bind(this), 1500);
-          }
+        if(this.wrapPaths[fromId] == toId) {
+          document.secretNetworkDexAggregatorForm.estimateAmount.value = fromAmount
+        } else {
+          setTimeout(function(){
+            if (fromAmount == document.secretNetworkDexAggregatorForm.fromAmount.value && fromId == this.fromId && toId == this.toId) {
+              this.getSwapPaths(fromId, toId, fromAmount)
+            }
+          }.bind(this), 1500);
         }
       }
 
@@ -313,27 +312,29 @@ $(document).ready(function(){
             tokenToId = this.wrapPaths[to_id]
           }
           this.swapPaths[from_id] = {}
-          let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
-          this.swapPaths[from_id][to_id] = await $.ajax({
-            url: url,
-            type: 'GET'
-          })
-          this.renderResults(from_id, to_id)
-          for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
-            if(currentQueryCount == this.queryCount) {
-              $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
-              let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
-              swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
-              this.setNetUsdResultOfSwaps(swapPath)
-              this.setBestResultForProtocol(swapPath)
-              this.renderResults(from_id, to_id)
+          if (Number(fromAmount) > 0) {
+            let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
+            this.swapPaths[from_id][to_id] = await $.ajax({
+              url: url,
+              type: 'GET'
+            })
+            this.renderResults(from_id, to_id)
+            for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
+              if(currentQueryCount == this.queryCount) {
+                $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
+                let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
+                swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
+                this.setNetUsdResultOfSwaps(swapPath)
+                this.setBestResultForProtocol(swapPath)
+                this.renderResults(from_id, to_id)
+              }
             }
-          }
-          if(currentQueryCount == this.queryCount) {
-            this.applyFee()
-            this.renderTable()
-            this.fillForm()
-            $('#results').removeClass('d-none')
+            if(currentQueryCount == this.queryCount) {
+              this.applyFee()
+              this.renderTable()
+              this.fillForm()
+              $('#results').removeClass('d-none')
+            }
           }
         } catch(error) {
           if(currentQueryCount == this.queryCount && error.status != 401) {
