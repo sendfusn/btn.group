@@ -658,8 +658,12 @@ $(document).ready(function(){
 
       this.updateUserInterface = async(poolDetailsOnly = false, userDetailsOnly = false) => {
         let height = await document.secretNetworkClient(this.environment).getHeight();
-        for (const pool of this.pools) {
-          await this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)
+        for (const [index, pool] of this.pools.entries()) {
+          if (index == 0) {
+            await this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)
+          } else {
+            this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)
+          }
         }
       }
 
