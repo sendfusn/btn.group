@@ -32,7 +32,6 @@ $(document).ready(function(){
       this.addressAliasAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w';
       this.addressAliasDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
       this.environment = 'production';
-      this.client = document.secretNetworkClient(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
       this.contractAddressDataHash = 'F466CF15F3186F1816D4D6A4BCEE6998E512179E5DBA9F2922DCCA7640381217'
       this.chainId = document.secretNetworkChainId(this.environment)
@@ -120,6 +119,12 @@ $(document).ready(function(){
         $ready.addClass('d-none');
         (async () => {
           try {
+            let gasParams = {
+              exec: {
+                amount: [{ amount: '50000', denom: 'uscrt' }],
+                gas: '50000',
+              },
+            }
             // Keplr extension injects the offline signer that is compatible with cosmJS.
             // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
             // And it also injects the helper function to `window.keplr`.
@@ -138,12 +143,6 @@ $(document).ready(function(){
                   const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                   const accounts = await keplrOfflineSigner.getAccounts();
                   this.address = accounts[0].address;
-                  let gasParams = {
-                      exec: {
-                        amount: [{ amount: '50000', denom: 'uscrt' }],
-                        gas: '50000',
-                      },
-                    }
                   this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
                 } catch (error) {
                   document.showAlertDanger(error)
@@ -153,7 +152,7 @@ $(document).ready(function(){
               }
             }
             let handleMsg = { show: { position: Number(this.chosenPosition) } }
-            let response = await this.client.execute(this.contractAddress, handleMsg)
+            let response = await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractAddressDataHash)
             let resultText = '';
             response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
             let authentication = JSON.parse(resultText)['show']['authentication']
@@ -192,6 +191,12 @@ $(document).ready(function(){
           // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
           // And it also injects the helper function to `window.keplr`.
           // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
+          let gasParams = {
+            exec: {
+              amount: [{ amount: gas, denom: 'uscrt' }],
+              gas: gas,
+            },
+          }
           if (!window.getOfflineSigner || !window.keplr) {
             alert("Please install keplr extension");
           } else {
@@ -206,12 +211,6 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                let gasParams = {
-                    exec: {
-                      amount: [{ amount: gas, denom: 'uscrt' }],
-                      gas: gas,
-                    },
-                  }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
@@ -221,7 +220,7 @@ $(document).ready(function(){
             }
           }
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
-          let response = await this.client.execute(document.buttonAddress(), handleMsg)
+          let response = await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
           let newAuthentication = {
             revealed: true
           } 
@@ -273,12 +272,12 @@ $(document).ready(function(){
           this.searchedAddress = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
           if (searchType == 'alias') {
             let searchParams = { search_type: searchType, search_value: this.searchedAddress };
-            let result = await this.client.queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
+            let result = await document.secretNetworkClient(this.environment).queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
             this.searchedAddress = result['attributes']['address']
           }
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
           let params = { address: this.searchedAddress, key: viewingKey };
-          let response = await this.client.queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
+          let response = await document.secretNetworkClient(this.environment).queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
           }
@@ -321,6 +320,12 @@ $(document).ready(function(){
           // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
           // And it also injects the helper function to `window.keplr`.
           // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
+          let gasParams = {
+            exec: {
+              amount: [{ amount: gas, denom: 'uscrt' }],
+              gas: gas,
+            },
+          }
           if (!window.getOfflineSigner || !window.keplr) {
             alert("Please install keplr extension");
           } else {
@@ -335,12 +340,6 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                let gasParams = {
-                    exec: {
-                      amount: [{ amount: gas, denom: 'uscrt' }],
-                      gas: gas,
-                    },
-                  }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
@@ -350,7 +349,7 @@ $(document).ready(function(){
             }
           }
           let handleMsg = { update_authentication: { position: position, id: id, label: label, username: username, password: password, notes: notes } }
-          let response = await this.client.execute(this.contractAddress, handleMsg)
+          let response = await this.client.execute(this.contractAddress, handleMsg, 0, gasParams.exec, this.contractAddressDataHash)
           let resultText = '';
           response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           let authentication = JSON.parse(resultText)['update_authentication']['authentication']
@@ -374,6 +373,12 @@ $(document).ready(function(){
         e.preventDefault()
         changeSubmitButtonToLoading()
         try {
+          let gasParams = {
+            exec: {
+              amount: [{ amount: '50000', denom: 'uscrt' }],
+              gas: '50000',
+            },
+          }
           // Keplr extension injects the offline signer that is compatible with cosmJS.
           // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
           // And it also injects the helper function to `window.keplr`.
@@ -392,12 +397,6 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                let gasParams = {
-                    exec: {
-                      amount: [{ amount: '50000', denom: 'uscrt' }],
-                      gas: '50000',
-                    },
-                  }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
@@ -410,7 +409,7 @@ $(document).ready(function(){
           let viewingKey = document.setViewingKeyForm.viewingKey.value
           let padding = Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10)))) + Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10))))
           let handleMsg = { set_viewing_key: { key: viewingKey, padding: padding } }
-          let response = await this.client.execute(this.contractAddress, handleMsg)
+          await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractAddressDataHash)
           document.showAlertSuccess('Viewing key set.')
         }
         catch(err) {
