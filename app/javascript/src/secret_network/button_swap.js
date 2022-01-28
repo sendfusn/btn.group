@@ -18,7 +18,7 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.gasWrap = 60000;
+      this.gasWrap = 160_000;
       this.queryCount = 0;
       this.tokenModalFor;
       this.userVipLevel = 0;
@@ -735,7 +735,6 @@ $(document).ready(function(){
             }
             this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
-            await this.delay(5_000)
             let returnAmount;
             response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
               if(attribute['key'] == 'return_amount') {
@@ -747,6 +746,7 @@ $(document).ready(function(){
             }
             successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
           }
+          await this.delay(5_000)
           document.showAlertSuccess(successMessage);
           this.resetAfterSwap()
           // Update vip levels if swap involves BUTT
@@ -754,8 +754,6 @@ $(document).ready(function(){
             this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
           }
         } catch(error) {
-          window.error = error
-          console.log(error)
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
           if (error.message.includes('timed out waiting for tx to be included in a block')) {
@@ -771,6 +769,8 @@ $(document).ready(function(){
             }
           } else if(error.message.includes('account sequence mismatch')) {
             document.showAlertDanger("Please try again.")
+          } else if(error.message.includes('Request rejected')) {
+            document.showAlertDanger("Timeout error. Please check your wallet to see if transaction went through. Otherwise try with more gas.")
           } else {
             document.showAlertDanger(error)
           }
