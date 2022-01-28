@@ -17,7 +17,7 @@ class CreateArbitragePathsJob < ApplicationJob
                               .where.not(cryptocurrency_pools: { amount: '0' })
                               .pluck(:id)
                               .uniq
-    trade_pair_pool_ids.find_each do |pool_id|
+    trade_pair_pool_ids.each do |pool_id|
       next if swap_path.last == pool_id
 
       current_swap_path = swap_path.dup
