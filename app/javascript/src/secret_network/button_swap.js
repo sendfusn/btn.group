@@ -134,8 +134,9 @@ $(document).ready(function(){
           $('#min-acceptable-amount-usd-price').text('$' + (this.cryptocurrencies[toId]['price'] * document.secretNetworkDexAggregatorForm.minAmount.value).toLocaleString(undefined, { maximumFractionDigits: 2 }))
         }
       }.bind(this));
-      $('li.bg-white').click(function(event){
-        this.updateAfterTokenSelect(event)
+      $('li.bg-white').click(function(e){
+        e.preventDefault()
+        this.updateAfterTokenSelect(e)
       }.bind(this))
 
       // === Functions ===
