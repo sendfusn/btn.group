@@ -8,8 +8,8 @@ $(document).ready(function(){
       document.activateKeplr()
       this.address;
       this.cryptocurrencies = {}
-      this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
+      this.dexAggregatorDataHash = '4B2AE0ECBEF722BCC85AAEBB501F2814BF4FC4C94A8E62574BFAB009CEBF719C'
       this.fromAmountInputSelector = '#from-amount-input'
       this.fromId = 515;
       this.toId = 351;
@@ -144,7 +144,7 @@ $(document).ready(function(){
         if(this.tokenModalFor == 'from') {
           this.fromId = event['currentTarget']['dataset']['cryptocurrencyId']
           this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
-          document.secretNetworkDexAggregatorForm.fromAmount.value = 0
+          document.secretNetworkDexAggregatorForm.fromAmount.value = ''
           let fromAmount = document.secretNetworkDexAggregatorForm.fromAmount.value
           $('#from-usd-price').text('')
           $('#from-token-button .symbol').text(this.cryptocurrencies[this.fromId]['symbol'])
@@ -537,16 +537,6 @@ $(document).ready(function(){
         }
       }
 
-      this.setClient = (gas) => {
-        let gasParams = {
-            exec: {
-              amount: [{ amount: gas, denom: 'uscrt' }],
-              gas: gas,
-            },
-          }
-        this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
-      }
-
       this.toggleConfig = async() => {
         if(this.wrapPaths[this.fromId] == this.toId) {
           $("#cog-container").addClass('d-none')
@@ -654,6 +644,7 @@ $(document).ready(function(){
         $submitButton.find('.ready').addClass('d-none')
         $submitButton.find('.loading #status').text('Loading...')
         let contract;
+        let contractDataHash;
         let handleMsg;
         let sentFunds = []
         let successMessage;
@@ -661,16 +652,24 @@ $(document).ready(function(){
           if (this.wrapPaths[fromId] == toId) {
             if(fromCryptocurrency['smart_contract']) {
               contract = fromCryptocurrency['smart_contract']['address']
+              contractDataHash = fromCryptocurrency['smart_contract']['data_hash']
               handleMsg = { redeem: { amount: fromAmount } };
               successMessage = 'Unwrapped'
             } else {
               contract = toCryptocurrency['smart_contract']['address']
+              contractDataHash = toCryptocurrency['smart_contract']['data_hash']
               handleMsg = { deposit: {} };
               sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
               successMessage = 'Wrapped'
             }
-            this.setClient(String(this.gasWrap));
-            let response = await this.client.execute(contract, handleMsg, '', sentFunds)
+            let gasParams = {
+              exec: {
+                amount: [{ amount: String(this.gasWrap), denom: 'uscrt' }],
+                gas: String(this.gasWrap),
+              },
+            }
+            this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+            let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
           } else {
             let currentFromId = fromId
             let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
@@ -719,14 +718,22 @@ $(document).ready(function(){
             let routeMsgEncoded = Buffer.from(JSON.stringify(routeMessage)).toString('base64')
             if (fromCryptocurrency['smart_contract']) {
               contract = fromCryptocurrency['smart_contract']['address']
+              contractDataHash = fromCryptocurrency['smart_contract']['data_hash']
               handleMsg = { send: { amount: fromAmount, recipient: recipient, msg: routeMsgEncoded } }
             } else {
               contract = this.dexAggregatorSmartContractAddress
+              contractDataHash = this.dexAggregatorDataHash
               handleMsg = { receive: { amount: fromAmount, from: this.address, msg: routeMsgEncoded } }
               sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
             }
-            this.setClient(String(gas));
-            let response = await this.client.execute(contract, handleMsg, '', sentFunds)
+            let gasParams = {
+              exec: {
+                amount: [{ amount: String(gas), denom: 'uscrt' }],
+                gas: String(gas),
+              },
+            }
+            this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+            let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
             let returnAmount;
             response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
               if(attribute['key'] == 'return_amount') {
