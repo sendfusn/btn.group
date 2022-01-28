@@ -5,6 +5,7 @@ $(document).ready(function(){
       this.admin;
       this.buttonBalance;
       this.buttLodeAddress = 'secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5';
+      this.buttLodeDataHash = '99F94EDC0D744B35A8FBCBDC8FB71C140CFA8F3F91FAD8C35B7CC37862A4AC95';
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
@@ -13,7 +14,7 @@ $(document).ready(function(){
       this.receivableAddress;
 
       try {
-        let result = await this.client.queryContractSmart(this.buttLodeAddress, { config: {} })
+        let result = await this.client.queryContractSmart(this.buttLodeAddress, { config: {} }, undefined, this.buttLodeDataHash)
         this.admin = result['admin']
         $('#admin-table-data').text(this.admin)
         if (result['new_admin_nomination']) {
@@ -33,7 +34,7 @@ $(document).ready(function(){
         this.receivableAddress = result['receivable_address']
         $('input[name=receivableAddress]').first().val(this.receivableAddress)
         $('#receivable-address-table-data').text(this.receivableAddress)
-        let balance_response = await this.client.queryContractSmart(document.buttonAddress(), { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } });
+        let balance_response = await this.client.queryContractSmart(document.buttonAddress(), { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } }, undefined, document.buttonDataHash());
         this.buttonBalance = applyDecimals(balance_response["balance"]["amount"], 6).toLocaleString('en', { minimumFractionDigits: 6 })
         $('#butt-balance-table-data').text(this.buttonBalance)
         $('#buttcoin-amount').val(this.buttonBalance)
@@ -60,8 +61,8 @@ $(document).ready(function(){
           let amount = document['buttLodeSendForm'].amount.value;
           amount = amount.replace(/,/g, '');
           amount = (amount * Math.pow(10, 6)).toFixed(0)
-          let handleMsg = { send_token: { amount: amount, token: { address: document.buttonAddress(), contract_hash: "F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288" } } }
-          let response = await this.client.execute(this.buttLodeAddress, handleMsg)
+          let handleMsg = { send_token: { amount: amount, token: { address: document.buttonAddress(), contract_hash: document.buttonDataHash() } } }
+          let response = await this.client.execute(this.buttLodeAddress, handleMsg, '', 0, gasParams.exec, this.buttLodeDataHash)
           document.showAlertSuccess("Send successful");
           document['buttLodeSendForm'].amount.value = ''
         }
