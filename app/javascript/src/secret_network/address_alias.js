@@ -28,9 +28,9 @@ $(document).ready(function(){
 
     window.onload = async() => {
       document.activateKeplr()
-      this.buttcoinAddress = 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt';
       this.environment = 'production';
       this.contractAddress = document.featureContractAddress(this.environment);
+      this.contractAddressDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
       this.chainId = document.secretNetworkChainId(this.environment)
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
 
@@ -40,6 +40,12 @@ $(document).ready(function(){
         $("#delete-loading").removeClass("d-none")
         $("#delete-ready").addClass("d-none")
         try {
+          let gasParams = {
+            exec: {
+              amount: [{ amount: '50000', denom: 'uscrt' }],
+              gas: '50000',
+            },
+          }
           // Keplr extension injects the offline signer that is compatible with cosmJS.
           // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
           // And it also injects the helper function to `window.keplr`.
@@ -58,12 +64,6 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                let gasParams = {
-                    exec: {
-                      amount: [{ amount: '50000', denom: 'uscrt' }],
-                      gas: '50000',
-                    },
-                  }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
@@ -75,7 +75,7 @@ $(document).ready(function(){
 
           let alias = $("#delete-button").data('alias');
           let handleMsg = { destroy: { alias: alias } }
-          let response = await this.client.execute(this.contractAddress, handleMsg)
+          let response = await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractAddressDataHash)
           $("#result-value").html('')
           $("#result-container").addClass("d-none");
           $("#result-value-container").addClass("d-none");
@@ -98,6 +98,12 @@ $(document).ready(function(){
         $("#create-button").find(".ready").addClass("d-none")
         document.hideAllAlerts();
         try {
+          let gasParams = {
+            exec: {
+              amount: [{ amount: '100000', denom: 'uscrt' }],
+              gas: '100000',
+            },
+          }
           if (!window.getOfflineSigner || !window.keplr) {
             alert("Please install keplr extension");
           } else {
@@ -112,12 +118,6 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                let gasParams = {
-                    exec: {
-                      amount: [{ amount: '100000', denom: 'uscrt' }],
-                      gas: '100000',
-                    },
-                  }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
@@ -130,7 +130,7 @@ $(document).ready(function(){
           let alias = document.aliasCreateForm.alias.value
           let avatarUrl = document.aliasCreateForm.avatarUrl.value;
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
-          let response = await this.client.execute(this.buttcoinAddress, handleMsg)
+          let response = await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + this.address
@@ -157,7 +157,6 @@ $(document).ready(function(){
 
       document.aliasSearchForm.onsubmit = async (e) => {
         e.preventDefault()
-        let client = document.secretNetworkClient(this.environment);
         $("#search-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
         $("#loading").removeClass("d-none")
@@ -167,7 +166,7 @@ $(document).ready(function(){
           let search_type = document.aliasSearchForm.searchType.value;
           let search_value = document.aliasSearchForm.searchValue.value;
           let search_params = { search_type: search_type, search_value: search_value };
-          let result = await client.queryContractSmart(this.contractAddress, { search: search_params })
+          let result = await document.secretNetworkClient(this.environment).queryContractSmart(this.contractAddress, { search: search_params }, undefined, this.contractAddressDataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + result['attributes']['address']
