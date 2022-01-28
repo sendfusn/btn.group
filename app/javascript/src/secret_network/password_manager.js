@@ -152,7 +152,7 @@ $(document).ready(function(){
               }
             }
             let handleMsg = { show: { position: Number(this.chosenPosition) } }
-            let response = await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractAddressDataHash)
+            let response = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractAddressDataHash)
             let resultText = '';
             response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
             let authentication = JSON.parse(resultText)['show']['authentication']
@@ -220,7 +220,7 @@ $(document).ready(function(){
             }
           }
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
-          let response = await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
+          let response = await this.client.execute(document.buttonAddress(), handleMsg, '', [], gasParams.exec, document.buttonDataHash())
           let newAuthentication = {
             revealed: true
           } 
@@ -409,7 +409,7 @@ $(document).ready(function(){
           let viewingKey = document.setViewingKeyForm.viewingKey.value
           let padding = Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10)))) + Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10))))
           let handleMsg = { set_viewing_key: { key: viewingKey, padding: padding } }
-          await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractAddressDataHash)
+          await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractAddressDataHash)
           document.showAlertSuccess('Viewing key set.')
         }
         catch(err) {

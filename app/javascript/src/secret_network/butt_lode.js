@@ -62,7 +62,7 @@ $(document).ready(function(){
           amount = amount.replace(/,/g, '');
           amount = (amount * Math.pow(10, 6)).toFixed(0)
           let handleMsg = { send_token: { amount: amount, token: { address: document.buttonAddress(), contract_hash: document.buttonDataHash() } } }
-          let response = await this.client.execute(this.buttLodeAddress, handleMsg, '', 0, gasParams.exec, this.buttLodeDataHash)
+          let response = await this.client.execute(this.buttLodeAddress, handleMsg, '', [], gasParams.exec, this.buttLodeDataHash)
           document.showAlertSuccess("Send successful");
           document['buttLodeSendForm'].amount.value = ''
         }

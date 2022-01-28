@@ -224,7 +224,7 @@ $(document).ready(function(){
             }
           }
 
-          result = await this.client.execute(this.contractAddress, msg, '', 0, gasParams.exec, this.contractAddressDataHash)
+          result = await this.client.execute(this.contractAddress, msg, '', [], gasParams.exec, this.contractAddressDataHash)
           document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
         }
         catch(err) {

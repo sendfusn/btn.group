@@ -75,7 +75,7 @@ $(document).ready(function(){
 
           let alias = $("#delete-button").data('alias');
           let handleMsg = { destroy: { alias: alias } }
-          let response = await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractAddressDataHash)
+          let response = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractAddressDataHash)
           $("#result-value").html('')
           $("#result-container").addClass("d-none");
           $("#result-value-container").addClass("d-none");
@@ -130,7 +130,7 @@ $(document).ready(function(){
           let alias = document.aliasCreateForm.alias.value
           let avatarUrl = document.aliasCreateForm.avatarUrl.value;
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
-          let response = await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
+          let response = await this.client.execute(document.buttonAddress(), handleMsg, '', [], gasParams.exec, document.buttonDataHash())
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + this.address
