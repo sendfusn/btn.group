@@ -44,7 +44,6 @@ $(document).ready(function(){
       document.activateKeplr()
       this.environment = 'production'
       this.chainId = document.secretNetworkChainId(this.environment)
-      this.client = document.secretNetworkClient(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
       this.nftAddresses = ['secret19syw637nl4rws0t9j5ku208wy8s2tvwqvyyhvu', 'secret1upc2jq8flv88x30ghzsc3lgd50ppd359fasxhu', 'secret1y8f9m90palcyugr0wmfj5jusg3jxhhhrns9efr', 'secret1fse2a04thwn4d22hjxr857csmuyjf0v2gjw36w']
 
@@ -66,7 +65,7 @@ $(document).ready(function(){
                 viewing_key: "DoTheRightThing.",
               }
             }
-            let transactions_response = await this.client.queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -80,7 +79,7 @@ $(document).ready(function(){
                       token_id: value['token_id'],
                     }
                   }
-                  let nftInfoResponse = await this.client.queryContractSmart(tokenAddress, params);
+                  let nftInfoResponse = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, params);
                   let imageUrl;
                   let nftName;
                   console.log(nftInfoResponse)
@@ -118,7 +117,7 @@ $(document).ready(function(){
             $("#balance").text('')
             $($('th')[2]).text('Amount')
             // Get the token info
-            let token_info_response = await this.client.queryContractSmart(tokenAddress, { token_info: {} });
+            let token_info_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, { token_info: {} });
             let token_decimals = token_info_response["token_info"]["decimals"]
             let token_symbol = token_info_response["token_info"]["symbol"]
             // Get the transactions for that token
@@ -130,7 +129,7 @@ $(document).ready(function(){
                 page_size: 1000
               }
             }
-            let transactions_response = await this.client.queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -171,7 +170,7 @@ $(document).ready(function(){
 
             // Get the balance for the token
             let msg = { balance:{ address: this.contractAddress, key: "DoTheRightThing." } };
-            let balance_response = await this.client.queryContractSmart(tokenAddress, msg)
+            let balance_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, msg)
             if (balance_response["viewing_key_error"]) {
               throw balance_response["viewing_key_error"]["msg"]
             }
@@ -196,6 +195,12 @@ $(document).ready(function(){
           let tokenAddress = document.mountDoomSetViewingKeyForm.tokenAddress.value;
           let contractHash = document.mountDoomSetViewingKeyForm.contractHash.value;
           let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
+          let gasParams = {
+            exec: {
+              amount: [{ amount: '50000', denom: 'uscrt' }],
+              gas: '50000',
+            },
+          }
           if (!window.getOfflineSigner || !window.keplr) {
             alert("Please install keplr extension");
           } else {
@@ -210,12 +215,6 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                let gasParams = {
-                    exec: {
-                      amount: [{ amount: '50000', denom: 'uscrt' }],
-                      gas: '50000',
-                    },
-                  }
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               } catch (error) {
                 console.error(error)
@@ -225,7 +224,7 @@ $(document).ready(function(){
             }
           }
 
-          result = await this.client.execute(this.contractAddress, msg)
+          result = await this.client.execute(this.contractAddress, msg, '', 0, gasParams.exec, this.contractAddressDataHash)
           document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
         }
         catch(err) {
