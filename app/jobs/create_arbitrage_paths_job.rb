@@ -2,7 +2,8 @@
 
 class CreateArbitragePathsJob < ApplicationJob
   def perform(symbol)
-    ci = Cryptocurrency.find_by(symbol: symbol.upcase, official: true).id
+    return unless (ci = Cryptocurrency.find_by(symbol: symbol.upcase, official: true)&.id)
+
     swap_path = []
     create_swap_path(ci, ci, swap_path)
   end
