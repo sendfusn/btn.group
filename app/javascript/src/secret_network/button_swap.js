@@ -753,6 +753,8 @@ $(document).ready(function(){
             this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
           }
         } catch(error) {
+          window.error = error
+          console.log(error)
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
           if (error.message.includes('timed out waiting for tx to be included in a block')) {
