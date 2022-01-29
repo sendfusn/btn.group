@@ -541,6 +541,7 @@ $(document).ready(function(){
               amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
               let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
               let response = await this.client.execute(value['deposit_token']['address'], handleMsg, '', [], gasParams.exec, value['deposit_token']['dataHash'])
+              await document.delay(5_000)
               document.showAlertSuccess("Deposit successful");
               document[value['address'] + 'DepositForm'].amount.value = ''
               this.updatePoolInterface(value, true)
@@ -565,8 +566,7 @@ $(document).ready(function(){
                   document.showAlertDanger(errorDisplayMessage)
                 }
               } else {
-                let errorDisplayMessage = err;
-                document.showAlertDanger(errorDisplayMessage)
+                document.showAlertDanger(err)
               }
             }
             finally {
@@ -604,11 +604,14 @@ $(document).ready(function(){
               }
               this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
               let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
+              await document.delay(5_000)
               document.showAlertSuccess("Withdraw successful");
               document[value['address'] + 'WithdrawForm'].amount.value = ''
               this.updatePoolInterface(value, true)
             }
             catch(err) {
+              console.log(err)
+              window.error = err
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
               // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
               if (err.message.includes('HTTP 502') || err.message.includes('timed out waiting for tx to be included in a block')) {
@@ -628,8 +631,7 @@ $(document).ready(function(){
                   document.showAlertDanger(errorDisplayMessage)
                 }
               } else {
-                let errorDisplayMessage = err;
-                document.showAlertDanger(errorDisplayMessage)
+                document.showAlertDanger(err)
               }
             }
             finally {
