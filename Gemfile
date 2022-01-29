@@ -25,8 +25,6 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma', '>= 5.5.1'
 gem 'rack-cors'
-# Recommended by Heroku: https://devcenter.heroku.com/articles/h12-request-timeout-in-ruby-mri
-gem 'rack-timeout', require: 'rack/timeout/base'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.4'
 gem 'rails_autoscale_agent'
