@@ -4,8 +4,8 @@ $(document).ready(function(){
   if($("#secret-network-pools").length) {
     window.onload = async () => {
       document.activateKeplr()
-      this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment);
+      this.environment = 'test';
+      this.chainId = document.secretNetworkChainId('production');
       let cryptocurrencies = {
         butt: {
           address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
