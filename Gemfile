@@ -36,7 +36,7 @@ gem 'redis'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 # Simple, efficient background processing for Ruby
-gem 'sidekiq'
+gem 'sidekiq', '>= 6.4.0'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
