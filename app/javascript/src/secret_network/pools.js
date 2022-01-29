@@ -641,6 +641,27 @@ $(document).ready(function(){
         }
       }.bind(this))
 
+      this.getBlockHeight = async() => {
+        if (this.gettingBlockHeight) {
+          while(this.gettingBlockHeight) {
+            await document.delay(1_000)
+          }
+          console.log(this.height)
+          return this.height
+        }
+
+        try {
+          this.gettingBlockHeight = true
+          this.height = await document.secretNetworkClient(this.environment).getHeight();
+          console.log(this.height)
+          return this.height
+        } catch (err) {
+          document.showAlertDanger(err)
+        } finally {
+          this.gettingBlockHeight = false
+        }
+      }
+
       this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
         await this.updateRewards(pool, afterTransaction, height)
         if (poolDetailsOnly) {
@@ -658,7 +679,7 @@ $(document).ready(function(){
       }
 
       this.updateUserInterface = async(poolDetailsOnly = false, userDetailsOnly = false) => {
-        let height = await document.secretNetworkClient(this.environment).getHeight();
+        let height = await this.getBlockHeight()
         for (const [index, pool] of this.pools.entries()) {
           if (index == 0) {
             await this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)

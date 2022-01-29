@@ -188,12 +188,6 @@ $(document).ready(function(){
         swapPath['netUsdResultOfSwaps'] = new BigNumber(swapPath['resultOfSwaps']).times(new BigNumber(toCryptocurrency['price'])).dividedBy(new BigNumber("10").pow(toCryptocurrency['decimals'])).minus(swapPath['gas_in_usd'])
       }
 
-      this.delay = async(ms) => {
-        return new Promise(resolve => {
-            setTimeout(() => { resolve('') }, ms);
-        })
-      }
-
       this.extractSwapToId = function(fromId, tradePairId) {
         let x;
         this.tradePairs[tradePairId]['cryptocurrency_pools'].forEach((cryptoPool) => {
@@ -746,7 +740,7 @@ $(document).ready(function(){
             }
             successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
           }
-          await this.delay(5_000)
+          await document.delay(5_000)
           document.showAlertSuccess(successMessage);
           this.resetAfterSwap()
           // Update vip levels if swap involves BUTT
@@ -758,7 +752,7 @@ $(document).ready(function(){
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
           if (error.message.includes('timed out waiting for tx to be included in a block')) {
             // Wait 5 seconds and if balance of the to and from token has changed... Success
-            await this.delay(5_000)
+            await document.delay(5_000)
             this.updateWalletBalance(fromId, '.from', this.fromAmountInputSelector)
             this.updateWalletBalance(toId, '.to')
             if (this.cryptocurrencies[fromId]['balance'] != fromBalance && this.cryptocurrencies[toId]['balance'] != toBalance) {

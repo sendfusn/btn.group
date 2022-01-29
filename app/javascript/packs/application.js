@@ -105,6 +105,12 @@ document.applyDecimals = function(amount, decimals) {
   return amount / parseFloat("1" + '0'.repeat(decimals))
 }
 
+document.delay = async(ms) => {
+  return new Promise(resolve => {
+      setTimeout(() => { resolve('') }, ms);
+  })
+}
+
 document.featureContractAddress = function(environment) {
   let contractAddress
   if (environment == 'staging') {
