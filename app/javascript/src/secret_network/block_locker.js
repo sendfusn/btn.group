@@ -78,7 +78,7 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "Locker updated."
-          await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
+          await this.client.execute(document.buttonAddress(), handleMsg, '', [], gasParams.exec, document.buttonDataHash())
           document.showAlertSuccess(resultText)
           $(e.target)[0].reset()
         }
@@ -118,7 +118,7 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
-          await this.client.execute(document.buttonAddress(), handleMsg, '', 0, gasParams.exec, document.buttonDataHash())
+          await this.client.execute(document.buttonAddress(), handleMsg, '', [], gasParams.exec, document.buttonDataHash())
           document.showAlertSuccess(resultText)
           $(e.target)[0].reset()
         }
@@ -157,7 +157,7 @@ $(document).ready(function(){
               },
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
-          result = await this.client.execute(this.contractAddress, handleMsg, '', 0, gasParams.exec, this.contractDataHash)
+          result = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractDataHash)
           result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           result = JSON.parse(resultText)
           // Display results
