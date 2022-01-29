@@ -32,6 +32,7 @@ $(document).ready(function(){
         for (const el of this.tradePairs) {
           await this.queryPoolFromBlockchain(el);
         }
+        await document.delay(120_000)
         location.reload()
       }
 
