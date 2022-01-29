@@ -18,7 +18,7 @@ $(document).ready(function(){
       this.chainId = document.secretNetworkChainId('production');
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
-      this.gasWrap = 160_000;
+      this.gasWrap = 60_000;
       this.queryCount = 0;
       this.tokenModalFor;
       this.userVipLevel = 0;
