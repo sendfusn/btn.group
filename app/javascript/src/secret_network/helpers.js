@@ -69,6 +69,8 @@ document.secretNetworkHttpUrl = function(environment) {
   let http_url = '/datahub';
   if (environment == 'staging') {
     http_url = http_url + '_staging'
+  } else if (environment == 'test') {
+    http_url = '/test'
   };
   return http_url
 }

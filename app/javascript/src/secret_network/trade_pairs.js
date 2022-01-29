@@ -3,10 +3,8 @@ $(document).ready(function(){
     // === LISTENERS ===
     window.onload = async () => {
       this.tradePairs = []
-      this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment);
+      this.environment = 'test';
       this.client = document.secretNetworkClient(this.environment);
-      this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       // datatable
       this.datatable = window.$('#trade-pairs-table').DataTable({
         columns: [
