@@ -24,7 +24,7 @@
     "node-fetch": "^2.6.7",
     "node-forge": "^1.0.0",
     "popper.js": "^1.16.1",
-    "secretjs": "0.17.5",
+    "secretjs": "1.0.2-alpha.2",
     "simple-get": "4.0.1",
     "tar": "6.1.9",
     "trim-newlines": "3.0.1"
