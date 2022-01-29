@@ -42,9 +42,9 @@ $(document).ready(function(){
 
     window.onload = async () => {
       document.activateKeplr()
-      this.environment = 'production'
-      this.chainId = document.secretNetworkChainId(this.environment)
-      this.contractAddress = document.featureContractAddress(this.environment);
+      this.environment = 'test'
+      this.chainId = document.secretNetworkChainId('production')
+      this.contractAddress = document.featureContractAddress('production');
       this.nftAddresses = ['secret19syw637nl4rws0t9j5ku208wy8s2tvwqvyyhvu', 'secret1upc2jq8flv88x30ghzsc3lgd50ppd359fasxhu', 'secret1y8f9m90palcyugr0wmfj5jusg3jxhhhrns9efr', 'secret1fse2a04thwn4d22hjxr857csmuyjf0v2gjw36w']
 
       document.mountDoomQueryForm.onsubmit = async (e) => {
