@@ -14,8 +14,8 @@ $(document).ready(function(){
       this.fromId = 515;
       this.toId = 351;
       this.tradePairs = {}
-      this.environment = 'test';
-      this.chainId = document.secretNetworkChainId('production');
+      this.environment = 'production';
+      this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.gasWrap = 60_000;
