@@ -663,17 +663,17 @@ $(document).ready(function(){
       }
 
       this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
-        await this.updateRewards(pool, afterTransaction, height)
+        this.updateRewards(pool, afterTransaction, height)
         if (poolDetailsOnly) {
-          await this.updateTotalShares(pool)
+          this.updateTotalShares(pool)
         } else {
-          await this.updateWalletBalance(pool['deposit_token'], pool)
-          await this.updateUserWithdrawable(pool)
+          this.updateWalletBalance(pool['deposit_token'], pool)
+          this.updateUserWithdrawable(pool)
           if (afterTransaction) {
-            await this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
+            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
           }
           if (!userDetailsOnly) {
-            await this.updateTotalShares(pool)
+            this.updateTotalShares(pool)
           }
         }
       }
@@ -847,6 +847,16 @@ $(document).ready(function(){
           $walletBalanceLink.removeClass('d-none')
         }
       }
+
+      $('.fa-sync').click(function(event){
+        event.preventDefault()
+        let poolAddress = $(event.currentTarget).closest('a')[0]['dataset']['poolAddress']
+        this.pools.forEach(pool => {
+          if (pool['address'] == poolAddress) {
+            this.updatePoolInterface(pool, false)
+          }
+        })
+      }.bind(this))
 
       $(document).on('keplr_connected', async(evt) => {
         $('.deposit-withdraw-forms-container').removeClass('d-none')
