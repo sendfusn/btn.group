@@ -4,7 +4,6 @@ $(document).ready(function(){
       document.activateKeplr()
       let paramCount = 0;
       this.address;
-      this.userVipLevel;
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client =  document.secretNetworkClient(this.environment);
@@ -25,9 +24,9 @@ $(document).ready(function(){
         $('.alert').removeClass('d-none')
         $('#loading-vip').removeClass('d-none')
         $('#pay-wall').addClass('d-none')
-        this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+        await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
         $('#loading-vip').addClass('d-none')
-        if (this.userVipLevel == 0) {
+        if (document.secretNetwork.userVipLevel == 0) {
           $('#pay-wall').removeClass('d-none')
         } else {
           $('.alert').addClass('d-none')
@@ -60,16 +59,16 @@ $(document).ready(function(){
             let params = {};
             let last_key;
             if (this.address) {
-              this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+              await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
               $('#loading-vip').addClass('d-none')
-              if (this.userVipLevel == 0) {
+              if (document.secretNetwork.userVipLevel == 0) {
                 $('#pay-wall').removeClass('d-none')
               } else {
                 $('.alert').addClass('d-none')
                 $('#add-new-param-container').removeClass('d-none')
               }
             }
-            if (this.userVipLevel > 0) {
+            if (document.secretNetwork.userVipLevel > 0) {
               $('#params-container input, #params-container select').each(function(index){
                 if (index % 3 == 0) {
                   last_key = this.value;

@@ -4,7 +4,6 @@ $(document).ready(function(){
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
-      this.userVipLevel = 0;
       document.activateKeplr()
       getAndSetSmartContracts(1)
       getAndSetCryptocurrencies(1)
@@ -27,14 +26,12 @@ $(document).ready(function(){
         $('.load-wallet-link').removeClass('d-none')
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
-        document.secretNetwork.getAndSetUserVipLevel(this.address, this.client).then(function(response){
-          this.userVipLevel = response
-          if (this.userVipLevel == 0) {
-            $('#pay-wall').removeClass('d-none')
-          } else {
-            $('#pay-wall').addClass('d-none')
-          }
-        })
+        await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+        if (document.secretNetwork.userVipLevel == 0) {
+          $('#pay-wall').removeClass('d-none')
+        } else {
+          $('#pay-wall').addClass('d-none')
+        }
       })
 
       document.querySelector('#load-from-keplr-button').addEventListener('click', async(evt) => {
@@ -64,8 +61,6 @@ $(document).ready(function(){
         let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
         let transactions = [];
         let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
-        this.userVipLevel = 0
-
         // Reset transactions table and balance
         $transactionsTableBody = $('#transactions-table-body');
         $transactionsTableBody.html('')
@@ -82,11 +77,8 @@ $(document).ready(function(){
 
         try {
           // First we need to find out if the user has premium access
-          if (this.address) {
-            this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
-          }
-          console.log(this.userVipLevel)
-          if (this.userVipLevel == 0) {
+          await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+          if (document.secretNetwork.userVipLevel == 0) {
             $('#pay-wall').removeClass('d-none')
             document.secretNetworkTransactionsForm.page.value = 1
             document.secretNetworkTransactionsForm.pageSize.value = '10'

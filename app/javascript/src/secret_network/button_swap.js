@@ -21,7 +21,6 @@ $(document).ready(function(){
       this.gasWrap = 60_000;
       this.queryCount = 0;
       this.tokenModalFor;
-      this.userVipLevel = 0;
       this.vipLevels = {
         0: {
           commission: 5,
@@ -89,7 +88,7 @@ $(document).ready(function(){
         $('.balance-container').removeClass('d-none')
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
-        this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+        await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
         this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
         this.updateWalletBalance(this.toId, '.to')
       })
@@ -174,9 +173,9 @@ $(document).ready(function(){
             }
           }
           if(otherProtocolsBestResultAmount) {
-            fee = this.vipLevels[this.userVipLevel]['commission'] * (this.selectedSwapPath['resultOfSwaps'] - otherProtocolsBestResultAmount) / 100
+            fee = this.vipLevels[document.secretNetwork.userVipLevel]['commission'] * (this.selectedSwapPath['resultOfSwaps'] - otherProtocolsBestResultAmount) / 100
           } else {
-            fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[this.userVipLevel]['tradingFee'] / 100
+            fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[document.secretNetwork.userVipLevel]['tradingFee'] / 100
           }
           this.selectedSwapPath['resultOfSwaps'] = Math.round(this.selectedSwapPath['resultOfSwaps'] - fee)
           this.setNetUsdResultOfSwaps(this.selectedSwapPath)
@@ -389,7 +388,7 @@ $(document).ready(function(){
       this.renderResults = (from_id, to_id) => {
         $("#swap-paths").html('')
         this.swapPaths[from_id][to_id].sort((a, b) => b.netUsdResultOfSwaps - a.netUsdResultOfSwaps).forEach((swapPath, index) => {
-          if (this.userVipLevel == 5) {
+          if (document.secretNetwork.userVipLevel == 5) {
             let swapPathId = swapPath['id']
             let x = '<div class="card mt-2" id="' + swapPathId + '">' + '<b>Swap path: #' + swapPathId + '</b>'
             let currentCryptoId = swapPath['from_id']
@@ -745,7 +744,7 @@ $(document).ready(function(){
           this.resetAfterSwap()
           // Update vip levels if swap involves BUTT
           if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
-            this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+            await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
           }
         } catch(error) {
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
