@@ -43,7 +43,7 @@ import '../src/secret_network/transactions'
 Rails.start()
 ActiveStorage.start()
 
-document.activateKeplr = function() {
+document.activateKeplr = async() => {
   if($(".keplr-wallet").length) {
     $('.keplr-wallet-button').removeClass('d-none')
     window.addEventListener("keplr_keystorechange", () => {
@@ -60,7 +60,7 @@ document.activateKeplr = function() {
 }
 
 // Think about loading in the environment here for smart contract interface maybe...
-document.connectKeplrWallet = async => {
+document.connectKeplrWallet = async() => {
   $(".keplr-wallet-button").prop("disabled", true);
   $(".keplr-wallet-button .loading").removeClass("d-none")
   $(".keplr-wallet-button .ready").addClass("d-none")
