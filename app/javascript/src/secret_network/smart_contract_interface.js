@@ -25,7 +25,7 @@ $(document).ready(function(){
         $('.alert').removeClass('d-none')
         $('#loading-vip').removeClass('d-none')
         $('#pay-wall').addClass('d-none')
-        this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
+        this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
         $('#loading-vip').addClass('d-none')
         if (this.userVipLevel == 0) {
           $('#pay-wall').removeClass('d-none')
@@ -60,7 +60,7 @@ $(document).ready(function(){
             let params = {};
             let last_key;
             if (this.address) {
-              this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
+              this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
               $('#loading-vip').addClass('d-none')
               if (this.userVipLevel == 0) {
                 $('#pay-wall').removeClass('d-none')

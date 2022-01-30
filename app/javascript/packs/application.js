@@ -77,13 +77,11 @@ document.activateKeplr = function() {
             }
           }
           $('.keplr-wallet-button').addClass('d-none')
-          $(document).trigger('keplr_connected', {});
           let accounts = await window.keplrOfflineSigner.getAccounts()
-          let address = accounts[0].address
           $('.wallet-details').removeClass('d-none')
-          $('.wallet-address').text(address)
-          let client = document.secretNetworkSigningClient('production', address, {})
-          await document.getAndSetUserVipLevel(address, client)
+          $('.wallet-address').text(accounts[0].address)
+          document.secretNetwork.walletAddress = accounts[0].address
+          $(document).trigger('keplr_connected', {});
         }
         catch(err) {
           document.showAlertDanger(err)

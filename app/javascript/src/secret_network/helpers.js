@@ -1,40 +1,45 @@
 document.secretNetwork = {
+  addressAliasContract: {
+    address: 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w',
+    dataHash: 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
+  },
   butt: {
     address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
     dataHash: 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'
-  }
-}
-
-document.getAndSetUserVipLevel = async(address, client) => {
-  let chainId = document.secretNetworkChainId('production')
-  let userVipLevel = 0
-  // Set users vip level
-  try {
-    let params = {
-      balance: {
-        address: address,
-        key: await window.keplr.getSecret20ViewingKey(chainId, document.secretNetwork.butt.address)
+  },
+  userVipLevel: 0,
+  walletAddress: undefined,
+  getAndSetUserVipLevel: async(address, client) => {
+    let chainId = document.secretNetworkChainId('production')
+    document.secretNetwork.userVipLevel = 0
+    // Set users vip level
+    try {
+      let params = {
+        balance: {
+          address: address,
+          key: await window.keplr.getSecret20ViewingKey(chainId, document.secretNetwork.butt.address)
+        }
       }
+      let balance_response = await client.queryContractSmart(document.secretNetwork.butt.address, params, undefined, document.secretNetwork.butt.dataHash);
+      let balance = balance_response["balance"]["amount"]
+      balance = Number(balance)
+      if (balance >= 100_000_000_000) {
+        document.secretNetwork.userVipLevel = 5
+      } else if(balance >= 50_000_000_000) {
+        document.secretNetwork.userVipLevel = 4
+      } else if(balance >= 25_000_000_000) {
+        document.secretNetwork.userVipLevel = 3
+      } else if(balance >= 12_500_000_000) {
+        document.secretNetwork.userVipLevel = 2
+      } else if(balance >= 6_250_000_000) {
+        document.secretNetwork.userVipLevel = 1
+      }
+    } catch(err) {
+      console.error(err)
+    } finally {
+      $("#vip-level").text(document.secretNetwork.userVipLevel)
+      return document.secretNetwork.userVipLevel
     }
-    let balance_response = await client.queryContractSmart(document.secretNetwork.butt.address, params, undefined, document.secretNetwork.butt.dataHash);
-    let balance = balance_response["balance"]["amount"]
-    balance = Number(balance)
-    if (balance >= 100_000_000_000) {
-      userVipLevel = 5
-    } else if(balance >= 50_000_000_000) {
-      userVipLevel = 4
-    } else if(balance >= 25_000_000_000) {
-      userVipLevel = 3
-    } else if(balance >= 12_500_000_000) {
-      userVipLevel = 2
-    } else if(balance >= 6_250_000_000) {
-      userVipLevel = 1
-    }
-  } catch(err) {
-    console.error(err)
-  } finally {
-    $("#vip-level").text(userVipLevel)
-    return userVipLevel
   }
 }
 

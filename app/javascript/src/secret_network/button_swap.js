@@ -89,7 +89,7 @@ $(document).ready(function(){
         $('.balance-container').removeClass('d-none')
         let accounts = await window.keplrOfflineSigner.getAccounts()
         this.address = accounts[0].address;
-        this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
+        this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
         this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
         this.updateWalletBalance(this.toId, '.to')
       })
@@ -745,7 +745,7 @@ $(document).ready(function(){
           this.resetAfterSwap()
           // Update vip levels if swap involves BUTT
           if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
-            this.userVipLevel = await document.getAndSetUserVipLevel(this.address, this.client)
+            this.userVipLevel = await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
           }
         } catch(error) {
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.

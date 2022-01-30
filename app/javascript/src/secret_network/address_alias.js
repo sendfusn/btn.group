@@ -1,36 +1,8 @@
 $(document).ready(function(){
   if($("#secret-network-address-alias").length) {
-    var myWidget = cloudinary.createUploadWidget({
-      cloudName: 'hv5cxagki',
-      cropping: true,
-      uploadPreset: "yxh7df5b",
-      multiple: false,
-      maxImageFileSize: 5_000_000,
-      resourceType: 'image'
-      }, (error, result) => {
-      if (!error && result && result.event === "success") {
-        console.log("Done! Here is the image info: ", result.info);
-        let imageUrl = result.info.secure_url
-        if (result.info.coordinates) {
-          let splitUrl = result.info.secure_url.split("upload/")
-          let coordinates = result.info.coordinates.custom
-          let transformationString = 'upload/c_crop,x_' + coordinates[0][0] + ',y_' + coordinates[0][1] + ',h_' + coordinates[0][2] + ',w_' + coordinates[0][3] + '/'
-          imageUrl = splitUrl[0] + transformationString +  splitUrl[1]
-        }
-        $("#avatar-url").val(imageUrl);
-      }
-    })
-
-    document.getElementById("cloudinary-upload-widget").addEventListener("click", function(evt){
-      myWidget.open();
-      evt.preventDefault();
-    }, false);
-
     window.onload = async() => {
       document.activateKeplr()
       this.environment = 'production';
-      this.contractAddress = document.featureContractAddress(this.environment);
-      this.contractAddressDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
       this.chainId = document.secretNetworkChainId(this.environment)
       this.httpUrl = document.secretNetworkHttpUrl(this.environment)
 
@@ -75,7 +47,7 @@ $(document).ready(function(){
 
           let alias = $("#delete-button").data('alias');
           let handleMsg = { destroy: { alias: alias } }
-          let response = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractAddressDataHash)
+          let response = await this.client.execute(document.secretNetwork.addressAliasContract.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.addressAliasContract.dataHash)
           $("#result-value").html('')
           $("#result-container").addClass("d-none");
           $("#result-value-container").addClass("d-none");
@@ -129,7 +101,7 @@ $(document).ready(function(){
 
           let alias = document.aliasCreateForm.alias.value
           let avatarUrl = document.aliasCreateForm.avatarUrl.value;
-          let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
+          let handleMsg = { send: { amount: '1000000', recipient: document.secretNetwork.addressAliasContract.address, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
           let response = await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
@@ -166,7 +138,7 @@ $(document).ready(function(){
           let search_type = document.aliasSearchForm.searchType.value;
           let search_value = document.aliasSearchForm.searchValue.value;
           let search_params = { search_type: search_type, search_value: search_value };
-          let result = await document.secretNetworkClient(this.environment).queryContractSmart(this.contractAddress, { search: search_params }, undefined, this.contractAddressDataHash)
+          let result = await document.secretNetworkClient(this.environment).queryContractSmart(document.secretNetwork.addressAliasContract.address, { search: search_params }, undefined, document.secretNetwork.addressAliasContract.dataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + result['attributes']['address']
@@ -199,5 +171,32 @@ $(document).ready(function(){
         }
       };
     }
+
+    // === CLOUDINARY ===
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: 'hv5cxagki',
+      cropping: true,
+      uploadPreset: "yxh7df5b",
+      multiple: false,
+      maxImageFileSize: 5_000_000,
+      resourceType: 'image'
+      }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        console.log("Done! Here is the image info: ", result.info);
+        let imageUrl = result.info.secure_url
+        if (result.info.coordinates) {
+          let splitUrl = result.info.secure_url.split("upload/")
+          let coordinates = result.info.coordinates.custom
+          let transformationString = 'upload/c_crop,x_' + coordinates[0][0] + ',y_' + coordinates[0][1] + ',h_' + coordinates[0][2] + ',w_' + coordinates[0][3] + '/'
+          imageUrl = splitUrl[0] + transformationString +  splitUrl[1]
+        }
+        $("#avatar-url").val(imageUrl);
+      }
+    })
+
+    document.getElementById("cloudinary-upload-widget").addEventListener("click", function(evt){
+      myWidget.open();
+      evt.preventDefault();
+    }, false);
   };
 });
