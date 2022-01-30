@@ -1,9 +1,8 @@
-document.buttonAddress = function() {
-  return 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt'
-}
-
-document.buttonDataHash = function() {
-  return 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'
+document.secretNetwork = {
+  butt: {
+    address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
+    dataHash: 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'
+  }
 }
 
 document.getAndSetUserVipLevel = async(address, client) => {
@@ -14,10 +13,10 @@ document.getAndSetUserVipLevel = async(address, client) => {
     let params = {
       balance: {
         address: address,
-        key: await window.keplr.getSecret20ViewingKey(chainId, document.buttonAddress())
+        key: await window.keplr.getSecret20ViewingKey(chainId, document.secretNetwork.butt.address)
       }
     }
-    let balance_response = await client.queryContractSmart(document.buttonAddress(), params, undefined, document.buttonDataHash());
+    let balance_response = await client.queryContractSmart(document.secretNetwork.butt.address, params, undefined, document.secretNetwork.butt.dataHash);
     let balance = balance_response["balance"]["amount"]
     balance = Number(balance)
     if (balance >= 100_000_000_000) {

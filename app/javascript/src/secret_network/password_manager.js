@@ -220,7 +220,7 @@ $(document).ready(function(){
             }
           }
           let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
-          let response = await this.client.execute(document.buttonAddress(), handleMsg, '', [], gasParams.exec, document.buttonDataHash())
+          let response = await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           let newAuthentication = {
             revealed: true
           } 

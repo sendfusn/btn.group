@@ -34,7 +34,7 @@ $(document).ready(function(){
         this.receivableAddress = result['receivable_address']
         $('input[name=receivableAddress]').first().val(this.receivableAddress)
         $('#receivable-address-table-data').text(this.receivableAddress)
-        let balance_response = await this.client.queryContractSmart(document.buttonAddress(), { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } }, undefined, document.buttonDataHash());
+        let balance_response = await this.client.queryContractSmart(document.secretNetwork.butt.address, { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } }, undefined, document.secretNetwork.butt.dataHash);
         this.buttonBalance = applyDecimals(balance_response["balance"]["amount"], 6).toLocaleString('en', { minimumFractionDigits: 6 })
         $('#butt-balance-table-data').text(this.buttonBalance)
         $('#buttcoin-amount').val(this.buttonBalance)
@@ -61,7 +61,7 @@ $(document).ready(function(){
           let amount = document['buttLodeSendForm'].amount.value;
           amount = amount.replace(/,/g, '');
           amount = (amount * Math.pow(10, 6)).toFixed(0)
-          let handleMsg = { send_token: { amount: amount, token: { address: document.buttonAddress(), contract_hash: document.buttonDataHash() } } }
+          let handleMsg = { send_token: { amount: amount, token: { address: document.secretNetwork.butt.address, contract_hash: document.secretNetwork.butt.dataHash } } }
           let response = await this.client.execute(this.buttLodeAddress, handleMsg, '', [], gasParams.exec, this.buttLodeDataHash)
           document.showAlertSuccess("Send successful");
           document['buttLodeSendForm'].amount.value = ''

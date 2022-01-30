@@ -5,7 +5,6 @@ $(document).ready(function(){
       let paramCount = 0;
       this.address;
       this.userVipLevel;
-      this.buttcoinContractAddress = "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt";
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client =  document.secretNetworkClient(this.environment);

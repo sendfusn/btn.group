@@ -78,7 +78,7 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "Locker updated."
-          await this.client.execute(document.buttonAddress(), handleMsg, '', [], gasParams.exec, document.buttonDataHash())
+          await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
           $(e.target)[0].reset()
         }
@@ -118,7 +118,7 @@ $(document).ready(function(){
             }
           this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
           resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
-          await this.client.execute(document.buttonAddress(), handleMsg, '', [], gasParams.exec, document.buttonDataHash())
+          await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
           $(e.target)[0].reset()
         }
