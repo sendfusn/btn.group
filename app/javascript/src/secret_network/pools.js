@@ -663,7 +663,7 @@ $(document).ready(function(){
       }
 
       this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
-        this.updateRewards(pool, afterTransaction, height)
+        await this.updateRewards(pool, afterTransaction, height)
         if (poolDetailsOnly) {
           this.updateTotalShares(pool)
         } else {
