@@ -6,7 +6,6 @@ $(document).ready(function(){
 
     window.onload = async () => {
       document.activateKeplr()
-      this.address;
       this.cryptocurrencies = {}
       this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
       this.dexAggregatorDataHash = '4B2AE0ECBEF722BCC85AAEBB501F2814BF4FC4C94A8E62574BFAB009CEBF719C'
@@ -86,9 +85,6 @@ $(document).ready(function(){
       }.bind(this))
       $(document).on('keplr_connected', async(evt) => {
         $('.balance-container').removeClass('d-none')
-        let accounts = await window.keplrOfflineSigner.getAccounts()
-        this.address = accounts[0].address;
-        await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
         this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
         this.updateWalletBalance(this.toId, '.to')
       })
@@ -542,7 +538,7 @@ $(document).ready(function(){
       }
 
       this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix, inputToClickFillTo = undefined) => {
-        if (this.address == undefined || this.cryptocurrencies == undefined) {
+        if (document.secretNetwork.walletAddress == undefined || this.cryptocurrencies == undefined) {
           return
         }
 
@@ -562,10 +558,10 @@ $(document).ready(function(){
             cryptoAddress = cryptocurrency['smart_contract']['address']
             let key = await window.keplr.getSecret20ViewingKey(this.chainId, cryptoAddress)
             // If they have the key, replace the button with the balance
-            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: this.address, key: key } }, undefined, cryptocurrency['smart_contract']['data_hash'])
+            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['smart_contract']['data_hash'])
             balance = balanceResponse['balance']['amount']
           } else {
-            let accountDetails = await this.client.getAccount(this.address)
+            let accountDetails = await this.client.getAccount(document.secretNetwork.walletAddress)
             accountDetails['balance'].forEach(function(balanceDetails) {
               if (cryptocurrency['denom'] == balanceDetails['denom']) {
                 balance = balanceDetails['amount']
@@ -662,7 +658,7 @@ $(document).ready(function(){
                 gas: String(this.gasWrap),
               },
             }
-            this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+            this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
           } else {
             let currentFromId = fromId
@@ -707,7 +703,7 @@ $(document).ready(function(){
               routeMessage = { swap: { expected_return: minAmount } }
             } else {
               recipient = this.dexAggregatorSmartContractAddress
-              routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: this.address }
+              routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: document.secretNetwork.walletAddress }
             }
             let routeMsgEncoded = Buffer.from(JSON.stringify(routeMessage)).toString('base64')
             if (fromCryptocurrency['smart_contract']) {
@@ -717,7 +713,7 @@ $(document).ready(function(){
             } else {
               contract = this.dexAggregatorSmartContractAddress
               contractDataHash = this.dexAggregatorDataHash
-              handleMsg = { receive: { amount: fromAmount, from: this.address, msg: routeMsgEncoded } }
+              handleMsg = { receive: { amount: fromAmount, from: document.secretNetwork.walletAddress, msg: routeMsgEncoded } }
               sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
             }
             let gasParams = {
@@ -726,7 +722,7 @@ $(document).ready(function(){
                 gas: String(gas),
               },
             }
-            this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+            this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
             let returnAmount;
             response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
@@ -744,7 +740,7 @@ $(document).ready(function(){
           this.resetAfterSwap()
           // Update vip levels if swap involves BUTT
           if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
-            await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+            await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
           }
         } catch(error) {
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.

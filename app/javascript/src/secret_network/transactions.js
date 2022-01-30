@@ -24,9 +24,6 @@ $(document).ready(function(){
       })
       $(document).on('keplr_connected', async(evt) => {
         $('.load-wallet-link').removeClass('d-none')
-        let accounts = await window.keplrOfflineSigner.getAccounts()
-        this.address = accounts[0].address;
-        await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
         if (document.secretNetwork.userVipLevel == 0) {
           $('#pay-wall').removeClass('d-none')
         } else {
@@ -42,7 +39,7 @@ $(document).ready(function(){
         try {
           let key = await window.keplr.getSecret20ViewingKey(this.chainId, document.secretNetworkTransactionsForm.contractAddress.value)
           document.secretNetworkTransactionsForm.viewingKey.value = key
-          document.secretNetworkTransactionsForm.address.value = this.address
+          document.secretNetworkTransactionsForm.address.value = document.secretNetwork.walletAddress
         } catch(err) {
           if (!err['message'].includes('There is no matched secret20')) {
             document.showAlertDanger(err)
@@ -77,7 +74,7 @@ $(document).ready(function(){
 
         try {
           // First we need to find out if the user has premium access
-          await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+          await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
           if (document.secretNetwork.userVipLevel == 0) {
             $('#pay-wall').removeClass('d-none')
             document.secretNetworkTransactionsForm.page.value = 1

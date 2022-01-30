@@ -2,7 +2,6 @@ $(document).ready(function(){
   if($("#secret-network-block-locker").length) {
     window.onload = async () => {
       document.activateKeplr()
-      this.address;
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
@@ -11,9 +10,7 @@ $(document).ready(function(){
       this.keplrOfflineSigner;
 
       $(document).on('keplr_connected', async(evt) => {
-        let accounts = await window.keplrOfflineSigner.getAccounts()
-        this.address = accounts[0].address;
-        document.blockLockerViewWhenLockedForm.walletAddress.value = this.address
+        document.blockLockerViewWhenLockedForm.walletAddress.value = document.secretNetwork.walletAddress
       })
 
       this.disableForm = function() {
@@ -76,7 +73,7 @@ $(document).ready(function(){
                 gas: '200000',
               },
             }
-          this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+          this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
           resultText = "Locker updated."
           await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
@@ -116,7 +113,7 @@ $(document).ready(function(){
                 gas: '100000',
               },
             }
-          this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+          this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
           resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
           await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
@@ -156,7 +153,7 @@ $(document).ready(function(){
                 gas: '37500',
               },
             }
-          this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+          this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
           result = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractDataHash)
           result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           result = JSON.parse(resultText)

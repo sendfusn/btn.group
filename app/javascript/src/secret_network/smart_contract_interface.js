@@ -3,7 +3,6 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       let paramCount = 0;
-      this.address;
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client =  document.secretNetworkClient(this.environment);
@@ -19,12 +18,9 @@ $(document).ready(function(){
       });
 
       $(document).on('keplr_connected', async(evt) => {
-        let accounts = await window.keplrOfflineSigner.getAccounts()
-        this.address = accounts[0].address;
         $('.alert').removeClass('d-none')
         $('#loading-vip').removeClass('d-none')
         $('#pay-wall').addClass('d-none')
-        await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
         $('#loading-vip').addClass('d-none')
         if (document.secretNetwork.userVipLevel == 0) {
           $('#pay-wall').removeClass('d-none')
@@ -58,8 +54,8 @@ $(document).ready(function(){
             let functionName = document.secretNetworkSmartContractInterfaceForm.functionName.value;
             let params = {};
             let last_key;
-            if (this.address) {
-              await document.secretNetwork.getAndSetUserVipLevel(this.address, this.client)
+            if (document.secretNetwork.walletAddress) {
+              await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
               $('#loading-vip').addClass('d-none')
               if (document.secretNetwork.userVipLevel == 0) {
                 $('#pay-wall').removeClass('d-none')
@@ -110,14 +106,14 @@ $(document).ready(function(){
                     // @ts-ignore
                     const keplrOfflineSigner = window.getOfflineSigner(chainId);
                     const accounts = await keplrOfflineSigner.getAccounts();
-                    this.address = accounts[0].address;
+                    document.secretNetwork.walletAddress = accounts[0].address;
                     let gasParams = {
                         exec: {
                           amount: [{ amount: '75000', denom: 'uscrt' }],
                           gas: '75000',
                         },
                       }
-                    this.client = document.secretNetworkSigningClient(environment, this.address, gasParams)
+                    this.client = document.secretNetworkSigningClient(environment, document.secretNetwork.walletAddress, gasParams)
                   } catch (error) {
                     console.error(error)
                   }

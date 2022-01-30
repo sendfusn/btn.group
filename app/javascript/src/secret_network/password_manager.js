@@ -22,10 +22,6 @@ $(document).ready(function(){
     $("#set-key-button").click(function(e){
       document.querySelectorAll("a[href^='#tab-2-1-2']")[0].click()
     })
-    $(document).on('keplr_connected', async(evt) => {
-      let accounts = await window.keplrOfflineSigner.getAccounts()
-      this.address = accounts[0].address;
-    })
 
     window.onload = async () => {
       document.activateKeplr()
@@ -142,8 +138,8 @@ $(document).ready(function(){
                   // @ts-ignore
                   const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                   const accounts = await keplrOfflineSigner.getAccounts();
-                  this.address = accounts[0].address;
-                  this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+                  document.secretNetwork.walletAddress = accounts[0].address;
+                  this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
                 } catch (error) {
                   document.showAlertDanger(error)
                 }
@@ -210,8 +206,8 @@ $(document).ready(function(){
                 // @ts-ignore
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
-                this.address = accounts[0].address;
-                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+                document.secretNetwork.walletAddress = accounts[0].address;
+                this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -339,8 +335,8 @@ $(document).ready(function(){
                 // @ts-ignore
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
-                this.address = accounts[0].address;
-                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+                document.secretNetwork.walletAddress = accounts[0].address;
+                this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -396,8 +392,8 @@ $(document).ready(function(){
                 // @ts-ignore
                 const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
                 const accounts = await keplrOfflineSigner.getAccounts();
-                this.address = accounts[0].address;
-                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+                document.secretNetwork.walletAddress = accounts[0].address;
+                this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -462,9 +458,7 @@ $(document).ready(function(){
       }
 
       this.addressOwnsAuthentication = function(address) {
-        console.log(address)
-        console.log(this.address)
-        return address.length > 5 && address == this.address
+        return address.length > 5 && address == document.secretNetwork.walletAddress
       }
     }
   };
