@@ -4,12 +4,7 @@ class ApplicationController < ActionController::Base
   helper_method :features, :head_description, :head_image, :head_link, :head_title, :logo_cloudinary_public_id
 
   # === CALLBACKS ===
-  before_action :authenticate_admin_user!, only: :arbitrage
   before_action :configure_permitted_parameters, if: :devise_controller?
-
-  def arbitrage
-    @head_title = 'Arbitrage | btn.group'
-  end
 
   def brand_assets
     @show_footer = true

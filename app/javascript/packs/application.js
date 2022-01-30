@@ -21,7 +21,6 @@ import 'datatables.net-buttons/js/buttons.html5.js'
 
 // APP
 import '../src/application/_environment_switch'
-import '../src/arbitrage'
 import '../src/ico_crypto'
 
 // NEAR
