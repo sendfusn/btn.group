@@ -758,8 +758,6 @@ $(document).ready(function(){
             }
           } else if(error.message.includes('account sequence mismatch')) {
             document.showAlertDanger("Please try again.")
-          } else if(error.message.includes('Request rejected')) {
-            document.showAlertDanger("Timeout error. Please check your wallet to see if transaction went through. Otherwise try with more gas.")
           } else {
             document.showAlertDanger(error)
           }
