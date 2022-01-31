@@ -538,7 +538,8 @@ $(document).ready(function(){
       }
 
       this.updateWalletBalance = async(cryptocurrencyId, selectorPrefix, inputToClickFillTo = undefined) => {
-        if (document.secretNetwork.walletAddress == undefined || this.cryptocurrencies == undefined) {
+        let cryptocurrency = this.cryptocurrencies[cryptocurrencyId];
+        if (cryptocurrency ==  undefined || document.secretNetwork.walletAddress == undefined) {
           return
         }
 
@@ -548,7 +549,6 @@ $(document).ready(function(){
         let $walletBalanceViewButton = $(selectorPrefix + '-balance-view-button')
         let balance
         let cryptoAddress;
-        let cryptocurrency = this.cryptocurrencies[cryptocurrencyId];
         let updateWalletBalanceStillValid = true
         $walletBalance.addClass('d-none')
         $walletBalanceLoading.removeClass('d-none')
@@ -735,21 +735,20 @@ $(document).ready(function(){
             }
             successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
           }
-          await document.delay(5_000)
-          document.showAlertSuccess(successMessage);
           this.resetAfterSwap()
           // Update vip levels if swap involves BUTT
           if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
             await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
           }
+          document.showAlertSuccess(successMessage);
         } catch(error) {
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
           if (error.message.includes('timed out waiting for tx to be included in a block')) {
-            // Wait 5 seconds and if balance of the to and from token has changed... Success
-            await document.delay(5_000)
-            this.updateWalletBalance(fromId, '.from', this.fromAmountInputSelector)
-            this.updateWalletBalance(toId, '.to')
+            // Wait 6.5 seconds and if balance of the to and from token has changed... Success
+            await document.delay(6_500)
+            await this.updateWalletBalance(fromId, '.from', this.fromAmountInputSelector)
+            await this.updateWalletBalance(toId, '.to')
             if (this.cryptocurrencies[fromId]['balance'] != fromBalance && this.cryptocurrencies[toId]['balance'] != toBalance) {
               document.showAlertSuccess("Swap successful");
               this.resetAfterSwap()
