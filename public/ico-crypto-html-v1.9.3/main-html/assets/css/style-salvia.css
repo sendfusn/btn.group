@@ -103,7 +103,7 @@ ul, ol, table { margin: 0; padding: 0; }
 
 strong, b { font-weight: 500; }
 
-a { outline: 0 none; transition: all 0.5s; color: #866bfe; }
+a { outline: 0 none; transition: all 0.2s; color: #866bfe; }
 
 a:link, a:visited { text-decoration: none; }
 
@@ -6524,7 +6524,7 @@ ul.progress-info { display: flex; justify-content: space-between; }
   .menu-item > a { font-weight: 400; padding: 20px 10px; }
   .menu-drop .menu-item > a { font-weight: 300; }
   .menu-item:hover { z-index: 9999; }
-  .menu-sub { position: absolute; min-width: 215px; max-width: 215px; background: #fff; padding: 15px 10px; top: 100%; left: 0; display: block !important; z-index: 99; opacity: 0; visibility: hidden; transition: all .4s; border-radius: 4px; transform: translateX(0) translateY(-8px); box-shadow: 0 3px 12px 0 rgba(91, 83, 162, 0.08); }
+  .menu-sub { position: absolute; min-width: 215px; max-width: 215px; background: #fff; padding: 15px 10px; top: 100%; left: 0; display: block !important; z-index: 99; opacity: 0; visibility: hidden; transition: all .1s; border-radius: 4px; transform: translateX(0) translateY(-8px); box-shadow: 0 3px 12px 0 rgba(91, 83, 162, 0.08); }
   .menu-sub a { width: 100%; display: block; padding: 10px 10px; }
   .menu-sub .menu-item:first-child { border-top: none; }
   .menu-sub .menu-item:hover > a { color: #866bfe; }
