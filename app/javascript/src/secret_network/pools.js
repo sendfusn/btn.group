@@ -553,8 +553,9 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateRewards(value)
-                this.updateTotalShares(value)
+                await document.delay(5_000)
+                await this.updateRewards(value)
+                await this.updateTotalShares(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
@@ -618,8 +619,9 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
-                this.updateRewards(value)
-                this.updateTotalShares(value)
+                await document.delay(5_000)
+                await this.updateRewards(value)
+                await this.updateTotalShares(value)
                 let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
