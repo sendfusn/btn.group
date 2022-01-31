@@ -163,15 +163,27 @@ document.prettyPrintJSON = function(json) {
   });
 };
 
-document.showAlertDanger = function(text) {
-  if (text != "Error: Request rejected") {
+document.showAlertWarning = function(error) {
+  toastr.options.closeButton = true;
+  toastr.options.closeDuration = 0;
+  toastr.options.extendedTimeOut = 0;
+  toastr.options.preventDuplicates = true;
+  toastr.options.tapToDismiss = false
+  toastr.options.timeOut = 0;
+  toastr.warning(error);
+}
+
+document.showAlertDanger = function(error) {
+  if(error.message && error.message.includes('account sequence mismatch')) {
+    document.showAlertWarning("Blockchain issue: Please try again.")
+  } else if (error != "Error: Request rejected") {
     toastr.options.closeButton = true;
     toastr.options.closeDuration = 0;
     toastr.options.extendedTimeOut = 0;
     toastr.options.preventDuplicates = true;
     toastr.options.tapToDismiss = false
     toastr.options.timeOut = 0;
-    toastr.error(text);
+    toastr.error(error);
   }
 }
 
