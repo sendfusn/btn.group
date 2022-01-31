@@ -355,7 +355,6 @@ $(document).ready(function(){
         let pool = this.tradePairs[poolId]
         let protocolIdentifier = pool['protocol']['identifier']
         let swapMsg;
-        console.log(pool)
         if (pool['downcase_data_hash_for_swap_simulation']) {
           fromCryptoCodeHash = fromCryptoCodeHash.toLowerCase()
         }
@@ -372,7 +371,6 @@ $(document).ready(function(){
           return result['return_amount']
         } catch(error) {
           console.log(error)
-          console.log(pool)
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
 
           let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg, undefined, pool['smart_contract']['data_hash'])
