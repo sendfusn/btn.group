@@ -8,6 +8,8 @@ ruby '3.0.2'
 gem 'actionpack', '>= 6.1.4.2'
 gem 'activeadmin'
 gem 'airbrake'
+# For ruby metrics
+gem 'barnes'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.6', require: false
 gem 'cloudinary'
