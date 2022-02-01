@@ -2,31 +2,14 @@ $(document).ready(function(){
   if($("#secret-network-mount-doom").length) {
     // Listeners 
     $('input[type=radio][name=tokenType]').change(function() {
-        if (this.value == 'nft') {
-          $('#fungibleTokenAddress').addClass('d-none')
-          $('#nonFungibleTokenAddress').removeClass('d-none')
-        } else if (this.value == 'snip-20') {
-          $('#fungibleTokenAddress').removeClass('d-none')
-          $('#nonFungibleTokenAddress').addClass('d-none')
-        }
-    });
-
-    getAndSetSmartContracts(1)
-    function getAndSetSmartContracts(blockchainId) {
-      document.smartContracts = {}
-      var request = new XMLHttpRequest()
-      // Open a new connection, using the GET request on the URL endpoint
-      request.open('GET', '/smart_contracts?blockchain_id=' + blockchainId, true)
-      request.onload = function () {
-        // Begin accessing JSON data here
-        var data = JSON.parse(this.response)
-        data.forEach((smartContract) => {
-          document.smartContracts[smartContract["address"]] = smartContract;
-        })
+      if (this.value == 'nft') {
+        $('#fungibleTokenAddress').addClass('d-none')
+        $('#nonFungibleTokenAddress').removeClass('d-none')
+      } else if (this.value == 'snip-20') {
+        $('#fungibleTokenAddress').removeClass('d-none')
+        $('#nonFungibleTokenAddress').addClass('d-none')
       }
-      // Send request
-      request.send()
-    }
+    });
 
     var changeSubmitButtonToLoading = function() {
       $('button[type="submit"]').prop("disabled", true)
@@ -132,7 +115,9 @@ $(document).ready(function(){
               throw(transactions_response['viewing_key_error']['msg'])
             }
             let transactionsTableBodyContent = '';
-            _.each(transactions_response["transfer_history"]["txs"], function(value){
+            let txs = transactions_response["transfer_history"]["txs"]
+            await document.secretNetwork.transactions.getSmartContractsInTxs(this.contractAddress, txs)
+            txs.forEach((value) => {
               // ID & Date
               transactionsTableBodyContent += '<tr><td>'
               if (value['block_time']) {
@@ -152,15 +137,16 @@ $(document).ready(function(){
               } else {
                 descriptionAddress = value['from']
               }
-              if (document.smartContracts[descriptionAddress]) {
+              let smartContract = document.secretNetwork.smartContracts[descriptionAddress]
+              if (smartContract) {
                 description += 'https://secretnodes.com/secret/chains/secret-4/contracts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
-                description += '<hr>Contract label: ' + document.smartContracts[descriptionAddress]['label']
+                description += '<hr>Contract label: ' + smartContract['label']
               } else {
                 description += 'https://secretnodes.com/secret/chains/secret-4/accounts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
               }
               transactionsTableBodyContent += description + '</td><td>'
               transactionsTableBodyContent += parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }) + '</td></tr>'
-            }.bind(this))
+            })
             transactionsTableBodyContent += '</tr>'
             $transactionsTableBody.html(transactionsTableBodyContent)
             // Add token symbol next to amount header

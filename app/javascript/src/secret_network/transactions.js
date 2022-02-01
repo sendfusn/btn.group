@@ -4,7 +4,6 @@ $(document).ready(function(){
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
-      this.smartContracts = {}
       document.activateKeplr()
 
       // === LISTENERS ===
@@ -102,7 +101,7 @@ $(document).ready(function(){
           }
           let transactionsTableBodyContent = '';
           let txs = transactions_response["transfer_history"]["txs"]
-          await this.getSmartContractsInTxs(txs)
+          await document.secretNetwork.transactions.getSmartContractsInTxs(address, txs)
           txs.forEach((value) => {
             // ID & Date
             transactionsTableBodyContent += '<tr><td>'
@@ -116,8 +115,14 @@ $(document).ready(function(){
             let amount = value['coins']['amount']
             amount = applyDecimals(amount, token_decimals)
             let description = '<a href="'
-            let descriptionAddress = this.extractDescriptionAddressFromTx(value);
-            let smartContract = this.smartContracts[descriptionAddress]
+            let descriptionAddress;
+            if (address != value['receiver']) {
+              amount *= -1
+              descriptionAddress = value['receiver']
+            } else {
+              descriptionAddress = value['from']
+            }
+            let smartContract = document.secretNetwork.smartContracts[descriptionAddress]
             if (smartContract) {
               description += 'https://secretnodes.com/secret/chains/secret-4/contracts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
               description += '<hr>Contract label: ' + smartContract['label']
@@ -167,42 +172,6 @@ $(document).ready(function(){
 
       function applyDecimals(amount, decimals) {
         return amount / parseFloat("1" + '0'.repeat(decimals))
-      }
-
-      this.getSmartContractsInTxs = async(txs) => {
-        let addressesString = ''
-        let addressesInString = {}
-        txs.forEach((tx) => {
-          let address = this.extractDescriptionAddressFromTx(tx)
-          if (!this.smartContracts[address] || !addressesInString[address]) {
-            addressesString = addressesString + address + ','
-            addressesInString[address] = true
-          }
-        })
-
-        try {
-          let contracts = await $.ajax({
-            url: '/smart_contracts?addresses=' + addressesString,
-            type: 'GET'
-          })
-          contracts.forEach((smartContract) => {
-            this.smartContracts[smartContract["address"]] = smartContract;
-          })
-        } catch(err) {
-          console.log(err)
-        }
-      }
-
-      this.extractDescriptionAddressFromTx = function(tx) {
-        let amount = tx['coins']['amount']
-        let descriptionAddress
-        if (address != tx['receiver']) {
-          amount *= -1
-          descriptionAddress = tx['receiver']
-        } else {
-          descriptionAddress = tx['from']
-        }
-        return descriptionAddress
       }
     };
   }

@@ -7,8 +7,43 @@ document.secretNetwork = {
     address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
     dataHash: 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'
   },
+  smartContracts: {},
   userVipLevel: 0,
   walletAddress: undefined,
+  transactions: {
+    extractDescriptionAddressFromTx: function(ownerAddress, tx) {
+      let descriptionAddress;
+      if (ownerAddress != tx['receiver']) {
+        descriptionAddress = tx['receiver']
+      } else {
+        descriptionAddress = tx['from']
+      }
+      return descriptionAddress
+    },
+    getSmartContractsInTxs: async(ownerAddress, txs) => {
+      let addressesString = ''
+      let addressesInString = {}
+      txs.forEach((tx) => {
+        let address = document.secretNetwork.transactions.extractDescriptionAddressFromTx(ownerAddress, tx)
+        if (!document.secretNetwork.smartContracts[address] || !addressesInString[address]) {
+          addressesString = addressesString + address + ','
+          addressesInString[address] = true
+        }
+      })
+
+      try {
+        let contracts = await $.ajax({
+          url: '/smart_contracts?addresses=' + addressesString,
+          type: 'GET'
+        })
+        contracts.forEach((smartContract) => {
+          document.secretNetwork.smartContracts[smartContract["address"]] = smartContract;
+        })
+      } catch(err) {
+        console.log(err)
+      }
+    }
+  },
   getAndSetUserVipLevel: async(address, client) => {
     let chainId = document.secretNetworkChainId('production')
     document.secretNetwork.userVipLevel = 0
