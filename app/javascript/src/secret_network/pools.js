@@ -251,7 +251,7 @@ $(document).ready(function(){
       let protocols = {
         secret_swap: {
           name: 'Secret Swap',
-          url: 'https://app.secretswap.io/earn'
+          url: 'https://app.secretswap.net/earn'
         },
         sienna: {
           name: 'Sienna',
