@@ -6,6 +6,9 @@ $(document).ready(function(){
       document.activateKeplr()
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
+      // A bit hacky but leave it for now.
+      // Querying buttlode config so that reg-tx gets called just here and everything else can by async without having to make that call
+      await document.secretNetworkClient(this.environment).queryContractSmart('secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5', { config: {} }, undefined, '99F94EDC0D744B35A8FBCBDC8FB71C140CFA8F3F91FAD8C35B7CC37862A4AC95');
       let cryptocurrencies = {
         butt: {
           address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
@@ -665,7 +668,7 @@ $(document).ready(function(){
       }
 
       this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
-        await this.updateRewards(pool, afterTransaction, height)
+        this.updateRewards(pool, afterTransaction, height)
         if (poolDetailsOnly) {
           this.updateTotalShares(pool)
         } else {
