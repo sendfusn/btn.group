@@ -49,7 +49,7 @@ ActiveAdmin.register Cryptocurrency do
       f.input :symbol
       f.input :decimals
       f.input :blockchain
-      f.input :smart_contract, collection: SmartContract.all.order(:label), member_label: proc { |sc| "#{sc.label} - #{sc.address}" }
+      f.input :smart_contract_id, label: 'Smart contract id'
       f.input :price
       f.input :coin_gecko_id
       f.input :official
