@@ -4,9 +4,8 @@ $(document).ready(function(){
       this.environment = 'production';
       this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
+      this.smartContracts = {}
       document.activateKeplr()
-      getAndSetSmartContracts(1)
-      getAndSetCryptocurrencies(1)
 
       // === LISTENERS ===
       $('#viewing-key-container .fa-eye').click(function(){
@@ -102,7 +101,9 @@ $(document).ready(function(){
             throw(transactions_response['viewing_key_error']['msg'])
           }
           let transactionsTableBodyContent = '';
-          _.each(transactions_response["transfer_history"]["txs"], function(value){
+          let txs = transactions_response["transfer_history"]["txs"]
+          await this.getSmartContractsInTxs(txs)
+          txs.forEach((value) => {
             // ID & Date
             transactionsTableBodyContent += '<tr><td>'
             if (value['block_time']) {
@@ -115,16 +116,11 @@ $(document).ready(function(){
             let amount = value['coins']['amount']
             amount = applyDecimals(amount, token_decimals)
             let description = '<a href="'
-            let descriptionAddress;
-            if (address != value['receiver']) {
-              amount *= -1
-              descriptionAddress = value['receiver']
-            } else {
-              descriptionAddress = value['from']
-            }
-            if (document.smartContracts[descriptionAddress]) {
+            let descriptionAddress = this.extractDescriptionAddressFromTx(value);
+            let smartContract = this.smartContracts[descriptionAddress]
+            if (smartContract) {
               description += 'https://secretnodes.com/secret/chains/secret-4/contracts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
-              description += '<hr>Contract label: ' + document.smartContracts[descriptionAddress]['label']
+              description += '<hr>Contract label: ' + smartContract['label']
             } else {
               description += 'https://secretnodes.com/secret/chains/secret-4/accounts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
             }
@@ -173,36 +169,40 @@ $(document).ready(function(){
         return amount / parseFloat("1" + '0'.repeat(decimals))
       }
 
-      function getAndSetCryptocurrencies(blockchainId) {
-        document.cryptocurrencies = {}
-        var request = new XMLHttpRequest()
-        // Open a new connection, using the GET request on the URL endpoint
-        request.open('GET', '/cryptocurrencies?blockchain_id=' + blockchainId, true)
-        request.onload = function () {
-          // Begin accessing JSON data here
-          var data = JSON.parse(this.response)
-          data.forEach((cryptocurrency) => {
-            document.cryptocurrencies[cryptocurrency["symbol"]] = cryptocurrency;
+      this.getSmartContractsInTxs = async(txs) => {
+        let addressesString = ''
+        let addressesInString = {}
+        txs.forEach((tx) => {
+          let address = this.extractDescriptionAddressFromTx(tx)
+          if (!this.smartContracts[address] || !addressesInString[address]) {
+            addressesString = addressesString + address + ','
+            addressesInString[address] = true
+          }
+        })
+
+        try {
+          let contracts = await $.ajax({
+            url: '/smart_contracts?addresses=' + addressesString,
+            type: 'GET'
           })
+          contracts.forEach((smartContract) => {
+            this.smartContracts[smartContract["address"]] = smartContract;
+          })
+        } catch(err) {
+          console.log(err)
         }
-        // Send request
-        request.send()
       }
 
-      function getAndSetSmartContracts(blockchainId) {
-        document.smartContracts = {}
-        var request = new XMLHttpRequest()
-        // Open a new connection, using the GET request on the URL endpoint
-        request.open('GET', '/smart_contracts?blockchain_id=' + blockchainId, true)
-        request.onload = function () {
-          // Begin accessing JSON data here
-          var data = JSON.parse(this.response)
-          data.forEach((smartContract) => {
-            document.smartContracts[smartContract["address"]] = smartContract;
-          })
+      this.extractDescriptionAddressFromTx = function(tx) {
+        let amount = tx['coins']['amount']
+        let descriptionAddress
+        if (address != tx['receiver']) {
+          amount *= -1
+          descriptionAddress = tx['receiver']
+        } else {
+          descriptionAddress = tx['from']
         }
-        // Send request
-        request.send()
+        return descriptionAddress
       }
     };
   }

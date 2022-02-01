@@ -2,6 +2,11 @@
 
 class SmartContractsController < ApplicationController
   def index
-    render json: SmartContract.where(blockchain_id: params[:blockchain_id])
+    smart_contracts = if params['addresses']
+      SmartContract.where(address: params['addresses'].split(','))
+    else
+      SmartContract.where(blockchain_id: params[:blockchain_id])
+    end
+    render json: smart_contracts
   end
 end
