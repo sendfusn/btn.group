@@ -26,6 +26,7 @@
     "popper.js": "^1.16.1",
     "secretjs": "0.17.6-beta.6",
     "simple-get": "4.0.1",
+    "ssri": "^6.0.2",
     "tar": "6.1.9",
     "trim-newlines": "^3.0.1",
     "url-parse": "^1.5.2"
