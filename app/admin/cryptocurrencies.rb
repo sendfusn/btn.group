@@ -26,8 +26,13 @@ ActiveAdmin.register Cryptocurrency do
     actions
   end
 
-  # filter :identifier
-  # filter :name
+  filter :name
+  filter :symbol
+  filter :blockchain
+  filter :smart_contract_id
+  filter :official
+  filter :nft
+  filter :price
 
   # # === SHOW ===
   # show do
