@@ -575,6 +575,9 @@ $(document).ready(function(){
               $depositButton.prop("disabled", false);
               $depositButtonLoading.addClass("d-none")
               $depositButtonReady.removeClass("d-none")
+              if (value['farm_contract_address'] && value['reward_token'] == cryptocurrencies['sefi']) {
+                this.updateRewards(this.pools[0])
+              }
             }
           };
 
@@ -641,6 +644,9 @@ $(document).ready(function(){
               $withdrawButton.prop("disabled", false);
               $withdrawButtonLoading.addClass("d-none")
               $withdrawButtonReady.removeClass("d-none")
+              if (value['farm_contract_address'] && value['reward_token'] == cryptocurrencies['sefi']) {
+                this.updateRewards(this.pools[0])
+              }
             }
           };
         }
