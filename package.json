@@ -17,7 +17,7 @@
     "datatables.net-buttons-bs4": "^2.0.1",
     "fast-deep-equal": "^3.1.1",
     "follow-redirects": "^1.14.7",
-    "is-svg": "^4.2.2",
+    "is-svg": "^4.3.0",
     "jquery": "^3.6.0",
     "list.js": "^2.3.1",
     "near-api-js": "^0.42.0",
