@@ -282,6 +282,7 @@ GEM
     rails-reverse-proxy (0.10.1)
       actionpack
       addressable
+    rails_autoscale_agent (0.11.0)
     railties (6.1.4.4)
       actionpack (= 6.1.4.4)
       activesupport (= 6.1.4.4)
@@ -452,6 +453,7 @@ DEPENDENCIES
   rack-timeout
   rails (~> 6.1.4)
   rails-reverse-proxy
+  rails_autoscale_agent
   redis
   rspec-rails
   rubocop
