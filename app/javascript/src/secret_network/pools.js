@@ -672,18 +672,22 @@ $(document).ready(function(){
       }
 
       this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
-        this.updateRewards(pool, afterTransaction, height)
         if (poolDetailsOnly) {
           this.updateTotalShares(pool)
-        } else {
+          if (pool['farm_contract_address']) {
+            this.updateRewards(pool, afterTransaction, height)
+          }
+        } else if (userDetailsOnly) {
           this.updateWalletBalance(pool['deposit_token'], pool)
           this.updateUserWithdrawable(pool)
-          if (afterTransaction) {
-            this.updateWalletBalance(pool['reward_token'] || pool['earn_token'], pool)
+          if (!pool['farm_contract_address']) {
+            this.updateRewards(pool, afterTransaction, height)
           }
-          if (!userDetailsOnly) {
-            this.updateTotalShares(pool)
-          }
+        } else {
+          this.updateTotalShares(pool)
+          this.updateWalletBalance(pool['deposit_token'], pool)
+          this.updateUserWithdrawable(pool)
+          this.updateRewards(pool, afterTransaction, height)
         }
       }
 
