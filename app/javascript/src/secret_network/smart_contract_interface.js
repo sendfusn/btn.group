@@ -4,7 +4,6 @@ $(document).ready(function(){
       document.activateKeplr()
       let paramCount = 0;
       this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment);
       this.client =  document.secretNetworkClient(this.environment);
 
       // === LISTENERS ===
@@ -47,7 +46,7 @@ $(document).ready(function(){
           try {
             // Set environment
             let environment = document.featureEnvironment();
-            let chainId = document.secretNetworkChainId(environment)
+            let chainId = document.secretNetwork.chainId(environment)
             let httpUrl = document.secretNetworkHttpUrl(environment)
             // Set params
             let contractAddress = document.secretNetworkSmartContractInterfaceForm.contractAddress.value;

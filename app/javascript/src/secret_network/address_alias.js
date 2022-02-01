@@ -3,8 +3,6 @@ $(document).ready(function(){
     window.onload = async() => {
       document.activateKeplr()
       this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment)
-      this.httpUrl = document.secretNetworkHttpUrl(this.environment)
 
       document.aliasDeleteForm.onsubmit = async (e) => {
         e.preventDefault()
@@ -19,7 +17,7 @@ $(document).ready(function(){
             },
           }
           // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(this.environment):string)` after load event.
           // And it also injects the helper function to `window.keplr`.
           // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
           if (!window.getOfflineSigner || !window.keplr) {
@@ -30,10 +28,10 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(this.chainId);
+                await window.keplr.enable(document.secretNetwork.chainId(this.environment));
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
@@ -84,10 +82,10 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(this.chainId);
+                await window.keplr.enable(document.secretNetwork.chainId(this.environment));
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
@@ -105,7 +103,7 @@ $(document).ready(function(){
           let response = await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
-          let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + this.address
+          let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(this.environment) + '/accounts/' + this.address
           let resultValueHtml = '<h3 class="mb-0">' + alias + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + this.address + '</a><img class="w-100" src="' + avatarUrl + '">'
           $("#result-value").html(resultValueHtml)
           // Set data on delete button
@@ -141,7 +139,7 @@ $(document).ready(function(){
           let result = await document.secretNetworkClient(this.environment).queryContractSmart(document.secretNetwork.addressAliasContract.address, { search: search_params }, undefined, document.secretNetwork.addressAliasContract.dataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
-          let url = 'https://secretnodes.com/secret/chains/' + this.chainId + '/accounts/' + result['attributes']['address']
+          let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(this.environment) + '/accounts/' + result['attributes']['address']
           let resultValueHtml = '<h3 class="mb-0">' + result['attributes']['alias'] + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + result['attributes']['address'] + '</a><img class="w-100" src="' + result['attributes']['avatar_url'] + '">'
           $("#result-value").html(resultValueHtml)
           $("#result-container").removeClass("d-none");

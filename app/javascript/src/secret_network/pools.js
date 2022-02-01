@@ -5,7 +5,6 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment);
       // A bit hacky but leave it for now.
       // Querying buttlode config so that reg-tx gets called just here and everything else can by async without having to make that call
       await document.secretNetworkClient(this.environment).queryContractSmart('secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5', { config: {} }, undefined, '99F94EDC0D744B35A8FBCBDC8FB71C140CFA8F3F91FAD8C35B7CC37862A4AC95');
@@ -259,7 +258,6 @@ $(document).ready(function(){
           url: 'https://app.sienna.network/swap/earn'
         }
       }
-      this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.pools = [
         // This has to be first position in array
         {
@@ -507,7 +505,7 @@ $(document).ready(function(){
             $balanceViewButton.find('.loading').removeClass('d-none')
             $balanceViewButton.find('.ready').addClass('d-none')
             try {
-              await window.keplr.suggestToken(this.chainId, value['deposit_token']['address']);
+              await window.keplr.suggestToken(document.secretNetwork.chainId(this.environment), value['deposit_token']['address']);
               this.updateWalletBalance(value['deposit_token'], value);
               $balanceViewButton.addClass('d-none')
             } catch(err) {
@@ -821,7 +819,7 @@ $(document).ready(function(){
         try {
           $walletBalance.addClass('d-none')
           $walletBalanceLoading.removeClass('d-none')
-          let key = await window.keplr.getSecret20ViewingKey(this.chainId, address)
+          let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(this.environment), address)
           // If they have the key, replace the button with the balance
           let balanceResponse = await document.secretNetworkClient(this.environment).queryContractSmart(address, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['dataHash'])
           let balanceFormatted = document.humanizeStringNumberFromSmartContract(balanceResponse['balance']['amount'], cryptocurrency['decimals'])

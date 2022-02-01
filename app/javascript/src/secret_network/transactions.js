@@ -2,7 +2,7 @@ $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     window.onload = async () => {
       this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment);
+      this.chainId = document.secretNetwork.chainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
       document.activateKeplr()
 

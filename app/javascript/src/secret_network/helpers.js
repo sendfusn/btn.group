@@ -44,8 +44,15 @@ document.secretNetwork = {
       }
     }
   },
+  chainId: function(environment) {
+    let chainId = 'secret-4'
+    if (environment == 'staging') {
+      chainId = 'pulsar-2'
+    };
+    return chainId
+  },
   getAndSetUserVipLevel: async(address, client) => {
-    let chainId = document.secretNetworkChainId('production')
+    let chainId = document.secretNetwork.chainId('production')
     document.secretNetwork.userVipLevel = 0
     // Set users vip level
     try {
@@ -76,14 +83,6 @@ document.secretNetwork = {
       return document.secretNetwork.userVipLevel
     }
   }
-}
-
-document.secretNetworkChainId = function(environment) {
-  let chainId = 'secret-4'
-  if (environment == 'staging') {
-    chainId = 'pulsar-2'
-  };
-  return chainId
 }
 
 document.secretNetworkClient = function(environment) {
@@ -117,7 +116,7 @@ document.secretNetworkSigningClient = function(environment, walletAddress, gasPa
     SigningCosmWasmClient,
   } = require('secretjs');
 
-  let chainId = document.secretNetworkChainId(environment)
+  let chainId = document.secretNetwork.chainId(environment)
   let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(environment))
   let keplrOfflineSigner = window.getOfflineSigner(chainId);
   if (environment == 'staging') {

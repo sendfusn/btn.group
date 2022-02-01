@@ -26,7 +26,6 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       this.environment = 'production'
-      this.chainId = document.secretNetworkChainId(this.environment)
       this.contractAddress = document.featureContractAddress(this.environment);
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
@@ -193,10 +192,10 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(this.chainId);
+                await window.keplr.enable(document.secretNetwork.chainId(this.environment));
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
                 this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)

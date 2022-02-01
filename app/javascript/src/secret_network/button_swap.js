@@ -14,9 +14,7 @@ $(document).ready(function(){
       this.toId = 351;
       this.tradePairs = {}
       this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment);
       this.client = document.secretNetworkClient(this.environment);
-      this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.gasWrap = 60_000;
       this.queryCount = 0;
       this.tokenModalFor;
@@ -68,7 +66,7 @@ $(document).ready(function(){
             }
             try {
               if (this.cryptocurrencies[cryptoId]['smart_contract']) {
-                await window.keplr.suggestToken(this.chainId, this.cryptocurrencies[cryptoId]['smart_contract']['address']);
+                await window.keplr.suggestToken(document.secretNetwork.chainId(this.environment), this.cryptocurrencies[cryptoId]['smart_contract']['address']);
               }
               this.updateWalletBalance(cryptoId, selectorPrefix, inputToClickFillTo);
               $balanceViewButton.addClass('d-none')
@@ -554,7 +552,7 @@ $(document).ready(function(){
         try {
           if (cryptocurrency['smart_contract']) {
             cryptoAddress = cryptocurrency['smart_contract']['address']
-            let key = await window.keplr.getSecret20ViewingKey(this.chainId, cryptoAddress)
+            let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(this.environment), cryptoAddress)
             // If they have the key, replace the button with the balance
             let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['smart_contract']['data_hash'])
             balance = balanceResponse['balance']['amount']

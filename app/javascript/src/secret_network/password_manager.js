@@ -30,9 +30,7 @@ $(document).ready(function(){
       this.environment = 'production';
       this.contractAddress = document.featureContractAddress(this.environment);
       this.contractAddressDataHash = 'F466CF15F3186F1816D4D6A4BCEE6998E512179E5DBA9F2922DCCA7640381217'
-      this.chainId = document.secretNetworkChainId(this.environment)
       this.chosenPosition;
-      this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.authentications = []
       this.authenticationsFormatted = []
 
@@ -122,7 +120,7 @@ $(document).ready(function(){
               },
             }
             // Keplr extension injects the offline signer that is compatible with cosmJS.
-            // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+            // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(this.environment):string)` after load event.
             // And it also injects the helper function to `window.keplr`.
             // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
             if (!window.getOfflineSigner || !window.keplr) {
@@ -133,10 +131,10 @@ $(document).ready(function(){
                   // This method will ask the user whether or not to allow access if they haven't visited this website.
                   // Also, it will request user to unlock the wallet if the wallet is locked.
                   // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                  await window.keplr.enable(this.chainId);
+                  await window.keplr.enable(document.secretNetwork.chainId(this.environment));
 
                   // @ts-ignore
-                  const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                  const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                   const accounts = await keplrOfflineSigner.getAccounts();
                   document.secretNetwork.walletAddress = accounts[0].address;
                   this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
@@ -184,7 +182,7 @@ $(document).ready(function(){
         let gas = calculateGas(180_000, dataLength)
         try {
           // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(this.environment):string)` after load event.
           // And it also injects the helper function to `window.keplr`.
           // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
           let gasParams = {
@@ -201,10 +199,10 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(this.chainId);
+                await window.keplr.enable(document.secretNetwork.chainId(this.environment));
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
                 this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
@@ -313,7 +311,7 @@ $(document).ready(function(){
         let gas = calculateGas(122_000, dataLength)
         try {
           // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(this.environment):string)` after load event.
           // And it also injects the helper function to `window.keplr`.
           // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
           let gasParams = {
@@ -330,10 +328,10 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(this.chainId);
+                await window.keplr.enable(document.secretNetwork.chainId(this.environment));
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
                 this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
@@ -376,7 +374,7 @@ $(document).ready(function(){
             },
           }
           // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(this.chainId:string)` after load event.
+          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(this.environment):string)` after load event.
           // And it also injects the helper function to `window.keplr`.
           // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
           if (!window.getOfflineSigner || !window.keplr) {
@@ -387,10 +385,10 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(this.chainId);
+                await window.keplr.enable(document.secretNetwork.chainId(this.environment));
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(this.chainId);
+                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
                 this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)

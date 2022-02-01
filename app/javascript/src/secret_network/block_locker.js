@@ -3,10 +3,8 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       this.environment = 'production';
-      this.chainId = document.secretNetworkChainId(this.environment);
       this.contractAddress = document.featureContractAddress(this.environment);
       this.contractDataHash = '9EF097E81EAB5AEC8594F8860AE47ED859FB6363C836F63BF02F01BE58343D36'
-      this.httpUrl = document.secretNetworkHttpUrl(this.environment)
       this.keplrOfflineSigner;
 
       $(document).on('keplr_connected', async(evt) => {
@@ -39,7 +37,7 @@ $(document).ready(function(){
               // This method will ask the user whether or not to allow access if they haven't visited this website.
               // Also, it will request user to unlock the wallet if the wallet is locked.
               // If you don't request enabling before usage, there is no guarantee that other methods will work.
-              await window.keplr.enable(this.chainId);
+              await window.keplr.enable(document.secretNetwork.chainId(this.environment));
             } else {
               throw("Please use the recent version of keplr extension")
             }
@@ -99,7 +97,7 @@ $(document).ready(function(){
               // This method will ask the user whether or not to allow access if they haven't visited this website.
               // Also, it will request user to unlock the wallet if the wallet is locked.
               // If you don't request enabling before usage, there is no guarantee that other methods will work.
-              await window.keplr.enable(this.chainId);
+              await window.keplr.enable(document.secretNetwork.chainId(this.environment));
             } else {
               throw("Please use the recent version of keplr extension")
             }
@@ -140,7 +138,7 @@ $(document).ready(function(){
               // This method will ask the user whether or not to allow access if they haven't visited this website.
               // Also, it will request user to unlock the wallet if the wallet is locked.
               // If you don't request enabling before usage, there is no guarantee that other methods will work.
-              await window.keplr.enable(this.chainId);
+              await window.keplr.enable(document.secretNetwork.chainId(this.environment));
             } else {
               throw("Please use the recent version of keplr extension")
             }
