@@ -9,7 +9,8 @@ class CreateSwapPathsJob < ApplicationJob
                              .pluck(:cryptocurrency_id)
                              .uniq
     cryptocurrency_ids.each do |from_id|
-      CreateSwapPathsForCryptoJob.perform_later(from_id)
+      run_time = Time.zone.now + rand(60).minutes
+      CreateSwapPathsForCryptoJob.set(wait_until: run_time).perform_later(from_id)
     end
   end
 end

@@ -17,6 +17,7 @@ class SwapPath < ApplicationRecord
     swap_path.swap_path_as_array.each_with_index do |pool_id, index|
       swap_path.pool_swap_paths.create(pool_id: pool_id, position: index)
     end
+    swap_path.set_maximum_tradeable_value
   end
 
   before_save do |swap_path|
@@ -65,6 +66,11 @@ class SwapPath < ApplicationRecord
 
   def gas_in_usd
     Cryptocurrency.find_by(symbol: 'SCRT', official: true).price * gas / 4_000_000
+  end
+
+  def set_maximum_tradeable_value
+    mtv = pools.order(:total_locked).first.total_locked
+    update(maximum_tradeable_value: mtv) if mtv != maximum_tradeable_value
   end
 
   def swap_path_as_array
