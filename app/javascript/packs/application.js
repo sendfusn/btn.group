@@ -165,6 +165,16 @@ document.prettyPrintJSON = function(json) {
   });
 };
 
+document.showAlertInfo = function(text) {
+  toastr.options.closeButton = true;
+  toastr.options.closeDuration = 0;
+  toastr.options.extendedTimeOut = 0;
+  toastr.options.preventDuplicates = true;
+  toastr.options.tapToDismiss = false
+  toastr.options.timeOut = 0;
+  toastr.info(text);
+}
+
 document.showAlertWarning = function(error) {
   toastr.options.closeButton = true;
   toastr.options.closeDuration = 0;

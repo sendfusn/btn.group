@@ -163,7 +163,11 @@ $(document).ready(function(){
           }
         }
         catch(err) {
-          document.showAlertDanger(err)
+          if(err.message && err.message.includes('Wrong viewing key')) {
+            document.showAlertWarning('Viewing key not set: Please set on the "Set viewing key" tab.')
+          } else {
+            document.showAlertDanger(err)
+          }
         }
         finally {
           changeSubmitButtonToReady()
