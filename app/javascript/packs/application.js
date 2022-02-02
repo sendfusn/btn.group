@@ -45,25 +45,27 @@ ActiveStorage.start()
 
 document.activateKeplr = async() => {
   if($(".keplr-wallet").length) {
-    $('.keplr-wallet-button').removeClass('d-none')
+    let keplrSelector = ".keplr-wallet-button"
+    $(keplrSelector).removeClass('d-none')
     window.addEventListener("keplr_keystorechange", () => {
       window.location.reload()
     })
 
-    document.querySelectorAll(".keplr-wallet-button").forEach(item => {
+    document.querySelectorAll(keplrSelector).forEach(item => {
       item.addEventListener('click', async(evt) => {
-        await document.connectKeplrWallet()
+        await document.connectKeplrWallet(keplrSelector)
       })
     })
-    await document.connectKeplrWallet()
+    await document.connectKeplrWallet(keplrSelector)
   }
 }
 
 // Think about loading in the environment here for smart contract interface maybe...
-document.connectKeplrWallet = async() => {
-  $(".keplr-wallet-button").prop("disabled", true);
-  $(".keplr-wallet-button .loading").removeClass("d-none")
-  $(".keplr-wallet-button .ready").addClass("d-none")
+document.connectKeplrWallet = async(selector) => {
+  let $keplrButton = $(selector)
+  $keplrButton.prop("disabled", true);
+  $keplrButton.find(".loading").removeClass("d-none")
+  $keplrButton.find(".ready").addClass("d-none")
   try {
     // Keplr extension injects the offline signer that is compatible with cosmJS.
     // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
@@ -84,12 +86,12 @@ document.connectKeplrWallet = async() => {
         throw "Please use the recent version of keplr extension";
       }
     }
-    $('.keplr-wallet-button').addClass('d-none')
+    $keplrButton.addClass('d-none')
     let accounts = await window.keplrOfflineSigner.getAccounts()
     $('.wallet-details').removeClass('d-none')
     $('.wallet-address').text(accounts[0].address)
     document.secretNetwork.walletAddress = accounts[0].address
-    await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetworkClient('production'))
+    await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client('production'))
     $(document).trigger('keplr_connected', {});
   }
   catch(err) {
@@ -97,9 +99,9 @@ document.connectKeplrWallet = async() => {
     $(document).trigger('keplr_dismissed', {});
   }
   finally {
-    $(".keplr-wallet-button").prop("disabled", false);
-    $(".keplr-wallet-button .ready").removeClass("d-none")
-    $(".keplr-wallet-button .loading").addClass("d-none")
+    $keplrButton.prop("disabled", false);
+    $keplrButton.find(".loading").addClass("d-none")
+    $keplrButton.find(".ready").removeClass("d-none")
   }
 }
 

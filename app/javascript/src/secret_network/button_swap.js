@@ -14,7 +14,7 @@ $(document).ready(function(){
       this.toId = 351;
       this.tradePairs = {}
       this.environment = 'production';
-      this.client = document.secretNetworkClient(this.environment);
+      this.client = document.secretNetwork.client(this.environment);
       this.gasWrap = 60_000;
       this.queryCount = 0;
       this.tokenModalFor;

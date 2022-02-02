@@ -136,7 +136,7 @@ $(document).ready(function(){
           let search_type = document.aliasSearchForm.searchType.value;
           let search_value = document.aliasSearchForm.searchValue.value;
           let search_params = { search_type: search_type, search_value: search_value };
-          let result = await document.secretNetworkClient(this.environment).queryContractSmart(document.secretNetwork.addressAliasContract.address, { search: search_params }, undefined, document.secretNetwork.addressAliasContract.dataHash)
+          let result = await document.secretNetwork.client(this.environment).queryContractSmart(document.secretNetwork.addressAliasContract.address, { search: search_params }, undefined, document.secretNetwork.addressAliasContract.dataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(this.environment) + '/accounts/' + result['attributes']['address']

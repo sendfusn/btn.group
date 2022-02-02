@@ -51,6 +51,23 @@ document.secretNetwork = {
     };
     return chainId
   },
+  client: function(environment) {
+    const {
+      CosmWasmClient,
+    } = require('secretjs');
+
+    if (environment == 'staging') {
+      if (!document.secretNetworkClientStaging) {
+        document.secretNetworkClientStaging = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
+      }
+      return document.secretNetworkClientStaging
+    } else {
+      if (!document.secretNetworkClientProduction) {
+        document.secretNetworkClientProduction = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
+      }
+      return document.secretNetworkClientProduction
+    }
+  },
   getAndSetUserVipLevel: async(address, client) => {
     let chainId = document.secretNetwork.chainId('production')
     document.secretNetwork.userVipLevel = 0
@@ -82,24 +99,6 @@ document.secretNetwork = {
       $("#vip-level").text(document.secretNetwork.userVipLevel)
       return document.secretNetwork.userVipLevel
     }
-  }
-}
-
-document.secretNetworkClient = function(environment) {
-  const {
-    CosmWasmClient,
-  } = require('secretjs');
-
-  if (environment == 'staging') {
-    if (!document.secretNetworkClientStaging) {
-      document.secretNetworkClientStaging = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
-    }
-    return document.secretNetworkClientStaging
-  } else {
-    if (!document.secretNetworkClientProduction) {
-      document.secretNetworkClientProduction = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
-    }
-    return document.secretNetworkClientProduction
   }
 }
 

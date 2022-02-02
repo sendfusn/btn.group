@@ -4,7 +4,7 @@ $(document).ready(function(){
       document.activateKeplr()
       let paramCount = 0;
       this.environment = 'production';
-      this.client =  document.secretNetworkClient(this.environment);
+      this.client =  document.secretNetwork.client(this.environment);
 
       // === LISTENERS ===
       $('#add-new-param').click(function(event){
@@ -89,7 +89,7 @@ $(document).ready(function(){
             // Interact with smart contract
             let result;
             if(document.secretNetworkSmartContractInterfaceForm.interactionType.value == 'query') {
-              this.client =  document.secretNetworkClient(environment);
+              this.client =  document.secretNetwork.client(environment);
               result = await this.client.queryContractSmart(contractAddress, msg);
             } else {
               if (!window.getOfflineSigner || !window.keplr) {

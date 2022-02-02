@@ -7,7 +7,7 @@ $(document).ready(function(){
       this.buttLodeAddress = 'secret1l9msv9yu7mgxant4stu89p0hqugz6j2frj7ne5';
       this.buttLodeDataHash = '99F94EDC0D744B35A8FBCBDC8FB71C140CFA8F3F91FAD8C35B7CC37862A4AC95';
       this.environment = 'production';
-      this.client = document.secretNetworkClient(this.environment);
+      this.client = document.secretNetwork.client(this.environment);
       this.receivableAddress;
 
       try {

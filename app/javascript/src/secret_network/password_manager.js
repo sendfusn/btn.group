@@ -266,12 +266,12 @@ $(document).ready(function(){
           this.searchedAddress = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
           if (searchType == 'alias') {
             let searchParams = { search_type: searchType, search_value: this.searchedAddress };
-            let result = await document.secretNetworkClient(this.environment).queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
+            let result = await document.secretNetwork.client(this.environment).queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
             this.searchedAddress = result['attributes']['address']
           }
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
           let params = { address: this.searchedAddress, key: viewingKey };
-          let response = await document.secretNetworkClient(this.environment).queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
+          let response = await document.secretNetwork.client(this.environment).queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
           }

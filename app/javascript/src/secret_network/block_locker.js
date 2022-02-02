@@ -177,7 +177,7 @@ $(document).ready(function(){
         let result;
         try {
           handleMsg = { user_locker: { address: document.blockLockerViewWhenUnlockedForm.walletAddress.value, passphrase: document.blockLockerViewWhenUnlockedForm.passphrase.value } };
-          result = await document.secretNetworkClient(this.environment).queryContractSmart(this.contractAddress, handleMsg, undefined, this.contractDataHash)
+          result = await document.secretNetwork.client(this.environment).queryContractSmart(this.contractAddress, handleMsg, undefined, this.contractDataHash)
           // Display results
           $("#result-value").html(document.prettyPrintJSON(result));
           $("#result-container").removeClass("d-none");

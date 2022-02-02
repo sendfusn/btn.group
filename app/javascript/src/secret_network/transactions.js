@@ -3,7 +3,7 @@ $(document).ready(function(){
     window.onload = async () => {
       this.environment = 'production';
       this.chainId = document.secretNetwork.chainId(this.environment);
-      this.client = document.secretNetworkClient(this.environment);
+      this.client = document.secretNetwork.client(this.environment);
       document.activateKeplr()
 
       // === LISTENERS ===

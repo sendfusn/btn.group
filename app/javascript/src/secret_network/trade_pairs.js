@@ -4,7 +4,7 @@ $(document).ready(function(){
     window.onload = async () => {
       this.tradePairs = []
       this.environment = 'production';
-      this.client = document.secretNetworkClient(this.environment);
+      this.client = document.secretNetwork.client(this.environment);
       // datatable
       this.datatable = window.$('#trade-pairs-table').DataTable({
         columns: [

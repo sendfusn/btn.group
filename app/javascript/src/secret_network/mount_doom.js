@@ -45,7 +45,7 @@ $(document).ready(function(){
                 viewing_key: "DoTheRightThing.",
               }
             }
-            let transactions_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -59,7 +59,7 @@ $(document).ready(function(){
                       token_id: value['token_id'],
                     }
                   }
-                  let nftInfoResponse = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, params);
+                  let nftInfoResponse = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, params);
                   let imageUrl;
                   let nftName;
                   console.log(nftInfoResponse)
@@ -97,7 +97,7 @@ $(document).ready(function(){
             $("#balance").text('')
             $($('th')[2]).text('Amount')
             // Get the token info
-            let token_info_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, { token_info: {} });
+            let token_info_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, { token_info: {} });
             let token_decimals = token_info_response["token_info"]["decimals"]
             let token_symbol = token_info_response["token_info"]["symbol"]
             // Get the transactions for that token
@@ -109,7 +109,7 @@ $(document).ready(function(){
                 page_size: 1000
               }
             }
-            let transactions_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -153,7 +153,7 @@ $(document).ready(function(){
 
             // Get the balance for the token
             let msg = { balance:{ address: this.contractAddress, key: "DoTheRightThing." } };
-            let balance_response = await document.secretNetworkClient(this.environment).queryContractSmart(tokenAddress, msg)
+            let balance_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, msg)
             if (balance_response["viewing_key_error"]) {
               throw balance_response["viewing_key_error"]["msg"]
             }
