@@ -21,5 +21,8 @@ class CryptoPricesJob < ApplicationJob
         c.update!(price: price['usd'])
       end
     end
+    alter = Cryptocurrency.find_by(symbol: 'ALTER', official: true)
+    susdt = Cryptocurrency.find_by(symbol: 'SUSDT', official: true)
+    alter.update(price: susdt.amount_with_decimals(Pool.find(798).simulate_swap(1_000_000, alter.id)[:return_amount])) if alter.updated_at < Time.current - 30.seconds
   end
 end
