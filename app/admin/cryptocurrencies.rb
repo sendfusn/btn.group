@@ -21,7 +21,6 @@ ActiveAdmin.register Cryptocurrency do
     column :official
     column :coin_gecko_id
     column :nft
-    column :arbitrage
     column :created_at
     column :updated_at
     actions
@@ -34,7 +33,6 @@ ActiveAdmin.register Cryptocurrency do
   filter :official
   filter :nft
   filter :price
-  filter :arbitrage
 
   # # === SHOW ===
   # show do
@@ -56,11 +54,10 @@ ActiveAdmin.register Cryptocurrency do
       f.input :coin_gecko_id
       f.input :official
       f.input :nft
-      f.input :arbitrage
     end
     f.actions
   end
 
   # === PERMIT PARAMS ===
-  permit_params :arbitrage, :blockchain_id, :coin_gecko_id, :smart_contract_id, :decimals, :name, :symbol, :price, :official, :nft
+  permit_params :blockchain_id, :coin_gecko_id, :smart_contract_id, :decimals, :name, :symbol, :price, :official, :nft
 end

@@ -26,12 +26,7 @@ class Pool < ApplicationRecord
   # === CALLBACKS ===
   after_save do |pool|
     if pool.category == 'trade_pair' && pool.enabled
-      if pool.saved_change_to_enabled?
-        CreateSwapPathsJob.perform_later
-        CryptocurrencyPool.deposit.pluck(:cryptocurrency_id).uniq.each do |c_id|
-          CreateArbitragePathsJob.perform_later(Cryptocurrency.find(c_id).symbol)
-        end
-      end
+      CreateSwapPathsJob.perform_later if pool.saved_change_to_enabled?
       SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.saved_change_to_total_locked?
     end
   end
