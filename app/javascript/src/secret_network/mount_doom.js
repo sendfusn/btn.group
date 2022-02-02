@@ -198,7 +198,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                this.client = document.secretNetworkSigningClient(this.environment, this.address, gasParams)
+                this.client = document.secretNetwork.signingClient(this.environment, this.address, gasParams)
               } catch (error) {
                 console.error(error)
               }

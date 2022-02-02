@@ -137,7 +137,7 @@ $(document).ready(function(){
                   const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                   const accounts = await keplrOfflineSigner.getAccounts();
                   document.secretNetwork.walletAddress = accounts[0].address;
-                  this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+                  this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
                 } catch (error) {
                   document.showAlertDanger(error)
                 }
@@ -205,7 +205,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+                this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -334,7 +334,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+                this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -391,7 +391,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+                this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }

@@ -47,7 +47,7 @@ $(document).ready(function(){
               gas: '75000',
             },
           }
-        this.client = document.secretNetworkSigningClient(this.environment, this.admin, gasParams)
+        this.client = document.secretNetwork.signingClient(this.environment, this.admin, gasParams)
         $sendButton = $("#butt-lode-send-button")
         $sendButtonLoading = $("#butt-lode-send-button-loading")
         $sendButtonReady = $("#butt-lode-send-button-ready")

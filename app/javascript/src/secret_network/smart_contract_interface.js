@@ -112,7 +112,7 @@ $(document).ready(function(){
                           gas: '75000',
                         },
                       }
-                    this.client = document.secretNetworkSigningClient(environment, document.secretNetwork.walletAddress, gasParams)
+                    this.client = document.secretNetwork.signingClient(environment, document.secretNetwork.walletAddress, gasParams)
                   } catch (error) {
                     console.error(error)
                   }

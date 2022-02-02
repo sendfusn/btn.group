@@ -654,7 +654,7 @@ $(document).ready(function(){
                 gas: String(this.gasWrap),
               },
             }
-            this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+            this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
           } else {
             let currentFromId = fromId
@@ -718,7 +718,7 @@ $(document).ready(function(){
                 gas: String(gas),
               },
             }
-            this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+            this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
             let returnAmount;
             response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){

@@ -99,6 +99,26 @@ document.secretNetwork = {
       $("#vip-level").text(document.secretNetwork.userVipLevel)
       return document.secretNetwork.userVipLevel
     }
+  },
+  signingClient: function(environment, walletAddress, gasParams) {
+    const {
+      SigningCosmWasmClient,
+    } = require('secretjs');
+
+    let chainId = document.secretNetwork.chainId(environment)
+    let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(environment))
+    let keplrOfflineSigner = window.getOfflineSigner(chainId);
+    if (environment == 'staging') {
+      if (!document.secretNetworkSigningClientStaging) {
+        document.secretNetworkSigningClientStaging = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
+      }
+      return document.secretNetworkSigningClientStaging
+    } else {
+      if (!document.secretNetworkSigningClientProduction) {
+        document.secretNetworkSigningClientProduction = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
+      }
+      return document.secretNetworkSigningClientProduction
+    }
   }
 }
 
@@ -108,25 +128,4 @@ document.secretNetworkHttpUrl = function(environment) {
     http_url = http_url + '_staging'
   };
   return http_url
-}
-
-document.secretNetworkSigningClient = function(environment, walletAddress, gasParams) {
-  const {
-    SigningCosmWasmClient,
-  } = require('secretjs');
-
-  let chainId = document.secretNetwork.chainId(environment)
-  let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(environment))
-  let keplrOfflineSigner = window.getOfflineSigner(chainId);
-  if (environment == 'staging') {
-    if (!document.secretNetworkSigningClientStaging) {
-      document.secretNetworkSigningClientStaging = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
-    }
-    return document.secretNetworkSigningClientStaging
-  } else {
-    if (!document.secretNetworkSigningClientProduction) {
-      document.secretNetworkSigningClientProduction = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
-    }
-    return document.secretNetworkSigningClientProduction
-  }
 }

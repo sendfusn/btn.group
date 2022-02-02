@@ -529,7 +529,7 @@ $(document).ready(function(){
                 gas: value['deposit_gas'],
               },
             }
-            this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+            this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
             $depositButton.prop("disabled", true);
             $depositButtonLoading.removeClass("d-none")
             $depositButtonReady.addClass("d-none")
@@ -603,7 +603,7 @@ $(document).ready(function(){
                   gas: value['withdraw_gas'],
                 },
               }
-              this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+              this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
               let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
               await document.delay(5_000)
               document.showAlertSuccess("Withdraw successful");
@@ -877,7 +877,7 @@ $(document).ready(function(){
               gas: this.pools[0]['deposit_gas'],
             },
           }
-          this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
           $claimSEFI.prop("disabled", true);
           $claimSEFI.find('.loading').removeClass("d-none")
           $claimSEFI.find('.ready').addClass("d-none")
@@ -907,7 +907,7 @@ $(document).ready(function(){
               gas: this.pools[1]['deposit_gas'],
             },
           }
-          this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
           $claimBUTT.prop("disabled", true);
           $claimBUTT.find('.loading').removeClass("d-none")
           $claimBUTT.find('.ready').addClass("d-none")
@@ -937,7 +937,7 @@ $(document).ready(function(){
       //         gas: this.pools[2]['deposit_gas'],
       //       },
       //     }
-      //     this.client = document.secretNetworkSigningClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+      //     this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
       //     $claimBUTT.prop("disabled", true);
       //     $claimBUTT.find('.loading').removeClass("d-none")
       //     $claimBUTT.find('.ready').addClass("d-none")
