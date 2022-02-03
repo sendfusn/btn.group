@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SwapPathsController < ApplicationController
+  before_action :authenticate_admin_user!, only: :index, if: :arbitrage?
   before_action :set_swap_paths
 
   def index
@@ -32,6 +33,12 @@ class SwapPathsController < ApplicationController
   end
 
   private
+
+    def arbitrage?
+      return if params['from_id'].blank? || params['to_id'].blank?
+
+      params['from_id'] == params['to_id']
+    end
 
     def maximum_tradeable_amount
       c = Cryptocurrency.find(params['from_id'])
