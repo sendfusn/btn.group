@@ -33,7 +33,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, this.address, gasParams)
+                this.client = document.secretNetwork.signingClient(this.address, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -87,7 +87,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, this.address, gasParams)
+                this.client = document.secretNetwork.signingClient(this.address, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -135,7 +135,7 @@ $(document).ready(function(){
           let search_type = document.aliasSearchForm.searchType.value;
           let search_value = document.aliasSearchForm.searchValue.value;
           let search_params = { search_type: search_type, search_value: search_value };
-          let result = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(document.secretNetwork.addressAliasContract.address, { search: search_params }, undefined, document.secretNetwork.addressAliasContract.dataHash)
+          let result = await document.secretNetwork.client().queryContractSmart(document.secretNetwork.addressAliasContract.address, { search: search_params }, undefined, document.secretNetwork.addressAliasContract.dataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(document.secretNetwork.environment) + '/accounts/' + result['attributes']['address']

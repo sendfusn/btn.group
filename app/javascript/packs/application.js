@@ -91,7 +91,8 @@ document.connectKeplrWallet = async(selector) => {
     $('.wallet-details').removeClass('d-none')
     $('.wallet-address').text(accounts[0].address)
     document.secretNetwork.walletAddress = accounts[0].address
-    await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client('production'))
+    document.secretNetwork.environment = 'production'
+    await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client())
     $(document).trigger('keplr_connected', {});
   }
   catch(err) {

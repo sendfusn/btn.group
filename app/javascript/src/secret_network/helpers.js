@@ -52,19 +52,19 @@ document.secretNetwork = {
     };
     return chainId
   },
-  client: function(environment) {
+  client: function() {
     const {
       CosmWasmClient,
     } = require('secretjs');
 
-    if (environment == 'staging') {
+    if (document.secretNetwork.environment == 'staging') {
       if (!document.secretNetworkClientStaging) {
-        document.secretNetworkClientStaging = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
+        document.secretNetworkClientStaging = new CosmWasmClient(document.secretNetworkHttpUrl(document.secretNetwork.environment))
       }
       return document.secretNetworkClientStaging
     } else {
       if (!document.secretNetworkClientProduction) {
-        document.secretNetworkClientProduction = new CosmWasmClient(document.secretNetworkHttpUrl(environment))
+        document.secretNetworkClientProduction = new CosmWasmClient(document.secretNetworkHttpUrl(document.secretNetwork.environment))
       }
       return document.secretNetworkClientProduction
     }
@@ -101,15 +101,15 @@ document.secretNetwork = {
       return document.secretNetwork.userVipLevel
     }
   },
-  signingClient: function(environment, walletAddress, gasParams) {
+  signingClient: function(walletAddress, gasParams) {
     const {
       SigningCosmWasmClient,
     } = require('secretjs');
 
-    let chainId = document.secretNetwork.chainId(environment)
-    let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(environment))
+    let chainId = document.secretNetwork.chainId(document.secretNetwork.environment)
+    let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(document.secretNetwork.environment))
     let keplrOfflineSigner = window.getOfflineSigner(chainId);
-    if (environment == 'staging') {
+    if (document.secretNetwork.environment == 'staging') {
       if (!document.secretNetworkSigningClientStaging) {
         document.secretNetworkSigningClientStaging = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
       }

@@ -13,7 +13,7 @@ $(document).ready(function(){
       this.fromId = 515;
       this.toId = 351;
       this.tradePairs = {}
-      this.client = document.secretNetwork.client(document.secretNetwork.environment);
+      this.client = document.secretNetwork.client();
       this.gasWrap = 60_000;
       this.queryCount = 0;
       this.tokenModalFor;
@@ -653,7 +653,7 @@ $(document).ready(function(){
                 gas: String(this.gasWrap),
               },
             }
-            this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+            this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
           } else {
             let currentFromId = fromId
@@ -717,7 +717,7 @@ $(document).ready(function(){
                 gas: String(gas),
               },
             }
-            this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+            this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
             let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
             let returnAmount;
             response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){

@@ -3,7 +3,7 @@ $(document).ready(function(){
     // === LISTENERS ===
     window.onload = async () => {
       this.tradePairs = []
-      this.client = document.secretNetwork.client(document.secretNetwork.environment);
+      this.client = document.secretNetwork.client();
       // datatable
       this.datatable = window.$('#trade-pairs-table').DataTable({
         columns: [

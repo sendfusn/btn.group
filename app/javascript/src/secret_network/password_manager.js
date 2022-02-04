@@ -136,7 +136,7 @@ $(document).ready(function(){
                   const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
                   const accounts = await keplrOfflineSigner.getAccounts();
                   document.secretNetwork.walletAddress = accounts[0].address;
-                  this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+                  this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
                 } catch (error) {
                   document.showAlertDanger(error)
                 }
@@ -204,7 +204,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+                this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -265,12 +265,12 @@ $(document).ready(function(){
           this.searchedAddress = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
           if (searchType == 'alias') {
             let searchParams = { search_type: searchType, search_value: this.searchedAddress };
-            let result = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
+            let result = await document.secretNetwork.client().queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
             this.searchedAddress = result['attributes']['address']
           }
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
           let params = { address: this.searchedAddress, key: viewingKey };
-          let response = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
+          let response = await document.secretNetwork.client().queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
           }
@@ -333,7 +333,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+                this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }
@@ -390,7 +390,7 @@ $(document).ready(function(){
                 const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+                this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
               } catch (error) {
                 document.showAlertDanger(error)
               }

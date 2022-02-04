@@ -3,7 +3,7 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       let paramCount = 0;
-      this.client = document.secretNetwork.client(document.secretNetwork.environment);
+      this.client = document.secretNetwork.client();
 
       // === LISTENERS ===
       $('#add-new-param').click(function(event){
@@ -88,7 +88,7 @@ $(document).ready(function(){
             // Interact with smart contract
             let result;
             if(document.secretNetworkSmartContractInterfaceForm.interactionType.value == 'query') {
-              this.client =  document.secretNetwork.client(document.secretNetwork.environment);
+              this.client =  document.secretNetwork.client();
               result = await this.client.queryContractSmart(contractAddress, msg);
             } else {
               if (!window.getOfflineSigner || !window.keplr) {
@@ -111,7 +111,7 @@ $(document).ready(function(){
                           gas: '75000',
                         },
                       }
-                    this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+                    this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
                   } catch (error) {
                     console.error(error)
                   }

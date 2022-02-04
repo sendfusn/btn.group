@@ -2,7 +2,7 @@ $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     window.onload = async () => {
       this.chainId = document.secretNetwork.chainId(document.secretNetwork.environment);
-      this.client = document.secretNetwork.client(document.secretNetwork.environment);
+      this.client = document.secretNetwork.client();
       document.activateKeplr()
 
       // === LISTENERS ===

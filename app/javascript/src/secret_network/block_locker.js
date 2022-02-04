@@ -70,7 +70,7 @@ $(document).ready(function(){
                 gas: '200000',
               },
             }
-          this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
           resultText = "Locker updated."
           await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
@@ -110,7 +110,7 @@ $(document).ready(function(){
                 gas: '100000',
               },
             }
-          this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
           resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
           await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
@@ -150,7 +150,7 @@ $(document).ready(function(){
                 gas: '37500',
               },
             }
-          this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
           result = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractDataHash)
           result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           result = JSON.parse(resultText)
@@ -176,7 +176,7 @@ $(document).ready(function(){
         let result;
         try {
           handleMsg = { user_locker: { address: document.blockLockerViewWhenUnlockedForm.walletAddress.value, passphrase: document.blockLockerViewWhenUnlockedForm.passphrase.value } };
-          result = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(this.contractAddress, handleMsg, undefined, this.contractDataHash)
+          result = await document.secretNetwork.client().queryContractSmart(this.contractAddress, handleMsg, undefined, this.contractDataHash)
           // Display results
           $("#result-value").html(document.prettyPrintJSON(result));
           $("#result-container").removeClass("d-none");
