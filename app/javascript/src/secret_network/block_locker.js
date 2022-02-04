@@ -2,8 +2,7 @@ $(document).ready(function(){
   if($("#secret-network-block-locker").length) {
     window.onload = async () => {
       document.activateKeplr()
-      this.environment = 'production';
-      this.contractAddress = document.featureContractAddress(this.environment);
+      this.contractAddress = document.featureContractAddress(document.secretNetwork.environment);
       this.contractDataHash = '9EF097E81EAB5AEC8594F8860AE47ED859FB6363C836F63BF02F01BE58343D36'
       this.keplrOfflineSigner;
 
@@ -37,7 +36,7 @@ $(document).ready(function(){
               // This method will ask the user whether or not to allow access if they haven't visited this website.
               // Also, it will request user to unlock the wallet if the wallet is locked.
               // If you don't request enabling before usage, there is no guarantee that other methods will work.
-              await window.keplr.enable(document.secretNetwork.chainId(this.environment));
+              await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
             } else {
               throw("Please use the recent version of keplr extension")
             }
@@ -71,7 +70,7 @@ $(document).ready(function(){
                 gas: '200000',
               },
             }
-          this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
           resultText = "Locker updated."
           await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
@@ -97,7 +96,7 @@ $(document).ready(function(){
               // This method will ask the user whether or not to allow access if they haven't visited this website.
               // Also, it will request user to unlock the wallet if the wallet is locked.
               // If you don't request enabling before usage, there is no guarantee that other methods will work.
-              await window.keplr.enable(document.secretNetwork.chainId(this.environment));
+              await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
             } else {
               throw("Please use the recent version of keplr extension")
             }
@@ -111,7 +110,7 @@ $(document).ready(function(){
                 gas: '100000',
               },
             }
-          this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
           resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
           await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
           document.showAlertSuccess(resultText)
@@ -138,7 +137,7 @@ $(document).ready(function(){
               // This method will ask the user whether or not to allow access if they haven't visited this website.
               // Also, it will request user to unlock the wallet if the wallet is locked.
               // If you don't request enabling before usage, there is no guarantee that other methods will work.
-              await window.keplr.enable(document.secretNetwork.chainId(this.environment));
+              await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
             } else {
               throw("Please use the recent version of keplr extension")
             }
@@ -151,7 +150,7 @@ $(document).ready(function(){
                 gas: '37500',
               },
             }
-          this.client = document.secretNetwork.signingClient(this.environment, document.secretNetwork.walletAddress, gasParams)
+          this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
           result = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractDataHash)
           result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           result = JSON.parse(resultText)
@@ -177,7 +176,7 @@ $(document).ready(function(){
         let result;
         try {
           handleMsg = { user_locker: { address: document.blockLockerViewWhenUnlockedForm.walletAddress.value, passphrase: document.blockLockerViewWhenUnlockedForm.passphrase.value } };
-          result = await document.secretNetwork.client(this.environment).queryContractSmart(this.contractAddress, handleMsg, undefined, this.contractDataHash)
+          result = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(this.contractAddress, handleMsg, undefined, this.contractDataHash)
           // Display results
           $("#result-value").html(document.prettyPrintJSON(result));
           $("#result-container").removeClass("d-none");

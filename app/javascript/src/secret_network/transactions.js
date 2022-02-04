@@ -1,9 +1,8 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     window.onload = async () => {
-      this.environment = 'production';
-      this.chainId = document.secretNetwork.chainId(this.environment);
-      this.client = document.secretNetwork.client(this.environment);
+      this.chainId = document.secretNetwork.chainId(document.secretNetwork.environment);
+      this.client = document.secretNetwork.client(document.secretNetwork.environment);
       document.activateKeplr()
 
       // === LISTENERS ===

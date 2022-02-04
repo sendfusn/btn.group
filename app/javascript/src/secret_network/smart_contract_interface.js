@@ -3,8 +3,7 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       let paramCount = 0;
-      this.environment = 'production';
-      this.client =  document.secretNetwork.client(this.environment);
+      this.client = document.secretNetwork.client(document.secretNetwork.environment);
 
       // === LISTENERS ===
       $('#add-new-param').click(function(event){
@@ -45,9 +44,9 @@ $(document).ready(function(){
         (async () => {
           try {
             // Set environment
-            let environment = document.featureEnvironment();
-            let chainId = document.secretNetwork.chainId(environment)
-            let httpUrl = document.secretNetworkHttpUrl(environment)
+            document.secretNetwork.environment = document.featureEnvironment();
+            let chainId = document.secretNetwork.chainId(document.secretNetwork.environment)
+            let httpUrl = document.secretNetworkHttpUrl(document.secretNetwork.environment)
             // Set params
             let contractAddress = document.secretNetworkSmartContractInterfaceForm.contractAddress.value;
             let functionName = document.secretNetworkSmartContractInterfaceForm.functionName.value;
@@ -89,7 +88,7 @@ $(document).ready(function(){
             // Interact with smart contract
             let result;
             if(document.secretNetworkSmartContractInterfaceForm.interactionType.value == 'query') {
-              this.client =  document.secretNetwork.client(environment);
+              this.client =  document.secretNetwork.client(document.secretNetwork.environment);
               result = await this.client.queryContractSmart(contractAddress, msg);
             } else {
               if (!window.getOfflineSigner || !window.keplr) {
@@ -112,7 +111,7 @@ $(document).ready(function(){
                           gas: '75000',
                         },
                       }
-                    this.client = document.secretNetwork.signingClient(environment, document.secretNetwork.walletAddress, gasParams)
+                    this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, document.secretNetwork.walletAddress, gasParams)
                   } catch (error) {
                     console.error(error)
                   }

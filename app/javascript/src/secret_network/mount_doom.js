@@ -25,8 +25,7 @@ $(document).ready(function(){
 
     window.onload = async () => {
       document.activateKeplr()
-      this.environment = 'production'
-      this.contractAddress = document.featureContractAddress(this.environment);
+      this.contractAddress = document.featureContractAddress(document.secretNetwork.environment);
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
         $nftsContainer = $('#nfts-container')
@@ -45,7 +44,7 @@ $(document).ready(function(){
                 viewing_key: "DoTheRightThing.",
               }
             }
-            let transactions_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -59,7 +58,7 @@ $(document).ready(function(){
                       token_id: value['token_id'],
                     }
                   }
-                  let nftInfoResponse = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, params);
+                  let nftInfoResponse = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(tokenAddress, params);
                   let imageUrl;
                   let nftName;
                   console.log(nftInfoResponse)
@@ -97,7 +96,7 @@ $(document).ready(function(){
             $("#balance").text('')
             $($('th')[2]).text('Amount')
             // Get the token info
-            let token_info_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, { token_info: {} });
+            let token_info_response = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(tokenAddress, { token_info: {} });
             let token_decimals = token_info_response["token_info"]["decimals"]
             let token_symbol = token_info_response["token_info"]["symbol"]
             // Get the transactions for that token
@@ -109,7 +108,7 @@ $(document).ready(function(){
                 page_size: 1000
               }
             }
-            let transactions_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -153,7 +152,7 @@ $(document).ready(function(){
 
             // Get the balance for the token
             let msg = { balance:{ address: this.contractAddress, key: "DoTheRightThing." } };
-            let balance_response = await document.secretNetwork.client(this.environment).queryContractSmart(tokenAddress, msg)
+            let balance_response = await document.secretNetwork.client(document.secretNetwork.environment).queryContractSmart(tokenAddress, msg)
             if (balance_response["viewing_key_error"]) {
               throw balance_response["viewing_key_error"]["msg"]
             }
@@ -196,13 +195,13 @@ $(document).ready(function(){
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
                 // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(document.secretNetwork.chainId(this.environment));
+                await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
 
                 // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(this.environment));
+                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
                 const accounts = await keplrOfflineSigner.getAccounts();
                 this.address = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(this.environment, this.address, gasParams)
+                this.client = document.secretNetwork.signingClient(document.secretNetwork.environment, this.address, gasParams)
               } catch (error) {
                 console.error(error)
               }
