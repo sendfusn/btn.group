@@ -53,16 +53,18 @@ document.activateKeplr = async() => {
 
     document.querySelectorAll(keplrSelector).forEach(item => {
       item.addEventListener('click', async(evt) => {
-        await document.connectKeplrWallet(keplrSelector)
+        await document.connectKeplrWallet()
       })
     })
-    await document.connectKeplrWallet(keplrSelector)
+    await document.connectKeplrWallet()
   }
 }
 
-// Think about loading in the environment here for smart contract interface maybe...
-document.connectKeplrWallet = async(selector) => {
-  let $keplrButton = $(selector)
+// The environment for this always has to be production for the user vip level stuff
+// But then does it mean that the user vip level stuff is going to be called every time?
+document.connectKeplrWallet = async() => {
+  document.secretNetwork.walletAddress = undefined
+  let $keplrButton = $(".keplr-wallet-button")
   $keplrButton.prop("disabled", true);
   $keplrButton.find(".loading").removeClass("d-none")
   $keplrButton.find(".ready").addClass("d-none")

@@ -1,54 +1,28 @@
 $(document).ready(function(){
   if($("#secret-network-address-alias").length) {
     window.onload = async() => {
-      document.activateKeplr()
-
       document.aliasDeleteForm.onsubmit = async (e) => {
         e.preventDefault()
         $("#delete-button").prop("disabled", true);
         $("#delete-loading").removeClass("d-none")
         $("#delete-ready").addClass("d-none")
         try {
-          let gasParams = {
-            exec: {
-              amount: [{ amount: '50000', denom: 'uscrt' }],
-              gas: '50000',
-            },
-          }
-          // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment):string)` after load event.
-          // And it also injects the helper function to `window.keplr`.
-          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-          if (!window.getOfflineSigner || !window.keplr) {
-            alert("Please install keplr extension");
-          } else {
-            if (window.keplr.experimentalSuggestChain) {
-              try {
-                // This method will ask the user whether or not to allow access if they haven't visited this website.
-                // Also, it will request user to unlock the wallet if the wallet is locked.
-                // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
-
-                // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
-                const accounts = await keplrOfflineSigner.getAccounts();
-                this.address = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(this.address, gasParams)
-              } catch (error) {
-                document.showAlertDanger(error)
-              }
-            } else {
-              alert("Please use the recent version of keplr extension");
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            let alias = $("#delete-button").data('alias');
+            let gasParams = {
+              exec: {
+                amount: [{ amount: '50000', denom: 'uscrt' }],
+                gas: '50000',
+              },
             }
+            let handleMsg = { destroy: { alias: alias } }
+            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.addressAliasContract.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.addressAliasContract.dataHash)
+            $("#result-value").html('')
+            $("#result-container").addClass("d-none");
+            $("#result-value-container").addClass("d-none");
+            document.showAlertSuccess('Alias deleted.')
           }
-
-          let alias = $("#delete-button").data('alias');
-          let handleMsg = { destroy: { alias: alias } }
-          let response = await this.client.execute(document.secretNetwork.addressAliasContract.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.addressAliasContract.dataHash)
-          $("#result-value").html('')
-          $("#result-container").addClass("d-none");
-          $("#result-value-container").addClass("d-none");
-          document.showAlertSuccess('Alias deleted.')
         }
         catch(err) {
           document.showAlertDanger(err)
@@ -67,48 +41,31 @@ $(document).ready(function(){
         $("#create-button").find(".ready").addClass("d-none")
         document.hideAllAlerts();
         try {
-          let gasParams = {
-            exec: {
-              amount: [{ amount: '100000', denom: 'uscrt' }],
-              gas: '100000',
-            },
-          }
-          if (!window.getOfflineSigner || !window.keplr) {
-            alert("Please install keplr extension");
-          } else {
-            if (window.keplr.experimentalSuggestChain) {
-              try {
-                // This method will ask the user whether or not to allow access if they haven't visited this website.
-                // Also, it will request user to unlock the wallet if the wallet is locked.
-                // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
-
-                // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
-                const accounts = await keplrOfflineSigner.getAccounts();
-                this.address = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(this.address, gasParams)
-              } catch (error) {
-                document.showAlertDanger(error)
-              }
-            } else {
-              alert("Please use the recent version of keplr extension");
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            let alias = document.aliasCreateForm.alias.value
+            let avatarUrl = document.aliasCreateForm.avatarUrl.value;
+            let gasParams = {
+              exec: {
+                amount: [{ amount: '100000', denom: 'uscrt' }],
+                gas: '100000',
+              },
             }
+            let handleMsg = { send: { amount: '1000000', recipient: document.secretNetwork.addressAliasContract.address, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
+            let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
+            $("#result-value-container").removeClass("d-none");
+            // $("#result-value").html(document.prettyPrintJSON(result));
+            let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(document.secretNetwork.environment) + '/accounts/' + document.secretNetwork.walletAddress
+            let resultValueHtml = '<h3 class="mb-0">' + alias + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + document.secretNetwork.walletAddress + '</a><img class="w-100" src="' + avatarUrl + '">'
+            $("#result-value").html(resultValueHtml)
+            // Set data on delete button
+            $("#delete-button").data('alias', alias)
+            $("#result-container").removeClass("d-none");
+            $('#delete-button').removeClass('d-none')
+            $('html, body').animate({
+                scrollTop: $("#result-container").offset().top
+            }, 2000);
           }
-
-          let alias = document.aliasCreateForm.alias.value
-          let avatarUrl = document.aliasCreateForm.avatarUrl.value;
-          let handleMsg = { send: { amount: '1000000', recipient: document.secretNetwork.addressAliasContract.address, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
-          let response = await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
-          $("#result-value-container").removeClass("d-none");
-          // $("#result-value").html(document.prettyPrintJSON(result));
-          let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(document.secretNetwork.environment) + '/accounts/' + this.address
-          let resultValueHtml = '<h3 class="mb-0">' + alias + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + this.address + '</a><img class="w-100" src="' + avatarUrl + '">'
-          $("#result-value").html(resultValueHtml)
-          // Set data on delete button
-          $("#delete-button").data('alias', alias)
-          $("#result-container").removeClass("d-none");
-          $('#delete-button').removeClass('d-none')
         }
         catch(err) {
           let errorDisplayMessage = err;
@@ -142,11 +99,9 @@ $(document).ready(function(){
           let resultValueHtml = '<h3 class="mb-0">' + result['attributes']['alias'] + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + result['attributes']['address'] + '</a><img class="w-100" src="' + result['attributes']['avatar_url'] + '">'
           $("#result-value").html(resultValueHtml)
           $("#result-container").removeClass("d-none");
-          if (window.keplrOfflineSigner) {
+          if (document.secretNetwork.walletAddress) {
             $("#delete-button").data('alias', result['attributes']['alias'])
-            let accounts = await window.keplrOfflineSigner.getAccounts()
-            let walletAddress = accounts[0].address
-            if (walletAddress == result['attributes']['address']) {
+            if (document.secretNetwork.walletAddress == result['attributes']['address']) {
               $('#delete-button').removeClass('d-none')
             } else {
               $('#delete-button').addClass('d-none')
@@ -167,6 +122,8 @@ $(document).ready(function(){
           $("#ready").removeClass("d-none")
         }
       };
+
+      document.activateKeplr()
     }
 
     // === CLOUDINARY ===
