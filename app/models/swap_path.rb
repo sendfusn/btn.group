@@ -53,8 +53,7 @@ class SwapPath < ApplicationRecord
   end
 
   def gas
-    g = 0
-    # g += 100_000 if swap_count >= 2
+    g = 100_000
     swap_path_as_array.each_with_index do |pool_id, index|
       protocol_identifier = Pool.find(pool_id).protocol.identifier
       g += 185_000 if protocol_identifier == 'sienna'
