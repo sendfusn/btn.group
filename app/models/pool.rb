@@ -27,17 +27,16 @@ class Pool < ApplicationRecord
     if pool.category == 'trade_pair'
       CreateSwapPathsJob.perform_later if pool.enabled && pool.saved_change_to_enabled?
       pool.swap_paths.find_each(&:destroy!) if !pool.enabled && pool.saved_change_to_enabled?
-      # I think this could be refined so that a general job is scheduled to run for all pools that have been updated in the last minute with the correct params
-      # like pools with the correct params that have had cryptocurrency pools updated in the last minute or something
-      # That way we can schedule it a few minutes time and not schedule if already scheduled
       SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.saved_change_to_total_locked?
     end
   end
 
   before_save do |pool|
-    pool.enabled = true if !pool.enabled && pool.total_locked.present? && pool.will_save_change_to_total_locked?
-    # Disable trade pool if total locked is zero and both cryptocurrency pools have been updated in the last 5 minutes
-    pool.enabled = false if pool.enabled && pool.total_locked.zero? && pool.will_save_change_to_total_locked? && pool.category == 'trade_pair' && pool.cryptocurrency_pools.deposit.where('updated_at > ?', Time.current - 5.minutes).count == 2
+    # If the other cryptocurrency pool has been updated in the last minute, the second one will trigger all this.
+    if pool.will_save_change_to_total_locked? && pool.category == 'trade_pair' && pool.cryptocurrency_pools.deposit.where('updated_at > ?', Time.current - 1.minute).count == 1
+      pool.enabled = true if !pool.enabled && pool.total_locked.present?
+      pool.enabled = false if pool.enabled && pool.total_locked.zero?
+    end
   end
 
   # === INSTANCE METHODS ===
