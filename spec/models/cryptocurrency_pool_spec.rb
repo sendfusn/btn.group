@@ -63,40 +63,5 @@ RSpec.describe CryptocurrencyPool, type: :model do
         end
       end
     end
-
-    describe 'disabling trade pair' do
-      before { allow(pool).to receive(:update!) }
-
-      context 'when cryptocurrency role is not deposit' do
-        context 'when cp amount is zero' do
-          it 'does not disable pool' do
-            cp.update!(amount: '0')
-            expect(pool).not_to have_received(:update!).with(enabled: false)
-          end
-        end
-      end
-
-      context 'when cryptocurrency role is deposit' do
-        before { cp.cryptocurrency_role = 'deposit' }
-
-        context 'when cp pool is trade_pair' do
-          before { cp.pool.update(category: 'trade_pair') }
-
-          context 'when cp amount is not zero' do
-            it 'does not disable pool' do
-              cp.update!(amount: '1')
-              expect(pool).not_to have_received(:update!).with(enabled: false)
-            end
-          end
-
-          context 'when cp amount is zero' do
-            it 'disables pool' do
-              cp.update!(amount: '0')
-              expect(pool).to have_received(:update!).with(enabled: false)
-            end
-          end
-        end
-      end
-    end
   end
 end
