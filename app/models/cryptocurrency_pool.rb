@@ -16,11 +16,8 @@ class CryptocurrencyPool < ApplicationRecord
 
   # === CALLBACKS ===
 
-  # when the amount is changed, we need to update the total locked in the pool
+  # when the deposit amount is changed, we need to update the total locked in the pool
   after_save do |cp|
-    if cp.deposit? && cp.amount.present? && cp.saved_change_to_amount?
-      cp.pool.update_total_locked
-      cp.pool.update!(enabled: false) if cp.pool.trade_pair? && cp.amount.to_i.zero?
-    end
+    cp.pool.update_total_locked if cp.deposit? && cp.saved_change_to_amount?
   end
 end

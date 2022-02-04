@@ -24,15 +24,17 @@ class Pool < ApplicationRecord
 
   # === CALLBACKS ===
   after_save do |pool|
-    if pool.category == 'trade_pair' && pool.enabled
-      CreateSwapPathsJob.perform_later if pool.saved_change_to_enabled?
+    if pool.category == 'trade_pair'
+      CreateSwapPathsJob.perform_later if pool.enabled && pool.saved_change_to_enabled?
+      # I think this could be refined so that a general job is scheduled to run for all pools that have been updated in the last minute with the correct params
+      # like pools with the correct params that have had cryptocurrency pools updated in the last minute or something
+      # That way we can schedule it a few minutes time and not schedule if already scheduled
       SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.saved_change_to_total_locked?
-      pool.update(enabled: false) if pool.trade_pair_without_liquidity?
     end
   end
 
-  after_update do |pool|
-    pool.swap_paths.destroy_all if pool.category == 'trade_pair' && !pool.enabled && pool.saved_change_to_enabled?
+  before_save do |pool|
+    pool.enabled = true if !pool.enabled && pool.total_locked.present? && pool.will_save_change_to_total_locked?
   end
 
   # === INSTANCE METHODS ===
@@ -62,12 +64,8 @@ class Pool < ApplicationRecord
       commission_amount: commission_amount.to_i }
   end
 
-  def trade_pair_without_liquidity?
-    return unless trade_pair?
-
-    cryptocurrency_pools.deposit.where.not(amount: '0').count != 2
-  end
-
+  # This will set total_locked to zero if all any deposit cryptocurrencies are missing
+  # a price or amount
   def update_total_locked
     total_locked = 0.0
     cryptocurrency_pools.deposit.find_each do |cp|
