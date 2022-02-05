@@ -112,7 +112,7 @@ $(document).ready(function(){
 
             // Description & Amount
             let amount = value['coins']['amount']
-            amount = applyDecimals(amount, token_decimals)
+            amount = document.applyDecimals(amount, token_decimals)
             let description = '<a href="'
             let descriptionAddress;
             if (address != value['receiver']) {
@@ -145,7 +145,7 @@ $(document).ready(function(){
           }
           let balance_response = await this.client.queryContractSmart(contractAddress, params);
           // Display results
-          $('#balance').text(applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
+          $('#balance').text(document.applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
         }
         catch(err) {
           console.error(err)
@@ -167,10 +167,6 @@ $(document).ready(function(){
           $("#loading").addClass("d-none")
           $("#ready").removeClass("d-none")
         }
-      }
-
-      function applyDecimals(amount, decimals) {
-        return amount / parseFloat("1" + '0'.repeat(decimals))
       }
     };
   }
