@@ -44,6 +44,12 @@ $(document).ready(function(){
         }
       }
 
+      // === LIST ===
+      var options = {
+        valueNames: [ 'address', 'symbol' ]
+      };
+      this.tokenList = new List('hacker-list', options);
+
       // === LISTENERS ===
       if ($('#arbitrage-container').length) {
         $('#arbitrage-enabled').change(function() {
@@ -145,6 +151,8 @@ $(document).ready(function(){
       // === Functions ===
       this.updateAfterTokenSelect = async(event) => {
         $('.modal').modal('hide');
+        $('#input-text-2').val('');
+        this.tokenList.search()
         if(this.tokenModalFor == 'from') {
           this.fromId = event['currentTarget']['dataset']['cryptocurrencyId']
           this.updateWalletBalance(this.fromId, '.from', this.fromAmountInputSelector)
@@ -773,12 +781,6 @@ $(document).ready(function(){
           $submitButton.find('.ready').removeClass('d-none')
         }
       };
-
-      var options = {
-        valueNames: [ 'address', 'symbol' ]
-      };
-
-      var hackerList = new List('hacker-list', options);
 
       this.getAndSetCryptocurrenciesAndTradePairs()
     }
