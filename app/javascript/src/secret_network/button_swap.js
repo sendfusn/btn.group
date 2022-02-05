@@ -5,7 +5,6 @@ $(document).ready(function(){
     $('header').addClass('h-100')
 
     window.onload = async () => {
-      document.activateKeplr()
       this.cryptocurrencies = {}
       this.dexAggregatorSmartContractAddress ='secret14qvf0dltj7ugdtcuvpd20323k5h4wpd905ssud';
       this.dexAggregatorDataHash = '4B2AE0ECBEF722BCC85AAEBB501F2814BF4FC4C94A8E62574BFAB009CEBF719C'
@@ -103,6 +102,7 @@ $(document).ready(function(){
         this.updateWalletBalance(this.toId, '.to')
       })
       $('#flip-token').click(function(event){
+        event.preventDefault()
         let fromId = this.fromId
         let toId = this.toId
         this.fromId = toId
@@ -782,6 +782,7 @@ $(document).ready(function(){
         }
       };
 
+      document.activateKeplr()
       this.getAndSetCryptocurrenciesAndTradePairs()
     }
   }
