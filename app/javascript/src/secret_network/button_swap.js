@@ -340,7 +340,7 @@ $(document).ready(function(){
               this.renderTable()
               this.fillForm()
               $('#results').removeClass('d-none')
-              if ($("#arbitrage-enabled").val() == 'on' && Number($("#to-amount-input").val()) - 1 > Number($("#from-amount-input").val())) {
+              if ($("#arbitrage-enabled").val() == 'on' && Number($("#to-amount-input").val()) - Number($("#arbitrage-profit").val()) > Number($("#from-amount-input").val())) {
                 $('#bird-audio')[0].play()
               }
             }
