@@ -6,6 +6,18 @@
           .container
             .row.justify-content-center
               .col-xl-6.col-lg-7.col-md-9.col-sm-10
+                - if current_admin_user
+                  %audio#bird-audio{ src: '../audios/birds.mp3' }
+                  .card#arbitrage-container
+                    %h5 Admin arbitrage options
+                    %p.mb-0
+                      %b Enabled:
+                      %input#arbitrage-enabled{ type: 'checkbox', checked: false }
+                    .form-group
+                      .input-group.mb-3
+                        %input.form-control#arbitrage-seconds{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0', step: '1', value: '300' }
+                        .input-group-append
+                          %span.input-group-text Seconds
                 .card.my-3
                   = render 'features_header', blockchain: :secret_network, feature: :button_swap, show_environment_switch: false
                   .collapse.mt-2#exampleCollapseExample

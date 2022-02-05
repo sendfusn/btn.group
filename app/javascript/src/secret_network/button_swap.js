@@ -45,6 +45,17 @@ $(document).ready(function(){
       }
 
       // === LISTENERS ===
+      if ($('#arbitrage-container').length) {
+        $('#arbitrage-enabled').change(function() {
+          if($('#arbitrage-enabled').is(":checked")) {
+            let arbitrageSeconds = $("#arbitrage-seconds").val()
+            const arbitrageInterval = setInterval(function() { $('#from-amount-input').trigger("input") }, arbitrageSeconds * 1_000);
+          } else {
+            clearInterval(arbitrageInterval);
+          }
+        });
+      }
+
       $.each(['.from-balance-view-button', '.to-balance-view-button'], function(index, value) {
         let $balanceViewButton = $(value)
         document.querySelectorAll(value).forEach(item => {
@@ -321,6 +332,9 @@ $(document).ready(function(){
               this.renderTable()
               this.fillForm()
               $('#results').removeClass('d-none')
+              if ($("#arbitrage-enabled").val() == 'on' && $("#from-amount-input").val() > $("#to-amount-input").val() + 1) {
+                $('#bird-audio')[0].play()
+              }
             }
           }
         } catch(error) {
