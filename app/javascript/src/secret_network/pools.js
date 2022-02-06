@@ -500,9 +500,12 @@ $(document).ready(function(){
             $balanceViewButton.find('.loading').removeClass('d-none')
             $balanceViewButton.find('.ready').addClass('d-none')
             try {
-              await window.keplr.suggestToken(document.secretNetwork.chainId(document.secretNetwork.environment), value['deposit_token']['address']);
-              this.updateWalletBalance(value['deposit_token'], value);
-              $balanceViewButton.addClass('d-none')
+              await document.connectKeplrWallet()
+              if (document.secretNetwork.walletAddress) {
+                await window.keplr.suggestToken(document.secretNetwork.chainId(document.secretNetwork.environment), value['deposit_token']['address']);
+                this.updateWalletBalance(value['deposit_token'], value);
+                $balanceViewButton.addClass('d-none')
+              }
             } catch(err) {
               let errorDisplayMessage = err;
               document.showAlertDanger(errorDisplayMessage)          
@@ -533,14 +536,17 @@ $(document).ready(function(){
             $depositButtonLoading.removeClass("d-none")
             $depositButtonReady.addClass("d-none")
             try {
-              let amount = document[value['address'] + 'DepositForm'].amount.value;
-              amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
-              let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
-              let response = await this.client.execute(value['deposit_token']['address'], handleMsg, '', [], gasParams.exec, value['deposit_token']['dataHash'])
-              await document.delay(5_000)
-              document.showAlertSuccess("Deposit successful");
-              document[value['address'] + 'DepositForm'].amount.value = ''
-              this.updatePoolInterface(value, true)
+              await document.connectKeplrWallet()
+              if (document.secretNetwork.walletAddress) {
+                let amount = document[value['address'] + 'DepositForm'].amount.value;
+                amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
+                let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
+                let response = await this.client.execute(value['deposit_token']['address'], handleMsg, '', [], gasParams.exec, value['deposit_token']['dataHash'])
+                await document.delay(5_000)
+                document.showAlertSuccess("Deposit successful");
+                document[value['address'] + 'DepositForm'].amount.value = ''
+                this.updatePoolInterface(value, true)
+              }
             }
             catch(err) {
               // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
@@ -586,28 +592,31 @@ $(document).ready(function(){
             $withdrawButtonLoading.removeClass("d-none")
             $withdrawButtonReady.addClass("d-none")
             try {
-              let amount = document[value['address'] + 'WithdrawForm'].amount.value
-              amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
-              let handleMsg;
-              if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
-                handleMsg = { withdraw: { shares_amount: amount } }
-              } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || value['address'] == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || value['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-                handleMsg = { withdraw: { amount: amount } }
-              } else {
-                handleMsg = { withdraw: { incentivized_token_amount: amount } }
+              await document.connectKeplrWallet()
+              if (document.secretNetwork.walletAddress) {
+                let amount = document[value['address'] + 'WithdrawForm'].amount.value
+                amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
+                let handleMsg;
+                if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
+                  handleMsg = { withdraw: { shares_amount: amount } }
+                } else if (value['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || value['address'] == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || value['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
+                  handleMsg = { withdraw: { amount: amount } }
+                } else {
+                  handleMsg = { withdraw: { incentivized_token_amount: amount } }
+                }
+                let gasParams = {
+                  exec: {
+                    amount: [{ amount: value['withdraw_gas'], denom: 'uscrt' }],
+                    gas: value['withdraw_gas'],
+                  },
+                }
+                this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
+                let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
+                await document.delay(5_000)
+                document.showAlertSuccess("Withdraw successful");
+                document[value['address'] + 'WithdrawForm'].amount.value = ''
+                this.updatePoolInterface(value, true)
               }
-              let gasParams = {
-                exec: {
-                  amount: [{ amount: value['withdraw_gas'], denom: 'uscrt' }],
-                  gas: value['withdraw_gas'],
-                },
-              }
-              this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-              let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
-              await document.delay(5_000)
-              document.showAlertSuccess("Withdraw successful");
-              document[value['address'] + 'WithdrawForm'].amount.value = ''
-              this.updatePoolInterface(value, true)
             }
             catch(err) {
               console.log(err)
@@ -822,15 +831,18 @@ $(document).ready(function(){
         let $walletBalanceLoading = $('.' + address + '-balance-loading')
         let $walletBalanceViewButton = $('.' + address + '-balance-view-button')
         try {
-          $walletBalance.addClass('d-none')
-          $walletBalanceLoading.removeClass('d-none')
-          let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(document.secretNetwork.environment), address)
-          // If they have the key, replace the button with the balance
-          let balanceResponse = await document.secretNetwork.client().queryContractSmart(address, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['dataHash'])
-          let balanceFormatted = document.humanizeStringNumberFromSmartContract(balanceResponse['balance']['amount'], cryptocurrency['decimals'])
-          $walletBalance.text(balanceFormatted)
-          $walletBalance.removeClass('d-none')
-          $walletBalanceViewButton.addClass('d-none')
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            $walletBalance.addClass('d-none')
+            $walletBalanceLoading.removeClass('d-none')
+            let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(document.secretNetwork.environment), address)
+            // If they have the key, replace the button with the balance
+            let balanceResponse = await document.secretNetwork.client().queryContractSmart(address, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['dataHash'])
+            let balanceFormatted = document.humanizeStringNumberFromSmartContract(balanceResponse['balance']['amount'], cryptocurrency['decimals'])
+            $walletBalance.text(balanceFormatted)
+            $walletBalance.removeClass('d-none')
+            $walletBalanceViewButton.addClass('d-none')
+          }
         } catch(err) {
           console.log(err)
           if (err.message.includes('502')) {
@@ -870,21 +882,23 @@ $(document).ready(function(){
       document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
         if (this.pools[0]['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
           let $claimSEFI = $('#claim-sefi')
-          let gasParams = {
-            exec: {
-              amount: [{ amount: this.pools[0]['deposit_gas'], denom: 'uscrt' }],
-              gas: this.pools[0]['deposit_gas'],
-            },
-          }
-          this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
           $claimSEFI.prop("disabled", true);
           $claimSEFI.find('.loading').removeClass("d-none")
           $claimSEFI.find('.ready').addClass("d-none")
           try {
-            let handleMsg = { send: { amount: '0', recipient: this.pools[0]['address'], msg: this.pools[0]['deposit_msg'] } }
-            let response = await this.client.execute(this.pools[0]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[0]['deposit_token']['dataHash'])
-            document.showAlertSuccess("Claim successful");
-            $claimSEFI.find('.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable').text('0')
+            await document.connectKeplrWallet()
+            if (document.secretNetwork.walletAddress) {
+              let gasParams = {
+                exec: {
+                  amount: [{ amount: this.pools[0]['deposit_gas'], denom: 'uscrt' }],
+                  gas: this.pools[0]['deposit_gas'],
+                },
+              }
+              let handleMsg = { send: { amount: '0', recipient: this.pools[0]['address'], msg: this.pools[0]['deposit_msg'] } }
+              let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.pools[0]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[0]['deposit_token']['dataHash'])
+              document.showAlertSuccess("Claim successful");
+              $claimSEFI.find('.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable').text('0')
+            }
           }
           catch(err) {
             document.showAlertDanger(err)
@@ -900,21 +914,23 @@ $(document).ready(function(){
       document.querySelector('#claim-butt').addEventListener('click', async(evt) => {
         if (this.pools[1]['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
           let $claimBUTT = $('#claim-butt')
-          let gasParams = {
-            exec: {
-              amount: [{ amount: this.pools[1]['deposit_gas'], denom: 'uscrt' }],
-              gas: this.pools[1]['deposit_gas'],
-            },
-          }
-          this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
           $claimBUTT.prop("disabled", true);
           $claimBUTT.find('.loading').removeClass("d-none")
           $claimBUTT.find('.ready').addClass("d-none")
           try {
-            let handleMsg = { send: { amount: '0', recipient: this.pools[1]['address'], msg: this.pools[1]['deposit_msg'] } }
-            let response = await this.client.execute(this.pools[1]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[1]['deposit_token']['dataHash'])
-            document.showAlertSuccess("Claim successful");
-            $claimBUTT.find('.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable').text('0')
+            await document.connectKeplrWallet()
+            if (document.secretNetwork.walletAddress) {
+              let gasParams = {
+                exec: {
+                  amount: [{ amount: this.pools[1]['deposit_gas'], denom: 'uscrt' }],
+                  gas: this.pools[1]['deposit_gas'],
+                },
+              }
+              let handleMsg = { send: { amount: '0', recipient: this.pools[1]['address'], msg: this.pools[1]['deposit_msg'] } }
+              let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.pools[1]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[1]['deposit_token']['dataHash'])
+              document.showAlertSuccess("Claim successful");
+              $claimBUTT.find('.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable').text('0')
+            }
           }
           catch(err) {
             document.showAlertDanger(err)

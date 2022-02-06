@@ -62,7 +62,7 @@ document.activateKeplr = async() => {
 
 // The environment for this always has to be production for the user vip level stuff
 // But then does it mean that the user vip level stuff is going to be called every time?
-document.connectKeplrWallet = async() => {
+document.connectKeplrWallet = async(getAndSetUserVipLevel = true) => {
   let $keplrButton = $(".keplr-wallet-button")
   $keplrButton.prop("disabled", true);
   $keplrButton.find(".loading").removeClass("d-none")
@@ -92,8 +92,10 @@ document.connectKeplrWallet = async() => {
     $('.wallet-details').removeClass('d-none')
     $('.wallet-address').text(accounts[0].address)
     document.secretNetwork.walletAddress = accounts[0].address
-    document.secretNetwork.environment = 'production'
-    await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client())
+    if (getAndSetUserVipLevel) {
+      document.secretNetwork.environment = 'production'
+      await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client())
+    }
     // Only call this once
     // If the user changes wallets the page will refresh and this will still apply
     // If the user signs out then signs in, everything should look the same
