@@ -24,11 +24,10 @@ $(document).ready(function(){
     })
 
     window.onload = async () => {
-      document.activateKeplr()
       this.addressAliasAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w';
       this.addressAliasDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
-      this.contractAddress = document.featureContractAddress(document.secretNetwork.environment);
-      this.contractAddressDataHash = 'F466CF15F3186F1816D4D6A4BCEE6998E512179E5DBA9F2922DCCA7640381217'
+      this.passwordManagerContractAddress = 'secret1x56ls7efhdy8axktua0gzuc7muvgwnr98gh54j';
+      this.passwordManagerContractDataHash = 'F466CF15F3186F1816D4D6A4BCEE6998E512179E5DBA9F2922DCCA7640381217'
       this.chosenPosition;
       this.authentications = []
       this.authenticationsFormatted = []
@@ -112,51 +111,28 @@ $(document).ready(function(){
         $ready.addClass('d-none');
         (async () => {
           try {
-            let gasParams = {
-              exec: {
-                amount: [{ amount: '50000', denom: 'uscrt' }],
-                gas: '50000',
-              },
-            }
-            // Keplr extension injects the offline signer that is compatible with cosmJS.
-            // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment):string)` after load event.
-            // And it also injects the helper function to `window.keplr`.
-            // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-            if (!window.getOfflineSigner || !window.keplr) {
-              alert("Please install keplr extension");
-            } else {
-              if (window.keplr.experimentalSuggestChain) {
-                try {
-                  // This method will ask the user whether or not to allow access if they haven't visited this website.
-                  // Also, it will request user to unlock the wallet if the wallet is locked.
-                  // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                  await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
-
-                  // @ts-ignore
-                  const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
-                  const accounts = await keplrOfflineSigner.getAccounts();
-                  document.secretNetwork.walletAddress = accounts[0].address;
-                  this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-                } catch (error) {
-                  document.showAlertDanger(error)
-                }
-              } else {
-                alert("Please use the recent version of keplr extension");
+            await document.connectKeplrWallet()
+            if (document.secretNetwork.walletAddress) {
+              let gasParams = {
+                exec: {
+                  amount: [{ amount: '50000', denom: 'uscrt' }],
+                  gas: '50000',
+                },
               }
+              let handleMsg = { show: { position: Number(this.chosenPosition) } }
+              let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.passwordManagerContractAddress, handleMsg, '', [], gasParams.exec, this.passwordManagerContractDataHash)
+              let resultText = '';
+              response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
+              let authentication = JSON.parse(resultText)['show']['authentication']
+              authentication['revealed'] = true
+              this.chosenPosition = authentication['position']
+              this.authentications[this.chosenPosition] = authentication
+              this.authenticationsFormatted[this.chosenPosition] = authentication
+              this.setPasswordManagerUpdateForm()
+              this.setShowTableData()
+              $button.addClass('d-none')
+              document.showAlertSuccess('Revealed')
             }
-            let handleMsg = { show: { position: Number(this.chosenPosition) } }
-            let response = await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractAddressDataHash)
-            let resultText = '';
-            response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
-            let authentication = JSON.parse(resultText)['show']['authentication']
-            authentication['revealed'] = true
-            this.chosenPosition = authentication['position']
-            this.authentications[this.chosenPosition] = authentication
-            this.authenticationsFormatted[this.chosenPosition] = authentication
-            this.setPasswordManagerUpdateForm()
-            this.setShowTableData()
-            $button.addClass('d-none')
-            document.showAlertSuccess('Revealed')
           }
           catch(err) {
             document.showAlertDanger(err)
@@ -180,72 +156,49 @@ $(document).ready(function(){
         let dataLength = label.length + username.length + password.length + notes.length
         let gas = calculateGas(180_000, dataLength)
         try {
-          // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment):string)` after load event.
-          // And it also injects the helper function to `window.keplr`.
-          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-          let gasParams = {
-            exec: {
-              amount: [{ amount: gas, denom: 'uscrt' }],
-              gas: gas,
-            },
-          }
-          if (!window.getOfflineSigner || !window.keplr) {
-            alert("Please install keplr extension");
-          } else {
-            if (window.keplr.experimentalSuggestChain) {
-              try {
-                // This method will ask the user whether or not to allow access if they haven't visited this website.
-                // Also, it will request user to unlock the wallet if the wallet is locked.
-                // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
-
-                // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
-                const accounts = await keplrOfflineSigner.getAccounts();
-                document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-              } catch (error) {
-                document.showAlertDanger(error)
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            let gasParams = {
+              exec: {
+                amount: [{ amount: gas, denom: 'uscrt' }],
+                gas: gas,
+              },
+            }
+            let handleMsg = { send: { amount: '1000000', recipient: this.passwordManagerContractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
+            let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
+            let newAuthentication = {
+              revealed: true
+            } 
+            _.each(response['logs'][0]['events'][1]['attributes'], function(kV){
+              if (kV['key'] == 'id') {
+                newAuthentication['id'] = kV['value']
               }
-            } else {
-              alert("Please use the recent version of keplr extension");
-            }
+              if (kV['key'] == 'position') {
+                newAuthentication['position'] = Number(kV['value'])
+              }
+              if (kV['key'] == 'label') {
+                newAuthentication['label'] = kV['value']
+              }
+              if (kV['key'] == 'username') {
+                newAuthentication['username'] = kV['value']
+              }
+              if (kV['key'] == 'password') {
+                newAuthentication['password'] = kV['value']
+              }
+              if (kV['key'] == 'notes') {
+                newAuthentication['notes'] = kV['value']
+              }
+            })
+            this.chosenPosition = newAuthentication['position']
+            this.authentications[newAuthentication['position']] = newAuthentication;
+            this.authenticationsFormatted[newAuthentication['position']] = newAuthentication;
+            document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
+            document.showAlertSuccess('Authentication created.')
+            document.passwordManagerCreateForm.label.value = ''
+            document.passwordManagerCreateForm.username.value = ''
+            document.passwordManagerCreateForm.password.value = ''
+            document.passwordManagerCreateForm.notes.value = ''
           }
-          let handleMsg = { send: { amount: '1000000', recipient: this.contractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
-          let response = await this.client.execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
-          let newAuthentication = {
-            revealed: true
-          } 
-          _.each(response['logs'][0]['events'][1]['attributes'], function(kV){
-            if (kV['key'] == 'id') {
-              newAuthentication['id'] = kV['value']
-            }
-            if (kV['key'] == 'position') {
-              newAuthentication['position'] = Number(kV['value'])
-            }
-            if (kV['key'] == 'label') {
-              newAuthentication['label'] = kV['value']
-            }
-            if (kV['key'] == 'username') {
-              newAuthentication['username'] = kV['value']
-            }
-            if (kV['key'] == 'password') {
-              newAuthentication['password'] = kV['value']
-            }
-            if (kV['key'] == 'notes') {
-              newAuthentication['notes'] = kV['value']
-            }
-          })
-          this.chosenPosition = newAuthentication['position']
-          this.authentications[newAuthentication['position']] = newAuthentication;
-          this.authenticationsFormatted[newAuthentication['position']] = newAuthentication;
-          document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
-          document.showAlertSuccess('Authentication created.')
-          document.passwordManagerCreateForm.label.value = ''
-          document.passwordManagerCreateForm.username.value = ''
-          document.passwordManagerCreateForm.password.value = ''
-          document.passwordManagerCreateForm.notes.value = ''
         }
         catch(err) {
           document.showAlertDanger(err)
@@ -270,7 +223,7 @@ $(document).ready(function(){
           }
           let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
           let params = { address: this.searchedAddress, key: viewingKey };
-          let response = await document.secretNetwork.client().queryContractSmart(this.contractAddress, { hints: params }, undefined, this.contractAddressDataHash)
+          let response = await document.secretNetwork.client().queryContractSmart(this.passwordManagerContractAddress, { hints: params }, undefined, this.passwordManagerContractDataHash)
           if (response['viewing_key_error']) {
             throw(response['viewing_key_error']['msg'])
           }
@@ -309,50 +262,27 @@ $(document).ready(function(){
         let dataLength = document.passwordManagerUpdateForm.position.value.length + id.length + label.length + username.length + password.length + notes.length
         let gas = calculateGas(122_000, dataLength)
         try {
-          // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment):string)` after load event.
-          // And it also injects the helper function to `window.keplr`.
-          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-          let gasParams = {
-            exec: {
-              amount: [{ amount: gas, denom: 'uscrt' }],
-              gas: gas,
-            },
-          }
-          if (!window.getOfflineSigner || !window.keplr) {
-            alert("Please install keplr extension");
-          } else {
-            if (window.keplr.experimentalSuggestChain) {
-              try {
-                // This method will ask the user whether or not to allow access if they haven't visited this website.
-                // Also, it will request user to unlock the wallet if the wallet is locked.
-                // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
-
-                // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
-                const accounts = await keplrOfflineSigner.getAccounts();
-                document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-              } catch (error) {
-                document.showAlertDanger(error)
-              }
-            } else {
-              alert("Please use the recent version of keplr extension");
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            let gasParams = {
+              exec: {
+                amount: [{ amount: gas, denom: 'uscrt' }],
+                gas: gas,
+              },
             }
+            let handleMsg = { update_authentication: { position: position, id: id, label: label, username: username, password: password, notes: notes } }
+            let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.passwordManagerContractAddress, handleMsg, 0, gasParams.exec, this.passwordManagerContractDataHash)
+            let resultText = '';
+            response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
+            let authentication = JSON.parse(resultText)['update_authentication']['authentication']
+            authentication['revealed'] = true
+            this.chosenPosition = authentication['position']
+            this.authentications[this.chosenPosition] = authentication
+            this.authenticationsFormatted[this.chosenPosition] = authentication
+            this.setPasswordManagerUpdateForm()
+            document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
+            document.showAlertSuccess('Update successful.')
           }
-          let handleMsg = { update_authentication: { position: position, id: id, label: label, username: username, password: password, notes: notes } }
-          let response = await this.client.execute(this.contractAddress, handleMsg, 0, gasParams.exec, this.contractAddressDataHash)
-          let resultText = '';
-          response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
-          let authentication = JSON.parse(resultText)['update_authentication']['authentication']
-          authentication['revealed'] = true
-          this.chosenPosition = authentication['position']
-          this.authentications[this.chosenPosition] = authentication
-          this.authenticationsFormatted[this.chosenPosition] = authentication
-          this.setPasswordManagerUpdateForm()
-          document.querySelectorAll("a[href^='#tab-2-4']")[0].click()
-          document.showAlertSuccess('Update successful.')
         }
         catch(err) {
           document.showAlertDanger(err)
@@ -366,44 +296,20 @@ $(document).ready(function(){
         e.preventDefault()
         changeSubmitButtonToLoading()
         try {
-          let gasParams = {
-            exec: {
-              amount: [{ amount: '50000', denom: 'uscrt' }],
-              gas: '50000',
-            },
-          }
-          // Keplr extension injects the offline signer that is compatible with cosmJS.
-          // You can get this offline signer from `window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment):string)` after load event.
-          // And it also injects the helper function to `window.keplr`.
-          // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-          if (!window.getOfflineSigner || !window.keplr) {
-            alert("Please install keplr extension");
-          } else {
-            if (window.keplr.experimentalSuggestChain) {
-              try {
-                // This method will ask the user whether or not to allow access if they haven't visited this website.
-                // Also, it will request user to unlock the wallet if the wallet is locked.
-                // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
-
-                // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
-                const accounts = await keplrOfflineSigner.getAccounts();
-                document.secretNetwork.walletAddress = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-              } catch (error) {
-                document.showAlertDanger(error)
-              }
-            } else {
-              alert("Please use the recent version of keplr extension");
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            let gasParams = {
+              exec: {
+                amount: [{ amount: '50000', denom: 'uscrt' }],
+                gas: '50000',
+              },
             }
+            let viewingKey = document.setViewingKeyForm.viewingKey.value
+            let padding = Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10)))) + Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10))))
+            let handleMsg = { set_viewing_key: { key: viewingKey, padding: padding } }
+            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.passwordManagerContractAddress, handleMsg, '', [], gasParams.exec, this.passwordManagerContractDataHash)
+            document.showAlertSuccess('Viewing key set.')
           }
-
-          let viewingKey = document.setViewingKeyForm.viewingKey.value
-          let padding = Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10)))) + Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10))))
-          let handleMsg = { set_viewing_key: { key: viewingKey, padding: padding } }
-          await this.client.execute(this.contractAddress, handleMsg, '', [], gasParams.exec, this.contractAddressDataHash)
-          document.showAlertSuccess('Viewing key set.')
         }
         catch(err) {
           document.showAlertDanger(err)
@@ -457,6 +363,8 @@ $(document).ready(function(){
       this.addressOwnsAuthentication = function(address) {
         return address.length > 5 && address == document.secretNetwork.walletAddress
       }
+
+      document.activateKeplr()
     }
   };
 });
