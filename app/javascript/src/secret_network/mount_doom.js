@@ -25,7 +25,8 @@ $(document).ready(function(){
 
     window.onload = async () => {
       document.activateKeplr()
-      this.contractAddress = document.featureContractAddress(document.secretNetwork.environment);
+      this.mountDoomContractAddress = 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq';
+      this.mountDoomContractDataHash = '8669D5303F367DEBA976820B36A89A80B88B4F0574C690FA7209D51C6BD18A53'
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
         $nftsContainer = $('#nfts-container')
@@ -40,7 +41,7 @@ $(document).ready(function(){
             // Get the transactions for that token
             let params = {
               transaction_history: {
-                address: this.contractAddress,
+                address: this.mountDoomContractAddress,
                 viewing_key: "DoTheRightThing.",
               }
             }
@@ -102,7 +103,7 @@ $(document).ready(function(){
             // Get the transactions for that token
             let params = {
               transfer_history: {
-                address: this.contractAddress,
+                address: this.mountDoomContractAddress,
                 key: "DoTheRightThing.",
                 page: 0,
                 page_size: 1000
@@ -114,7 +115,7 @@ $(document).ready(function(){
             }
             let transactionsTableBodyContent = '';
             let txs = transactions_response["transfer_history"]["txs"]
-            await document.secretNetwork.transactions.getSmartContractsInTxs(this.contractAddress, txs)
+            await document.secretNetwork.transactions.getSmartContractsInTxs(this.mountDoomContractAddress, txs)
             txs.forEach((value) => {
               // ID & Date
               transactionsTableBodyContent += '<tr><td>'
@@ -129,7 +130,7 @@ $(document).ready(function(){
               amount = document.applyDecimals(amount, token_decimals)
               let description = '<a href="'
               let descriptionAddress;
-              if (this.contractAddress != value['receiver']) {
+              if (this.mountDoomContractAddress != value['receiver']) {
                 amount *= -1
                 descriptionAddress = value['receiver']
               } else {
@@ -151,7 +152,7 @@ $(document).ready(function(){
             $($('th')[2]).text('Amount' + ' (' + token_symbol + ')')
 
             // Get the balance for the token
-            let msg = { balance:{ address: this.contractAddress, key: "DoTheRightThing." } };
+            let msg = { balance:{ address: this.mountDoomContractAddress, key: "DoTheRightThing." } };
             let balance_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, msg)
             if (balance_response["viewing_key_error"]) {
               throw balance_response["viewing_key_error"]["msg"]
@@ -178,40 +179,20 @@ $(document).ready(function(){
         changeSubmitButtonToLoading()
         document.hideAllAlerts();
         try {
-          let tokenAddress = document.mountDoomSetViewingKeyForm.tokenAddress.value;
-          let contractHash = document.mountDoomSetViewingKeyForm.contractHash.value;
-          let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
-          let gasParams = {
-            exec: {
-              amount: [{ amount: '50000', denom: 'uscrt' }],
-              gas: '50000',
-            },
-          }
-          if (!window.getOfflineSigner || !window.keplr) {
-            alert("Please install keplr extension");
-          } else {
-            if (window.keplr.experimentalSuggestChain) {
-              try {
-                // This method will ask the user whether or not to allow access if they haven't visited this website.
-                // Also, it will request user to unlock the wallet if the wallet is locked.
-                // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                await window.keplr.enable(document.secretNetwork.chainId(document.secretNetwork.environment));
-
-                // @ts-ignore
-                const keplrOfflineSigner = window.getOfflineSigner(document.secretNetwork.chainId(document.secretNetwork.environment));
-                const accounts = await keplrOfflineSigner.getAccounts();
-                this.address = accounts[0].address;
-                this.client = document.secretNetwork.signingClient(this.address, gasParams)
-              } catch (error) {
-                console.error(error)
-              }
-            } else {
-              alert("Please use the recent version of keplr extension");
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            let tokenAddress = document.mountDoomSetViewingKeyForm.tokenAddress.value;
+            let contractHash = document.mountDoomSetViewingKeyForm.contractHash.value;
+            let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
+            let gasParams = {
+              exec: {
+                amount: [{ amount: '50000', denom: 'uscrt' }],
+                gas: '50000',
+              },
             }
+            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).client.execute(this.mountDoomContractAddress, msg, '', [], gasParams.exec, this.mountDoomContractDataHash)
+            document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
           }
-
-          result = await this.client.execute(this.contractAddress, msg, '', [], gasParams.exec, this.contractAddressDataHash)
-          document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
         }
         catch(err) {
           document.showAlertDanger(err)
