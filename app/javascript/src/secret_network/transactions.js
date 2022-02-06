@@ -3,7 +3,6 @@ $(document).ready(function(){
     window.onload = async () => {
       this.chainId = document.secretNetwork.chainId(document.secretNetwork.environment);
       this.client = document.secretNetwork.client();
-      document.activateKeplr()
 
       // === LISTENERS ===
       $('#viewing-key-container .fa-eye').click(function(){
@@ -34,9 +33,12 @@ $(document).ready(function(){
         $target.find('.loading').removeClass('d-none')
         $target.find('.ready').addClass('d-none')
         try {
-          let key = await window.keplr.getSecret20ViewingKey(this.chainId, document.secretNetworkTransactionsForm.contractAddress.value)
-          document.secretNetworkTransactionsForm.viewingKey.value = key
-          document.secretNetworkTransactionsForm.address.value = document.secretNetwork.walletAddress
+          await document.connectKeplrWallet(false)
+          if (document.secretNetwork.walletAddress) {
+            let key = await window.keplr.getSecret20ViewingKey(this.chainId, document.secretNetworkTransactionsForm.contractAddress.value)
+            document.secretNetworkTransactionsForm.viewingKey.value = key
+            document.secretNetworkTransactionsForm.address.value = document.secretNetwork.walletAddress
+          }
         } catch(err) {
           if (!err['message'].includes('There is no matched secret20')) {
             document.showAlertDanger(err)
@@ -168,6 +170,7 @@ $(document).ready(function(){
           $("#ready").removeClass("d-none")
         }
       }
+      document.activateKeplr()
     };
   }
 });
