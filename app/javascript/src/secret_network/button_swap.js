@@ -80,11 +80,14 @@ $(document).ready(function(){
               selectorPrefix = '.to'
             }
             try {
-              if (this.cryptocurrencies[cryptoId]['smart_contract']) {
-                await window.keplr.suggestToken(document.secretNetwork.chainId(document.secretNetwork.environment), this.cryptocurrencies[cryptoId]['smart_contract']['address']);
+              await document.connectKeplrWallet()
+              if (document.secretNetwork.walletAddress) {
+                if (this.cryptocurrencies[cryptoId]['smart_contract']) {
+                  await window.keplr.suggestToken(document.secretNetwork.chainId(document.secretNetwork.environment), this.cryptocurrencies[cryptoId]['smart_contract']['address']);
+                }
+                this.updateWalletBalance(cryptoId, selectorPrefix, inputToClickFillTo);
+                $balanceViewButton.addClass('d-none')
               }
-              this.updateWalletBalance(cryptoId, selectorPrefix, inputToClickFillTo);
-              $balanceViewButton.addClass('d-none')
             } catch(err) {
               document.showAlertDanger(err)
             } finally {
@@ -559,7 +562,6 @@ $(document).ready(function(){
         if (cryptocurrency ==  undefined || document.secretNetwork.walletAddress == undefined) {
           return
         }
-
         let $walletBalance = $(selectorPrefix + '-balance')
         let $walletBalanceLink = $(selectorPrefix + '-balance-link')
         let $walletBalanceLoading = $(selectorPrefix + '-balance-loading')
@@ -571,46 +573,49 @@ $(document).ready(function(){
         $walletBalanceLoading.removeClass('d-none')
         $walletBalanceViewButton.addClass('d-none')
         try {
-          if (cryptocurrency['smart_contract']) {
-            cryptoAddress = cryptocurrency['smart_contract']['address']
-            let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(document.secretNetwork.environment), cryptoAddress)
-            // If they have the key, replace the button with the balance
-            let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['smart_contract']['data_hash'])
-            balance = balanceResponse['balance']['amount']
-          } else {
-            let accountDetails = await this.client.getAccount(document.secretNetwork.walletAddress)
-            accountDetails['balance'].forEach(function(balanceDetails) {
-              if (cryptocurrency['denom'] == balanceDetails['denom']) {
-                balance = balanceDetails['amount']
-              }
-            })
-            if (balance == undefined) {
-              balance = '0'
-            }
-          }
-          cryptocurrency['balance'] = balance
-          if (selectorPrefix == '.from') {
-            if (cryptocurrencyId != this.fromId) {
-              updateWalletBalanceStillValid = false
-            }
-          } else {
-            if (cryptocurrencyId != this.toId) {
-              updateWalletBalanceStillValid = false
-            }
-          }
-          if (updateWalletBalanceStillValid) {
-            let balanceFormatted = document.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
-            if (inputToClickFillTo) {
-              $walletBalance.off("click");
-              $walletBalance.attr('href', '#');
-              $walletBalance.click(function(e) {
-                e.preventDefault()
-                $(inputToClickFillTo).val(balanceFormatted.replace(/,/g, '')).trigger('input')
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            if (cryptocurrency['smart_contract']) {
+              cryptoAddress = cryptocurrency['smart_contract']['address']
+              let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(document.secretNetwork.environment), cryptoAddress)
+              // If they have the key, replace the button with the balance
+              let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['smart_contract']['data_hash'])
+              balance = balanceResponse['balance']['amount']
+            } else {
+              let accountDetails = await this.client.getAccount(document.secretNetwork.walletAddress)
+              accountDetails['balance'].forEach(function(balanceDetails) {
+                if (cryptocurrency['denom'] == balanceDetails['denom']) {
+                  balance = balanceDetails['amount']
+                }
               })
+              if (balance == undefined) {
+                balance = '0'
+              }
             }
-            $walletBalance.text(balanceFormatted)
-            $walletBalance.removeClass('d-none')
-            $walletBalanceViewButton.addClass('d-none')
+            cryptocurrency['balance'] = balance
+            if (selectorPrefix == '.from') {
+              if (cryptocurrencyId != this.fromId) {
+                updateWalletBalanceStillValid = false
+              }
+            } else {
+              if (cryptocurrencyId != this.toId) {
+                updateWalletBalanceStillValid = false
+              }
+            }
+            if (updateWalletBalanceStillValid) {
+              let balanceFormatted = document.humanizeStringNumberFromSmartContract(balance, cryptocurrency['decimals'])
+              if (inputToClickFillTo) {
+                $walletBalance.off("click");
+                $walletBalance.attr('href', '#');
+                $walletBalance.click(function(e) {
+                  e.preventDefault()
+                  $(inputToClickFillTo).val(balanceFormatted.replace(/,/g, '')).trigger('input')
+                })
+              }
+              $walletBalance.text(balanceFormatted)
+              $walletBalance.removeClass('d-none')
+              $walletBalanceViewButton.addClass('d-none')
+            }
           }
         } catch(err) {
           if (updateWalletBalanceStillValid) {
@@ -656,108 +661,111 @@ $(document).ready(function(){
         let sentFunds = []
         let successMessage;
         try {
-          if (this.wrapPaths[fromId] == toId) {
-            if(fromCryptocurrency['smart_contract']) {
-              contract = fromCryptocurrency['smart_contract']['address']
-              contractDataHash = fromCryptocurrency['smart_contract']['data_hash']
-              handleMsg = { redeem: { amount: fromAmount } };
-              successMessage = 'Unwrapped'
-            } else {
-              contract = toCryptocurrency['smart_contract']['address']
-              contractDataHash = toCryptocurrency['smart_contract']['data_hash']
-              handleMsg = { deposit: {} };
-              sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
-              successMessage = 'Wrapped'
-            }
-            let gasParams = {
-              exec: {
-                amount: [{ amount: String(this.gasWrap), denom: 'uscrt' }],
-                gas: String(this.gasWrap),
-              },
-            }
-            this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-            let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
-          } else {
-            let currentFromId = fromId
-            let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
-            minAmount = document.formatHumanizedNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
-            let hops = []
-            let gas = 0
-            let initNativeFromToken;
-            // when from token is native
-            if(fromCryptocurrency['smart_contract'] == undefined) {
-              let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
-              initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
-              gas += this.gasWrap
-            }
-            gas += this.selectedSwapPath['gas']
-            this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
-              let tradePair = this.tradePairs[tradePairId]
-              let fromToken;
-              if(initNativeFromToken && hops.length == 0) {
-                fromToken = initNativeFromToken
-                currentFromId = this.wrapPaths[currentFromId]
+          await document.connectKeplrWallet()
+          if (document.secretNetwork.walletAddress) {
+            if (this.wrapPaths[fromId] == toId) {
+              if(fromCryptocurrency['smart_contract']) {
+                contract = fromCryptocurrency['smart_contract']['address']
+                contractDataHash = fromCryptocurrency['smart_contract']['data_hash']
+                handleMsg = { redeem: { amount: fromAmount } };
+                successMessage = 'Unwrapped'
               } else {
-                fromToken = {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}
+                contract = toCryptocurrency['smart_contract']['address']
+                contractDataHash = toCryptocurrency['smart_contract']['data_hash']
+                handleMsg = { deposit: {} };
+                sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
+                successMessage = 'Wrapped'
               }
-              let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: fromToken}
+              let gasParams = {
+                exec: {
+                  amount: [{ amount: String(this.gasWrap), denom: 'uscrt' }],
+                  gas: String(this.gasWrap),
+                },
+              }
+              this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
+              let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
+            } else {
+              let currentFromId = fromId
+              let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
+              minAmount = document.formatHumanizedNumberForSmartContract(minAmount, this.selectedSwapPath['to']['decimals'])
+              let hops = []
+              let gas = 0
+              let initNativeFromToken;
+              // when from token is native
+              if(fromCryptocurrency['smart_contract'] == undefined) {
+                let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
+                initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
+                gas += this.gasWrap
+              }
+              gas += this.selectedSwapPath['gas']
+              this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
+                let tradePair = this.tradePairs[tradePairId]
+                let fromToken;
+                if(initNativeFromToken && hops.length == 0) {
+                  fromToken = initNativeFromToken
+                  currentFromId = this.wrapPaths[currentFromId]
+                } else {
+                  fromToken = {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}
+                }
+                let hop = {smart_contract: {address: tradePair['smart_contract']['address'], contract_hash: tradePair['smart_contract']['data_hash']}, from_token: fromToken}
+                hops.push(hop)
+                currentFromId = this.extractSwapToId(currentFromId, tradePairId)
+              })
+              let hop = {from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
+              // when to token is native
+              if (this.wrapPaths[currentFromId] == toId) {
+                let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
+                hop['redeem_denom'] = toCryptocurrency['denom']
+                hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
+                gas += this.gasWrap
+              }
               hops.push(hop)
-              currentFromId = this.extractSwapToId(currentFromId, tradePairId)
-            })
-            let hop = {from_token: {snip20: {address: this.cryptocurrencies[currentFromId]['smart_contract']['address'], contract_hash: this.cryptocurrencies[currentFromId]['smart_contract']['data_hash']}}}
-            // when to token is native
-            if (this.wrapPaths[currentFromId] == toId) {
-              let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
-              hop['redeem_denom'] = toCryptocurrency['denom']
-              hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
-              gas += this.gasWrap
-            }
-            hops.push(hop)
-            let recipient;
-            let routeMessage;
-            if (hops.length == 1) {
-              recipient = this.tradePairs[hops[0]]['smart_contract']['address']
-              routeMessage = { swap: { expected_return: minAmount } }
-            } else {
-              recipient = this.dexAggregatorSmartContractAddress
-              routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: document.secretNetwork.walletAddress }
-            }
-            let routeMsgEncoded = Buffer.from(JSON.stringify(routeMessage)).toString('base64')
-            if (fromCryptocurrency['smart_contract']) {
-              contract = fromCryptocurrency['smart_contract']['address']
-              contractDataHash = fromCryptocurrency['smart_contract']['data_hash']
-              handleMsg = { send: { amount: fromAmount, recipient: recipient, msg: routeMsgEncoded } }
-            } else {
-              contract = this.dexAggregatorSmartContractAddress
-              contractDataHash = this.dexAggregatorDataHash
-              handleMsg = { receive: { amount: fromAmount, from: document.secretNetwork.walletAddress, msg: routeMsgEncoded } }
-              sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
-            }
-            let gasParams = {
-              exec: {
-                amount: [{ amount: String(gas), denom: 'uscrt' }],
-                gas: String(gas),
-              },
-            }
-            this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-            let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
-            let returnAmount;
-            response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
-              if(attribute['key'] == 'return_amount') {
-                returnAmount = attribute['value']
+              let recipient;
+              let routeMessage;
+              if (hops.length == 1) {
+                recipient = this.tradePairs[hops[0]]['smart_contract']['address']
+                routeMessage = { swap: { expected_return: minAmount } }
+              } else {
+                recipient = this.dexAggregatorSmartContractAddress
+                routeMessage = { hops: hops, estimated_amount: estimateAmount, minimum_acceptable_amount: minAmount, to: document.secretNetwork.walletAddress }
               }
-            })
-            if(new BigNumber(estimateAmount) < new BigNumber(returnAmount)) {
-              returnAmount = estimateAmount
+              let routeMsgEncoded = Buffer.from(JSON.stringify(routeMessage)).toString('base64')
+              if (fromCryptocurrency['smart_contract']) {
+                contract = fromCryptocurrency['smart_contract']['address']
+                contractDataHash = fromCryptocurrency['smart_contract']['data_hash']
+                handleMsg = { send: { amount: fromAmount, recipient: recipient, msg: routeMsgEncoded } }
+              } else {
+                contract = this.dexAggregatorSmartContractAddress
+                contractDataHash = this.dexAggregatorDataHash
+                handleMsg = { receive: { amount: fromAmount, from: document.secretNetwork.walletAddress, msg: routeMsgEncoded } }
+                sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
+              }
+              let gasParams = {
+                exec: {
+                  amount: [{ amount: String(gas), denom: 'uscrt' }],
+                  gas: String(gas),
+                },
+              }
+              this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
+              let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
+              let returnAmount;
+              response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
+                if(attribute['key'] == 'return_amount') {
+                  returnAmount = attribute['value']
+                }
+              })
+              if(new BigNumber(estimateAmount) < new BigNumber(returnAmount)) {
+                returnAmount = estimateAmount
+              }
+              successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
             }
-            successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
+            this.resetAfterSwap()
+            // Update vip levels if swap involves BUTT
+            if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
+              await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
+            }
+            document.showAlertSuccess(successMessage);
           }
-          this.resetAfterSwap()
-          // Update vip levels if swap involves BUTT
-          if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
-            await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
-          }
-          document.showAlertSuccess(successMessage);
         } catch(error) {
           // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
@@ -782,8 +790,8 @@ $(document).ready(function(){
         }
       };
 
-      document.activateKeplr()
       this.getAndSetCryptocurrenciesAndTradePairs()
+      document.activateKeplr()
     }
   }
 })
