@@ -76,7 +76,7 @@ module SecretNetwork
     end
 
     def head_description
-      @head_description || 'Buttcoin, block locker, yield optimizer and other blockchain solutions on the Secret and NEAR networks.'
+      @head_description || 'Button, block locker, yield optimizer and other blockchain solutions on the Secret and NEAR networks.'
     end
 
     def head_image

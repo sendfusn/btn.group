@@ -54,8 +54,8 @@ class ApplicationController < ActionController::Base
               production: 'secret1dww8fs5xlj6es5vwyp7ccgm4xclkmhxajxfaqa'
             }
           },
-          buttcoin: {
-            name: 'Buttcoin (BUTT)',
+          button: {
+            name: 'Button ($BUTT)',
             show_in_navbar: true,
             show_link: true,
             status: 'Live',
@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
   end
 
   def head_description
-    'Buttcoin, block locker, yield optimizer and other blockchain solutions on the Secret and NEAR networks.'
+    'Button ($BUTT), Button Swap, Block Locker, Yield Optimizers and other blockchain solutions on the Secret and NEAR networks.'
   end
 
   def head_image

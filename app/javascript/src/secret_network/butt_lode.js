@@ -32,7 +32,7 @@ $(document).ready(function(){
         let balance_response = await document.secretNetwork.client().queryContractSmart(document.secretNetwork.butt.address, { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } }, undefined, document.secretNetwork.butt.dataHash);
         this.buttonBalance = document.applyDecimals(balance_response["balance"]["amount"], 6).toLocaleString('en', { minimumFractionDigits: 6 })
         $('#butt-balance-table-data').text(this.buttonBalance)
-        $('#buttcoin-amount').val(this.buttonBalance)
+        $('#butt-amount').val(this.buttonBalance)
       } catch(err) {
         document.showAlertDanger(err)
       }

@@ -9,9 +9,9 @@
                 .cpn-head
                   %h3.title.title-thin
                     = cl_image_tag(logo_cloudinary_public_id, crop: :scale, height: 36, dpr: 2, fetch_format: :auto, quality: :auto, class: 'mr-1 d-inline', style: 'height: 36px; vertical-align: middle;')
-                    Buttcoin (BUTT)
+                    Button (BUTT)
                   %p.mb-0.tc-light-alt
-                    = link_to features[:secret_network][:features][:buttcoin][:contracts][:production], "https://secretnodes.com/secret/chains/secret-4/contracts/#{features[:secret_network][:features][:buttcoin][:contracts][:production]}", target: '_blank', rel: 'noopener'
+                    = link_to features[:secret_network][:features][:button][:contracts][:production], "https://secretnodes.com/secret/chains/secret-4/contracts/#{features[:secret_network][:features][:button][:contracts][:production]}", target: '_blank', rel: 'noopener'
                   %p.mb-0.tc-light-alt
                     = link_to 'http://scrt.network', target: '_blank', rel: 'noopener' do
                       = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 24, height: 24, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
@@ -219,7 +219,7 @@
                     %th Address
                 %tbody
                   %tr
-                    %td Buttcoin distributor
+                    %td Button distributor
                     %td Distributing 1.4 BUTT per block until block 15,060,000, ~Jul 2024
                     %td 21,122,824.8
                     %td secret12f4s3atdafl55juvgtnpqs2n32km5h7q8y42cu
