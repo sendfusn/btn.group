@@ -126,14 +126,27 @@
                     = features[:secret_network][:name]
   %section.section.section-s.bg-white
     .container
+      .row.justify-content-center
+        .col-4.col-sm-4.col-md-3.col-lg-2.text-center
+          = link_to 'https://www.coingecko.com/en/coins/buttcoin', target: '_blank', rel: 'noopener' do
+            = image_tag 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636594988/logos/CoinGecko-pos_i2s9gv.svg'
+        .col-4.col-sm-4.col-md-3.col-lg-2.text-center
+          = link_to 'https://secretanalytics.xyz/secretswap/secret1f30aqh59eg5xhalsdc6u8cv26qe283ey9pp658', target: '_blank', rel: 'noopener' do
+            = image_tag 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636594988/logos/SCRT-Analytics-logo-p-500_hdbmxn.png'
+        .col-4.col-sm-4.col-md-3.col-lg-2.text-center
+          = link_to 'https://app.secretswap.net/', target: '_blank', rel: 'noopener' do
+            = image_tag 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636597008/logos/secret-swap_ajyx9t.svg'
+  %section.section.section-s.bg-light
+    .container
       .nk-block.block-partners
-        %ul.partner-list.flex-lg-nowrap.mgb-m30
-          %li.partner-logo-s3
-            = link_to 'https://www.coingecko.com/en/coins/buttcoin', target: '_blank', rel: 'noopener' do
-              = image_tag 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636594988/logos/CoinGecko-pos_i2s9gv.svg'
-          %li.partner-logo-s3
-            = link_to 'https://secretanalytics.xyz/secretswap/secret1f30aqh59eg5xhalsdc6u8cv26qe283ey9pp658', target: '_blank', rel: 'noopener' do
-              = image_tag 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636594988/logos/SCRT-Analytics-logo-p-500_hdbmxn.png'
-          %li.partner-logo-s3
-            = link_to 'https://app.secretswap.net/', target: '_blank', rel: 'noopener' do
-              = image_tag 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636597008/logos/secret-swap_ajyx9t.svg'
+        .section-head.section-head-sm
+          %h6.title-md.title-thin.text-center Secret Network validators we recommend
+      .row.justify-content-center
+        .col-4.col-sm-4.col-md-3.col-lg-2.text-center
+          = link_to 'https://wallet.keplr.app/#/secret/stake', target: '_blank', rel: 'noopener' do
+            = image_tag 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.8Ue2MpkfwW0JGFO-eKTUDgHaHa%26pid%3DApi&f=1', style: 'border-radius: 99px;', class: 'w-100'
+            %h4.title-sm.title-semibold.mt-1 Mr. Roboto🤖's Secret
+        .col-4.col-sm-4.col-md-3.col-lg-2.text-center
+          = link_to 'https://wallet.keplr.app/#/secret/stake', target: '_blank', rel: 'noopener' do
+            = image_tag 'https://s3.amazonaws.com/keybase_processed_uploads/70424e3fb28db8b77da822c9ad550d05_360_360.jpg', style: 'border-radius: 99px;', class: 'w-100'
+            %h4.title-sm.title-semibold.mt-1 NodeVine🍇
