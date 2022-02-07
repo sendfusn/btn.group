@@ -1,8 +1,4 @@
 document.secretNetwork = {
-  addressAliasContract: {
-    address: 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w',
-    dataHash: 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
-  },
   butt: {
     address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
     dataHash: 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'

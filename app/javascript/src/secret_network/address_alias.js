@@ -1,6 +1,9 @@
 $(document).ready(function(){
   if($("#secret-network-address-alias").length) {
     window.onload = async() => {
+      this.addressAliasContractAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w'
+      this.addressAliasContractDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
+
       document.aliasDeleteForm.onsubmit = async (e) => {
         e.preventDefault()
         $("#delete-button").prop("disabled", true);
@@ -17,7 +20,7 @@ $(document).ready(function(){
               },
             }
             let handleMsg = { destroy: { alias: alias } }
-            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.addressAliasContract.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.addressAliasContract.dataHash)
+            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.addressAliasContractAddress, handleMsg, '', [], gasParams.exec, this.addressAliasContractDataHash)
             $("#result-value").html('')
             $("#result-container").addClass("d-none");
             $("#result-value-container").addClass("d-none");
@@ -51,7 +54,7 @@ $(document).ready(function(){
                 gas: '100000',
               },
             }
-            let handleMsg = { send: { amount: '1000000', recipient: document.secretNetwork.addressAliasContract.address, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
+            let handleMsg = { send: { amount: '1000000', recipient: this.addressAliasContractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
             let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
             $("#result-value-container").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
@@ -92,7 +95,7 @@ $(document).ready(function(){
           let search_type = document.aliasSearchForm.searchType.value;
           let search_value = document.aliasSearchForm.searchValue.value;
           let search_params = { search_type: search_type, search_value: search_value };
-          let result = await document.secretNetwork.client().queryContractSmart(document.secretNetwork.addressAliasContract.address, { search: search_params }, undefined, document.secretNetwork.addressAliasContract.dataHash)
+          let result = await document.secretNetwork.client().queryContractSmart(this.addressAliasContractAddress, { search: search_params }, undefined, this.addressAliasContractDataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(document.secretNetwork.environment) + '/accounts/' + result['attributes']['address']
