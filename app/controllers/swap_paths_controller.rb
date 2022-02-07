@@ -5,6 +5,7 @@ class SwapPathsController < ApplicationController
   before_action :set_swap_paths
 
   def index
+    max_number_of_swap_paths = arbitrage? ? 20 : 2
     top_swap_paths = []
     @swap_paths.find_each do |sp|
       result_amount = sp.simulate_swaps(params['from_amount'])
@@ -13,7 +14,7 @@ class SwapPathsController < ApplicationController
     end
     top_swap_paths = top_swap_paths.sort_by { |obj| obj[:net_usd_outcome] }
                                    .reverse
-                                   .map { |obj| obj[:swap_path_id] }[0..2]
+                                   .map { |obj| obj[:swap_path_id] }[0..max_number_of_swap_paths]
     # If swap paths don't hold at least one sienna swap path with swap count one, add it.
     # We are only factoring in swap count one because sienna doesn't do routing.
     sienna_swap_path_id = SwapPath.find_by(from_id: params['from_id'], to_id: params['to_id'], protocol: Protocol.find_by(identifier: 'sienna'), swap_count: 1)&.id
