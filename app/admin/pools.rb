@@ -8,6 +8,7 @@ ActiveAdmin.register Pool do
     column :smart_contract do |pool|
       pool.smart_contract.label_formatted
     end
+    column :total_locked
     column :apr
     column :apy
     column :enabled

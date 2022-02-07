@@ -58,7 +58,7 @@ $(document).ready(function(){
             let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
             $("#result-value-container").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
-            let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(document.secretNetwork.environment) + '/accounts/' + document.secretNetwork.walletAddress
+            let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId() + '/accounts/' + document.secretNetwork.walletAddress
             let resultValueHtml = '<h3 class="mb-0">' + alias + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + document.secretNetwork.walletAddress + '</a><img class="w-100" src="' + avatarUrl + '">'
             $("#result-value").html(resultValueHtml)
             // Set data on delete button
@@ -98,7 +98,7 @@ $(document).ready(function(){
           let result = await document.secretNetwork.client().queryContractSmart(this.addressAliasContractAddress, { search: search_params }, undefined, this.addressAliasContractDataHash)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
-          let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId(document.secretNetwork.environment) + '/accounts/' + result['attributes']['address']
+          let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId() + '/accounts/' + result['attributes']['address']
           let resultValueHtml = '<h3 class="mb-0">' + result['attributes']['alias'] + '</h3><a class="mb-3 d-block" target="_blank" rel="noopener" href="' + url + '">' + result['attributes']['address'] + '</a><img class="w-100" src="' + result['attributes']['avatar_url'] + '">'
           $("#result-value").html(resultValueHtml)
           $("#result-container").removeClass("d-none");

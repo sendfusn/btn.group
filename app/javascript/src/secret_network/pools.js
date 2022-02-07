@@ -502,7 +502,7 @@ $(document).ready(function(){
             try {
               await document.connectKeplrWallet()
               if (document.secretNetwork.walletAddress) {
-                await window.keplr.suggestToken(document.secretNetwork.chainId(document.secretNetwork.environment), value['deposit_token']['address']);
+                await window.keplr.suggestToken(document.secretNetwork.chainId(), value['deposit_token']['address']);
                 this.updateWalletBalance(value['deposit_token'], value);
                 $balanceViewButton.addClass('d-none')
               }
@@ -835,7 +835,7 @@ $(document).ready(function(){
           if (document.secretNetwork.walletAddress) {
             $walletBalance.addClass('d-none')
             $walletBalanceLoading.removeClass('d-none')
-            let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(document.secretNetwork.environment), address)
+            let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(), address)
             // If they have the key, replace the button with the balance
             let balanceResponse = await document.secretNetwork.client().queryContractSmart(address, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['dataHash'])
             let balanceFormatted = document.humanizeStringNumberFromSmartContract(balanceResponse['balance']['amount'], cryptocurrency['decimals'])

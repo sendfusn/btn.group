@@ -42,7 +42,7 @@ document.secretNetwork = {
       }
     }
   },
-  chainId: function(environment) {
+  chainId: function(environment = 'production') {
     let chainId = 'secret-4'
     if (environment == 'staging') {
       chainId = 'pulsar-2'
@@ -67,7 +67,7 @@ document.secretNetwork = {
     }
   },
   getAndSetUserVipLevel: async(address, client) => {
-    let chainId = document.secretNetwork.chainId('production')
+    let chainId = document.secretNetwork.chainId()
     document.secretNetwork.userVipLevel = 0
     // Set users vip level
     try {

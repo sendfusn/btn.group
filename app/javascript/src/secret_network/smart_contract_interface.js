@@ -46,7 +46,6 @@ $(document).ready(function(){
             // Set environment
             document.secretNetwork.environment = document.featureEnvironment();
             let chainId = document.secretNetwork.chainId(document.secretNetwork.environment)
-            let httpUrl = document.secretNetworkHttpUrl(document.secretNetwork.environment)
             // Set params
             let contractAddress = document.secretNetworkSmartContractInterfaceForm.contractAddress.value;
             let functionName = document.secretNetworkSmartContractInterfaceForm.functionName.value;
