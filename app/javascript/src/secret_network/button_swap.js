@@ -80,7 +80,7 @@ $(document).ready(function(){
               selectorPrefix = '.to'
             }
             try {
-              await document.connectKeplrWallet()
+              await document.connectKeplrWallet(false)
               if (document.secretNetwork.walletAddress) {
                 if (this.cryptocurrencies[cryptoId]['smart_contract']) {
                   await window.keplr.suggestToken(document.secretNetwork.chainId(document.secretNetwork.environment), this.cryptocurrencies[cryptoId]['smart_contract']['address']);
@@ -573,7 +573,7 @@ $(document).ready(function(){
         $walletBalanceLoading.removeClass('d-none')
         $walletBalanceViewButton.addClass('d-none')
         try {
-          await document.connectKeplrWallet()
+          await document.connectKeplrWallet(false)
           if (document.secretNetwork.walletAddress) {
             if (cryptocurrency['smart_contract']) {
               cryptoAddress = cryptocurrency['smart_contract']['address']
