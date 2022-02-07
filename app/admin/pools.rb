@@ -24,7 +24,7 @@ ActiveAdmin.register Pool do
   form do |f|
     f.inputs do
       f.input :protocol
-      f.input :smart_contract, collection: SmartContract.all.order(:label), member_label: proc { |sc| sc.label_formatted }
+      f.input :smart_contract_id
       f.input :category, as: :select
       f.input :deadline
       f.input :pending_rewards
