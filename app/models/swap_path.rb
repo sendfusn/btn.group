@@ -68,7 +68,7 @@ class SwapPath < ApplicationRecord
   end
 
   def set_maximum_tradeable_value
-    return unless (mtv = pools&.order(:total_locked)&.first&.total_locked)
+    mtv = pools&.order(:total_locked)&.first&.total_locked
 
     update(maximum_tradeable_value: mtv) if mtv != maximum_tradeable_value
   end
