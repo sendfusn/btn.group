@@ -54,11 +54,11 @@ $(document).ready(function(){
         $('#arbitrage-enabled').change(function() {
           if($('#arbitrage-enabled').is(":checked")) {
             let arbitrageSeconds = $("#arbitrage-seconds").val()
-            const arbitrageInterval = setInterval(function() { $('#from-amount-input').trigger("input") }, arbitrageSeconds * 1_000);
+            this.arbitrageInterval = setInterval(function() { $('#from-amount-input').trigger("input") }, arbitrageSeconds * 1_000);
           } else {
-            clearInterval(arbitrageInterval);
+            clearInterval(this.arbitrageInterval);
           }
-        });
+        }.bind(this));
       }
 
       $.each(['.from-balance-view-button', '.to-balance-view-button'], function(index, value) {
