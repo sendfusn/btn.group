@@ -87,7 +87,8 @@ class ApplicationController < ActionController::Base
             show_link: true,
             status: 'Live',
             contracts: {
-              production: 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq'
+              production: 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq',
+              production_two: 'secret18m0lha86nmq4c2842hjyv5g3xsuldp5r3kyxqq'
             }
           },
           password_manager: {
