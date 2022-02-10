@@ -39,14 +39,14 @@
             .container
               .nk-block.block-footer
                 .row.justify-content-between
-                  .col-lg-9.col-md-8
+                  .col-lg-8.col-md-7
                     .wgs.wgs-menu
                       %h6.wgs-title.text-white About
                       .wgs-body
                         %ul.wgs-links.wgs-links-s3
                           %li= link_to 'Brand assets', brand_assets_path, class: 'd-inline'
                           %li= link_to 'Roadmap', roadmap_path, class: 'd-inline'
-                  .col-lg-3.col-md-4
+                  .col-lg-4.col-md-5
                     .wgs.wgs-text
                       .wgs-body
                         %h6.wgs-title.text-white Join our community
@@ -61,6 +61,9 @@
                             %li
                               = link_to 'https://discord.gg/fxTbthnzFW', target: '_blank', rel: 'noopener' do
                                 %em.social-icon.fab.fa-discord
+                            %li
+                              = link_to 'https://medium.com/@btn.group', target: '_blank', rel: 'noopener' do
+                                %em.social-icon.fab.fa-medium
                             %li
                               = link_to 'https://t.me/btn_group', target: '_blank', rel: 'noopener' do
                                 %em.social-icon.fab.fa-telegram
