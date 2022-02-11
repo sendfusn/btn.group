@@ -43,7 +43,7 @@ module SecretNetwork
                                .pluck(:cryptocurrency_id)
                                .uniq
       @fungible_tokens = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).where.not(symbol: %w[ATOM DVPN LUNA OSMO SCRT UST]).order(:symbol)
-      @nfts = Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(symbol)')
+      @nfts = Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(name)')
       @navbar_container_fluid = true
       @head_description = 'Burn contract for Secret network tokens.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/mount_doom/mt_doom_biwkdj.png'
