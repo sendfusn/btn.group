@@ -327,25 +327,29 @@ $(document).ready(function(){
               url: url,
               type: 'GET'
             })
-            this.renderResults(from_id, to_id)
-            for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
+            if(this.swapPaths[from_id][to_id].length) {
+              this.renderResults(from_id, to_id)
+              for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
+                if(currentQueryCount == this.queryCount) {
+                  $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
+                  let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
+                  swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
+                  this.setNetUsdResultOfSwaps(swapPath)
+                  this.setBestResultForProtocol(swapPath)
+                  this.renderResults(from_id, to_id)
+                }
+              }
               if(currentQueryCount == this.queryCount) {
-                $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
-                let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
-                swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
-                this.setNetUsdResultOfSwaps(swapPath)
-                this.setBestResultForProtocol(swapPath)
-                this.renderResults(from_id, to_id)
+                this.applyFee()
+                this.renderTable()
+                this.fillForm()
+                $('#results').removeClass('d-none')
+                if ($('#arbitrage-enabled').length && $('#arbitrage-enabled').is(":checked") && Number($("#to-amount-input").val()) - Number($("#arbitrage-profit").val()) > Number($("#from-amount-input").val())) {
+                  $('#bird-audio')[0].play()
+                }
               }
-            }
-            if(currentQueryCount == this.queryCount) {
-              this.applyFee()
-              this.renderTable()
-              this.fillForm()
-              $('#results').removeClass('d-none')
-              if ($('#arbitrage-enabled').length && $('#arbitrage-enabled').is(":checked") && Number($("#to-amount-input").val()) - Number($("#arbitrage-profit").val()) > Number($("#from-amount-input").val())) {
-                $('#bird-audio')[0].play()
-              }
+            } else {
+              document.showAlertInfo('No swap paths available. Please try different tokens or different amounts.')
             }
           }
         } catch(error) {
