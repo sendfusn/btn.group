@@ -222,7 +222,7 @@ $(document).ready(function(){
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
             let tokenAddress = document.mountDoomSetViewingKeyForm.tokenAddress.value;
-            let contractHash = document.mountDoomSetViewingKeyForm.contractHash.value;
+            let contractHash = await document.secretNetwork.client().getCodeHashByContractAddr(tokenAddress)
             let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
             let gasParams = {
               exec: {
@@ -235,6 +235,9 @@ $(document).ready(function(){
           }
         }
         catch(err) {
+          if(err.message.includes('decoding bech32 failed:')) {
+            err = 'Invalid address.'
+          }
           document.showAlertDanger(err)
         }
         finally {
