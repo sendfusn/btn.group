@@ -60,17 +60,57 @@ $(document).ready(function(){
           $('#nonFungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
         } else {
           this.tokenAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
-          console.log(event['currentTarget']['dataset'])
           $('#fungibleTokenAddress .symbol').text(event['currentTarget']['dataset']['cryptocurrencySymbol'])
           $('#fungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
         }
         $(document.mountDoomQueryForm).submit()
       }
 
-      document.mountDoomQueryForm.onsubmit = async (e) => {
-        e.preventDefault()
+      this.processNftTxs = async(txs) => {
         $nftsContainer = $('#nfts-container')
         $nftsContainer.addClass('d-none')
+        let nftsContainerHtml = ''
+        _.each(txs, function(value) {
+          (async () => {
+            try {
+              let params = {
+                nft_info: {
+                  token_id: value['token_id'],
+                }
+              }
+              let nftInfoResponse = await document.secretNetwork.client().queryContractSmart(this.nftAddress, params);
+              let imageUrl;
+              let nftName;
+              if (nftInfoResponse['nft_info']['token_uri']) {
+                let result = await $.ajax({
+                  url: nftInfoResponse['nft_info']['token_uri'],
+                  type: 'GET'
+                })
+                imageUrl = result['image']
+                nftName = result['name']
+              } else if(nftInfoResponse['nft_info']['extension']['image']) {
+                imageUrl = nftInfoResponse['nft_info']['extension']['image']
+                nftName = nftInfoResponse['nft_info']['extension']['name']
+              } else {
+                imageUrl = nftInfoResponse['nft_info']['extension']['media'][0]['url']
+                nftName = nftInfoResponse['nft_info']['extension']['name']
+              }
+              nftsContainerHtml += '<div class="col-sm-6 col-md-4 col-lg-6 col-xl-4 col-xxl-3 mb-4"><div class="blog mb-0">'
+              nftsContainerHtml += '<div class="blog-photo"><img class="w-100" src="' + imageUrl + '"></div>'
+              nftsContainerHtml += '<div class="blog-text"><h5 class="title title-sm">' + nftName + '</h5>'
+              nftsContainerHtml += '</div></div></div>'
+              $nftsContainer.html(nftsContainerHtml)
+              $nftsContainer.removeClass('d-none')
+            }
+            catch(err) {
+              document.showAlertDanger('Error retrieving all images. Please try again.')
+            }
+          })();
+        }.bind(this))
+      }
+
+      document.mountDoomQueryForm.onsubmit = async (e) => {
+        e.preventDefault()
         $('#transactions-container').addClass('d-none')
         changeSubmitButtonToLoading()
         document.hideAllAlerts();
@@ -89,46 +129,7 @@ $(document).ready(function(){
               throw(transactions_response['viewing_key_error']['msg'])
             }
             let txs = transactions_response['transaction_history']['txs']
-            console.log(txs)
-            let nftsContainerHtml = ''
-            _.each(txs, function(value) {
-              (async () => {
-                try {
-                  let params = {
-                    nft_info: {
-                      token_id: value['token_id'],
-                    }
-                  }
-                  let nftInfoResponse = await document.secretNetwork.client().queryContractSmart(this.nftAddress, params);
-                  let imageUrl;
-                  let nftName;
-                  console.log(nftInfoResponse)
-                  if (nftInfoResponse['nft_info']['token_uri']) {
-                    let result = await $.ajax({
-                      url: nftInfoResponse['nft_info']['token_uri'],
-                      type: 'GET'
-                    })
-                    imageUrl = result['image']
-                    nftName = result['name']
-                  } else if(nftInfoResponse['nft_info']['extension']['image']) {
-                    imageUrl = nftInfoResponse['nft_info']['extension']['image']
-                    nftName = nftInfoResponse['nft_info']['extension']['name']
-                  } else {
-                    imageUrl = nftInfoResponse['nft_info']['extension']['media'][0]['url']
-                    nftName = nftInfoResponse['nft_info']['extension']['name']
-                  }
-                  nftsContainerHtml += '<div class="col-sm-6 col-md-4 col-lg-6 col-xl-4 col-xxl-3 mb-4"><div class="blog mb-0">'
-                  nftsContainerHtml += '<div class="blog-photo"><img class="w-100" src="' + imageUrl + '"></div>'
-                  nftsContainerHtml += '<div class="blog-text"><h5 class="title title-sm">' + nftName + '</h5>'
-                  nftsContainerHtml += '</div></div></div>'
-                  $nftsContainer.html(nftsContainerHtml)
-                  $nftsContainer.removeClass('d-none')
-                }
-                catch(err) {
-                  document.showAlertDanger(err)
-                }
-              })();
-            }.bind(this))
+            this.processNftTxs(txs)
           } else {
             // Reset transactions table and balance
             $transactionsTableBody = $('#transactions-table-body');
