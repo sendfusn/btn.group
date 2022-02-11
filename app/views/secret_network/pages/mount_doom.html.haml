@@ -28,10 +28,14 @@
                           %input.input-radio#snip-20{ name: 'tokenType', type: 'radio', value: 'snip-20' }
                           %label{ for: 'snip-20' } SNIP-20
                     .field-item
-                      %label.field-label Token
                       .field-wrap
-                        = select_tag 'fungibleTokenAddress', options_from_collection_for_select(Cryptocurrency.where(official: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).where.not(coin_gecko_id: nil).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'input-bordered d-none'
-                        = select_tag 'nonFungibleTokenAddress', options_from_collection_for_select(Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'input-bordered'
+                        #fungibleTokenAddress.btn.btn-auto.btn-transparent.dropdown-toggle.d-none.pl-0{ 'data-target' => '#mountDoomTokens', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                          = cl_image_tag(@fungible_tokens.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                          %span.symbol BUTT
+                        #nonFungibleTokenAddress.btn.btn-auto.btn-transparent.dropdown-toggle.pl-0{ 'data-target' => '#mountDoomNFTs', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                          .block
+                            = cl_image_tag(@nfts.find_by(symbol: 'ANONS').attachments.first&.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                          %span.symbol ANONS
                     .field-item.d-none
                       %label.field-label Token Address
                       .field-wrap
@@ -112,3 +116,44 @@
                         %th Amount
                     %tbody#transactions-table-body
             .row#nfts-container
+.modal.fade.tokenList#mountDoomTokens{ 'aria-hidden' => 'true', 'aria-labelledby' => 'mountDoomTokenLabel', :role => 'dialog', :tabindex => '-1' }
+  .modal-dialog{ role: 'document' }
+    .modal-content.bg-white#token-list{ style: 'height: 90vh' }
+      .modal-header.d-block
+        %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
+          %span{ 'aria-hidden' => 'true' } ×
+        %h5.modal-title#mountDoomTokenLabel Select a token
+        .field-wrap.mt-2
+          %input.input-bordered.input-bordered-lg.search#input-text-1{ autocomplete: 'off', name: 'inputname1', type: 'text', placeholder: 'Search symbol' }
+      .modal-body{ style: 'overflow: scroll;' }
+        .position-absolute No result found.
+        %ul.list
+          - @fungible_tokens.each do |cryptocurrency|
+            %li.bg-white{ style: 'padding: 0 !important;', 'data-cryptocurrency-address': cryptocurrency.smart_contract.address, 'data-cryptocurrency-name': cryptocurrency.name, 'data-cryptocurrency-cloudinary-public-id': cryptocurrency.attachments.first&.cloudinary_public_id, 'data-cryptocurrency-symbol': cryptocurrency.symbol }
+              = link_to '#', class: 'd-block' do
+                .d-flex
+                  - if cryptocurrency.attachments.first
+                    .position-absolute{ style: 'top: 7px' }
+                      = cl_image_tag(cryptocurrency.attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                  %b.symbol{ style: 'color: #415076 !important; padding-left: 33px;' }= cryptocurrency.symbol
+
+.modal.fade.tokenList#mountDoomNFTs{ 'aria-hidden' => 'true', 'aria-labelledby' => 'mountDoomTokenLabel', :role => 'dialog', :tabindex => '-1' }
+  .modal-dialog{ role: 'document' }
+    .modal-content.bg-white#nft-list{ style: 'height: 90vh' }
+      .modal-header.d-block
+        %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
+          %span{ 'aria-hidden' => 'true' } ×
+        %h5.modal-title#mountDoomTokenLabel Select a token
+        .field-wrap.mt-2
+          %input.input-bordered.input-bordered-lg.search#input-text-2{ autocomplete: 'off', name: 'inputname1', type: 'text', placeholder: 'Search symbol' }
+      .modal-body{ style: 'overflow: scroll;' }
+        .position-absolute No result found.
+        %ul.list
+          - @nfts.each do |cryptocurrency|
+            %li.bg-white{ style: 'padding: 0 !important;', 'data-cryptocurrency-address': cryptocurrency.smart_contract.address, 'data-cryptocurrency-name': cryptocurrency.name, 'data-cryptocurrency-cloudinary-public-id': cryptocurrency.attachments.first&.cloudinary_public_id, 'data-cryptocurrency-symbol': cryptocurrency.symbol }
+              = link_to '#', class: 'd-block' do
+                .d-flex
+                  - if cryptocurrency.attachments.first
+                    .position-absolute{ style: 'top: 7px' }
+                      = cl_image_tag(cryptocurrency.attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                  %b.symbol{ style: 'color: #415076 !important; padding-left: 33px;' }= cryptocurrency.name

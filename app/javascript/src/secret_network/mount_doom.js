@@ -24,9 +24,49 @@ $(document).ready(function(){
     }
 
     window.onload = async () => {
-      document.activateKeplr()
       this.mountDoomContractAddress = 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq';
       this.mountDoomContractDataHash = '8669D5303F367DEBA976820B36A89A80B88B4F0574C690FA7209D51C6BD18A53'
+      this.mountDoomForStashhContractAddress = 'secret18m0lha86nmq4c2842hjyv5g3xsuldp5r3kyxqq'
+      this.tokenAddress = document.secretNetwork.butt.address;
+      this.nftAddress = 'secret1xx4fp7qgkyxdk9elrzd8v5p7gj28lvxprwl9lw';
+
+      // === LIST ===
+      var options = {
+        valueNames: [ 'address', 'symbol' ]
+      };
+      this.tokenList = new List('token-list', options);
+      this.nftList = new List('nft-list', options)
+
+      // === LISTENERS ===
+      $('li.bg-white').click(function(e){
+        e.preventDefault()
+        this.updateAfterTokenSelect(e)
+      }.bind(this))
+
+      // === FUNCTIONS ===
+      this.updateAfterTokenSelect = async(event) => {
+        $('.modal').modal('hide');
+        $('#input-text-1').val('');
+        $('#input-text-2').val('');
+        this.tokenList.search()
+        this.nftList.search()
+        let cloudinaryPublicId = event['currentTarget']['dataset']['cryptocurrencyCloudinaryPublicId']
+        if (!cloudinaryPublicId) {
+          cloudinaryPublicId = 'external-content.duckduckgo-1_memqe7'
+        }
+        if(document.mountDoomQueryForm.tokenType.value == 'nft') {
+          this.nftAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
+          $('#nonFungibleTokenAddress .symbol').text(event['currentTarget']['dataset']['cryptocurrencyName'])
+          $('#nonFungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
+        } else {
+          this.tokenAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
+          console.log(event['currentTarget']['dataset'])
+          $('#fungibleTokenAddress .symbol').text(event['currentTarget']['dataset']['cryptocurrencySymbol'])
+          $('#fungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
+        }
+        $(document.mountDoomQueryForm).submit()
+      }
+
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
         $nftsContainer = $('#nfts-container')
@@ -37,7 +77,6 @@ $(document).ready(function(){
         try {
           let tokenType = document.mountDoomQueryForm.tokenType.value;
           if (tokenType == 'nft') {
-            let tokenAddress = document.mountDoomQueryForm.nonFungibleTokenAddress.value;
             // Get the transactions for that token
             let params = {
               transaction_history: {
@@ -45,11 +84,12 @@ $(document).ready(function(){
                 viewing_key: "DoTheRightThing.",
               }
             }
-            let transactions_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetwork.client().queryContractSmart(this.nftAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
             let txs = transactions_response['transaction_history']['txs']
+            console.log(txs)
             let nftsContainerHtml = ''
             _.each(txs, function(value) {
               (async () => {
@@ -59,7 +99,7 @@ $(document).ready(function(){
                       token_id: value['token_id'],
                     }
                   }
-                  let nftInfoResponse = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
+                  let nftInfoResponse = await document.secretNetwork.client().queryContractSmart(this.nftAddress, params);
                   let imageUrl;
                   let nftName;
                   console.log(nftInfoResponse)
@@ -90,14 +130,13 @@ $(document).ready(function(){
               })();
             }.bind(this))
           } else {
-            let tokenAddress = document.mountDoomQueryForm.fungibleTokenAddress.value;
             // Reset transactions table and balance
             $transactionsTableBody = $('#transactions-table-body');
             $transactionsTableBody.html('')
             $("#balance").text('')
             $($('th')[2]).text('Amount')
             // Get the token info
-            let token_info_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, { token_info: {} });
+            let token_info_response = await document.secretNetwork.client().queryContractSmart(this.tokenAddress, { token_info: {} });
             let token_decimals = token_info_response["token_info"]["decimals"]
             let token_symbol = token_info_response["token_info"]["symbol"]
             // Get the transactions for that token
@@ -109,7 +148,7 @@ $(document).ready(function(){
                 page_size: 1000
               }
             }
-            let transactions_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
+            let transactions_response = await document.secretNetwork.client().queryContractSmart(this.tokenAddress, params);
             if (transactions_response['viewing_key_error']) {
               throw(transactions_response['viewing_key_error']['msg'])
             }
@@ -153,7 +192,7 @@ $(document).ready(function(){
 
             // Get the balance for the token
             let msg = { balance:{ address: this.mountDoomContractAddress, key: "DoTheRightThing." } };
-            let balance_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, msg)
+            let balance_response = await document.secretNetwork.client().queryContractSmart(this.tokenAddress, msg)
             if (balance_response["viewing_key_error"]) {
               throw balance_response["viewing_key_error"]["msg"]
             }
@@ -190,17 +229,23 @@ $(document).ready(function(){
                 gas: '50000',
               },
             }
-            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).client.execute(this.mountDoomContractAddress, msg, '', [], gasParams.exec, this.mountDoomContractDataHash)
+            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.mountDoomContractAddress, msg, '', [], gasParams.exec, this.mountDoomContractDataHash)
             document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
           }
         }
         catch(err) {
-          document.showAlertDanger(err)
+          if(err.message && err.message.includes('Wrong viewing key')) {
+            document.showAlertWarning('Viewing key not set: Please set on the "Set viewing key" tab.')
+          } else {
+            document.showAlertDanger(err)
+          }
         }
         finally {
           changeSubmitButtonToReady()
         }
       };
+
+      document.activateKeplr()
     }
   };
 });

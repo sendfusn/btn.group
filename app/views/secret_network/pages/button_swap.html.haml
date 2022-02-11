@@ -95,7 +95,7 @@
                             #from-usd-price
                           .col-5.col-sm-4
                             .btn.btn-transparent.dropdown-toggle.float-right#from-token-button{ 'data-target' => '#buttonSwap', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
-                              = cl_image_tag(Cryptocurrency.find_by(symbol: 'SSCRT').attachments.first.cloudinary_public_id, class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                              = cl_image_tag(Cryptocurrency.find_by(symbol: 'SSCRT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
                               %span.symbol SCRT
                     .text-center
                       = link_to '#' do
@@ -159,7 +159,7 @@
                           %td.table-des -
                 #swap-paths
     .nk-ovm.shape-q
-.modal.fade#buttonSwap{ 'aria-hidden' => 'true', 'aria-labelledby' => 'buttonSwapLabel', :role => 'dialog', :tabindex => '-1' }
+.modal.fade.tokenList#buttonSwap{ 'aria-hidden' => 'true', 'aria-labelledby' => 'buttonSwapLabel', :role => 'dialog', :tabindex => '-1' }
   .modal-dialog{ role: 'document' }
     .modal-content.bg-white#hacker-list{ style: 'height: 90vh' }
       .modal-header.d-block
@@ -177,5 +177,5 @@
                 .d-flex
                   - if cryptocurrency.attachments.first
                     .position-absolute{ style: 'top: 7px' }
-                      = cl_image_tag(cryptocurrency.attachments.first.cloudinary_public_id, class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                      = cl_image_tag(cryptocurrency.attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
                   %b.symbol{ style: 'color: #415076 !important; padding-left: 33px;' }= cryptocurrency.symbol
