@@ -27,6 +27,7 @@ $(document).ready(function(){
       this.mountDoomContractAddress = 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq';
       this.mountDoomContractDataHash = '8669D5303F367DEBA976820B36A89A80B88B4F0574C690FA7209D51C6BD18A53'
       this.mountDoomForStashhContractAddress = 'secret18m0lha86nmq4c2842hjyv5g3xsuldp5r3kyxqq'
+      this.$nftsContainer = $('#nfts-container')
       this.tokenAddress = document.secretNetwork.butt.address;
       this.nftAddress = 'secret1xx4fp7qgkyxdk9elrzd8v5p7gj28lvxprwl9lw';
 
@@ -67,8 +68,6 @@ $(document).ready(function(){
       }
 
       this.processNftTxs = async(txs) => {
-        $nftsContainer = $('#nfts-container')
-        $nftsContainer.addClass('d-none')
         let nftsContainerHtml = ''
         _.each(txs, function(value) {
           (async () => {
@@ -99,8 +98,8 @@ $(document).ready(function(){
               nftsContainerHtml += '<div class="blog-photo"><img class="w-100" src="' + imageUrl + '"></div>'
               nftsContainerHtml += '<div class="blog-text"><h5 class="title title-sm">' + nftName + '</h5>'
               nftsContainerHtml += '</div></div></div>'
-              $nftsContainer.html(nftsContainerHtml)
-              $nftsContainer.removeClass('d-none')
+              this.$nftsContainer.html(nftsContainerHtml)
+              this.$nftsContainer.removeClass('d-none')
             }
             catch(err) {
               document.showAlertDanger('Error retrieving all images. Please try again.')
@@ -111,6 +110,7 @@ $(document).ready(function(){
 
       document.mountDoomQueryForm.onsubmit = async (e) => {
         e.preventDefault()
+        this.$nftsContainer.addClass('d-none')
         $('#transactions-container').addClass('d-none')
         changeSubmitButtonToLoading()
         document.hideAllAlerts();
