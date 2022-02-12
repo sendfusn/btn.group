@@ -3,7 +3,6 @@ $(document).ready(function(){
     window.onload = async () => {
       this.mountDoomContractAddress = 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq';
       this.mountDoomContractDataHash = '8669D5303F367DEBA976820B36A89A80B88B4F0574C690FA7209D51C6BD18A53'
-      this.mountDoomForStashhContractAddress = 'secret18m0lha86nmq4c2842hjyv5g3xsuldp5r3kyxqq'
       this.$nftsContainer = $('#nfts-container')
       this.tokenAddress = document.secretNetwork.butt.address;
       this.nftAddress = 'secret1xx4fp7qgkyxdk9elrzd8v5p7gj28lvxprwl9lw';
@@ -81,6 +80,7 @@ $(document).ready(function(){
       }
 
       this.processNftTxs = async(txs) => {
+        console.log(txs)
         let nftsContainerHtml = ''
         _.each(txs, function(value) {
           (async () => {
