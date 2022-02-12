@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'nokogiri', '>= 1.12.5'
 gem 'pg'
 # Use Puma as the app server
-gem 'puma', '>= 5.5.1'
+gem 'puma', '>= 5.6.2'
 gem 'rack-cors'
 # Recommended by Heroku: https://devcenter.heroku.com/articles/h12-request-timeout-in-ruby-mri
 gem 'rack-timeout', require: 'rack/timeout/base'
