@@ -14,7 +14,6 @@
             %li.bg-white{ style: 'padding: 0 !important;', 'data-cryptocurrency-id': cryptocurrency.id, 'data-cryptocurrency-address': cryptocurrency.smart_contract&.address, 'data-cryptocurrency-name': cryptocurrency.name, 'data-cryptocurrency-cloudinary-public-id': cryptocurrency.attachments.first&.cloudinary_public_id, 'data-cryptocurrency-symbol': cryptocurrency.symbol }
               = link_to '#', class: 'd-block' do
                 .d-flex
-                  - if cryptocurrency.attachments.first
-                    .position-absolute{ style: 'top: 7px' }
-                      = cl_image_tag(cryptocurrency.attachments.first&.cloudinary_public_id || 'external-content.duckduckgo-1_memqe7', transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                  .position-absolute{ style: 'top: 7px' }
+                    = cl_image_tag(cryptocurrency.attachments.first&.cloudinary_public_id || 'external-content.duckduckgo-1_memqe7', transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
                   %b.symbol{ style: 'color: #415076 !important; padding-left: 33px;' }= label_type == 'symbol' ? cryptocurrency.symbol : cryptocurrency.name
