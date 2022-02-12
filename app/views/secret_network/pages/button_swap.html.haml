@@ -159,23 +159,4 @@
                           %td.table-des -
                 #swap-paths
     .nk-ovm.shape-q
-.modal.fade.tokenList#buttonSwap{ 'aria-hidden' => 'true', 'aria-labelledby' => 'buttonSwapLabel', :role => 'dialog', :tabindex => '-1' }
-  .modal-dialog{ role: 'document' }
-    .modal-content.bg-white#hacker-list{ style: 'height: 90vh' }
-      .modal-header.d-block
-        %button.close{ 'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button' }
-          %span{ 'aria-hidden' => 'true' } ×
-        %h5.modal-title#buttonSwapLabel Select a token
-        .field-wrap.mt-2
-          %input.input-bordered.input-bordered-lg.search#input-text-2{ autocomplete: 'off', name: 'inputname1', type: 'text', placeholder: 'Search symbol' }
-      .modal-body{ style: 'overflow: scroll;' }
-        .position-absolute No result found.
-        %ul.list
-          - @cryptocurrencies.each do |cryptocurrency|
-            %li.bg-white{ style: 'padding: 0 !important;', 'data-cryptocurrency-id': cryptocurrency.id }
-              = link_to '#', class: 'd-block' do
-                .d-flex
-                  - if cryptocurrency.attachments.first
-                    .position-absolute{ style: 'top: 7px' }
-                      = cl_image_tag(cryptocurrency.attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
-                  %b.symbol{ style: 'color: #415076 !important; padding-left: 33px;' }= cryptocurrency.symbol
+= render 'token_list', modal_title_id: 'buttonSwapLabel', modal_id: 'buttonSwap', modal_content_id: 'hacker-list', modal_input_id: 'input-text-2', cryptocurrencies: @cryptocurrencies, label_type: 'symbol'
