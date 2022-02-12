@@ -118,6 +118,11 @@
                         %th Description
                         %th Amount
                     %tbody#transactions-table-body
-            .row#nfts-container
+            .row.d-none#nfts-container
+              .col-12
+                %b
+                  %span#sacrifice-count
+                  sent to Mount Doom
+                .row.mt-3#nfts-results
 = render 'token_list', modal_title_id: 'mountDoomTokenLabel', modal_id: 'mountDoomTokens', modal_content_id: 'token-list', modal_input_id: 'input-text-1', cryptocurrencies: @fungible_tokens, label_type: 'symbol', include_other: true
 = render 'token_list', modal_title_id: 'mountDoomNFTLabel', modal_id: 'mountDoomNFTs', modal_content_id: 'nft-list', modal_input_id: 'input-text-2', cryptocurrencies: @nfts, label_type: 'name', include_other: true
