@@ -4,6 +4,8 @@ document.secretNetwork = {
     dataHash: 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'
   },
   environment: 'production',
+  gettingBlockHeight: false,
+  height: 0,
   keplrConnectedTriggered: false,
   smartContracts: {},
   userVipLevel: 0,
@@ -96,6 +98,24 @@ document.secretNetwork = {
     } finally {
       $("#vip-level").text(document.secretNetwork.userVipLevel)
       return document.secretNetwork.userVipLevel
+    }
+  },
+  getBlockHeight: async() => {
+    if (document.secretNetwork.gettingBlockHeight) {
+      while(document.secretNetwork.gettingBlockHeight) {
+        await document.delay(1_000)
+      }
+      return document.secretNetwork.height
+    }
+
+    try {
+      document.secretNetwork.gettingBlockHeight = true
+      document.secretNetwork.height = await document.secretNetwork.client().getHeight();
+      return document.secretNetwork.height
+    } catch (err) {
+      document.showAlertDanger(err)
+    } finally {
+      document.secretNetwork.gettingBlockHeight = false
     }
   },
   signingClient: function(walletAddress, gasParams) {
