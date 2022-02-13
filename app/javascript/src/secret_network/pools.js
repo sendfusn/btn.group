@@ -656,25 +656,6 @@ $(document).ready(function(){
         }
       }.bind(this))
 
-      this.getBlockHeight = async() => {
-        if (this.gettingBlockHeight) {
-          while(this.gettingBlockHeight) {
-            await document.delay(1_000)
-          }
-          return this.height
-        }
-
-        try {
-          this.gettingBlockHeight = true
-          this.height = await document.secretNetwork.client().getHeight();
-          return this.height
-        } catch (err) {
-          document.showAlertDanger(err)
-        } finally {
-          this.gettingBlockHeight = false
-        }
-      }
-
       this.updatePoolInterface = async(pool, afterTransaction, poolDetailsOnly = false, userDetailsOnly = false, height = undefined) => {
         if (poolDetailsOnly) {
           this.updateTotalShares(pool)
@@ -696,7 +677,7 @@ $(document).ready(function(){
       }
 
       this.updateUserInterface = async(poolDetailsOnly = false, userDetailsOnly = false) => {
-        let height = await this.getBlockHeight()
+        let height = await document.secretNetwork.getBlockHeight()
         for (const [index, pool] of this.pools.entries()) {
           this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)
         }
