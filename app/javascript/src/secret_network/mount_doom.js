@@ -80,7 +80,7 @@ $(document).ready(function(){
         }
       }
 
-      this.processNftTxs = async(txs) => {
+      this.processNftTxs = async(txs, address) => {
         let nftsContainerHtml = ''
         $('#sacrifice-count').text(txs.length)
         this.$nftsContainer.removeClass('d-none')
@@ -92,9 +92,10 @@ $(document).ready(function(){
                   token_id: value['token_id'],
                 }
               }
-              let nftInfoResponse = await document.secretNetwork.client().queryContractSmart(this.nftAddress, params);
+              let nftInfoResponse = await document.secretNetwork.client().queryContractSmart(address, params);
               let imageUrl;
               let nftName;
+              let svg;
               if (nftInfoResponse['nft_info']['token_uri']) {
                 let result = await $.ajax({
                   url: nftInfoResponse['nft_info']['token_uri'],
@@ -105,12 +106,19 @@ $(document).ready(function(){
               } else if(nftInfoResponse['nft_info']['extension']['image']) {
                 imageUrl = nftInfoResponse['nft_info']['extension']['image']
                 nftName = nftInfoResponse['nft_info']['extension']['name']
+              } else if (nftInfoResponse['nft_info']['extension']['image_data']) {
+                svg = nftInfoResponse['nft_info']['extension']['image_data']
+                nftName = nftInfoResponse['nft_info']['extension']['name']
               } else {
                 imageUrl = nftInfoResponse['nft_info']['extension']['media'][0]['url']
                 nftName = nftInfoResponse['nft_info']['extension']['name']
               }
               nftsContainerHtml += '<div class="col-sm-6 col-md-4 col-lg-6 col-xl-4 col-xxl-3 mb-4"><div class="blog mb-0">'
-              nftsContainerHtml += '<div class="blog-photo"><img class="w-100" src="' + imageUrl + '"></div>'
+              if (imageUrl) {
+                nftsContainerHtml += '<div class="blog-photo"><img class="w-100" src="' + imageUrl + '"></div>'
+              } else {
+                nftsContainerHtml += '<div class="blog-photo">' + svg + '</div>'
+              }
               nftsContainerHtml += '<div class="blog-text"><h5 class="title title-sm">' + nftName + '</h5>'
               nftsContainerHtml += '</div></div></div>'
               this.$nftsResults.html(nftsContainerHtml)
@@ -238,7 +246,7 @@ $(document).ready(function(){
             throw(transactions_response['viewing_key_error']['msg'])
           }
           let txs = transactions_response['transaction_history']['txs']
-          this.processNftTxs(txs)
+          this.processNftTxs(txs, address)
         }
         catch(err) {
           if(err.message && err.message.includes('Wrong viewing key')) {

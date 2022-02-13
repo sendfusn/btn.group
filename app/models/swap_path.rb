@@ -20,8 +20,10 @@ class SwapPath < ApplicationRecord
     swap_path.set_maximum_tradeable_value
   end
 
-  before_save do |swap_path|
+  before_create do |swap_path|
+    # remove spaces from swap path as string
     swap_path.swap_path_as_string&.gsub!(/\s+/, '')
+    # set protocol_id for swap path if all pools involved are from the same protocol
     protocol_ids = Pool.where(id: swap_path.swap_path_as_array).pluck(:protocol_id).uniq
     swap_path.protocol_id = protocol_ids.first if protocol_ids.count == 1
   end

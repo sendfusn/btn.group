@@ -47,6 +47,9 @@ Metrics/BlockLength:
 RSpec/ImplicitExpect:
   EnforcedStyle: should
 
+RSpec/MultipleExpectations:
+  Enabled: false
+
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
