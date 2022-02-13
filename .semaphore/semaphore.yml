@@ -30,6 +30,9 @@ blocks:
           - bundle install
           - cache store
       jobs:
+        - name: immigrant
+          commands:
+            - bundle exec rake immigrant:check_keys
         - name: rubocop
           commands:
             - bundle exec rubocop
