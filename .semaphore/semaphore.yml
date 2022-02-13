@@ -30,9 +30,6 @@ blocks:
           - bundle install
           - cache store
       jobs:
-        - name: immigrant
-          commands:
-            - bundle exec rake immigrant:check_keys
         - name: rubocop
           commands:
             - bundle exec rubocop
@@ -58,6 +55,9 @@ blocks:
           - sem-service start postgres
           - 'bundle exec rake db:setup'
       jobs:
+        - name: immigrant
+          commands:
+            - bundle exec rake immigrant:check_keys
         - name: rspec
           commands:
             - bundle exec rspec
