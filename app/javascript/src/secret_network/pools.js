@@ -243,16 +243,6 @@ $(document).ready(function(){
           symbol: 'sXMR'
         }
       };
-      let protocols = {
-        secret_swap: {
-          name: 'Secret Swap',
-          url: 'https://app.secretswap.net/earn'
-        },
-        sienna: {
-          name: 'Sienna',
-          url: 'https://app.sienna.network/swap/earn'
-        }
-      }
       this.pools = [
         // This has to be first position in array
         {
@@ -296,7 +286,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sefi'],
           farm_contract_address: 'secret1knars62aly28xkqxe8xeqtf7ans8hqxgm6a05k',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '400000',
         },
@@ -309,7 +298,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sefi_satom_lp'],
           farm_contract_address: 'secret1ga4yptznzm6ycrru3d02g6596cs7wgkugv9pmc',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '937500',
         },
@@ -322,7 +310,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sefi_sluna_lp'],
           farm_contract_address: 'secret1hzul4anur0lw3mq4t0sg95ew27hjg8x9tz6jes',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '937500',
         },
@@ -335,7 +322,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sefi_sosmo_lp'],
           farm_contract_address: 'secret170mt93k5fh07vdhdvu585mxv2e7j7me2xtkae9',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '937500',
         },
@@ -348,7 +334,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_sefi_lp'],
           farm_contract_address: 'secret1twjquxp06j9ppyg4v6dr496fnmfcvzpx8weddm',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           reward_token: cryptocurrencies['sefi'],
           withdraw_gas: '937500',
         },
@@ -361,7 +346,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sefi_sxmr_lp'],
           farm_contract_address: 'secret1pqvny7lp32z939vtd08jhe66cxl0qp3quxyls5',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '937500',
           reward_token: cryptocurrencies['sefi'],
         },
@@ -374,7 +358,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sefi_susdc_eth_lp'],
           farm_contract_address: 'secret16ahwz30chht7wg926tfaj07563hkmemad4nnzm',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '937500',
           reward_token: cryptocurrencies['sefi'],
         },
@@ -387,7 +370,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_susdt_eth_lp'],
           farm_contract_address: 'secret1ny8nvnya5q4zcxpyldvdhts0uvh26heny8ynuj',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '1125000',
           reward_token: cryptocurrencies['sefi'],
         },
@@ -400,7 +382,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_seth_eth_lp'],
           farm_contract_address: 'secret17r72nj7yhc0fnm3ay8j8tluqqd2twj60lvwr3w',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '1125000',
           reward_token: cryptocurrencies['sefi'],
         },
@@ -411,7 +392,6 @@ $(document).ready(function(){
         //   deposit_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
         //   earn_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
         //   farm_contract_address: 'secret1enpte7ll3r4zrs70najmf7g83hdzy33wmdx7nk',
-        //   protocol: protocols['secret_swap'],
         //   withdraw_gas: '1125000',
         //   reward_token: cryptocurrencies['sefi'],
         // },
@@ -424,7 +404,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
           farm_contract_address: 'secret16pqkssv08hjfmamrcz9gruhxxsuvc25n4gq0s2',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '1125000',
           reward_token: cryptocurrencies['sefi'],
         },
@@ -435,7 +414,6 @@ $(document).ready(function(){
         //   deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
         //   earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
         //   farm_contract_address: 'secret1geklww0t0kwehc2w9llwce2wkg40pp4ljfpa8m',
-        //   protocol: protocols['secret_swap'],
         //   withdraw_gas: '1125000',
         //   reward_token: cryptocurrencies['sefi'],
         // },
@@ -448,7 +426,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
           farm_contract_address: 'secret1rcvjaua8dfhjlh0kwhrsj54l4aj46mu5evgqwq',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '1125000',
           reward_token: cryptocurrencies['sefi'],
         },
@@ -459,7 +436,6 @@ $(document).ready(function(){
         //   deposit_token: cryptocurrencies['seth_eth_swbtc_lp'],
         //   earn_token: cryptocurrencies['seth_eth_swbtc_lp'],
         //   farm_contract_address: 'secret1zsnjdcjwpyamc98lyvd5v8u9rw0949px6r5agg',
-        //   protocol: protocols['secret_swap'],
         //   withdraw_gas: '1050000',
         //   reward_token: cryptocurrencies['sefi'],
         // },
@@ -472,7 +448,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['seth_bsc_seth_eth_lp'],
           farm_contract_address: 'secret1s3gg4l6u2vpewqp2lpupqwr52ktdak00rq05ms',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '1050000',
           reward_token: cryptocurrencies['sefi'],
         },
@@ -485,7 +460,6 @@ $(document).ready(function(){
           earn_token: cryptocurrencies['sefi_sdvpn_lp'],
           farm_contract_address: 'secret1zyd8tdq5wxe7jmmhw99uwh3qwwhx5cphu85lya',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          protocol: protocols['secret_swap'],
           withdraw_gas: '1050000',
           reward_token: cryptocurrencies['sefi'],
         }
