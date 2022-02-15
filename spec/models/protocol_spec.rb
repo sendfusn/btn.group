@@ -13,6 +13,9 @@ RSpec.describe Protocol, type: :model do
   end
 
   describe 'VALIDATIONS' do
+    before { create(:protocol) }
+
     it { should validate_presence_of(:identifier) }
+    it { should validate_uniqueness_of(:identifier).ignoring_case_sensitivity }
   end
 end

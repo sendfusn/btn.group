@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :protocol do
-    identifier { rand(2) }
+    identifier { Protocol.identifiers.keys.sample }
     sequence(:name) { |n| "name#{n}" }
     sequence(:url) { |n| "https://url#{n}.com" }
   end
