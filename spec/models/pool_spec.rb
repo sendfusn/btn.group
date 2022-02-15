@@ -54,14 +54,14 @@ RSpec.describe Pool, type: :model do
 
         context 'when belongs to non farm pool' do
           it 'raises an error' do
-            pool.pool = create(:pool, category: :profit_distributor)
+            pool.pool = create(:pool, category: :profit_distributor, smart_contract: smart_contract)
             expect(pool.valid?).to be false
           end
         end
 
         context 'when belongs to farm pool' do
           it 'is valid' do
-            pool.pool = create(:pool, category: :farm)
+            pool.pool = create(:pool, category: :farm, smart_contract: smart_contract)
             expect(pool.valid?).to be true
           end
         end

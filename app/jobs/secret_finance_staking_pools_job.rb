@@ -57,10 +57,14 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
       apr = pending_rewards_in_usd * 100 * 31_540_000 / locked_amount_in_usd / time_remaining_in_seconds
       if apr.positive?
         pool.update(apr: apr.round(2))
-        pool.pool&.update(apy: ((((1 + apr / 100 / 365)**365) - 1) * 100).round(2))
+        Pool.where(pool: pool).find_each do |yield_optimizer|
+          yield_optimizer.update(apy: ((((1 + apr / 100 / 365)**365) - 1) * 100).round(2))
+        end
       else
         pool.update(apr: 0)
-        pool.pool&.update(apy: 0)
+        Pool.where(pool: pool).find_each do |yield_optimizer|
+          yield_optimizer.update(apy: 0)
+        end
       end
     end
     return if pool.cryptocurrency_pools.present?
