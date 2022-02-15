@@ -66,14 +66,15 @@ class Pool < ApplicationRecord
       commission_amount: commission_amount.to_i }
   end
 
-  # This will set total_locked to zero if all any deposit cryptocurrencies are missing
-  # a price or amount
   def update_total_locked
     total_locked = 0.0
     cryptocurrency_pools.deposit.find_each do |cp|
-      break if cp.amount.nil? || cp.cryptocurrency.price.nil? || cp.cryptocurrency.decimals.nil?
-
-      total_locked += cp.cryptocurrency.amount_with_decimals(cp.amount) * cp.cryptocurrency.price
+      if cp.amount.nil? || cp.cryptocurrency.price.nil?
+        total_locked = nil
+        break
+      else
+        total_locked += cp.cryptocurrency.amount_with_decimals(cp.amount) * cp.cryptocurrency.price
+      end
     end
     update!(total_locked: total_locked)
   end

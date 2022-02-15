@@ -39,26 +39,17 @@ RSpec.describe Cryptocurrency, type: :model do
         allow(pool).to receive(:update_total_locked)
       end
 
-      context 'when price is not present' do
-        it 'does not call #update_total_locked on any associated trade pairs' do
-          cryptocurrency.update!(price: nil)
-          expect(cryptocurrency.pools.first.total_locked).to eq 0
+      context 'when price has changed' do
+        it 'calls #update_total_locked on any associated trade pairs' do
+          cryptocurrency.update!(price: 100)
+          expect(cryptocurrency.pools.first.total_locked).to eq 1
         end
       end
 
-      context 'when price is present' do
-        context 'when price has changed' do
-          it 'calls #update_total_locked on any associated trade pairs' do
-            cryptocurrency.update!(price: 100)
-            expect(cryptocurrency.pools.first.total_locked).to eq 1
-          end
-        end
-
-        context 'when price has not changed' do
-          it 'does not call #update_total_locked on any associated trade pairs' do
-            cryptocurrency.update!(price: 55)
-            expect(cryptocurrency.pools.first.total_locked).to eq 0.55
-          end
+      context 'when price has not changed' do
+        it 'does not call #update_total_locked on any associated trade pairs' do
+          cryptocurrency.update!(price: 55)
+          expect(cryptocurrency.pools.first.total_locked).to eq 0.55
         end
       end
     end

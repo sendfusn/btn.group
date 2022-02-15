@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe SwapPath, type: :model do
+  let(:amount) { 1_000_000 }
+  let(:amount_two) { 2_000_000 }
   let(:blockchain) do
     if Blockchain.count.zero?
       create(:blockchain)
@@ -10,7 +12,6 @@ RSpec.describe SwapPath, type: :model do
       Blockchain.first
     end
   end
-  let(:cryptocurrency) { create(:cryptocurrency, blockchain: blockchain, smart_contract: smart_contract) }
   let(:pool_one) { create(:pool, protocol: protocol_one, smart_contract: smart_contract) }
   let(:pool_two) { create(:pool, protocol: protocol_two, smart_contract: smart_contract_two) }
   let(:protocol_one) { create(:protocol) }
@@ -82,9 +83,28 @@ RSpec.describe SwapPath, type: :model do
     end
   end
 
-  # describe 'INSTANCE METHODS' do
-  #   descrive '#net_result_as_usd' do
+  describe 'INSTANCE METHODS' do
+    describe '#net_result_as_usd' do
+      before { allow(swap_path).to receive(:gas_in_usd).and_return(1234) }
 
-  #   end
-  # end
+      it 'returns the net result as usd' do
+        result_amount = rand(1_000_000)
+        expect(swap_path.net_result_as_usd(result_amount)).to eq(swap_path.to.amount_as_usd(result_amount) - swap_path.gas_in_usd)
+      end
+    end
+
+    # describe '#simulate_swaps' do
+    #   before do
+    #     swap_path.update(swap_path_as_string: "#{pool_one.id}, #{pool_two.id}")
+    #     pool_one
+    #     pool_two
+    #   end
+
+    #   it 'simulates the swaps in the correct order' do
+    #     allow(pool_one).to receive(:simulate_swap).and_return(10)
+    #     allow(pool_two).to receive(:simulate_swap).and_return(20)
+    #     expect(swap_path.simulate_swaps(amount)).to eq(amount + amount_two)
+    #   end
+    # end
+  end
 end

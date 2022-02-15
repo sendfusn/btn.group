@@ -3,7 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Pool, type: :model do
+  let(:blockchain) do
+    if Blockchain.count.zero?
+      create(:blockchain)
+    else
+      Blockchain.first
+    end
+  end
+  let(:cryptocurrency) { build(:cryptocurrency, blockchain: blockchain) }
   let(:pool) { build(:pool) }
+  let(:smart_contract) { build(:smart_contract, blockchain: blockchain) }
 
   describe 'ASSOCIATIONS' do
     it { should belong_to(:pool).optional }
@@ -32,6 +41,42 @@ RSpec.describe Pool, type: :model do
       end
 
       it { should validate_presence_of(:enabled) }
+    end
+  end
+
+  describe 'INSTANCE METHODS' do
+    describe '#update_total_locked' do
+      context 'when deposit token amount is nil' do
+        before { create(:cryptocurrency_pool, pool: pool, cryptocurrency: cryptocurrency) }
+
+        it 'sets the total_locked to nil' do
+          pool.update_total_locked
+          expect(pool.total_locked).to be nil
+        end
+      end
+
+      context 'when deposit token amount is present' do
+        before { create(:cryptocurrency_pool, cryptocurrency: cryptocurrency, pool: pool, amount: rand(1_000_000_000).to_s) }
+
+        context 'when cryptocurrency price is nil' do
+          before { cryptocurrency.update(price: nil) }
+
+          it 'sets the total_locked to nil' do
+            pool.update_total_locked
+            expect(pool.total_locked).to be nil
+          end
+        end
+
+        context 'when cryptocurrency price is present' do
+          before { cryptocurrency.update(price: rand(43_000)) }
+
+          it 'sets the total_locked' do
+            cp = pool.cryptocurrency_pools.first
+            pool.update_total_locked
+            expect(pool.total_locked).to eq((cp.cryptocurrency.amount_with_decimals(cp.amount) * cp.cryptocurrency.price).round(2))
+          end
+        end
+      end
     end
   end
 end
