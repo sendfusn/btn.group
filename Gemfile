@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.2'
 
-gem 'actionpack', '>= 6.1.4.2'
+gem 'actionpack', '>= 6.1.4.6'
 gem 'activeadmin'
 gem 'airbrake'
 # For ruby metrics
