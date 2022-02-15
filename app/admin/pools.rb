@@ -19,7 +19,8 @@ ActiveAdmin.register Pool do
     actions
   end
 
-  filter :category, as: :select
+  filter :protocol, as: :select
+  filter :category, as: :select, collection: Pool.categories
   filter :enabled
   filter :smart_contract_id
 
