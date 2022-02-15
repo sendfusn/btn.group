@@ -19,8 +19,12 @@ class Pool < ApplicationRecord
   scope :enabled, lambda { where(enabled: true) }
 
   # === VALIDATIONS ===
+  validates :pool_id, absence: true, unless: :yield_optimizer?
+  # if yield optimizer, pool must belong to farm contract
+  validates :pool_id, presence: true, if: :yield_optimizer?
   validates :enabled, presence: true, if: :pseudo_wrap_pool?
   validates :smart_contract_id, uniqueness: true
+  validate :yield_optimizer_belongs_to_farm, if: :yield_optimizer?
 
   # === CALLBACKS ===
   after_save do |pool|
@@ -90,5 +94,9 @@ class Pool < ApplicationRecord
         token_count += 1 if cp.cryptocurrency.smart_contract.present?
       end
       token_count == 1
+    end
+
+    def yield_optimizer_belongs_to_farm
+      errors.add(:yield_optimizer, 'must belong to farm contract.') unless pool&.farm?
     end
 end

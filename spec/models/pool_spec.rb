@@ -42,6 +42,38 @@ RSpec.describe Pool, type: :model do
 
       it { should validate_presence_of(:enabled) }
     end
+
+    describe 'pool_id' do
+      subject { pool }
+
+      context 'when pool is yield_optimizer' do
+        before { pool.category = 'yield_optimizer' }
+
+        # Yield optimizer contract must belong to a farm contract
+        it { should validate_presence_of(:pool_id) }
+
+        context 'when belongs to non farm pool' do
+          it 'raises an error' do
+            pool.pool = create(:pool, category: :profit_distributor)
+            expect(pool.valid?).to be false
+          end
+        end
+
+        context 'when belongs to farm pool' do
+          it 'is valid' do
+            pool.pool = create(:pool, category: :farm)
+            expect(pool.valid?).to be true
+          end
+        end
+      end
+
+      context 'when pool is not yield_optimizer' do
+        before { pool.category = (described_class.categories.keys - ['yield_optimizer']).sample }
+
+        # Non yield optimizer contract must not belong to any pool
+        it { should validate_absence_of(:pool_id) }
+      end
+    end
   end
 
   describe 'INSTANCE METHODS' do
