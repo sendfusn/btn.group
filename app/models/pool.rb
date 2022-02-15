@@ -24,7 +24,7 @@ class Pool < ApplicationRecord
 
   # === CALLBACKS ===
   after_save do |pool|
-    if pool.category == 'trade_pair'
+    if pool.trade_pair?
       CreateSwapPathsJob.perform_later if pool.enabled && pool.saved_change_to_enabled?
       pool.swap_paths.find_each(&:destroy!) if !pool.enabled && pool.saved_change_to_enabled?
       SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.saved_change_to_total_locked?
@@ -33,7 +33,7 @@ class Pool < ApplicationRecord
 
   before_save do |pool|
     # If the other cryptocurrency pool has been updated in the last minute, the second one will trigger all this.
-    if pool.will_save_change_to_total_locked? && pool.category == 'trade_pair' && pool.cryptocurrency_pools.deposit.where('updated_at > ?', Time.current - 1.minute).count == 1
+    if pool.will_save_change_to_total_locked? && pool.trade_pair? && pool.cryptocurrency_pools.deposit.where('updated_at > ?', Time.current - 1.minute).count == 1
       pool.enabled = true if !pool.enabled && pool.total_locked.present?
       pool.enabled = false if pool.enabled && pool.total_locked.zero?
     end
@@ -42,7 +42,7 @@ class Pool < ApplicationRecord
   # === INSTANCE METHODS ===
   # Investigate getting commision_rate_nom and commission_rate_denom
   def simulate_swap(amount, from_id)
-    return unless category == 'trade_pair'
+    return unless trade_pair?
     return unless cryptocurrency_pools.deposit.pluck(:cryptocurrency_id).include?(from_id)
 
     amount = amount.to_d
