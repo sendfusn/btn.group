@@ -5,19 +5,21 @@ ActiveAdmin.register Pool do
     selectable_column
     id_column
     column :protocol
+    column :category
     column :smart_contract do |pool|
       pool.smart_contract.label_formatted
     end
     column :total_locked
     column :apr
     column :apy
-    column :enabled
     column :downcase_data_hash_for_swap_simulation
+    column :enabled
     column :created_at
     column :updated_at
     actions
   end
 
+  filter :category, as: :select
   filter :enabled
   filter :smart_contract_id
 

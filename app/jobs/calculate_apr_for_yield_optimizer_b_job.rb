@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# This can be refactored into pool with a callback...
+# The other thing is that it should be based on the LP tokens inside of the farm contract
+# Also needs to be refactored so that it factors in the end date...
+
 require 'rest-client'
 
 class CalculateAprForYieldOptimizerBJob < ApplicationJob
