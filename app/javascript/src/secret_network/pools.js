@@ -711,35 +711,39 @@ $(document).ready(function(){
           }
         } else {
           if (document.secretNetwork.walletAddress) {
-            let $poolClaimable = $('.' + pool.address + '-claimable')
-            if (afterTransaction) {
-              $poolClaimable.text('0');
-            } else {
-              try {
-                $poolClaimable.text('Loading...');
+            let $claimButton = $('[data-pool-address="' + pool.address + '"]').find('.claim-button')
+            try {
+              if (afterTransaction) {
+                $claimButton.find('.ready').text('0');
+              } else {
+                $claimButton.find('.loading').removeClass('d-none')
+                $claimButton.find('.ready').addClass('d-none')
                 if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
                   let response = await document.secretNetwork.client().queryContractSmart(pool.address, {claimable_profit: { user_address: document.secretNetwork.walletAddress}}, undefined, pool.dataHash)
-                  $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['claimable_profit']['amount'], pool['reward_token']['decimals']))
+                  $claimButton.find('.ready').text(document.humanizeStringNumberFromSmartContract(response['claimable_profit']['amount'], pool['reward_token']['decimals']))
                 } else {
                   if (!height) {
                     height = await document.secretNetwork.client().getHeight();
                   }
                   let response = await document.secretNetwork.client().queryContractSmart(pool.address, {pending_buttcoin: { address: document.secretNetwork.walletAddress, height: height }}, undefined, pool.dataHash)
-                  $poolClaimable.text(document.humanizeStringNumberFromSmartContract(response['pending_buttcoin']['amount'], 6))
-                }
-              } catch(err) {
-                if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}') || err.message.includes('{"not_found":{"kind":"cw_profit_distributor_b::state::User"}}')) {
-                  $poolClaimable.text('0');
-                } else {
-                  console.log(err)
-                  if (this.retryCount < 5) {
-                    setTimeout(function(){
-                      this.retryCount += 1
-                      this.updateRewards(pool)
-                    }.bind(this), 5000);
-                  }
+                  $claimButton.find('.ready').text(document.humanizeStringNumberFromSmartContract(response['pending_buttcoin']['amount'], 6))
                 }
               }
+            } catch(err) {
+              if (err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}') || err.message.includes('{"not_found":{"kind":"cw_profit_distributor_b::state::User"}}')) {
+                $poolClaimable.text('0');
+              } else {
+                console.log(err)
+                if (this.retryCount < 5) {
+                  setTimeout(function(){
+                    this.retryCount += 1
+                    this.updateRewards(pool)
+                  }.bind(this), 5000);
+                }
+              }
+            } finally {
+              $claimButton.find('.loading').addClass('d-none')
+              $claimButton.find('.ready').removeClass('d-none')
             }
           }
         }
@@ -808,9 +812,10 @@ $(document).ready(function(){
         }
       }
 
+      // === LISTENERS ===
       $('.fa-sync').click(function(event){
         event.preventDefault()
-        let poolAddress = $(event.currentTarget).closest('a')[0]['dataset']['poolAddress']
+        let poolAddress = $(event.currentTarget).closest('.card')[0]['dataset']['poolAddress']
         this.pools.forEach(pool => {
           if (pool['address'] == poolAddress) {
             this.updatePoolInterface(pool, false)
@@ -818,104 +823,52 @@ $(document).ready(function(){
         })
       }.bind(this))
 
+      document.querySelectorAll('.claim-button').forEach(item => {
+        item.addEventListener('click', async(event) => {
+          event.preventDefault()
+          let $button = $(event.currentTarget)
+          $button.prop('disabled', true);
+          $button.find('.loading').removeClass('d-none')
+          $button.find('.ready').addClass('d-none')
+          try {
+            await document.connectKeplrWallet()
+            if (document.secretNetwork.walletAddress) {
+              let poolAddress = $button.closest('.card')[0]['dataset']['poolAddress']
+              let pool;
+              this.pools.forEach(p => {
+                if (p['address'] == poolAddress) {
+                  pool = p
+                }
+              })
+              let gasParams = {
+                exec: {
+                  amount: [{ amount: pool['deposit_gas'], denom: 'uscrt' }],
+                  gas: pool['deposit_gas'],
+                },
+              }
+              let handleMsg = { send: { amount: '0', recipient: pool['address'], msg: pool['deposit_msg'] } }
+              let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(pool['deposit_token']['address'], handleMsg, '', [], gasParams.exec, pool['deposit_token']['dataHash'])
+              document.showAlertSuccess("Claim successful");
+              $button.find('.ready').text('0')
+            }
+          }
+          catch(err) {
+            document.showAlertDanger(err)
+          }
+          finally {
+            $button.prop("disabled", false);
+            $button.find('.loading').addClass("d-none")
+            $button.find('.ready').removeClass("d-none")
+          }
+        })
+      })
+
       $(document).on('keplr_connected', async(evt) => {
+        $('.claim-button').removeClass('d-none')
         $('.deposit-withdraw-forms-container').removeClass('d-none')
         this.updateUserInterface(false, true)
       })
 
-      document.querySelector('#claim-sefi').addEventListener('click', async(evt) => {
-        if (this.pools[0]['address'] == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz') {
-          let $claimSEFI = $('#claim-sefi')
-          $claimSEFI.prop("disabled", true);
-          $claimSEFI.find('.loading').removeClass("d-none")
-          $claimSEFI.find('.ready').addClass("d-none")
-          try {
-            await document.connectKeplrWallet()
-            if (document.secretNetwork.walletAddress) {
-              let gasParams = {
-                exec: {
-                  amount: [{ amount: this.pools[0]['deposit_gas'], denom: 'uscrt' }],
-                  gas: this.pools[0]['deposit_gas'],
-                },
-              }
-              let handleMsg = { send: { amount: '0', recipient: this.pools[0]['address'], msg: this.pools[0]['deposit_msg'] } }
-              let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.pools[0]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[0]['deposit_token']['dataHash'])
-              document.showAlertSuccess("Claim successful");
-              $claimSEFI.find('.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable').text('0')
-            }
-          }
-          catch(err) {
-            document.showAlertDanger(err)
-          }
-          finally {
-            $claimSEFI.prop("disabled", false);
-            $claimSEFI.find('.loading').addClass("d-none")
-            $claimSEFI.find('.ready').removeClass("d-none")
-          }
-        }
-      })
-
-      document.querySelector('#claim-butt').addEventListener('click', async(evt) => {
-        if (this.pools[1]['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
-          let $claimBUTT = $('#claim-butt')
-          $claimBUTT.prop("disabled", true);
-          $claimBUTT.find('.loading').removeClass("d-none")
-          $claimBUTT.find('.ready').addClass("d-none")
-          try {
-            await document.connectKeplrWallet()
-            if (document.secretNetwork.walletAddress) {
-              let gasParams = {
-                exec: {
-                  amount: [{ amount: this.pools[1]['deposit_gas'], denom: 'uscrt' }],
-                  gas: this.pools[1]['deposit_gas'],
-                },
-              }
-              let handleMsg = { send: { amount: '0', recipient: this.pools[1]['address'], msg: this.pools[1]['deposit_msg'] } }
-              let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.pools[1]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[1]['deposit_token']['dataHash'])
-              document.showAlertSuccess("Claim successful");
-              $claimBUTT.find('.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable').text('0')
-            }
-          }
-          catch(err) {
-            document.showAlertDanger(err)
-          }
-          finally {
-            $claimBUTT.prop("disabled", false);
-            $claimBUTT.find('.loading').addClass("d-none")
-            $claimBUTT.find('.ready').removeClass("d-none")
-          }
-        }
-      })
-
-      // document.querySelector('#claim-profit-distributor-b-butt').addEventListener('click', async(evt) => {
-      //   if (this.pools[2]['address'] == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
-      //     let $claimBUTT = $('#claim-profit-distributor-b-butt')
-      //     let gasParams = {
-      //       exec: {
-      //         amount: [{ amount: this.pools[2]['deposit_gas'], denom: 'uscrt' }],
-      //         gas: this.pools[2]['deposit_gas'],
-      //       },
-      //     }
-      //     this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-      //     $claimBUTT.prop("disabled", true);
-      //     $claimBUTT.find('.loading').removeClass("d-none")
-      //     $claimBUTT.find('.ready').addClass("d-none")
-      //     try {
-      //       let handleMsg = { send: { amount: '0', recipient: this.pools[2]['address'], msg: this.pools[2]['deposit_msg'] } }
-      //       let response = await this.client.execute(this.pools[2]['deposit_token']['address'], handleMsg, '', [], gasParams.exec, this.pools[2]['deposit_token']['dataHash'])
-      //       document.showAlertSuccess("Claim successful");
-      //       $claimBUTT.find('.secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan-claimable').text('0')
-      //     }
-      //     catch(err) {
-      //       document.showAlertDanger(err)
-      //     }
-      //     finally {
-      //       $claimBUTT.prop("disabled", false);
-      //       $claimBUTT.find('.loading').addClass("d-none")
-      //       $claimBUTT.find('.ready').removeClass("d-none")
-      //     }
-      //   }
-      // })
       document.activateKeplr()
       // A bit hacky but leave it for now.
       // Querying buttlode config so that reg-tx gets called just here and everything else can by async without having to make that call

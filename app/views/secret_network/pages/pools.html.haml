@@ -44,12 +44,12 @@
                     = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
             .row.mb-5
               .col-12#pools
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Profit distributor
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %span.mr-1 Deposit BUTT
@@ -64,12 +64,12 @@
                       %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-total-shares Loading...
                       %br
                       Claimable SEFI:
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border#claim-sefi{ type: 'button' }
-                        .d-none.loading
+                      = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
+                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
+                        .loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
-                        .ready
-                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-claimable Connect wallet
+                        .d-none.ready
                   .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
@@ -108,12 +108,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Farm
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %span.mr-1
@@ -134,12 +134,12 @@
                       APR: #{Pool.find_by(smart_contract_id: SmartContract.find_by(address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku').id).apr}%
                       %br
                       Claimable BUTT:
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border#claim-butt{ type: 'button' }
-                        .d-none.loading
+                      = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
+                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
+                        .loading
                           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                           %em Loading...
-                        .ready
-                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-claimable Connect wallet
+                        .d-none.ready
                   .row.deposit-withdraw-forms-container.d-none
                     .col-12
                       %hr
@@ -178,12 +178,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -240,12 +240,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -304,12 +304,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -368,12 +368,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -432,12 +432,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -496,12 +496,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -560,12 +560,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku-withdraw-button-ready Withdraw
-                -# .card.mb-3
+                -# .card.mb-3{ 'data-pool-address': 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v' }
                 -#   .row
                 -#     .col-12
                 -#       %h5.title.title-sm.mb-1
                 -#         Yield optimizer
-                -#         %a{ href: '#', 'data-pool-address': 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v' }
+                -#         %a{ href: '#' }
                 -#           %span.fa.fa-sync
                 -#     .col-md-6.text-regular-sm
                 -#       %div Deposit & Earn
@@ -624,12 +624,12 @@
                 -#             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                 -#             %em Loading...
                 -#           .secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -752,12 +752,12 @@
                 -#             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                 -#             %em Loading...
                 -#           .secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -880,12 +880,12 @@
                 -#             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                 -#             %em Loading...
                 -#           .secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -944,12 +944,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -1008,12 +1008,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -1072,12 +1072,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
@@ -1136,12 +1136,12 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww-withdraw-button-ready Withdraw
-                .card.mb-3
+                .card.mb-3{ 'data-pool-address': 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs' }
                   .row
                     .col-12
                       %h5.title.title-sm.mb-1
                         Yield optimizer
-                        %a.float-right{ href: '#', 'data-pool-address': 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs' }
+                        %a.float-right{ href: '#' }
                           %span.fa.fa-sync
                     .col-md-6.text-regular-sm
                       %div Deposit & Earn
