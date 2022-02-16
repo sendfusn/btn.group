@@ -266,17 +266,6 @@ $(document).ready(function(){
           reward_token: cryptocurrencies['butt'],
           withdraw_gas: '262500',
         },
-        // This has to be third position in array
-        // {
-        //   address: 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan',
-        //   dataHash: '7A8DAAA2FC9A76F65DC1200D698B5132DF657C01551D55DE838A6457F3B4734D',
-        //   deposit_gas: '112500',
-        //   deposit_msg: 'eyJkZXBvc2l0Ijoge319',
-        //   deposit_token: cryptocurrencies['butt_sxmr_lp'],
-        //   earn_token: cryptocurrencies['butt_sxmr_lp'],
-        //   reward_token: cryptocurrencies['butt'],
-        //   withdraw_gas: '112500',
-        // },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
           dataHash: '3D83E7A7A192A57198049481A74888B340D2B1C4F5A33A6083C3500FA53E05DC',
