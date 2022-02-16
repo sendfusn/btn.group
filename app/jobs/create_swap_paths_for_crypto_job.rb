@@ -36,10 +36,12 @@ class CreateSwapPathsForCryptoJob < ApplicationJob
       next if current_crypto_id_path.include?(swap_to_id)
 
       current_crypto_id_path.push(swap_to_id)
-      SwapPath.create(from_id: from_id,
-                      to_id: swap_to_id,
-                      swap_count: current_swap_path.length,
-                      swap_path_as_string: convert_swap_path_array_to_string(current_swap_path))
+      unless SwapPath.find_by(swap_path_as_string: convert_swap_path_array_to_string(current_swap_path))
+        SwapPath.create(from_id: from_id,
+                        to_id: swap_to_id,
+                        swap_count: current_swap_path.length,
+                        swap_path_as_string: convert_swap_path_array_to_string(current_swap_path))
+      end
       create_swap_path(swap_to_id, from_id, current_swap_path, current_crypto_id_path)
     end
   end
