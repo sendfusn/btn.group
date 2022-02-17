@@ -90,11 +90,11 @@
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                           .input-group-append
                             %span.input-group-text BUTT
-                        %button.btn.btn-primary.btn-rg.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button{ type: 'submit' }
-                          .d-none.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-loading
+                        %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                          .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
-                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-deposit-button-ready Deposit
+                          .ready Deposit
                     .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Connect wallet
@@ -104,10 +104,10 @@
                           .input-group-append
                             %span.input-group-text BUTT
                         %button.btn.btn-primary.btn-rg.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button{ type: 'submit' }
-                          .d-none.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-loading
+                          .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
-                          .secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button-ready Withdraw
+                          .ready Withdraw
                 .card.mb-3{ 'data-pool-address': 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku' }
                   .row
                     .col-12
@@ -160,11 +160,11 @@
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                           .input-group-append
                             %span.input-group-text BUTT-sWBTC
-                        %button.btn.btn-primary.btn-rg.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button{ type: 'submit' }
-                          .d-none.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-loading
+                        %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                          .loading.d-none
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
-                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-deposit-button-ready Deposit
+                          .ready Deposit
                     .col-md-6.text-regular-sm
                       Withdrawable:
                       %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Connect wallet
@@ -173,11 +173,11 @@
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                           .input-group-append
                             %span.input-group-text BUTT-sWBTC
-                        %button.btn.btn-primary.btn-rg.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button{ type: 'submit' }
-                          .d-none.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-loading
+                        %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                          .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
-                          .secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-withdraw-button-ready Withdraw
+                          .ready Withdraw
                 - @yield_optimizers.each do |yield_optimizer|
                   .card.mb-3{ 'data-pool-address': yield_optimizer.address }
                     .row
@@ -225,10 +225,10 @@
                             .input-group-append
                               %span.input-group-text= yield_optimizer.deposit_label
                           %button.btn.btn-primary.btn-rg{ class: "#{yield_optimizer.address}-deposit-button", type: 'submit' }
-                            .d-none{ class: "#{yield_optimizer.address}-deposit-button-loading" }
+                            .d-none.loading
                               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                               %em Loading...
-                            %div{ class: "#{yield_optimizer.address}-deposit-button-ready" } Deposit
+                            .ready Deposit
                       .col-md-6.text-regular-sm
                         Withdrawable:
                         %span{ class: "#{yield_optimizer.address}-user-shares" } Connect wallet
@@ -238,7 +238,7 @@
                             .input-group-append
                               %span.input-group-text= yield_optimizer.deposit_label
                           %button.btn.btn-primary.btn-rg{ class: "#{yield_optimizer.address}-withdraw-button", type: 'submit' }
-                            .d-none{ class: "#{yield_optimizer.address}-withdraw-button-loading" }
+                            .d-none.loading
                               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                               %em Loading...
-                            %div{ class: "#{yield_optimizer.address}-withdraw-button-ready" } Withdraw
+                            .ready Withdraw

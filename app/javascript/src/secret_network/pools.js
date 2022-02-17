@@ -481,11 +481,10 @@ $(document).ready(function(){
           })
         })
 
-        let $depositButton = $('.' + value['address'] + '-deposit-button')
-        let $depositButtonLoading = $('.' + value['address'] + '-deposit-button-loading')
-        let $depositButtonReady = $('.' + value['address'] + '-deposit-button-ready')
-        if($depositButton.length) {
-          document[value['address'] + 'DepositForm'].onsubmit = async (e) => {
+        let depositFormName = value['address'] + 'DepositForm'
+        if($('[name=' + depositFormName + ']').length) {
+          let $depositButton = $('[name=' + depositFormName + ']').find('button[type=submit]')
+          document[depositFormName].onsubmit = async (e) => {
             e.preventDefault()
             this.retryCount = 0;
             let gasParams = {
@@ -496,18 +495,18 @@ $(document).ready(function(){
             }
             this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
             $depositButton.prop("disabled", true);
-            $depositButtonLoading.removeClass("d-none")
-            $depositButtonReady.addClass("d-none")
+            $depositButton.find('.loading').removeClass("d-none")
+            $depositButton.find('.ready').addClass("d-none")
             try {
               await document.connectKeplrWallet()
               if (document.secretNetwork.walletAddress) {
-                let amount = document[value['address'] + 'DepositForm'].amount.value;
+                let amount = document[depositFormName].amount.value;
                 amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
                 let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
                 let response = await this.client.execute(value['deposit_token']['address'], handleMsg, '', [], gasParams.exec, value['deposit_token']['dataHash'])
                 await document.delay(5_000)
                 document.showAlertSuccess("Deposit successful");
-                document[value['address'] + 'DepositForm'].amount.value = ''
+                document[depositFormName].amount.value = ''
                 this.updatePoolInterface(value, true)
               }
             }
@@ -526,7 +525,7 @@ $(document).ready(function(){
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
                   this.updatePoolInterface(value, true)
                   document.showAlertSuccess("Deposit successful");
-                  document[value['address'] + 'DepositForm'].amount.value = ''
+                  document[depositFormName].amount.value = ''
                 } else {
                   let errorDisplayMessage = "Out of gas. Please set a higher gas amount and try again.";
                   document.showAlertDanger(errorDisplayMessage)
@@ -536,28 +535,27 @@ $(document).ready(function(){
               }
             }
             finally {
-              $depositButton.prop("disabled", false);
-              $depositButtonLoading.addClass("d-none")
-              $depositButtonReady.removeClass("d-none")
+              $depositButton.prop('disabled', false);
+              $depositButton.find('.loading').addClass('d-none')
+              $depositButton.find('.ready').removeClass('d-none')
               if (value['farm_contract_address'] && value['reward_token'] == cryptocurrencies['sefi']) {
                 this.updateRewards(this.pools[0])
               }
             }
           };
 
-          let $withdrawButton = $('.' + value['address'] + '-withdraw-button')
-          let $withdrawButtonLoading = $('.' + value['address'] + '-withdraw-button-loading')
-          let $withdrawButtonReady = $('.' + value['address'] + '-withdraw-button-ready')
-          document[value['address'] + 'WithdrawForm'].onsubmit = async (e) => {
+          let withdrawFormName = value['address'] + 'WithdrawForm'
+          let $withdrawButton = $('[name=' + withdrawFormName + ']').find('button[type=submit]')
+          document[withdrawFormName].onsubmit = async (e) => {
             e.preventDefault()
             this.retryCount = 0;
-            $withdrawButton.prop("disabled", true);
-            $withdrawButtonLoading.removeClass("d-none")
-            $withdrawButtonReady.addClass("d-none")
+            $withdrawButton.prop('disabled', true);
+            $withdrawButton.find('.loading').removeClass('d-none')
+            $withdrawButton.find('.ready').addClass('d-none')
             try {
               await document.connectKeplrWallet()
               if (document.secretNetwork.walletAddress) {
-                let amount = document[value['address'] + 'WithdrawForm'].amount.value
+                let amount = document[withdrawFormName].amount.value
                 amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
                 let handleMsg;
                 if (value['address'] == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
@@ -577,7 +575,7 @@ $(document).ready(function(){
                 let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
                 await document.delay(5_000)
                 document.showAlertSuccess("Withdraw successful");
-                document[value['address'] + 'WithdrawForm'].amount.value = ''
+                document[withdrawFormName].amount.value = ''
                 this.updatePoolInterface(value, true)
               }
             }
@@ -598,7 +596,7 @@ $(document).ready(function(){
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
                   this.updatePoolInterface(value, true)
                   document.showAlertSuccess("Withdraw successful");
-                  document[value['address'] + 'WithdrawForm'].amount.value = ''
+                  document[withdrawFormName].amount.value = ''
                 } else {
                   let errorDisplayMessage = "Out of gas. Please set a higher gas amount and try again.";
                   document.showAlertDanger(errorDisplayMessage)
@@ -608,9 +606,9 @@ $(document).ready(function(){
               }
             }
             finally {
-              $withdrawButton.prop("disabled", false);
-              $withdrawButtonLoading.addClass("d-none")
-              $withdrawButtonReady.removeClass("d-none")
+              $withdrawButton.prop('disabled', false);
+              $withdrawButton.find('.loading').addClass('d-none')
+              $withdrawButton.find('.ready').removeClass('d-none')
               if (value['farm_contract_address'] && value['reward_token'] == cryptocurrencies['sefi']) {
                 this.updateRewards(this.pools[0])
               }
