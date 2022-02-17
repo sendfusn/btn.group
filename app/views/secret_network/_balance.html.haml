@@ -1,8 +1,10 @@
+- label ||= 'Balance'
 - show_keplr_connect_button ||= true
+
 - if show_keplr_connect_button
   = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
 .balance-container.text-regular-sm.d-none
-  Balance:
+  #{label}:
   %span{ class: "#{selector_prefix}-balance-loading" }
     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
     %em Loading...
