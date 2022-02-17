@@ -19,11 +19,11 @@ class Pool < ApplicationRecord
   scope :enabled, lambda { where(enabled: true) }
 
   # === VALIDATIONS ===
-  validates :pool_id, absence: true, unless: :yield_optimizer?
-  # if yield optimizer, pool must belong to farm contract
-  validates :pool_id, presence: true, if: :yield_optimizer?
+  validates :pool_id, absence: true, unless: :must_belong_to_pool?
+  validates :pool_id, presence: true, if: :must_belong_to_pool?
   validates :enabled, presence: true, if: :pseudo_wrap_pool?
   validates :smart_contract_id, uniqueness: true
+  validate :farm_belongs_to_trade_pair, if: :farm?
   validate :yield_optimizer_belongs_to_farm, if: :yield_optimizer?
 
   # === CALLBACKS ===
@@ -84,6 +84,14 @@ class Pool < ApplicationRecord
   end
 
   private
+
+    def farm_belongs_to_trade_pair
+      errors.add(:farm, 'must belong to trade pair contract.') unless pool&.trade_pair?
+    end
+
+    def must_belong_to_pool?
+      farm? || yield_optimizer?
+    end
 
     def pseudo_wrap_pool?
       return unless trade_pair?
