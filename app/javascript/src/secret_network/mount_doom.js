@@ -225,6 +225,7 @@ $(document).ready(function(){
 
       document.mountDoomNonFungibleTokenQueryForm.onsubmit = async (e) => {
         e.preventDefault()
+        this.$nftsResults.html('')
         this.$nftsContainer.addClass('d-none')
         $('#transactions-container').addClass('d-none')
         changeSubmitButtonToLoading()
