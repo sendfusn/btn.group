@@ -42,37 +42,40 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
   def process_pool_json(pool_json)
     return unless (pool_smart_contract = SmartContract.find_by(address: pool_json['pool_address']))
 
-    pool = Pool.find_or_initialize_by(smart_contract_id: pool_smart_contract.id)
+    pool = Protocol.find_by(identifier: :secret_swap)
+                   .pools
+                   .find_or_initialize_by(smart_contract_id: pool_smart_contract.id, category: 'farm')
     locked_amount_in_usd = pool_json['total_locked'].to_i * pool_json['inc_token']['price'].to_f / 10**pool_json['inc_token']['decimals']
-    pool.update!(category: 'farm',
-                 deadline: pool_json['deadline'].to_i,
-                 pending_rewards: pool_json['pending_rewards'].to_i,
-                 protocol: Protocol.find_by(identifier: :secret_swap),
-                 total_locked: locked_amount_in_usd)
+    pool.deadline = pool_json['deadline'].to_i
+    pool.pending_rewards = pool_json['pending_rewards'].to_i
+    pool.total_locked = locked_amount_in_usd
+    if pool.persisted?
+      pool.save!
+    else
+      incentivized_token_cryptocurrency = process_token_json(pool_json['inc_token'])
+      reward_token_cryptocurrency = process_token_json(pool_json['rewards_token'])
+      pool.pool_id = CryptocurrencyPool.shares.find_by(cryptocurrency: incentivized_token_cryptocurrency)&.pool&.id
+      pool.cryptocurrency_pools.create(cryptocurrency: incentivized_token_cryptocurrency, cryptocurrency_role: :deposit)
+      pool.cryptocurrency_pools.create(cryptocurrency: reward_token_cryptocurrency, cryptocurrency_role: :reward)
+    end
     # EthereumBridgeFrontend/blob/master/src/components/Earn/EarnRow/index.tsx
-    time_remaining_in_seconds = (pool.deadline - 128_730) * 6.22 + 1_632_380_505 - Time.zone.now.to_i
     price_of_rewards = pool_json['rewards_token']['price'].to_f
     pending_rewards_in_usd = pool.pending_rewards * price_of_rewards / 1_000_000
-    if locked_amount_in_usd.positive?
-      apr = pending_rewards_in_usd * 100 * 31_540_000 / locked_amount_in_usd / time_remaining_in_seconds
-      if apr.positive?
-        pool.update(apr: apr.round(2))
-        Pool.where(pool: pool).find_each do |yield_optimizer|
-          yield_optimizer.update(apy: ((((1 + apr / 100 / 365)**365) - 1) * 100).round(2))
-        end
-      else
-        pool.update(apr: 0)
-        Pool.where(pool: pool).find_each do |yield_optimizer|
-          yield_optimizer.update(apy: 0)
-        end
+    return unless locked_amount_in_usd.positive?
+
+    time_remaining_in_seconds = (pool.deadline - 128_730) * 6.22 + 1_632_380_505 - Time.zone.now.to_i
+    apr = pending_rewards_in_usd * 100 * 31_540_000 / locked_amount_in_usd / time_remaining_in_seconds
+    if apr.positive?
+      pool.update(apr: apr.round(2))
+      Pool.where(pool: pool).find_each do |yield_optimizer|
+        yield_optimizer.update(apy: ((((1 + apr / 100 / 365)**365) - 1) * 100).round(2))
+      end
+    else
+      pool.update(apr: 0)
+      Pool.where(pool: pool).find_each do |yield_optimizer|
+        yield_optimizer.update(apy: 0)
       end
     end
-    return if pool.cryptocurrency_pools.present?
-
-    incentivized_token_cryptocurrency = process_token_json(pool_json['inc_token'])
-    reward_token_cryptocurrency = process_token_json(pool_json['rewards_token'])
-    pool.cryptocurrency_pools.create(cryptocurrency: incentivized_token_cryptocurrency, cryptocurrency_role: :deposit)
-    pool.cryptocurrency_pools.create(cryptocurrency: reward_token_cryptocurrency, cryptocurrency_role: :reward)
   end
 
   def process_token_json(token_json)

@@ -71,9 +71,6 @@ RSpec.describe Pool, type: :model do
       context 'when pool is farm' do
         before { pool.category = 'farm' }
 
-        # Yield optimizer contract must belong to a farm contract
-        it { should validate_presence_of(:pool_id) }
-
         context 'when belongs to non trade pair pool' do
           it 'raises an error' do
             pool.pool = create(:pool, category: :profit_distributor, smart_contract: smart_contract)
