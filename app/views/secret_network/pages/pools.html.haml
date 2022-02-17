@@ -103,7 +103,7 @@
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                           .input-group-append
                             %span.input-group-text BUTT
-                        %button.btn.btn-primary.btn-rg.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-withdraw-button{ type: 'submit' }
+                        %button.btn.btn-primary.btn-rg{ type: 'submit' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
@@ -224,7 +224,7 @@
                             %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                             .input-group-append
                               %span.input-group-text= yield_optimizer.deposit_label
-                          %button.btn.btn-primary.btn-rg{ class: "#{yield_optimizer.address}-deposit-button", type: 'submit' }
+                          %button.btn.btn-primary.btn-rg{ type: 'submit' }
                             .d-none.loading
                               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                               %em Loading...
@@ -237,7 +237,7 @@
                             %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                             .input-group-append
                               %span.input-group-text= yield_optimizer.deposit_label
-                          %button.btn.btn-primary.btn-rg{ class: "#{yield_optimizer.address}-withdraw-button", type: 'submit' }
+                          %button.btn.btn-primary.btn-rg{ type: 'submit' }
                             .d-none.loading
                               %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                               %em Loading...
