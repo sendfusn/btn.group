@@ -55,6 +55,7 @@ class SecretFinanceStakingPoolsJob < ApplicationJob
       incentivized_token_cryptocurrency = process_token_json(pool_json['inc_token'])
       reward_token_cryptocurrency = process_token_json(pool_json['rewards_token'])
       pool.pool_id = CryptocurrencyPool.shares.find_by(cryptocurrency: incentivized_token_cryptocurrency)&.pool&.id
+      pool.save!
       pool.cryptocurrency_pools.create(cryptocurrency: incentivized_token_cryptocurrency, cryptocurrency_role: :deposit)
       pool.cryptocurrency_pools.create(cryptocurrency: reward_token_cryptocurrency, cryptocurrency_role: :reward)
     end
