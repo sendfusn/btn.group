@@ -74,17 +74,7 @@
                     .col-12
                       %hr
                     .col-md-6.text-regular-sm.mb-3.mb-lg-0
-                      Depositable:
-                      %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-loading.d-none Loading...
-                      %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-link
-                        %span.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance Connect wallet
-                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt-balance-view-button.d-none{ type: 'button' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            .fas.fa-search.mr-1
-                            View
+                      = render 'secret_network/balance', selector_prefix: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt', show_keplr_connect_button: false
                       %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszDepositForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
@@ -96,8 +86,7 @@
                             %em Loading...
                           .ready Deposit
                     .col-md-6.text-regular-sm
-                      Withdrawable:
-                      %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares Connect wallet
+                      = render 'secret_network/balance', selector_prefix: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares', show_keplr_connect_button: false
                       %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
@@ -144,17 +133,7 @@
                     .col-12
                       %hr
                     .col-md-6.text-regular-sm.mb-3.mb-lg-0
-                      Depositable:
-                      %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-loading.d-none Loading...
-                      %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-link
-                        %span.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance Connect wallet
-                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl-balance-view-button.d-none{ type: 'button' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            .fas.fa-search.mr-1
-                            View
+                      = render 'secret_network/balance', selector_prefix: 'secret19kh9wmzulxv8lw0e0fyxjxmwtmln2fqpnetucl', show_keplr_connect_button: false
                       %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuDepositForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
@@ -166,8 +145,7 @@
                             %em Loading...
                           .ready Deposit
                     .col-md-6.text-regular-sm
-                      Withdrawable:
-                      %span.secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares Connect wallet
+                      = render 'secret_network/balance', selector_prefix: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku-user-shares', show_keplr_connect_button: false
                       %form{ name: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fkuWithdrawForm' }
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
@@ -208,17 +186,7 @@
                       .col-12
                         %hr
                       .col-md-6.text-regular-sm.mb-3.mb-lg-0
-                        Depositable:
-                        %span.d-none{ class: "#{yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.address}-balance-loading" } Loading...
-                        %span{ class: "#{yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.address}-balance-link" }
-                          %span{ class: "#{yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.address}-balance" } Connect wallet
-                          %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.d-none{ class: "#{yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.address}-balance-view-button", type: 'button' }
-                            .d-none.loading
-                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                              %em Loading...
-                            .ready
-                              .fas.fa-search.mr-1
-                              View
+                        = render 'secret_network/balance', selector_prefix: yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false
                         %form{ name: "#{yield_optimizer.address}DepositForm" }
                           .input-group.mb-3
                             %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
@@ -230,8 +198,7 @@
                               %em Loading...
                             .ready Deposit
                       .col-md-6.text-regular-sm
-                        Withdrawable:
-                        %span{ class: "#{yield_optimizer.address}-user-shares" } Connect wallet
+                        = render 'secret_network/balance', selector_prefix: "#{yield_optimizer.address}-user-shares", show_keplr_connect_button: false
                         %form{ name: "#{yield_optimizer.address}WithdrawForm" }
                           .input-group.mb-3
                             %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }

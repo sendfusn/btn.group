@@ -645,11 +645,14 @@ $(document).ready(function(){
       }
 
       this.updateUserWithdrawable = async(pool) => {
-        let $userShares = $('.' + pool['address'] + '-user-shares')
+        let $userShares = $('.' + pool['address'] + '-user-shares-balance')
+        let $userSharesLink = $('.' + pool['address'] + '-user-shares-balance-link')
+        let $userSharesLoading = $('.' + pool['address'] + '-user-shares-balance-loading')
         let depositTokenSymbol = pool['deposit_token']['symbol']
 
         try {
-          $userShares.text('Loading...');
+          $userSharesLoading.removeClass('d-none')
+          $userSharesLink.addClass('d-none')
           let userResponse;
           let withdrawable = new BigNumber("0");
           if (pool.address == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || pool.address == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || pool.address == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
@@ -679,6 +682,9 @@ $(document).ready(function(){
           if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {
             console.log(err)
           }
+        } finally {
+          $userSharesLoading.addClass('d-none')
+          $userSharesLink.removeClass('d-none')
         }
       }
 
@@ -860,6 +866,7 @@ $(document).ready(function(){
       })
 
       $(document).on('keplr_connected', async(evt) => {
+        $('.balance-container').removeClass('d-none')
         $('.claim-button').removeClass('d-none')
         $('.deposit-withdraw-forms-container').removeClass('d-none')
         this.updateUserInterface(false, true)
