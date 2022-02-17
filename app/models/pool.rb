@@ -13,7 +13,7 @@ class Pool < ApplicationRecord
   has_many :swap_paths, through: :pool_swap_paths
 
   # === ENUMS ===
-  enum category: { farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3 }
+  enum category: { farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3, wrap: 4 }
 
   # === SCOPES ===
   scope :enabled, lambda { where(enabled: true) }
