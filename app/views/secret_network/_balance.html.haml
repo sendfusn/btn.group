@@ -1,5 +1,7 @@
-- label ||= 'Balance'
-- show_keplr_connect_button ||= true
+:ruby
+  active_balance_link ||= false
+  label ||= 'Balance'
+  show_keplr_connect_button ||= true
 
 - if show_keplr_connect_button
   = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
@@ -10,7 +12,10 @@
     %em Loading...
   %span{ class: "#{selector_prefix}-balance-link" }
     %span
-      %a{ class: "#{selector_prefix}-balance" }
+      - if active_balance_link
+        = link_to '', '#', class: "#{selector_prefix}-balance"
+      - else
+        %a{ class: "#{selector_prefix}-balance" }
     %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.btn-round.btn-auto.d-none{ type: 'button', class: "#{selector_prefix}-balance-view-button" }
       .d-none.loading
         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -18,4 +23,3 @@
       .ready
         .fas.fa-search.mr-1
         View
-

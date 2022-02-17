@@ -815,6 +815,11 @@ $(document).ready(function(){
       }
 
       // === LISTENERS ===
+      $('.balance-container a[href="#"]').click(function(event){
+        event.preventDefault()
+        $(event.target).closest('.balance-container').siblings('form').find('input').val($(event.target).text())
+      })
+
       $('.fa-sync').click(function(event){
         event.preventDefault()
         let poolAddress = $(event.currentTarget).closest('.card')[0]['dataset']['poolAddress']

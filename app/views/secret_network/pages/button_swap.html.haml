@@ -88,7 +88,7 @@
                   %form.d-none{ name: 'secretNetworkDexAggregatorForm' }
                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
                       .form-group.mb-0
-                        = render 'secret_network/balance', selector_prefix: 'from'
+                        = render 'secret_network/balance', selector_prefix: 'from', active_balance_link: true
                         .row.gutter-10px
                           .col-7.col-sm-8
                             %input.amount-input.form-control.p-0#from-amount-input{ autocomplete: 'off', name: 'fromAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any' }
