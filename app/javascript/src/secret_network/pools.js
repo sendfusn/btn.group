@@ -396,16 +396,16 @@ $(document).ready(function(){
           withdraw_gas: '1125000',
           reward_token: cryptocurrencies['sefi'],
         },
-        // {
-        //   address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c',
-        //   deposit_gas: '1125000',
-        //   deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
-        //   deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
-        //   earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
-        //   farm_contract_address: 'secret1geklww0t0kwehc2w9llwce2wkg40pp4ljfpa8m',
-        //   withdraw_gas: '1125000',
-        //   reward_token: cryptocurrencies['sefi'],
-        // },
+        {
+          address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c',
+          deposit_gas: '1125000',
+          deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
+          deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
+          earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
+          farm_contract_address: 'secret1geklww0t0kwehc2w9llwce2wkg40pp4ljfpa8m',
+          withdraw_gas: '1125000',
+          reward_token: cryptocurrencies['sefi'],
+        },
         {
           address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql',
           dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
@@ -484,7 +484,7 @@ $(document).ready(function(){
         let $depositButton = $('.' + value['address'] + '-deposit-button')
         let $depositButtonLoading = $('.' + value['address'] + '-deposit-button-loading')
         let $depositButtonReady = $('.' + value['address'] + '-deposit-button-ready')
-        if(!value['under_maintenance']) {
+        if($depositButton.length) {
           document[value['address'] + 'DepositForm'].onsubmit = async (e) => {
             e.preventDefault()
             this.retryCount = 0;
@@ -686,26 +686,24 @@ $(document).ready(function(){
 
       this.updateRewards = async(pool, afterTransaction = false, height = undefined) => {
         if (pool.farm_contract_address) {
-          if (!pool.under_maintenance) {
-            let $poolRewardsToProcess = $('.' + pool.address + '-rewards-to-process')
-            if (afterTransaction) {
-              $poolRewardsToProcess.text('0');
-            } else {
-              try {
-                $poolRewardsToProcess.text('Loading...');
-                if (!height) {
-                  height = await document.secretNetwork.client().getHeight();
-                }
-                let response = await document.secretNetwork.client().queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }}, undefined, pool.farm_contract_data_hash)
-                $poolRewardsToProcess.text(document.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
-              } catch(err) {
-                console.log(err)
-                if (this.retryCount < 5) {
-                  setTimeout(function(){
-                    this.retryCount += 1
-                    this.updateRewards(pool)
-                  }.bind(this), 5000);
-                }
+          let $poolRewardsToProcess = $('.' + pool.address + '-rewards-to-process')
+          if (afterTransaction) {
+            $poolRewardsToProcess.text('0');
+          } else {
+            try {
+              $poolRewardsToProcess.text('Loading...');
+              if (!height) {
+                height = await document.secretNetwork.client().getHeight();
+              }
+              let response = await document.secretNetwork.client().queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }}, undefined, pool.farm_contract_data_hash)
+              $poolRewardsToProcess.text(document.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
+            } catch(err) {
+              console.log(err)
+              if (this.retryCount < 5) {
+                setTimeout(function(){
+                  this.retryCount += 1
+                  this.updateRewards(pool)
+                }.bind(this), 5000);
               }
             }
           }

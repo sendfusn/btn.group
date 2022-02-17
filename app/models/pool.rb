@@ -4,13 +4,16 @@ class Pool < ApplicationRecord
   # === ASSOCIATIONS ===
   # A yield optimizer pool can belong to one farm pool
   # and a farm pool can have many yield optimizer pools
-  belongs_to :pool, optional: true
+  belongs_to :pool, inverse_of: false, optional: true
   belongs_to :protocol, optional: true
   belongs_to :smart_contract
   has_many :cryptocurrency_pools, dependent: :destroy
   has_many :cryptocurrencies, through: :cryptocurrency_pools
   has_many :pool_swap_paths, dependent: :destroy
   has_many :swap_paths, through: :pool_swap_paths
+
+  # === DELEGATES ===
+  delegate :address, to: :smart_contract
 
   # === ENUMS ===
   enum category: { farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3, wrap: 4 }
@@ -44,6 +47,26 @@ class Pool < ApplicationRecord
   end
 
   # === INSTANCE METHODS ===
+  def deposit_label
+    deposit_cryptocurrency_ids = root_pool.cryptocurrency_pools.deposit.pluck(:cryptocurrency_id)
+    string = ''
+    Cryptocurrency.where(id: deposit_cryptocurrency_ids).order(:id).each_with_index do |cryptocurrency, index|
+      string = if index.zero?
+        cryptocurrency.symbol
+      else
+        "#{string}-#{cryptocurrency.symbol}"
+      end
+    end
+    string = "#{string} LP" if deposit_cryptocurrency_ids.length > 1
+    string
+  end
+
+  def root_pool
+    current_pool = self
+    current_pool = current_pool.pool while current_pool.pool.present?
+    current_pool
+  end
+
   # Investigate getting commision_rate_nom and commission_rate_denom
   def simulate_swap(amount, from_id)
     return unless trade_pair?

@@ -24,6 +24,10 @@ RSpec.describe Pool, type: :model do
     it { should have_many(:swap_paths) }
   end
 
+  describe 'DELEGATES' do
+    it { should delegate_method(:address).to(:smart_contract) }
+  end
+
   describe 'ENUMS' do
     it { should define_enum_for(:category).with_values(farm: 0, trade_pair: 1, yield_optimizer: 2, profit_distributor: 3, wrap: 4) }
   end
