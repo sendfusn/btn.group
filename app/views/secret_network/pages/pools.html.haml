@@ -44,59 +44,62 @@
                     = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
             .row.mb-5
               .col-12#pools
-                .card.mb-3{ 'data-pool-address': 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' }
-                  .row
-                    .col-12
-                      %h5.title.title-sm.mb-1
-                        Profit distributor
-                        %a.float-right{ href: '#' }
-                          %span.fa.fa-sync
-                    .col-md-6.text-regular-sm
-                      %span.mr-1 Deposit BUTT
-                      %span
-                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
-                      %br
-                      %span.mr-1 Earn SEFI
-                      %span
-                        %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595507/logos/sefi_mqwcdx.svg' }
-                    .col-md-6.text-regular-sm
-                      TVL:
-                      %span.secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-total-shares Loading...
-                      %br
-                      Claimable SEFI:
-                      = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
-                      %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
-                        .loading
-                          %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                          %em Loading...
-                        .d-none.ready
-                  .row.deposit-withdraw-forms-container.d-none
-                    .col-12
-                      %hr
-                    .col-md-6.text-regular-sm.mb-3.mb-lg-0
-                      = render 'secret_network/balance', selector_prefix: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt', show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
-                      %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszDepositForm' }
-                        .input-group.mb-3
-                          %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-                          .input-group-append
-                            %span.input-group-text BUTT
-                        %button.btn.btn-primary.btn-rg{ type: 'submit' }
-                          .d-none.loading
+                // === PROFIT DISTRIBUTORS ===
+                - @profit_distributors.each do |profit_distributor|
+                  .card.mb-3{ 'data-pool-address': profit_distributor.address }
+                    .row
+                      .col-12
+                        %h5.title.title-sm.mb-1
+                          Profit distributor
+                          %a.float-right{ href: '#' }
+                            %span.fa.fa-sync
+                      .col-md-6.text-regular-sm
+                        %span.mr-1 Deposit #{profit_distributor.deposit_label}
+                        %span
+                          = cl_image_tag profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
+                        %br
+                        %span.mr-1 Earn #{profit_distributor.earn_label}
+                        %span
+                          = cl_image_tag profit_distributor.cryptocurrency_pools.reward.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
+                      .col-md-6.text-regular-sm
+                        TVL:
+                        %span{ class: "#{profit_distributor.address}-total-shares" }Loading...
+                        %br
+                        Claimable #{profit_distributor.earn_label}:
+                        = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
+                        %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
+                          .loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
-                          .ready Deposit
-                    .col-md-6.text-regular-sm
-                      = render 'secret_network/balance', selector_prefix: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz-user-shares', show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
-                      %form{ name: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqverszWithdrawForm' }
-                        .input-group.mb-3
-                          %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-                          .input-group-append
-                            %span.input-group-text BUTT
-                        %button.btn.btn-primary.btn-rg{ type: 'submit' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready Withdraw
+                          .d-none.ready
+                    .row.deposit-withdraw-forms-container.d-none
+                      .col-12
+                        %hr
+                      .col-md-6.text-regular-sm.mb-3.mb-lg-0
+                        = render 'secret_network/balance', selector_prefix: profit_distributor.cryptocurrency_pools.reward.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
+                        %form{ name: "#{profit_distributor.address}DepositForm" }
+                          .input-group.mb-3
+                            %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                            .input-group-append
+                              %span.input-group-text= profit_distributor.earn_label
+                          %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                            .d-none.loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .ready Deposit
+                      .col-md-6.text-regular-sm
+                        = render 'secret_network/balance', selector_prefix: "#{profit_distributor.address}-user-shares", show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
+                        %form{ name: "#{profit_distributor.address}WithdrawForm" }
+                          .input-group.mb-3
+                            %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                            .input-group-append
+                              %span.input-group-text= profit_distributor.earn_label
+                          %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                            .d-none.loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .ready Withdraw
+                // === FARM ===
                 .card.mb-3{ 'data-pool-address': 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku' }
                   .row
                     .col-12
@@ -107,7 +110,7 @@
                     .col-md-6.text-regular-sm
                       %span.mr-1
                         Deposit
-                        = link_to 'BUTT-sWBTC', 'https://app.secretswap.net/pool#Provide', target: '_blank', rel: 'noopener'
+                        = link_to 'BUTT-SWBTC LP', 'https://app.secretswap.net/pool#Provide', target: '_blank', rel: 'noopener'
                       %span
                         %img.logo-avatar{ src: 'https://res.cloudinary.com/hv5cxagki/image/upload/v1636595738/logos/btn_purple_background_sv3dst.png' }
                       %span
@@ -138,7 +141,7 @@
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                           .input-group-append
-                            %span.input-group-text BUTT-sWBTC
+                            %span.input-group-text BUTT-SWBTC LP
                         %button.btn.btn-primary.btn-rg{ type: 'submit' }
                           .loading.d-none
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -150,7 +153,7 @@
                         .input-group.mb-3
                           %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
                           .input-group-append
-                            %span.input-group-text BUTT-sWBTC
+                            %span.input-group-text BUTT-SWBTC LP
                         %button.btn.btn-primary.btn-rg{ type: 'submit' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }

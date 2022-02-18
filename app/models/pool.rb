@@ -61,6 +61,14 @@ class Pool < ApplicationRecord
     string
   end
 
+  def earn_label
+    if yield_optimizer?
+      deposit_label
+    else
+      cryptocurrency_pools.reward.first.cryptocurrency.symbol
+    end
+  end
+
   def root_pool
     current_pool = self
     current_pool = current_pool.pool while current_pool.pool.present?
