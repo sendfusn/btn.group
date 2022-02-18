@@ -664,7 +664,7 @@ $(document).ready(function(){
               // Factor in rewards when you get the chance
               let poolResponse = await document.secretNetwork.client().queryContractSmart(pool.address, {pool: {}}, undefined, pool.dataHash)
               let incentivizedTokenTotal = new BigNumber(poolResponse['pool']['incentivized_token_total']);
-              if (new BigNumber(poolResponse['pool']['shares_total']) > 0) {
+              if (new BigNumber(poolResponse['pool']['shares_total']).isGreaterThan(0)) {
                 withdrawable = withdrawable.multipliedBy(incentivizedTokenTotal).dividedBy(new BigNumber(poolResponse['pool']['shares_total']))
               } else {
                 withdrawable = new BigNumber("0");
@@ -672,7 +672,7 @@ $(document).ready(function(){
               
             }
           }
-          if (withdrawable > 0) {
+          if (withdrawable.isGreaterThan(0)) {
             withdrawable = withdrawable.dividedBy(new BigNumber("10").pow(pool['deposit_token']['decimals'])).decimalPlaces(pool['deposit_token']['decimals'])
           }
           $userShares.text(withdrawable.toFormat())
