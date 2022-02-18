@@ -61,16 +61,13 @@ module SecretNetwork
       @head_description = 'Farm, yield optimizer and profit sharing pools by btn.group on the Secret Network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls.png'
       @head_title = 'Pools | Secret network | btn.group'
-      @profit_distributors = Pool.profit_distributor
-                                 .enabled
-                                 .includes(:smart_contract)
-                                 .where(smart_contract: { blockchain: Blockchain.find_by(identifier: :secret_network) })
-                                 .order(:created_at)
-      @yield_optimizers = Pool.yield_optimizer
-                              .enabled
-                              .includes(:smart_contract)
-                              .where(smart_contract: { blockchain: Blockchain.find_by(identifier: :secret_network) })
-                              .order(:created_at)
+      @pools = Protocol.btn_group
+                       .first
+                       .pools
+                       .enabled
+                       .includes(:smart_contract)
+                       .where(smart_contract: { blockchain: Blockchain.find_by(identifier: :secret_network) })
+                       .order(:created_at)
     end
 
     def smart_contract_interface

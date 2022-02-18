@@ -11,4 +11,13 @@ class Protocol < ApplicationRecord
   # === VALIDATIONS ===
   validates :identifier, presence: true
   validates :identifier, uniqueness: true
+
+  # === INSTANCE METHODS ===
+  def provide_url
+    if secret_swap?
+      "#{url}#Provide"
+    else
+      url
+    end
+  end
 end
