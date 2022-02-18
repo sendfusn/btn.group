@@ -543,7 +543,7 @@ $(document).ready(function(){
           protocolId = swapPath['protocol_id']
         }
         if (this.bestResultsPerProtocol[protocolId]) {
-          if(swapPath['netUsdResultOfSwaps'] > this.bestResultsPerProtocol[protocolId]['netUsdResultOfSwaps']) {
+          if(swapPath['netUsdResultOfSwaps'].isGreaterThan(this.bestResultsPerProtocol[protocolId]['netUsdResultOfSwaps'])) {
             this.bestResultsPerProtocol[protocolId] = swapPath
           }
         } else {
