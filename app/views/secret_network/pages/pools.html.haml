@@ -46,7 +46,7 @@
               .col-12#pools
                 // === PROFIT DISTRIBUTORS ===
                 - @pools.profit_distributor.each do |profit_distributor|
-                  .card.mb-3{ 'data-pool-address': profit_distributor.address }
+                  .card.mb-3{ 'data-pool-address': profit_distributor.address, 'data-depositable-price': profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.price }
                     .row
                       .col-12
                         %h5.title.title-sm.mb-1
@@ -101,7 +101,7 @@
                             .ready Withdraw
                 // === FARM ===
                 - @pools.farm.each do |farm_pool|
-                  .card.mb-3{ 'data-pool-address': farm_pool.address }
+                  .card.mb-3{ 'data-pool-address': farm_pool.address, 'data-depositable-price': farm_pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
                     .row
                       .col-12
                         %h5.title.title-sm.mb-1
@@ -160,7 +160,7 @@
                               %em Loading...
                             .ready Withdraw
                 - @pools.yield_optimizer.each do |yield_optimizer|
-                  .card.mb-3{ 'data-pool-address': yield_optimizer.address }
+                  .card.mb-3{ 'data-pool-address': yield_optimizer.address, 'data-depositable-price': yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
                     .row
                       .col-12
                         %h5.title.title-sm.mb-1

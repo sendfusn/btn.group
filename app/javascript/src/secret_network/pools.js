@@ -639,7 +639,9 @@ $(document).ready(function(){
       this.updateUserInterface = async(poolDetailsOnly = false, userDetailsOnly = false) => {
         let height = await document.secretNetwork.getBlockHeight()
         for (const [index, pool] of this.pools.entries()) {
-          this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)
+          if ($('[data-pool-address="' + pool.address + '"]').length) {
+            this.updatePoolInterface(pool, false, poolDetailsOnly, userDetailsOnly, height)
+          }
         }
       }
 
@@ -752,22 +754,26 @@ $(document).ready(function(){
 
       this.updateTotalShares = async(pool) => {
         try {
-          let poolAddress = pool.address
           let depositTokenSymbol = pool['deposit_token']['symbol']
+          let poolAddress = pool.address
+          let price = new BigNumber($('[data-pool-address=' + poolAddress + ']')[0]['dataset']['depositablePrice'])
           let totalSharesSelector = '.' + poolAddress + '-total-shares'
           let humanizedStringNumberFromSmartContract;
+          let sharesAmount;
           $(totalSharesSelector).text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || poolAddress == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
             let config = await document.secretNetwork.client().queryContractSmart(poolAddress, {config: {}}, undefined, pool.dataHash)
-            humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(config['config']['total_shares'], pool['deposit_token']['decimals'], 0)
+            sharesAmount = config['config']['total_shares']
           } else if (poolAddress == 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku') {
             let response = await document.secretNetwork.client().queryContractSmart(poolAddress, {pool: {}}, undefined, pool.dataHash)
-            humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(response['pool']['shares_total'], pool['deposit_token']['decimals'], 0)
+            sharesAmount = response['pool']['shares_total']
           } else {
             let responseTwo = await document.secretNetwork.client().queryContractSmart(poolAddress, {pool: {}}, undefined, pool.dataHash)
-            humanizedStringNumberFromSmartContract = document.humanizeStringNumberFromSmartContract(responseTwo['pool']['incentivized_token_total'], pool['deposit_token']['decimals'], 0)
+            sharesAmount = responseTwo['pool']['incentivized_token_total']
           }
-          $(totalSharesSelector).text(humanizedStringNumberFromSmartContract + ' ' + depositTokenSymbol)
+          sharesAmount = new BigNumber(sharesAmount)
+          let tvl = document.humanizeStringNumberFromSmartContract(sharesAmount.multipliedBy(price), pool['deposit_token']['decimals'], 0)
+          $(totalSharesSelector).text('$' + tvl)
         } catch(err) {
           console.log(err)
         }

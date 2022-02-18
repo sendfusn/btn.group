@@ -111,7 +111,7 @@ class Pool < ApplicationRecord
     shares_with_decimals = cp.cryptocurrency.amount_with_decimals(cp.amount)
     return if shares_with_decimals.zero?
 
-    cp.cryptocurrency.update(price: (total_locked / shares_with_decimals).round(2))
+    cp.cryptocurrency.update(price: total_locked / shares_with_decimals)
   end
 
   def update_total_locked
