@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_040510) do
+ActiveRecord::Schema.define(version: 2022_02_18_084606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2022_02_15_040510) do
     t.string "symbol", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "price", precision: 15, scale: 10
+    t.decimal "price", precision: 30, scale: 10
     t.bigint "smart_contract_id"
     t.boolean "official"
     t.bigint "blockchain_id"

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# This is just for the farm contract values which don't really get used for anything
+# so all good. This isn't going to affect the values from trade pairs page.
+
 require 'rest-client'
 
 class SecretFinanceStakingPoolsJob < ApplicationJob

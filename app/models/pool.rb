@@ -35,6 +35,7 @@ class Pool < ApplicationRecord
       CreateSwapPathsJob.perform_later if pool.enabled && pool.saved_change_to_enabled?
       pool.swap_paths.find_each(&:destroy!) if !pool.enabled && pool.saved_change_to_enabled?
       SetMaximumTradeableValueForPoolSwapPathsJob.perform_later(pool.id, 0) if pool.total_locked.present? && pool.saved_change_to_total_locked?
+      pool.update_shares_price if pool.saved_change_to_total_locked?
     end
   end
 
@@ -99,6 +100,18 @@ class Pool < ApplicationRecord
     { return_amount: return_amount.to_i,
       spread_amount: spread_amount.to_i,
       commission_amount: commission_amount.to_i }
+  end
+
+  def update_shares_price
+    return unless total_locked&.positive?
+    return unless trade_pair?
+    return unless (cp = cryptocurrency_pools.shares.first)
+    return if cp.amount.blank?
+
+    shares_with_decimals = cp.cryptocurrency.amount_with_decimals(cp.amount)
+    return if shares_with_decimals.zero?
+
+    cp.cryptocurrency.update(price: (total_locked / shares_with_decimals).round(2))
   end
 
   def update_total_locked
