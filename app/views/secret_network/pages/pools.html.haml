@@ -76,7 +76,7 @@
                       .col-12
                         %hr
                       .col-md-6.text-regular-sm.mb-3.mb-lg-0
-                        = render 'secret_network/balance', selector_prefix: profit_distributor.cryptocurrency_pools.reward.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
+                        = render 'secret_network/balance', selector_prefix: profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
                         %form{ name: "#{profit_distributor.address}DepositForm" }
                           .input-group.mb-3
                             %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
@@ -136,7 +136,7 @@
                       .col-12
                         %hr
                       .col-md-6.text-regular-sm.mb-3.mb-lg-0
-                        = render 'secret_network/balance', selector_prefix: farm_pool.cryptocurrency_pools.reward.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
+                        = render 'secret_network/balance', selector_prefix: farm_pool.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
                         %form{ name: "#{farm_pool.address}DepositForm" }
                           .input-group.mb-3
                             %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
