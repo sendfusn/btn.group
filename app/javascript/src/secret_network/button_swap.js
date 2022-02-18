@@ -230,7 +230,7 @@ $(document).ready(function(){
 
       this.getAndSetCryptocurrenciesAndTradePairs = async() => {
         let result = await $.ajax({
-          url: '/pools?enabled=true',
+          url: '/pools?enabled=true&categories=trade_pair',
           type: 'GET'
         })
         result.forEach((tradePair) => {

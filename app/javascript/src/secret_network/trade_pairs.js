@@ -24,7 +24,7 @@ $(document).ready(function(){
 
       this.getAndSetTradePairs = async() => {
         let result = await $.ajax({
-          url: '/pools',
+          url: '/pools?categories=trade_pair',
           type: 'GET'
         })
         this.tradePairs = result
