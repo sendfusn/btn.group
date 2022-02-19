@@ -126,6 +126,13 @@
                                 %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                                 %em Loading...
                               .ready Withdraw
+                      %hr
+                      .text-regular-sm
+                        We recommend farming BUTT instead of using the profit distributor.
+                        %br
+                        This is due to the less than desired TVL in the yield optimizer pools and the price of SEFI.
+                        %br
+                        Not financial advice.
                 // === FARM ===
                 - @pools.farm.each do |farm_pool|
                   .block{ class: farm_pool.apr.zero? ? 'non-incentivized d-none' : 'incentivized' }
