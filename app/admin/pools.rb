@@ -12,7 +12,6 @@ ActiveAdmin.register Pool do
     column :total_locked
     column :apr
     column :apy
-    column :downcase_data_hash_for_swap_simulation
     column :enabled
     column :created_at
     column :updated_at
@@ -36,7 +35,6 @@ ActiveAdmin.register Pool do
       f.input :apr
       f.input :apy
       f.input :pool, collection: Pool.joins(:smart_contract).order('lower(smart_contracts.label) ASC'), member_label: proc { |pool| pool.smart_contract.label_formatted }
-      f.input :downcase_data_hash_for_swap_simulation, boolean: true
       f.input :enabled
     end
     f.actions
@@ -47,7 +45,6 @@ ActiveAdmin.register Pool do
                 :apy,
                 :category,
                 :deadline,
-                :downcase_data_hash_for_swap_simulation,
                 :enabled,
                 :pending_rewards,
                 :pool_id,

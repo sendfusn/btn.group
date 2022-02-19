@@ -381,9 +381,6 @@ $(document).ready(function(){
         let pool = this.tradePairs[poolId]
         let protocolIdentifier = pool['protocol']['identifier']
         let swapMsg;
-        if (pool['downcase_data_hash_for_swap_simulation']) {
-          fromCryptoCodeHash = fromCryptoCodeHash.toLowerCase()
-        }
         if (protocolIdentifier == 'secret_swap') {
           swapMsg = {simulation: {offer_asset: {info: {token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash, viewing_key: 'SecretSwap'}}, amount: fromAmountFormatted}}}
         } else if (protocolIdentifier == 'sienna') {
