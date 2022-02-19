@@ -839,6 +839,43 @@ $(document).ready(function(){
         })
       }.bind(this))
 
+      $('#farm-checkbox').change(function(){
+        if (this.checked) {
+          $('.farm').removeClass('d-none')
+        } else {
+          $('.farm').addClass('d-none')
+        }
+      });
+      $('#profit-distributor-checkbox').change(function(){
+        if (this.checked) {
+          $('.profit-distributor').removeClass('d-none')
+        } else {
+          $('.profit-distributor').addClass('d-none')
+        }
+      });
+      $('#yield-optimizer-checkbox').change(function(){
+        if (this.checked) {
+          $('.yield-optimizer').removeClass('d-none')
+        } else {
+          $('.yield-optimizer').addClass('d-none')
+        }
+      });
+
+      $('#incentivized-checkbox').change(function(){
+        if (this.checked) {
+          $('.incentivized').removeClass('d-none')
+        } else {
+          $('.incentivized').addClass('d-none')
+        }
+      });
+      $('#non-incentivized-checkbox').change(function(){
+        if (this.checked) {
+          $('.non-incentivized').removeClass('d-none')
+        } else {
+          $('.non-incentivized').addClass('d-none')
+        }
+      });
+
       document.querySelectorAll('.claim-button').forEach(item => {
         item.addEventListener('click', async(event) => {
           event.preventDefault()
