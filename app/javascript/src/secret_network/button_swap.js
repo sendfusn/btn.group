@@ -779,6 +779,7 @@ $(document).ready(function(){
               }
               successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
             }
+            await document.delay(6_500)
             this.resetAfterSwap()
             // Update vip levels if swap involves BUTT
             if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
