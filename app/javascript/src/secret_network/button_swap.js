@@ -366,6 +366,7 @@ $(document).ready(function(){
       }
 
       this.querySwapSimulation = async(fromAmountFormatted, fromId, poolId) => {
+        let currentQueryCount = this.queryCount;
         if (this.simulationSwapResults[poolId] == undefined) {
           this.simulationSwapResults[poolId] = {}
         }
@@ -415,7 +416,7 @@ $(document).ready(function(){
             let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg, undefined, pool['smart_contract']['data_hash'])
             this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
             return result['return_amount']
-          } else {
+          } else if (currentQueryCount == this.queryCount) {
             document.showAlertDanger(error)
           }
         }
