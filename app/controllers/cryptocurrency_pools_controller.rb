@@ -13,7 +13,7 @@ class CryptocurrencyPoolsController < ApplicationController
   private
 
     def cryptocurrency_pool_params
-      params.require(:cryptocurrency_pool).permit(:amount)
+      params.require(:cryptocurrency_pool).permit(:amount, :downcase_data_hash_for_swap_simulation)
     end
 
     def set_cryptocurrency_pool
