@@ -416,7 +416,7 @@ $(document).ready(function(){
             this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
             return result['return_amount']
           } else {
-            showAlertDanger(error)
+            document.showAlertDanger(error)
           }
         }
       }
