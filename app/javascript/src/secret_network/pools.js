@@ -514,12 +514,13 @@ $(document).ready(function(){
               // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
               if (err.message.includes('HTTP 502') || err.message.includes('timed out waiting for tx to be included in a block')) {
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
-                let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
+                let $totalSharesSelector = $('[data-pool-address="' + value['address'] + '"]').find('.total-shares')
+                let tVLBeforeUpdate = $totalSharesSelector.text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 await document.delay(5_000)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
-                let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
+                let tVLAfterUpdate = $totalSharesSelector.text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
                   this.updatePoolInterface(value, true)
@@ -585,12 +586,13 @@ $(document).ready(function(){
               // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
               if (err.message.includes('HTTP 502') || err.message.includes('timed out waiting for tx to be included in a block')) {
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
-                let tVLBeforeUpdate = $("." + value['address'] + "-total-shares").text()
+                let $totalSharesSelector = $('[data-pool-address="' + value['address'] + '"]').find('.total-shares')
+                let tVLBeforeUpdate = $totalSharesSelector.text()
                 let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 await document.delay(5_000)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
-                let tVLAfterUpdate = $("." + value['address'] + "-total-shares").text()
+                let tVLAfterUpdate = $totalSharesSelector.text()
                 let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
                   this.updatePoolInterface(value, true)
@@ -757,10 +759,10 @@ $(document).ready(function(){
           let depositTokenSymbol = pool['deposit_token']['symbol']
           let poolAddress = pool.address
           let price = new BigNumber($('[data-pool-address=' + poolAddress + ']')[0]['dataset']['depositablePrice'])
-          let totalSharesSelector = '.' + poolAddress + '-total-shares'
+          let $totalSharesSelector = $('[data-pool-address="' + pool.address + '"]').find('.total-shares')
           let humanizedStringNumberFromSmartContract;
           let sharesAmount;
-          $(totalSharesSelector).text('Loading...')
+          $totalSharesSelector.text('Loading...')
           if (poolAddress == 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz' || poolAddress == 'secret1wuxwnfrkdnysww5nq4v807rj3ksrdv3j5eenv2' || poolAddress == 'secret1sxmznzev9vcnw8yenjddgtfucpu7ymw6emkzan') {
             let config = await document.secretNetwork.client().queryContractSmart(poolAddress, {config: {}}, undefined, pool.dataHash)
             sharesAmount = config['config']['total_shares']
@@ -773,7 +775,7 @@ $(document).ready(function(){
           }
           sharesAmount = new BigNumber(sharesAmount)
           let tvl = document.humanizeStringNumberFromSmartContract(sharesAmount.multipliedBy(price), pool['deposit_token']['decimals'], 0)
-          $(totalSharesSelector).text('$' + tvl)
+          $totalSharesSelector.text('$' + tvl)
         } catch(err) {
           console.log(err)
         }

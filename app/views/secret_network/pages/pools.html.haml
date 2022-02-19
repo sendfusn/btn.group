@@ -63,7 +63,7 @@
                           = cl_image_tag profit_distributor.cryptocurrency_pools.reward.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
                       .col-md-6.text-regular-sm
                         TVL:
-                        %span{ class: "#{profit_distributor.address}-total-shares" }Loading...
+                        %span.total-shares Loading...
                         %br
                         Claimable #{profit_distributor.earn_label}:
                         = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
@@ -121,7 +121,7 @@
                           = cl_image_tag farm_pool.cryptocurrency_pools.reward.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
                       .col-md-6.text-regular-sm
                         TVL:
-                        %span{ class: "#{farm_pool.address}-total-shares" } Loading...
+                        %span.total-shares Loading...
                         %br
                         APR: #{farm_pool.apr}%
                         %br
@@ -178,7 +178,7 @@
                         = link_to yield_optimizer.pool.protocol.name, yield_optimizer.pool.protocol.url, rel: 'noopener', target: '_blank'
                       .col-md-6.text-regular-sm
                         TVL:
-                        %span{ class: "#{yield_optimizer.address}-total-shares" } Loading...
+                        %span.total-shares Loading...
                         %br
                         APY: #{yield_optimizer.apy}%
                         %br
