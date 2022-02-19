@@ -675,13 +675,14 @@ $(document).ready(function(){
               } else {
                 withdrawable = new BigNumber("0");
               }
-              
             }
           }
           if (withdrawable.isGreaterThan(0)) {
             withdrawable = withdrawable.dividedBy(new BigNumber("10").pow(pool['deposit_token']['decimals'])).decimalPlaces(pool['deposit_token']['decimals'])
           }
+          let price = new BigNumber($('[data-pool-address=' + pool.address + ']')[0]['dataset']['depositablePrice'])
           $userShares.text(withdrawable.toFormat())
+          $userShares.siblings('.balance-as-usd').text('($' + withdrawable.multipliedBy(price).toFormat(2) + ')')
         } catch(err) {
           $userShares.text('0');
           if (!err.message.includes('{"not_found":{"kind":"cw_profit_distributor::state::User"}}')) {

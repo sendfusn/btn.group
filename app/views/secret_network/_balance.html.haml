@@ -14,8 +14,10 @@
     %span
       - if active_balance_link
         = link_to '', '#', class: "#{selector_prefix}-balance"
+        %span.balance-as-usd
       - else
         %a{ class: "#{selector_prefix}-balance" }
+        %span.balance-as-usd
     %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.btn-round.btn-auto.d-none{ type: 'button', class: "#{selector_prefix}-balance-view-button" }
       .d-none.loading
         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
