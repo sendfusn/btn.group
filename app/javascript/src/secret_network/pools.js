@@ -516,12 +516,13 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let $totalSharesSelector = $('[data-pool-address="' + value['address'] + '"]').find('.total-shares')
                 let tVLBeforeUpdate = $totalSharesSelector.text()
-                let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                let $rewardsToProcess = $('[data-pool-address="' + value['address'] + '"]').find('.rewards-to-process')
+                let rewardsToProcessBeforeUpdate = $rewardsToProcess.text()
                 await document.delay(5_000)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
                 let tVLAfterUpdate = $totalSharesSelector.text()
-                let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                let rewardsToProcessAfterUpdate = $rewardsToProcess.text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
                   this.updatePoolInterface(value, true)
                   document.showAlertSuccess("Deposit successful");
@@ -588,12 +589,13 @@ $(document).ready(function(){
                 // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
                 let $totalSharesSelector = $('[data-pool-address="' + value['address'] + '"]').find('.total-shares')
                 let tVLBeforeUpdate = $totalSharesSelector.text()
-                let rewardsToProcessBeforeUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                let $rewardsToProcess = $('[data-pool-address="' + value['address'] + '"]').find('.rewards-to-process')
+                let rewardsToProcessBeforeUpdate = $rewardsToProcess.text()
                 await document.delay(5_000)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
                 let tVLAfterUpdate = $totalSharesSelector.text()
-                let rewardsToProcessAfterUpdate = $("." + value['address'] + "-rewards-to-process").text()
+                let rewardsToProcessAfterUpdate = $rewardsToProcess.text()
                 if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
                   this.updatePoolInterface(value, true)
                   document.showAlertSuccess("Withdraw successful");
@@ -693,17 +695,17 @@ $(document).ready(function(){
 
       this.updateRewards = async(pool, afterTransaction = false, height = undefined) => {
         if (pool.farm_contract_address) {
-          let $poolRewardsToProcess = $('.' + pool.address + '-rewards-to-process')
+          let $rewardsToProcess = $('[data-pool-address="' + pool.address + '"]').find('.rewards-to-process')
           if (afterTransaction) {
-            $poolRewardsToProcess.text('0');
+            $rewardsToProcess.text('0');
           } else {
             try {
-              $poolRewardsToProcess.text('Loading...');
+              $rewardsToProcess.text('Loading...');
               if (!height) {
                 height = await document.secretNetwork.client().getHeight();
               }
               let response = await document.secretNetwork.client().queryContractSmart(pool.farm_contract_address, {rewards: { address: pool.address, height: height, key: "DoTheRightThing." }}, undefined, pool.farm_contract_data_hash)
-              $poolRewardsToProcess.text(document.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
+              $rewardsToProcess.text(document.humanizeStringNumberFromSmartContract(response['rewards']['rewards'], pool['reward_token']['decimals']))
             } catch(err) {
               console.log(err)
               if (this.retryCount < 5) {
