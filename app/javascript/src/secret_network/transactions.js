@@ -1,17 +1,39 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     window.onload = async () => {
+      this.nonFungibleTokenAddress = 'secret1xx4fp7qgkyxdk9elrzd8v5p7gj28lvxprwl9lw'
       this.tokenAddress = document.secretNetwork.butt.address;
       this.tokenType = 'fungibleToken'
 
       // === LIST ===
       var options = {
-        valueNames: [ 'address', 'symbol' ]
+        valueNames: ['address', 'symbol']
       };
       this.tokenList = new List('token-list', options);
       this.nftList = new List('nft-list', options)
 
       // === LISTENERS ===
+      $('input[type=radio][name=tokenType]').change(function(e) {
+        this.tokenType = e['target']['value']
+        document.secretNetworkTransactionsForm.viewingKey.value = ''
+        if (this.tokenType == 'nft') {
+          $('#fungible-token-button').addClass('d-none')
+          $('#non-fungible-token-button').removeClass('d-none')
+          if (this.nonFungibleTokenAddress) {
+            $('.other-field-item').addClass('d-none')
+          } else {
+            $('.other-field-item').removeClass('d-none')
+          }
+        } else if (this.tokenType == 'fungibleToken') {
+          $('#fungible-token-button').removeClass('d-none')
+          $('#non-fungible-token-button').addClass('d-none')
+          if (this.tokenAddress) {
+            $('.other-field-item').addClass('d-none')
+          } else {
+            $('.other-field-item').removeClass('d-none')
+          }
+        }
+      }.bind(this));
       $('#viewing-key-container .fa-eye').click(function(){
         if($('#viewing-key-input').attr('type') == 'text') {
           $('#viewing-key-input').attr('type', 'password')
@@ -39,16 +61,26 @@ $(document).ready(function(){
         try {
           await document.connectKeplrWallet(false)
           if (document.secretNetwork.walletAddress) {
-            let tokenAddress = this.tokenAddress
-            if (!this.tokenAddress) {
-              tokenAddress = document.secretNetworkTransactionsForm.otherTokenAddress.value;
+            let tokenAddress;
+            if (this.tokenType == 'nft') {
+              tokenAddress = this.nonFungibleTokenAddress
+              if (!this.nonFungibleTokenAddress) {
+                tokenAddress = document.secretNetworkTransactionsForm.otherTokenAddress.value;
+              }
+            } else {
+              tokenAddress = this.tokenAddress
+              if (!this.tokenAddress) {
+                tokenAddress = document.secretNetworkTransactionsForm.otherTokenAddress.value;
+              }
             }
+            document.secretNetworkTransactionsForm.address.value = document.secretNetwork.walletAddress
             let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(), tokenAddress)
             document.secretNetworkTransactionsForm.viewingKey.value = key
-            document.secretNetworkTransactionsForm.address.value = document.secretNetwork.walletAddress
           }
         } catch(err) {
-          if (!err['message'].includes('There is no matched secret20')) {
+          if (err['message'].includes('There is no matched secret20')) {
+            document.showAlertInfo('No viewing key in wallet for this contract.')
+          } else {
             document.showAlertDanger(err)
           }
         } finally {
@@ -79,34 +111,38 @@ $(document).ready(function(){
         }
         if(this.tokenType == 'nft') {
           this.nftAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
-          $('#nonFungibleTokenAddress .symbol').text(event['currentTarget']['dataset']['cryptocurrencyName'])
-          $('#nonFungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
-          if (symbol == 'OTHER') {
-            $('#non-fungible-token-inputs').find('.other-field-item').removeClass('d-none')
-          } else {
-            $('#non-fungible-token-inputs').find('.other-field-item').addClass('d-none')
-          }
+          $('#non-fungible-token-button .symbol').text(event['currentTarget']['dataset']['cryptocurrencyName'])
+          $('#non-fungible-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
         } else {
           this.tokenAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
-          $('#fungibleTokenAddress .symbol').text(symbol)
-          $('#fungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
-          if (symbol == 'OTHER') {
-            $('#fungible-token-inputs').find('.other-field-item').removeClass('d-none')
-          } else {
-            $('#fungible-token-inputs').find('.other-field-item').addClass('d-none')
-          }
+          $('#fungible-token-button .symbol').text(symbol)
+          $('#fungible-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
+        }
+        if (symbol == 'OTHER') {
+          $('.other-field-item').removeClass('d-none')
+        } else {
+          $('.other-field-item').addClass('d-none')
         }
       }
 
       document.secretNetworkTransactionsForm.onsubmit = async (e) => {
         e.preventDefault()
         let address = document.secretNetworkTransactionsForm.address.value;
-        let tokenAddress = this.tokenAddress
-        if (!this.tokenAddress) {
+        let tokenAddress;
+        let token_decimals;
+        let token_symbol;
+        let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
+        let params;
+        if (this.tokenType == 'nft') {
+          tokenAddress = this.nonFungibleTokenAddress
+        } else {
+          tokenAddress = this.tokenAddress
+        }
+        if (!tokenAddress) {
           tokenAddress = document.secretNetworkTransactionsForm.otherTokenAddress.value;
         }
+
         let transactions = [];
-        let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
         // Reset transactions table and balance
         $transactionsTableBody = $('#transactions-table-body');
         $transactionsTableBody.html('')
@@ -132,16 +168,28 @@ $(document).ready(function(){
             $('#pay-wall').addClass('d-none')
           }
 
-          // Get the token info
-          let token_info_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, { token_info: {} });
-          let token_decimals = token_info_response["token_info"]["decimals"]
-          let token_symbol = token_info_response["token_info"]["symbol"]
-          let params = {
-            transfer_history: {
-              address: address,
-              key: viewingKey,
-              page: parseFloat(document.secretNetworkTransactionsForm.page.value - 1),
-              page_size: parseFloat(document.secretNetworkTransactionsForm.pageSize.value)
+          // Set params based on tokenType
+          if (this.tokenType == 'nft') {
+            params = {
+              transaction_history: {
+                address: address,
+                viewing_key: viewingKey,
+                page: parseFloat(document.secretNetworkTransactionsForm.page.value - 1),
+                page_size: parseFloat(document.secretNetworkTransactionsForm.pageSize.value)
+              }
+            }
+          } else {
+            // Get the token info
+            let token_info_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, { token_info: {} });
+            token_decimals = token_info_response["token_info"]["decimals"]
+            token_symbol = token_info_response["token_info"]["symbol"]
+            params = {
+              transfer_history : {
+                address: address,
+                key: viewingKey,
+                page: parseFloat(document.secretNetworkTransactionsForm.page.value - 1),
+                page_size: parseFloat(document.secretNetworkTransactionsForm.pageSize.value)
+              }
             }
           }
 
@@ -151,7 +199,15 @@ $(document).ready(function(){
             throw(transactions_response['viewing_key_error']['msg'])
           }
           let transactionsTableBodyContent = '';
-          let txs = transactions_response["transfer_history"]["txs"]
+          console.log(transactions_response)
+          // Set params based on tokenType
+          let txs;
+          if (this.tokenType == 'nft') {
+            txs = transactions_response["transaction_history"]["txs"]
+          } else {
+            txs = transactions_response["transfer_history"]["txs"]
+          }
+
           await document.secretNetwork.transactions.getSmartContractsInTxs(address, txs)
           txs.forEach((value) => {
             // ID & Date
@@ -160,19 +216,35 @@ $(document).ready(function(){
               let dateAsString = new Date(Number(value['block_time']) * 1000).toLocaleString(undefined, {dateStyle: 'short', timeStyle: 'short'});
               transactionsTableBodyContent += dateAsString + '<hr>'
             }
-            transactionsTableBodyContent += 'id: #' + value['id'] + '</td><td>'
+            let id = value['id']
+            if (this.tokenType == 'nft') {
+              id = value['tx_id']
+            }
+            transactionsTableBodyContent += 'id: #' + id + '</td><td>'
 
             // Description & Amount
-            let amount = value['coins']['amount']
-            amount = document.applyDecimals(amount, token_decimals)
-            let description = '<a href="'
+            let amount;
             let descriptionAddress;
-            if (address != value['receiver']) {
-              amount *= -1
-              descriptionAddress = value['receiver']
+            if (this.tokenType == 'nft') {
+              amount = 1
+              if (address != value['action']['transfer']['recipient']) {
+                amount *= -1
+                descriptionAddress = value['action']['transfer']['recipient']
+              } else {
+                descriptionAddress = value['action']['transfer']['from']
+              }
             } else {
-              descriptionAddress = value['from']
+              amount = value['coins']['amount']
+              amount = document.applyDecimals(amount, token_decimals)
+              if (address != value['receiver']) {
+                amount *= -1
+                descriptionAddress = value['receiver']
+              } else {
+                descriptionAddress = value['from']
+              }
             }
+            
+            let description = '<a href="'
             let smartContract = document.secretNetwork.smartContracts[descriptionAddress]
             if (smartContract) {
               description += 'https://secretnodes.com/secret/chains/secret-4/contracts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
@@ -186,18 +258,39 @@ $(document).ready(function(){
           transactionsTableBodyContent += '</tr>'
           $transactionsTableBody.html(transactionsTableBodyContent)
           // Add token symbol next to amount header
-          $($('th')[2]).text('Amount' + ' (' + token_symbol + ')')
+          let amountColumnHeader = 'Amount'
+          if (this.tokenType == 'fungibleToken') {
+            amountColumnHeader = 'Amount' + ' (' + token_symbol + ')'
+          }
+          $($('th')[2]).text(amountColumnHeader)
 
           // Get the balance for the token
-          params = {
-            balance: {
-              address: address,
-              key: viewingKey
+          if (this.tokenType == 'nft') {
+            params = {
+              tokens: {
+                limit: 1000,
+                owner: address,
+                viewing_key: viewingKey
+              }
+            }
+          } else {
+            params = {
+              balance: {
+                address: address,
+                key: viewingKey
+              }
             }
           }
-          let balance_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
+          let response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
+
           // Display results
-          $('#balance').text(document.applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
+          let balance;
+          if (this.tokenType == 'nft') {
+            balance = response['token_list']['tokens'].length
+          } else {
+            balance = document.applyDecimals(response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol
+          }
+          $('#balance').text(balance)
         }
         catch(err) {
           console.error(err)

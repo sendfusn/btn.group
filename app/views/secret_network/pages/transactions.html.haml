@@ -10,54 +10,68 @@
             .sidebar.mr-lg-4.mb-4
               = render 'features_header', blockchain: :secret_network, feature: :transactions, show_environment_switch: false
               %hr
-              %form#fungible-token-inputs{ name: 'secretNetworkTransactionsForm' }
-                .field-item
-                  .field-item.pb-0
-                    .field-wrap
-                      .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0#fungibleTokenAddress{ 'data-target' => '#fungibleTokens', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
-                        = cl_image_tag(@fungible_tokens.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
-                        %span.symbol BUTT
-                  .field-item.pb-0.d-none.other-field-item
-                    %label.field-label Token Address
-                    .field-wrap
-                      %input.form-control{ name: 'otherTokenAddress', autocomplete: 'off' }
-                .field-item
-                  %label.field-label{ for: 'address' }
-                    %span.mr-2 Address
-                  = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto'
-                  %span.load-wallet-link.d-none
-                    %button.btn.btn-primary.btn-xxs.mb-1.border.btn-round.btn-auto#load-from-keplr-button{ type: 'button' }
-                      .d-none.loading
+              .tab-content
+                .tab-pane.fade.active.show
+                  %ul.d-flex.flex-wrap.gutter-30px
+                    %li.mb-3
+                      .field-wrap
+                        %input.input-radio#nft{ name: 'tokenType', type: 'radio', value: 'nft' }
+                        %label{ for: 'nft' } NFT
+                    %li.mb-3
+                      .field-wrap
+                        %input.input-radio#fungibleToken{ name: 'tokenType', type: 'radio', value: 'fungibleToken', checked: true }
+                        %label{ for: 'fungibleToken' } SNIP-20
+                  %form{ name: 'secretNetworkTransactionsForm' }
+                    .field-item
+                      .field-item.pb-0
+                        .field-wrap
+                          .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0#fungible-token-button{ 'data-target' => '#fungibleTokens', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                            = cl_image_tag(@fungible_tokens.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                            %span.symbol BUTT
+                          .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0.d-none#non-fungible-token-button{ 'data-target' => '#NFTs', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                            = cl_image_tag(@nfts.find_by(symbol: 'ANONS').attachments.first&.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                            %span.symbol ANONS
+                      .field-item.pb-0.d-none.other-field-item
+                        %label.field-label Token Address
+                        .field-wrap
+                          %input.form-control{ name: 'otherTokenAddress', autocomplete: 'off' }
+                    .field-item
+                      %label.field-label{ for: 'address' }
+                        %span.mr-2 Address
+                      = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto'
+                      %span.load-wallet-link.d-none
+                        %button.btn.btn-primary.btn-xxs.mb-1.border.btn-round.btn-auto#load-from-keplr-button{ type: 'button' }
+                          .d-none.loading
+                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                            %em Loading...
+                          .ready
+                            Load from Keplr
+                      %input.form-control#address{ name: 'address', placeholder: 'secret123...' }
+                    .field-item#viewing-key-container
+                      %label.field-label{ for: 'viewing-key' } Viewing key
+                      .input-group
+                        %input.form-control.border-right-0#viewing-key-input{ type: 'password', required: true, spellcheck: false, autocorrect: 'off', autocapitalize: 'off', autocomplete: 'off', name: 'viewingKey' }
+                        .input-group-append
+                          %span.input-group-text.bg-white.border-left-0
+                            %i.fa.fa-eye
+                    .row
+                      .col-6
+                        .field-item
+                          %label.field-label{ for: 'page-size' } Show
+                          %select.form-control#page-size{ name: 'pageSize' }
+                            %option{ value: 10 } 10
+                            %option{ value: 50, selected: true } 50
+                            %option{ value: 100 } 100
+                      .col-6
+                        .field-item
+                          %label.field-label{ for: 'page' } Page
+                          %input.form-control#page{ type: 'number', name: 'page', value: '1', min: 1 }
+                    %button.btn.btn-grad.mt-2#search-button{ type: 'submit' }
+                      .d-none#loading
                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                         %em Loading...
-                      .ready
-                        Load from Keplr
-                  %input.form-control#address{ name: 'address', placeholder: 'secret123...' }
-                .field-item#viewing-key-container
-                  %label.field-label{ for: 'viewing-key' } Viewing key
-                  .input-group
-                    %input.form-control.border-right-0#viewing-key-input{ type: 'password', required: true, spellcheck: false, autocorrect: 'off', autocapitalize: 'off', autocomplete: 'off', name: 'viewingKey' }
-                    .input-group-append
-                      %span.input-group-text.bg-white.border-left-0
-                        %i.fa.fa-eye
-                .row
-                  .col-6
-                    .field-item
-                      %label.field-label{ for: 'page-size' } Show
-                      %select.form-control#page-size{ name: 'pageSize' }
-                        %option{ value: 10 } 10
-                        %option{ value: 50, selected: true } 50
-                        %option{ value: 100 } 100
-                  .col-6
-                    .field-item
-                      %label.field-label{ for: 'page' } Page
-                      %input.form-control#page{ type: 'number', name: 'page', value: '1', min: 1 }
-                %button.btn.btn-grad.mt-2#search-button{ type: 'submit' }
-                  .d-none#loading
-                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                    %em Loading...
-                  #ready
-                    Search
+                      #ready
+                        Search
           .col-lg-7.col-xl-8
             .collapse.mb-3#exampleCollapseExample
               .card
@@ -92,8 +106,8 @@
                       %th Amount
                   %tbody#transactions-table-body
               %p
-                * Minting transactions are not included (e.g. receiving tokens via the bridge etc)
+                * Minting transactions are not included yet (e.g. receiving tokens via the bridge etc)
                 %br
-                * Viewing SNIP-20 transactions is live. Regular transactions and improved ui/ux in development.
+                * Viewing NFT & SNIP-20 transactions is live. Regular transactions are on the to-do list.
 = render 'token_list', modal_title_id: 'fungibleTokenLabel', modal_id: 'fungibleTokens', modal_content_id: 'token-list', modal_input_id: 'input-text-1', cryptocurrencies: @fungible_tokens, label_type: 'symbol', include_other: true
-= render 'token_list', modal_title_id: 'mountDoomNFTLabel', modal_id: 'mountDoomNFTs', modal_content_id: 'nft-list', modal_input_id: 'input-text-2', cryptocurrencies: @nfts, label_type: 'name', include_other: true
+= render 'token_list', modal_title_id: 'NFTLabel', modal_id: 'NFTs', modal_content_id: 'nft-list', modal_input_id: 'input-text-2', cryptocurrencies: @nfts, label_type: 'name', include_other: true
