@@ -199,7 +199,6 @@ $(document).ready(function(){
             throw(transactions_response['viewing_key_error']['msg'])
           }
           let transactionsTableBodyContent = '';
-          console.log(transactions_response)
           // Set params based on tokenType
           let txs;
           if (this.tokenType == 'nft') {
@@ -225,6 +224,7 @@ $(document).ready(function(){
             // Description & Amount
             let amount;
             let descriptionAddress;
+            let tokenId;
             if (this.tokenType == 'nft') {
               amount = 1
               if (address != value['action']['transfer']['recipient']) {
@@ -233,6 +233,7 @@ $(document).ready(function(){
               } else {
                 descriptionAddress = value['action']['transfer']['from']
               }
+              tokenId = value['token_id']
             } else {
               amount = value['coins']['amount']
               amount = document.applyDecimals(amount, token_decimals)
@@ -249,8 +250,14 @@ $(document).ready(function(){
             if (smartContract) {
               description += 'https://secretnodes.com/secret/chains/secret-4/contracts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
               description += '<hr>Contract label: ' + smartContract['label']
+              if (tokenId) {
+                description = description + '<br>Token id: ' + tokenId
+              }
             } else {
               description += 'https://secretnodes.com/secret/chains/secret-4/accounts/' + descriptionAddress + '" target="_blank">' + descriptionAddress + '</a>'
+              if (tokenId) {
+                description = description + '<hr>Token id: ' + tokenId
+              }
             }
             transactionsTableBodyContent += description + '</td><td>'
             transactionsTableBodyContent += parseFloat(amount).toLocaleString('en', { minimumFractionDigits: token_decimals }) + '</td></tr>'
