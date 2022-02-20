@@ -1,6 +1,16 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     window.onload = async () => {
+      this.tokenAddress = document.secretNetwork.butt.address;
+      this.tokenType = 'fungibleToken'
+
+      // === LIST ===
+      var options = {
+        valueNames: [ 'address', 'symbol' ]
+      };
+      this.tokenList = new List('token-list', options);
+      this.nftList = new List('nft-list', options)
+
       // === LISTENERS ===
       $('#viewing-key-container .fa-eye').click(function(){
         if($('#viewing-key-input').attr('type') == 'text') {
@@ -10,9 +20,6 @@ $(document).ready(function(){
         }
       })
       $('#address').change(function(){
-        $('#viewing-key-input').val('')
-      })
-      $('#contract-address').change(function(){
         $('#viewing-key-input').val('')
       })
       $(document).on('keplr_connected', async(evt) => {
@@ -32,7 +39,11 @@ $(document).ready(function(){
         try {
           await document.connectKeplrWallet(false)
           if (document.secretNetwork.walletAddress) {
-            let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(), document.secretNetworkTransactionsForm.contractAddress.value)
+            let tokenAddress = this.tokenAddress
+            if (!this.tokenAddress) {
+              tokenAddress = document.secretNetworkTransactionsForm.otherTokenAddress.value;
+            }
+            let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(), tokenAddress)
             document.secretNetworkTransactionsForm.viewingKey.value = key
             document.secretNetworkTransactionsForm.address.value = document.secretNetwork.walletAddress
           }
@@ -48,10 +59,52 @@ $(document).ready(function(){
         }
       })
 
+      $('li.bg-white').click(function(e){
+        e.preventDefault()
+        this.updateAfterTokenSelect(e)
+      }.bind(this))
+
+      // === FUNCTIONS ===
+      this.updateAfterTokenSelect = async(event) => {
+        $('#viewing-key-input').val('')
+        $('.modal').modal('hide');
+        $('#input-text-1').val('');
+        $('#input-text-2').val('');
+        this.tokenList.search()
+        this.nftList.search()
+        let cloudinaryPublicId = event['currentTarget']['dataset']['cryptocurrencyCloudinaryPublicId']
+        let symbol = event['currentTarget']['dataset']['cryptocurrencySymbol']
+        if (!cloudinaryPublicId) {
+          cloudinaryPublicId = 'external-content.duckduckgo-1_memqe7'
+        }
+        if(this.tokenType == 'nft') {
+          this.nftAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
+          $('#nonFungibleTokenAddress .symbol').text(event['currentTarget']['dataset']['cryptocurrencyName'])
+          $('#nonFungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
+          if (symbol == 'OTHER') {
+            $('#non-fungible-token-inputs').find('.other-field-item').removeClass('d-none')
+          } else {
+            $('#non-fungible-token-inputs').find('.other-field-item').addClass('d-none')
+          }
+        } else {
+          this.tokenAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
+          $('#fungibleTokenAddress .symbol').text(symbol)
+          $('#fungibleTokenAddress .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
+          if (symbol == 'OTHER') {
+            $('#fungible-token-inputs').find('.other-field-item').removeClass('d-none')
+          } else {
+            $('#fungible-token-inputs').find('.other-field-item').addClass('d-none')
+          }
+        }
+      }
+
       document.secretNetworkTransactionsForm.onsubmit = async (e) => {
         e.preventDefault()
         let address = document.secretNetworkTransactionsForm.address.value;
-        let contractAddress = secretNetworkTransactionsForm.contractAddress.value;
+        let tokenAddress = this.tokenAddress
+        if (!this.tokenAddress) {
+          tokenAddress = document.secretNetworkTransactionsForm.otherTokenAddress.value;
+        }
         let transactions = [];
         let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
         // Reset transactions table and balance
@@ -80,7 +133,7 @@ $(document).ready(function(){
           }
 
           // Get the token info
-          let token_info_response = await document.secretNetwork.client().queryContractSmart(contractAddress, { token_info: {} });
+          let token_info_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, { token_info: {} });
           let token_decimals = token_info_response["token_info"]["decimals"]
           let token_symbol = token_info_response["token_info"]["symbol"]
           let params = {
@@ -93,7 +146,7 @@ $(document).ready(function(){
           }
 
           // Get the transactions for that token
-          let transactions_response = await document.secretNetwork.client().queryContractSmart(contractAddress, params);
+          let transactions_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
           if (transactions_response['viewing_key_error']) {
             throw(transactions_response['viewing_key_error']['msg'])
           }
@@ -142,7 +195,7 @@ $(document).ready(function(){
               key: viewingKey
             }
           }
-          let balance_response = await document.secretNetwork.client().queryContractSmart(contractAddress, params);
+          let balance_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
           // Display results
           $('#balance').text(document.applyDecimals(balance_response["balance"]["amount"], token_decimals).toLocaleString('en', { minimumFractionDigits: token_decimals }) + ' ' + token_symbol)
         }

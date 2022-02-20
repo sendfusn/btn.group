@@ -82,6 +82,16 @@ module SecretNetwork
     end
 
     def transactions
+      cryptocurrency_ids = Pool.trade_pair
+                               .enabled
+                               .joins(:smart_contract)
+                               .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
+                               .joins(:cryptocurrency_pools)
+                               .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
+                               .pluck(:cryptocurrency_id)
+                               .uniq
+      @fungible_tokens = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).where.not(symbol: %w[ATOM DVPN LUNA OSMO SCRT UST]).order(:symbol)
+      @nfts = Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(name)')
       @navbar_container_fluid = true
       @head_description = 'Transactions viewer for Secret network tokens.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/transactions/transaction_rough_j8coyp.png'

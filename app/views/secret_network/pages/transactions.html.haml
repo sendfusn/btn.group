@@ -10,10 +10,17 @@
             .sidebar.mr-lg-4.mb-4
               = render 'features_header', blockchain: :secret_network, feature: :transactions, show_environment_switch: false
               %hr
-              %form{ name: 'secretNetworkTransactionsForm' }
+              %form#fungible-token-inputs{ name: 'secretNetworkTransactionsForm' }
                 .field-item
-                  %label.field-label{ for: 'contract-address' } Token
-                  = select_tag 'contractAddress', options_from_collection_for_select(Cryptocurrency.where(official: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).where.not(coin_gecko_id: nil).order('LOWER(symbol)'), 'address', 'label_formatted'), class: 'form-control', id: 'contract-address'
+                  .field-item.pb-0
+                    .field-wrap
+                      .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0#fungibleTokenAddress{ 'data-target' => '#fungibleTokens', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                        = cl_image_tag(@fungible_tokens.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                        %span.symbol BUTT
+                  .field-item.pb-0.d-none.other-field-item
+                    %label.field-label Token Address
+                    .field-wrap
+                      %input.form-control{ name: 'otherTokenAddress', autocomplete: 'off' }
                 .field-item
                   %label.field-label{ for: 'address' }
                     %span.mr-2 Address
@@ -88,3 +95,5 @@
                 * Minting transactions are not included (e.g. receiving tokens via the bridge etc)
                 %br
                 * Viewing SNIP-20 transactions is live. Regular transactions and improved ui/ux in development.
+= render 'token_list', modal_title_id: 'fungibleTokenLabel', modal_id: 'fungibleTokens', modal_content_id: 'token-list', modal_input_id: 'input-text-1', cryptocurrencies: @fungible_tokens, label_type: 'symbol', include_other: true
+= render 'token_list', modal_title_id: 'mountDoomNFTLabel', modal_id: 'mountDoomNFTs', modal_content_id: 'nft-list', modal_input_id: 'input-text-2', cryptocurrencies: @nfts, label_type: 'name', include_other: true
