@@ -503,7 +503,7 @@ $(document).ready(function(){
                 amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
                 let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
                 let response = await this.client.execute(value['deposit_token']['address'], handleMsg, '', [], gasParams.exec, value['deposit_token']['dataHash'])
-                await document.delay(5_000)
+                await document.delay(19_500)
                 document.showAlertSuccess("Deposit successful");
                 document[depositFormName].amount.value = ''
                 this.updatePoolInterface(value, true)
@@ -518,7 +518,7 @@ $(document).ready(function(){
                 let tVLBeforeUpdate = $totalSharesSelector.text()
                 let $rewardsToProcess = $('[data-pool-address="' + value['address'] + '"]').find('.rewards-to-process')
                 let rewardsToProcessBeforeUpdate = $rewardsToProcess.text()
-                await document.delay(5_000)
+                await document.delay(19_500)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
                 let tVLAfterUpdate = $totalSharesSelector.text()
@@ -574,7 +574,7 @@ $(document).ready(function(){
                 }
                 this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
                 let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
-                await document.delay(5_000)
+                await document.delay(19_500)
                 document.showAlertSuccess("Withdraw successful");
                 document[withdrawFormName].amount.value = ''
                 this.updatePoolInterface(value, true)
@@ -591,7 +591,7 @@ $(document).ready(function(){
                 let tVLBeforeUpdate = $totalSharesSelector.text()
                 let $rewardsToProcess = $('[data-pool-address="' + value['address'] + '"]').find('.rewards-to-process')
                 let rewardsToProcessBeforeUpdate = $rewardsToProcess.text()
-                await document.delay(5_000)
+                await document.delay(19_500)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
                 let tVLAfterUpdate = $totalSharesSelector.text()
