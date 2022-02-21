@@ -3,20 +3,18 @@
     .nk-banner.pb-5
       .banner.banner-page
         .mt-3.mb-5.w-100
-          .container
-            .row.mb-3
-              .col-12
-                .alert.alert-warning
-                  %h4.title.title-sm.mb-0
-                    %span.fa.fa-exclamation-triangle
-                    Warning
-                  %p
-                    * What goes on the blockchain, stays on the blockchain.
-                    %br
-                    * If storing your wallet keys, once you unlock the locker, please transfer all funds to a different wallet.
+          .container-fluid
             .row
-              .col-12
+              .col-lg-6.mb-3
                 .card
+                  .alert.alert-warning
+                    %h4.title.title-sm.mb-0
+                      %span.fa.fa-exclamation-triangle
+                      Warning
+                    %p
+                      * What goes on the blockchain, stays on the blockchain.
+                      %br
+                      * If storing your wallet keys, once you unlock the locker, please transfer all funds to a different wallet.
                   = render 'features_header', blockchain: :secret_network, feature: :block_locker, show_environment_switch: false
                   .collapse.mt-2#exampleCollapseExample
                     .card.card-default.bg-theme-light
@@ -60,13 +58,11 @@
                   %hr
                   %ul.nav.tab-nav.tab-nav-btn
                     %li
-                      %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Create or update
+                      %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Create / Update
                     %li
-                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Unlock
+                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-3' } View
                     %li
-                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-3' } View (when locked)
-                    %li
-                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-4' } View (when unlocked)
+                      %a{ 'data-toggle' => 'tab', :href => '#tab-2-recover', style: 'background: orange; color: white;' } Recover
                   .tab-content
                     .tab-pane.fade.active.show#tab-2-1
                       %form{ name: 'blockLockerCreateOrUpdateForm' }
@@ -74,28 +70,17 @@
                           %label.field-label Content
                           %textarea.input-bordered.input-textarea.w-100{ name: 'content', autocomplete: 'off', rows: 5 }
                         .field-item
-                          %label.field-label Passphrase
+                          %label.field-label Recovery passphrase
                           %input.input-bordered.w-100{ name: 'passphrase', autocomplete: 'off' }
                         .field-item
-                          %label.field-label Whitelisted address 1
+                          %label.field-label Recovery address 1
                           %input.input-bordered.w-100{ name: 'whitelistedAddress1', autocomplete: 'off' }
                         .field-item
-                          %label.field-label{ for: 'whitelisted-address-2' } Whitelisted address 2
+                          %label.field-label{ for: 'whitelisted-address-2' } Recovery address 2
                           %input.input-bordered.w-100{ name: 'whitelistedAddress2', autocomplete: 'off' }
                         .field-item
-                          %label.field-label{ for: 'whitelisted-address-3' } Whitelisted address 3
+                          %label.field-label{ for: 'whitelisted-address-3' } Recovery address 3
                           %input.input-bordered.w-100{ name: 'whitelistedAddress3', autocomplete: 'off' }
-                        %button.btn.btn-grad.submit-button{ type: 'submit' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            Submit
-                    .tab-pane.fade#tab-2-2
-                      %form{ name: 'blockLockerUnlockForm' }
-                        .field-item
-                          %label.field-label Wallet address
-                          %input.input-bordered.w-100{ name: 'walletAddress', autocomplete: 'off' }
                         %button.btn.btn-grad.submit-button{ type: 'submit' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -112,28 +97,47 @@
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                             %em Loading...
                           .ready
-                            Submit
-                    .tab-pane.fade#tab-2-4
-                      %form{ name: 'blockLockerViewWhenUnlockedForm' }
-                        .field-item
-                          %label.field-label Wallet address
-                          %input.input-bordered.w-100{ name: 'walletAddress', autocomplete: 'off' }
-                        .field-item
-                          %label.field-label{ for: 'passphrase' } Passphrase
-                          %input.input-bordered.w-100{ name: 'passphrase', autocomplete: 'off' }
-                        %button.btn.btn-grad.submit-button{ type: 'submit' }
-                          .d-none.loading
-                            %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                            %em Loading...
-                          .ready
-                            Submit
+                            View
+                    .tab-pane.fade#tab-2-recover
+                      %ul.nav.tab-nav.tab-nav-btn
+                        %li
+                          %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Unlock
+                        %li
+                          %a{ 'data-toggle' => 'tab', :href => '#tab-2-4' } View (when unlocked)
+                      .tab-content
+                        .tab-pane.fade.active.show#tab-2-2
+                          %form{ name: 'blockLockerUnlockForm' }
+                            .field-item
+                              %label.field-label Wallet address
+                              %input.input-bordered.w-100{ name: 'walletAddress', autocomplete: 'off' }
+                            %button.btn.btn-grad.submit-button{ type: 'submit' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready
+                                Unlock
+                        .tab-pane.fade#tab-2-4
+                          %form{ name: 'blockLockerViewWhenUnlockedForm' }
+                            .field-item
+                              %label.field-label Wallet address
+                              %input.input-bordered.w-100{ name: 'walletAddress', autocomplete: 'off' }
+                            .field-item
+                              %label.field-label{ for: 'passphrase' } Passphrase
+                              %input.input-bordered.w-100{ name: 'passphrase', autocomplete: 'off' }
+                            %button.btn.btn-grad.submit-button{ type: 'submit' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready
+                                View
                   %hr
                   %p
                     * Cost to create, update or unlock a locker = 1 BUTT + ~gas(SCRT)
                     %br
                     * You can get BUTT from
                     = link_to 'Button Swap', secret_network_button_swap_path
-                .card.bg-light.my-3.d-none#result-container
+              .col-lg-6
+                .card.bg-light#result-container
                   %h3 Result
                   .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
                     %pre#result-value

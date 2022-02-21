@@ -14,6 +14,7 @@ module SecretNetwork
       @head_description = 'Never lose your blockchain keys. Decentralized, immutable and affordable way to store your blockchain keys on the Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/block_locker/bl2_ep4ctq.png'
       @head_title = 'Block locker | Secret network | btn.group'
+      @navbar_container_fluid = true
     end
 
     def button_swap
