@@ -3,6 +3,7 @@ import BigNumber from "bignumber.js";
 $(document).ready(function(){
   if($("#secret-network-pools").length) {
     window.onload = async () => {
+      this.gasFactor = 5
       let cryptocurrencies = {
         butt: {
           address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
@@ -248,207 +249,207 @@ $(document).ready(function(){
         {
           address: 'secret1ccgl5ys39zprnw2jq8g3eq00jd83temmqversz',
           dataHash: 'BF78E4C9A6E0563072D36DEF3D6C44FB2BD8FED15932A5ECAD4915200D728813',
-          deposit_gas: '112500',
+          deposit_gas: String(112_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9idXR0Y29pbiI6IHt9IH0=',
           deposit_token: cryptocurrencies['butt'],
           earn_token: cryptocurrencies['sefi'],
           reward_token: cryptocurrencies['sefi'],
-          withdraw_gas: '112500',
+          withdraw_gas: String(112_500 * this.gasFactor),
         },
         {
           address: 'secret1725s6smzds6h89djq9yqrtlqfepnxruc3m4fku',
           dataHash: 'A66AD14E31CBC2AB25B3A7B7085F0BC345E65C09649C49EA88CD77A4987AA0A5',
-          deposit_gas: '262500',
+          deposit_gas: String(262_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['butt_swbtc_lp'],
           earn_token: cryptocurrencies['butt'],
           reward_token: cryptocurrencies['butt'],
-          withdraw_gas: '262500',
+          withdraw_gas: String(262_500 * this.gasFactor),
         },
         {
           address: 'secret17gpz09yv0eyw633y459ncqmf4qsye9kwqecnvf',
           dataHash: '3D83E7A7A192A57198049481A74888B340D2B1C4F5A33A6083C3500FA53E05DC',
-          deposit_gas: '400000',
+          deposit_gas: String(400_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi'],
           earn_token: cryptocurrencies['sefi'],
           farm_contract_address: 'secret1knars62aly28xkqxe8xeqtf7ans8hqxgm6a05k',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
           reward_token: cryptocurrencies['sefi'],
-          withdraw_gas: '400000',
+          withdraw_gas: String(400_000 * this.gasFactor),
         },
         {
           address: 'secret1zy4qj454r8pxp7xrrsfyg39mjw37p59pcqxzt6',
           dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
-          deposit_gas: '937500',
+          deposit_gas: String(937_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_satom_lp'],
           earn_token: cryptocurrencies['sefi_satom_lp'],
           farm_contract_address: 'secret1ga4yptznzm6ycrru3d02g6596cs7wgkugv9pmc',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
           reward_token: cryptocurrencies['sefi'],
-          withdraw_gas: '937500',
+          withdraw_gas: String(937_500 * this.gasFactor),
         },
         {
           address: 'secret1e20srxwp706dcntvgaxqrfza7v8km3wj493q87',
           dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
-          deposit_gas: '937500',
+          deposit_gas: String(937_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sluna_lp'],
           earn_token: cryptocurrencies['sefi_sluna_lp'],
           farm_contract_address: 'secret1hzul4anur0lw3mq4t0sg95ew27hjg8x9tz6jes',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
           reward_token: cryptocurrencies['sefi'],
-          withdraw_gas: '937500',
+          withdraw_gas: String(937_500 * this.gasFactor),
         },
         {
           address: 'secret1h382lgl6u3djn62elh3lw25qjk9rnm890ynzww',
           dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
-          deposit_gas: '937500',
+          deposit_gas: String(937_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sosmo_lp'],
           earn_token: cryptocurrencies['sefi_sosmo_lp'],
           farm_contract_address: 'secret170mt93k5fh07vdhdvu585mxv2e7j7me2xtkae9',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
           reward_token: cryptocurrencies['sefi'],
-          withdraw_gas: '937500',
+          withdraw_gas: String(937_500 * this.gasFactor),
         },
         {
           address: 'secret1yuxtccepn3n3z8stqq8cwkz2kvyjcx4nahcs0v',
           dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
-          deposit_gas: '937500',
+          deposit_gas: String(937_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sefi_lp'],
           earn_token: cryptocurrencies['sscrt_sefi_lp'],
           farm_contract_address: 'secret1twjquxp06j9ppyg4v6dr496fnmfcvzpx8weddm',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
           reward_token: cryptocurrencies['sefi'],
-          withdraw_gas: '937500',
+          withdraw_gas: String(937_500 * this.gasFactor),
         },
         {
           address: 'secret1wgqv5ch9njg454ru5pau02ut7mh5wjf2rr3gmj',
           dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
-          deposit_gas: '937500',
+          deposit_gas: String(937_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sxmr_lp'],
           earn_token: cryptocurrencies['sefi_sxmr_lp'],
           farm_contract_address: 'secret1pqvny7lp32z939vtd08jhe66cxl0qp3quxyls5',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '937500',
+          withdraw_gas: String(937_500 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret1xec2u79g8qx7krz48lk3xsmr3crmyvp6tp46jn',
           dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
-          deposit_gas: '937500',
+          deposit_gas: String(937_500 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_susdc_eth_lp'],
           earn_token: cryptocurrencies['sefi_susdc_eth_lp'],
           farm_contract_address: 'secret16ahwz30chht7wg926tfaj07563hkmemad4nnzm',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '937500',
+          withdraw_gas: String(937_500 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret1rtu4dnkknlsuxwunc0ufry8se78vjul4953l5z',
           dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
-          deposit_gas: '1125000',
+          deposit_gas: String(1_125_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_susdt_eth_lp'],
           earn_token: cryptocurrencies['sscrt_susdt_eth_lp'],
           farm_contract_address: 'secret1ny8nvnya5q4zcxpyldvdhts0uvh26heny8ynuj',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '1125000',
+          withdraw_gas: String(1_125_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret199pnc4xusvazp73ns95mylqeq9m4xcr8k4fzku',
           dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
-          deposit_gas: '1125000',
+          deposit_gas: String(1_125_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_seth_eth_lp'],
           earn_token: cryptocurrencies['sscrt_seth_eth_lp'],
           farm_contract_address: 'secret17r72nj7yhc0fnm3ay8j8tluqqd2twj60lvwr3w',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '1125000',
+          withdraw_gas: String(1_125_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v',
-          deposit_gas: '1125000',
+          deposit_gas: String(1_125_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
           earn_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
           farm_contract_address: 'secret1enpte7ll3r4zrs70najmf7g83hdzy33wmdx7nk',
-          withdraw_gas: '1125000',
+          withdraw_gas: String(1_125_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret18ys9t245ejrx06zmfj6mkvnrd8wrupdanfvnxp',
           dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
-          deposit_gas: '1125000',
+          deposit_gas: String(1_125_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
           earn_token: cryptocurrencies['sscrt_sbnb_bsc_lp'],
           farm_contract_address: 'secret16pqkssv08hjfmamrcz9gruhxxsuvc25n4gq0s2',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '1125000',
+          withdraw_gas: String(1_125_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c',
-          deposit_gas: '1125000',
+          deposit_gas: String(1_125_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
           earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
           farm_contract_address: 'secret1geklww0t0kwehc2w9llwce2wkg40pp4ljfpa8m',
-          withdraw_gas: '1125000',
+          withdraw_gas: String(1_125_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret1k38fm5942tnyl7jqct0nxkluldl84gldhravql',
           dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
-          deposit_gas: '1125000',
+          deposit_gas: String(1_125_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
           earn_token: cryptocurrencies['susdc_eth_susdc_bsc_lp'],
           farm_contract_address: 'secret1rcvjaua8dfhjlh0kwhrsj54l4aj46mu5evgqwq',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '1125000',
+          withdraw_gas: String(1_125_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm',
-          deposit_gas: '1050000',
+          deposit_gas: String(1_050_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['seth_eth_swbtc_lp'],
           earn_token: cryptocurrencies['seth_eth_swbtc_lp'],
           farm_contract_address: 'secret1zsnjdcjwpyamc98lyvd5v8u9rw0949px6r5agg',
-          withdraw_gas: '1050000',
+          withdraw_gas: String(1_050_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret19fj9cvqnzpf7fjczc4e8sgrc62jfv9ay5a7j82',
           dataHash: '7F2CD7ED1969D142BDCAC1F2AAEB9D1E5C0B11768C79B1C1DB8CB9557DB97D34',
-          deposit_gas: '1050000',
+          deposit_gas: String(1_050_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['seth_bsc_seth_eth_lp'],
           earn_token: cryptocurrencies['seth_bsc_seth_eth_lp'],
           farm_contract_address: 'secret1s3gg4l6u2vpewqp2lpupqwr52ktdak00rq05ms',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '1050000',
+          withdraw_gas: String(1_050_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         },
         {
           address: 'secret1gvhhhpqreh36kq6ds7h365tf2jr38dxenkg4rs',
           dataHash: 'A454B82B242B48CA88342ED6BA61439B12D2B1FD8A8FDB0233D6077D3BCECF87',
-          deposit_gas: '1050000',
+          deposit_gas: String(1_050_000 * this.gasFactor),
           deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
           deposit_token: cryptocurrencies['sefi_sdvpn_lp'],
           earn_token: cryptocurrencies['sefi_sdvpn_lp'],
           farm_contract_address: 'secret1zyd8tdq5wxe7jmmhw99uwh3qwwhx5cphu85lya',
           farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
-          withdraw_gas: '1050000',
+          withdraw_gas: String(1_050_000 * this.gasFactor),
           reward_token: cryptocurrencies['sefi'],
         }
       ]
@@ -503,7 +504,7 @@ $(document).ready(function(){
                 amount = document.formatHumanizedNumberForSmartContract(amount, value['deposit_token']['decimals'])
                 let handleMsg = { send: { amount: amount, recipient: value['address'], msg: value['deposit_msg'] } }
                 let response = await this.client.execute(value['deposit_token']['address'], handleMsg, '', [], gasParams.exec, value['deposit_token']['dataHash'])
-                await document.delay(19_500)
+                await document.delay(32_500)
                 document.showAlertSuccess("Deposit successful");
                 document[depositFormName].amount.value = ''
                 this.updatePoolInterface(value, true)
@@ -518,7 +519,7 @@ $(document).ready(function(){
                 let tVLBeforeUpdate = $totalSharesSelector.text()
                 let $rewardsToProcess = $('[data-pool-address="' + value['address'] + '"]').find('.rewards-to-process')
                 let rewardsToProcessBeforeUpdate = $rewardsToProcess.text()
-                await document.delay(19_500)
+                await document.delay(32_500)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
                 let tVLAfterUpdate = $totalSharesSelector.text()
@@ -574,7 +575,7 @@ $(document).ready(function(){
                 }
                 this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
                 let response = await this.client.execute(value['address'], handleMsg, '', [], gasParams.exec, value['dataHash'])
-                await document.delay(19_500)
+                await document.delay(32_500)
                 document.showAlertSuccess("Withdraw successful");
                 document[withdrawFormName].amount.value = ''
                 this.updatePoolInterface(value, true)
@@ -591,7 +592,7 @@ $(document).ready(function(){
                 let tVLBeforeUpdate = $totalSharesSelector.text()
                 let $rewardsToProcess = $('[data-pool-address="' + value['address'] + '"]').find('.rewards-to-process')
                 let rewardsToProcessBeforeUpdate = $rewardsToProcess.text()
-                await document.delay(19_500)
+                await document.delay(32_500)
                 await this.updateRewards(value)
                 await this.updateTotalShares(value)
                 let tVLAfterUpdate = $totalSharesSelector.text()
