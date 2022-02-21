@@ -37,7 +37,7 @@ class SwapPath < ApplicationRecord
       g += 185_000 if protocol_identifier == 'secret_swap'
       g -= 30_000 if index >= 1
     end
-    g
+    g * 3
   end
 
   def gas_in_usd
