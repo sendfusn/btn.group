@@ -780,7 +780,7 @@ $(document).ready(function(){
               }
               successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
             }
-            await document.delay(32_500)
+            await document.delay(6_500 * document.secretNetwork.gasAndDelayFactor)
             this.resetAfterSwap()
             // Update vip levels if swap involves BUTT
             if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
@@ -793,7 +793,7 @@ $(document).ready(function(){
           // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
           if (error.message.includes('timed out waiting for tx to be included in a block')) {
             // Wait 6.5 seconds and if balance of the to and from token has changed... Success
-            await document.delay(32_500)
+            await document.delay(6_500 * document.secretNetwork.gasAndDelayFactor)
             await this.updateWalletBalance(fromId, '.from', this.fromAmountInputSelector)
             await this.updateWalletBalance(toId, '.to')
             if (this.cryptocurrencies[fromId]['balance'] != fromBalance && this.cryptocurrencies[toId]['balance'] != toBalance) {
