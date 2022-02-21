@@ -43,13 +43,16 @@ $(document).ready(function(){
             if (document.blockLockerCreateOrUpdateForm.whitelistedAddress1.value.length > 0 || document.blockLockerCreateOrUpdateForm.whitelistedAddress2.value.length > 0 || document.blockLockerCreateOrUpdateForm.whitelistedAddress3.value.length > 0) {
               whitelistedAddresses = []
               if (document.blockLockerCreateOrUpdateForm.whitelistedAddress1.value.length) {
-                whitelistedAddresses.push(document.blockLockerCreateOrUpdateForm.whitelistedAddress1.value)
+                whitelistedAddresses.push(document.blockLockerCreateOrUpdateForm.whitelistedAddress1.value.toLowerCase())
               }
               if (document.blockLockerCreateOrUpdateForm.whitelistedAddress2.value.length) {
-                whitelistedAddresses.push(document.blockLockerCreateOrUpdateForm.whitelistedAddress2.value)
+                whitelistedAddresses.push(document.blockLockerCreateOrUpdateForm.whitelistedAddress2.value.toLowerCase())
               }
               if (document.blockLockerCreateOrUpdateForm.whitelistedAddress3.value.length) {
-                whitelistedAddresses.push(document.blockLockerCreateOrUpdateForm.whitelistedAddress3.value)
+                whitelistedAddresses.push(document.blockLockerCreateOrUpdateForm.whitelistedAddress3.value.toLowerCase())
+              }
+              if (whitelistedAddresses.includes(document.secretNetwork.walletAddress.toLowerCase())) {
+                throw('Recovery address must be different to wallet address.')
               }
             }
             handleMsg = { send: { amount: "1000000", recipient: this.blockLockerContractAddress, msg: Buffer.from(JSON.stringify({ create_or_update_locker: { content: content, passphrase: passphrase, whitelisted_addresses: whitelistedAddresses } })).toString('base64') } };

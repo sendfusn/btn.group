@@ -3,18 +3,20 @@
     .nk-banner.pb-5
       .banner.banner-page
         .mt-3.mb-5.w-100
-          .container-fluid
+          .container
+            .row.mb-3
+              .col-12
+                .alert.alert-warning
+                  %h4.title.title-sm.mb-0
+                    %span.fa.fa-exclamation-triangle
+                    Warning
+                  %p
+                    * What goes on the blockchain, stays on the blockchain.
+                    %br
+                    * If storing your wallet keys, once you unlock the locker, please transfer all funds to a different wallet.
             .row
-              .col-lg-6.mb-3
+              .col-12
                 .card
-                  .alert.alert-warning
-                    %h4.title.title-sm.mb-0
-                      %span.fa.fa-exclamation-triangle
-                      Warning
-                    %p
-                      * What goes on the blockchain, stays on the blockchain.
-                      %br
-                      * If storing your wallet keys, once you unlock the locker, please transfer all funds to a different wallet.
                   = render 'features_header', blockchain: :secret_network, feature: :block_locker, show_environment_switch: false
                   .collapse.mt-2#exampleCollapseExample
                     .card.card-default.bg-theme-light
@@ -68,19 +70,19 @@
                       %form{ name: 'blockLockerCreateOrUpdateForm' }
                         .field-item
                           %label.field-label Content
-                          %textarea.input-bordered.input-textarea.w-100{ name: 'content', autocomplete: 'off', rows: 5 }
+                          %textarea.input-bordered.input-textarea.w-100{ name: 'content', autocomplete: 'off', rows: 5, required: true }
                         .field-item
                           %label.field-label Recovery passphrase
-                          %input.input-bordered.w-100{ name: 'passphrase', autocomplete: 'off' }
+                          %input.input-bordered.w-100{ name: 'passphrase', autocomplete: 'off', required: true }
                         .field-item
                           %label.field-label Recovery address 1
-                          %input.input-bordered.w-100{ name: 'whitelistedAddress1', autocomplete: 'off' }
+                          %input.input-bordered.w-100.text-lowercase{ name: 'whitelistedAddress1', autocomplete: 'off', required: true }
                         .field-item
                           %label.field-label{ for: 'whitelisted-address-2' } Recovery address 2
-                          %input.input-bordered.w-100{ name: 'whitelistedAddress2', autocomplete: 'off' }
+                          %input.input-bordered.w-100.text-lowercase{ name: 'whitelistedAddress2', autocomplete: 'off' }
                         .field-item
                           %label.field-label{ for: 'whitelisted-address-3' } Recovery address 3
-                          %input.input-bordered.w-100{ name: 'whitelistedAddress3', autocomplete: 'off' }
+                          %input.input-bordered.w-100.text-lowercase{ name: 'whitelistedAddress3', autocomplete: 'off' }
                         %button.btn.btn-grad.submit-button{ type: 'submit' }
                           .d-none.loading
                             %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
@@ -136,8 +138,7 @@
                     %br
                     * You can get BUTT from
                     = link_to 'Button Swap', secret_network_button_swap_path
-              .col-lg-6
-                .card.bg-light#result-container
+                .card.bg-light.my-3.d-none#result-container
                   %h3 Result
                   .card-body.bg-white{ style: 'border: 1px solid lightblue;' }
                     %pre#result-value
