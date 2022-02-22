@@ -13,7 +13,7 @@ $(document).ready(function(){
       this.toId = 351;
       this.tradePairs = {}
       this.client = document.secretNetwork.client();
-      this.gasWrap = 60_000;
+      this.gasWrap = 60_000 * document.secretNetwork.gasAndDelayFactor;
       this.queryCount = 0;
       this.tokenModalFor;
       this.vipLevels = {
