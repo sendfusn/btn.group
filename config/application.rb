@@ -22,6 +22,7 @@ module PayMeCrypto
       if initialized_server? && !Rails.env.test?
         Rails.application.load_seed
         CryptoPricesJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless CryptoPricesJob.scheduled?
+        SecretNetworkCalculateAverageBlockTimeJob.perform_later unless SecretNetworkCalculateAverageBlockTimeJob.scheduled?
         SecretNetworkGetSmartContractsJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless SecretNetworkGetSmartContractsJob.scheduled?
         SecretFinanceStakingPoolsJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless SecretFinanceStakingPoolsJob.scheduled?
         SecretSwapGetPairsJob.set(wait_until: Time.zone.now + rand(1..300).minutes).perform_later unless SecretSwapGetPairsJob.scheduled?
