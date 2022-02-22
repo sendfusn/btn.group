@@ -3,6 +3,8 @@ $(document).ready(function(){
     window.onload = async() => {
       this.addressAliasContractAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w'
       this.addressAliasContractDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
+      this.gasCreate = String(100_000 * document.secretNetwork.gasAndDelayFactor)
+      this.gasDelete = String(50_000 * document.secretNetwork.gasAndDelayFactor)
 
       document.aliasDeleteForm.onsubmit = async (e) => {
         e.preventDefault()
@@ -15,8 +17,8 @@ $(document).ready(function(){
             let alias = $("#delete-button").data('alias');
             let gasParams = {
               exec: {
-                amount: [{ amount: '50000', denom: 'uscrt' }],
-                gas: '50000',
+                amount: [{ amount: this.gasDelete, denom: 'uscrt' }],
+                gas: this.gasDelete,
               },
             }
             let handleMsg = { destroy: { alias: alias } }
@@ -50,8 +52,8 @@ $(document).ready(function(){
             let avatarUrl = document.aliasCreateForm.avatarUrl.value;
             let gasParams = {
               exec: {
-                amount: [{ amount: '100000', denom: 'uscrt' }],
-                gas: '100000',
+                amount: [{ amount: this.gasCreate, denom: 'uscrt' }],
+                gas: this.gasCreate,
               },
             }
             let handleMsg = { send: { amount: '1000000', recipient: this.addressAliasContractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
