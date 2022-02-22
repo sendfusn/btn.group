@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_19_062923) do
+ActiveRecord::Schema.define(version: 2022_02_21_235559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 2022_02_19_062923) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "identifier", default: 0, null: false
+    t.decimal "base_block_time", precision: 6, scale: 2
+    t.decimal "latest_block_time", precision: 6, scale: 2
     t.index ["identifier"], name: "index_blockchains_on_identifier", unique: true
   end
 
