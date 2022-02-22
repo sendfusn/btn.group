@@ -4,7 +4,7 @@ document.secretNetwork = {
     dataHash: 'F8B27343FF08290827560A1BA358EECE600C9EA7F403B02684AD87AE7AF0F288'
   },
   environment: 'production',
-  gasAndDelayFactor: 8,
+  gasAndDelayFactor: 1,
   gettingBlockHeight: false,
   height: 0,
   keplrConnectedTriggered: false,
