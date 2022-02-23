@@ -23,7 +23,7 @@ class CryptoPricesJob < ApplicationJob
     end
     shd = Cryptocurrency.find_by(symbol: 'SHD', official: true)
     sscrt = Cryptocurrency.find_by(symbol: 'SSCRT', official: true)
-    shd_per_sscrt = shd.amount_with_decimals(Pool.find(864).simulate_swap(1_000_000, sscrt.id)[:return_amount])
-    shd.update(price: shd_per_sscrt * sscrt.price) if shd.price.nil?
+    sscrt_per_shd = sscrt.amount_with_decimals(Pool.find(865).simulate_swap(100_000_000, shd.id)[:return_amount])
+    shd.update(price: sscrt_per_shd * sscrt.price) if shd.price.nil?
   end
 end
