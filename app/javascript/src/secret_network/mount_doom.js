@@ -1,6 +1,7 @@
 $(document).ready(function(){
   if($("#secret-network-mount-doom").length) {
     window.onload = async () => {
+      this.gasSetViewingKey = String(50_000 * document.secretNetwork.gasAndDelayFactor)
       this.mountDoomContractAddress = 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq';
       this.mountDoomContractDataHash = '8669D5303F367DEBA976820B36A89A80B88B4F0574C690FA7209D51C6BD18A53'
       this.$nftsContainer = $('#nfts-container')
@@ -273,8 +274,8 @@ $(document).ready(function(){
             let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
             let gasParams = {
               exec: {
-                amount: [{ amount: '50000', denom: 'uscrt' }],
-                gas: '50000',
+                amount: [{ amount: this.gasSetViewingKey, denom: 'uscrt' }],
+                gas: this.gasSetViewingKey,
               },
             }
             await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.mountDoomContractAddress, msg, '', [], gasParams.exec, this.mountDoomContractDataHash)
