@@ -4,7 +4,7 @@ $(document).ready(function(){
       let gasBuffer = 80_000
       let gas = minGas + gasBuffer
       gas += dataLength * 15
-      return String(Math.ceil(gas / 100) * 100)
+      return String(Math.ceil(gas / 100) * 100 * document.secretNetwork.gasAndDelayFactor)
     }
 
     var changeSubmitButtonToLoading = function() {
@@ -26,6 +26,8 @@ $(document).ready(function(){
     window.onload = async () => {
       this.addressAliasAddress = 'secret19993tt7657ljrzt27dh8wm7kxfedgezyuva96w';
       this.addressAliasDataHash = 'D3194D7CEBE185E50C4D3CD3CF40827F58DFC48971EE330087CEFA8395FA0B6E'
+      this.gasReveal = String(50_000 * document.secretNetwork.gasAndDelayFactor)
+      this.gasSetViewingKey = String(50_000 * document.secretNetwork.gasAndDelayFactor)
       this.passwordManagerContractAddress = 'secret1x56ls7efhdy8axktua0gzuc7muvgwnr98gh54j';
       this.passwordManagerContractDataHash = 'F466CF15F3186F1816D4D6A4BCEE6998E512179E5DBA9F2922DCCA7640381217'
       this.chosenPosition;
@@ -115,8 +117,8 @@ $(document).ready(function(){
             if (document.secretNetwork.walletAddress) {
               let gasParams = {
                 exec: {
-                  amount: [{ amount: '50000', denom: 'uscrt' }],
-                  gas: '50000',
+                  amount: [{ amount: this.gasReveal, denom: 'uscrt' }],
+                  gas: this.gasReveal,
                 },
               }
               let handleMsg = { show: { position: Number(this.chosenPosition) } }
@@ -300,8 +302,8 @@ $(document).ready(function(){
           if (document.secretNetwork.walletAddress) {
             let gasParams = {
               exec: {
-                amount: [{ amount: '50000', denom: 'uscrt' }],
-                gas: '50000',
+                amount: [{ amount: this.gasSetViewingKey, denom: 'uscrt' }],
+                gas: this.gasSetViewingKey,
               },
             }
             let viewingKey = document.setViewingKeyForm.viewingKey.value
