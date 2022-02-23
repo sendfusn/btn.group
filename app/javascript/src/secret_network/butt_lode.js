@@ -8,6 +8,8 @@ $(document).ready(function(){
       this.buttLodeDataHash = '99F94EDC0D744B35A8FBCBDC8FB71C140CFA8F3F91FAD8C35B7CC37862A4AC95';
       this.receivableAddress;
 
+      this.gasSend = String(75_000 * document.secretNetwork.gasAndDelayFactor)
+
       try {
         let result = await document.secretNetwork.client().queryContractSmart(this.buttLodeAddress, { config: {} }, undefined, this.buttLodeDataHash)
         this.admin = result['admin']
@@ -50,8 +52,8 @@ $(document).ready(function(){
           if (document.secretNetwork.walletAddress) {
             let gasParams = {
               exec: {
-                amount: [{ amount: '75000', denom: 'uscrt' }],
-                gas: '75000',
+                amount: [{ amount: this.gasSend, denom: 'uscrt' }],
+                gas: this.gasSend,
               },
             }
             let amount = document['buttLodeSendForm'].amount.value;
