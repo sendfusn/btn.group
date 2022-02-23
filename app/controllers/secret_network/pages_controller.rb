@@ -3,6 +3,8 @@
 module SecretNetwork
   class PagesController < ApplicationController
     before_action :authenticate_admin_user!, only: %i[trade_pairs]
+    before_action :set_cryptocurrencies, only: %i[button_swap mount_doom transactions]
+    before_action :set_nfts, only: %i[mount_doom transactions]
 
     def address_alias
       @head_description = 'Create an alias for your Secret Network wallet address.'
@@ -17,15 +19,6 @@ module SecretNetwork
     end
 
     def button_swap
-      cryptocurrency_ids = Pool.trade_pair
-                               .enabled
-                               .joins(:smart_contract)
-                               .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
-                               .joins(:cryptocurrency_pools)
-                               .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
-                               .pluck(:cryptocurrency_id)
-                               .uniq
-      @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids, registered_with_dex_aggregator: true).where.not(coin_gecko_id: nil).where.not(symbol: %w[ATOM DVPN LUNA OSMO UST]).order(:symbol)
       @head_description = 'DeFi / DEX aggregator offering the best token swap rates on the Secret network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/dex_aggregator/dex_mhead_rs_xxqpdz.png'
       @head_title = 'Button Swap | Secret network | btn.group'
@@ -34,16 +27,6 @@ module SecretNetwork
     def butt_lode; end
 
     def mount_doom
-      cryptocurrency_ids = Pool.trade_pair
-                               .enabled
-                               .joins(:smart_contract)
-                               .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
-                               .joins(:cryptocurrency_pools)
-                               .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
-                               .pluck(:cryptocurrency_id)
-                               .uniq
-      @fungible_tokens = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).where.not(symbol: %w[ATOM DVPN LUNA OSMO SCRT UST]).order(:symbol)
-      @nfts = Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(name)')
       @navbar_container_fluid = true
       @head_description = 'Burn contract for Secret network tokens.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/mount_doom/mt_doom_biwkdj.png'
@@ -82,16 +65,6 @@ module SecretNetwork
     end
 
     def transactions
-      cryptocurrency_ids = Pool.trade_pair
-                               .enabled
-                               .joins(:smart_contract)
-                               .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
-                               .joins(:cryptocurrency_pools)
-                               .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
-                               .pluck(:cryptocurrency_id)
-                               .uniq
-      @fungible_tokens = Cryptocurrency.where(id: cryptocurrency_ids).where.not(coin_gecko_id: nil).where.not(symbol: %w[ATOM DVPN LUNA OSMO SCRT UST]).order(:symbol)
-      @nfts = Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(name)')
       @navbar_container_fluid = true
       @head_description = 'Transactions viewer for Secret network tokens.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/transactions/transaction_rough_j8coyp.png'
@@ -113,5 +86,24 @@ module SecretNetwork
     def head_title
       @head_title || 'btn.group'
     end
+
+    private
+
+      def set_cryptocurrencies
+        cryptocurrency_ids = Pool.trade_pair
+                                 .enabled
+                                 .joins(:smart_contract)
+                                 .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
+                                 .joins(:cryptocurrency_pools)
+                                 .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
+                                 .pluck(:cryptocurrency_id)
+                                 .uniq
+        @cryptocurrencies = Cryptocurrency.where(id: cryptocurrency_ids, registered_with_dex_aggregator: true).order(:symbol)
+        @fungible_tokens = @cryptocurrencies
+      end
+
+      def set_nfts
+        @nfts = Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(name)')
+      end
   end
 end
