@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rest-client'
+
 class CryptoPricesJob < ApplicationJob
   after_perform do |_job|
     run_time = Time.zone.now + 1.minute
@@ -18,7 +20,7 @@ class CryptoPricesJob < ApplicationJob
     response_as_json = JSON.parse(response.body)
     response_as_json.each do |coin_gecko_id, price|
       Cryptocurrency.where(coin_gecko_id: coin_gecko_id).find_each do |c|
-        c.update!(price: price['usd'])
+        c.update!(price: price['usd']) if price['usd'].present?
       end
     end
     shd = Cryptocurrency.find_by(symbol: 'SHD', official: true)
