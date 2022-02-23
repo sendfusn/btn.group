@@ -49,7 +49,7 @@ module SecretNetwork
                        .pools
                        .enabled
                        .includes(:smart_contract)
-                       .where(smart_contract: { blockchain: Blockchain.find_by(identifier: :secret_network) })
+                       .where(smart_contract: { blockchain: blockchain })
                        .order(:created_at)
     end
 
@@ -87,13 +87,17 @@ module SecretNetwork
       @head_title || 'btn.group'
     end
 
+    def blockchain
+      @blockchain ||= Blockchain.secret_network.first
+    end
+
     private
 
       def set_cryptocurrencies
         cryptocurrency_ids = Pool.trade_pair
                                  .enabled
                                  .joins(:smart_contract)
-                                 .where(smart_contract: { blockchain_id: Blockchain.find_by(identifier: :secret_network) })
+                                 .where(smart_contract: { blockchain_id: blockchain })
                                  .joins(:cryptocurrency_pools)
                                  .where(cryptocurrency_pools: { cryptocurrency_role: :deposit })
                                  .pluck(:cryptocurrency_id)
@@ -103,7 +107,7 @@ module SecretNetwork
       end
 
       def set_nfts
-        @nfts = Cryptocurrency.where(nft: true, blockchain: Blockchain.find_by(identifier: 'secret_network')).joins(:smart_contract).order('LOWER(name)')
+        @nfts = Cryptocurrency.where(nft: true, blockchain: blockchain).joins(:smart_contract).order('LOWER(name)')
       end
   end
 end

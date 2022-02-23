@@ -37,7 +37,7 @@ class SwapPath < ApplicationRecord
       g += 185_000 if protocol_identifier == 'secret_swap'
       g -= 30_000 if index >= 1
     end
-    g * (Blockchain.secret_network.first.latest_block_time / Blockchain.secret_network.first.base_block_time).ceil
+    g * Blockchain.secret_network.first.gas_and_delay_factor
   end
 
   def gas_in_usd

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  helper_method :features, :head_description, :head_image, :head_link, :head_title, :logo_cloudinary_public_id
+  helper_method :blockchain, :features, :head_description, :head_image, :head_link, :head_title, :logo_cloudinary_public_id
 
   # === CALLBACKS ===
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -141,6 +141,8 @@ class ApplicationController < ActionController::Base
   def logo_cloudinary_public_id
     'logos/button.group_logo_ecemui'
   end
+
+  def blockchain; end
 
   protected
 
