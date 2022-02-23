@@ -33,8 +33,8 @@ class SwapPath < ApplicationRecord
     g = 100_000
     pools.order(:position).each_with_index do |pool, index|
       protocol_identifier = pool.protocol.identifier
-      g += 185_000 if protocol_identifier == 'sienna'
-      g += 185_000 if protocol_identifier == 'secret_swap'
+      g += 150_000 if protocol_identifier == 'sienna'
+      g += 150_000 if protocol_identifier == 'secret_swap'
       g -= 30_000 if index >= 1
     end
     g * Blockchain.secret_network.first.gas_and_delay_factor
