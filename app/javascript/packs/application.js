@@ -177,6 +177,14 @@ document.prettyPrintJSON = function(json) {
   });
 };
 
+document.refreshBlockchainStats = function(id, delay) {
+  setTimeout(function(){
+    $.ajax({
+      url: '/blockchains/' + id + '/stats'
+    });
+  }, delay);
+}
+
 document.showAlertInfo = function(text) {
   toastr.options.closeButton = true;
   toastr.options.closeDuration = 0;

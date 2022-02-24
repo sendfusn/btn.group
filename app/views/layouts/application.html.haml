@@ -29,10 +29,12 @@
     %script{ src: 'https://widget.cloudinary.com/v2.0/global/all.js', type: 'text/javascript' }
     -# === LIST.JS ===
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js', type: 'text/javascript' }
-  %body.h-100.nk-body.body-wider.theme-dark.mode-onepage{ 'data-secret-network-gas-and-delay-factor': (Blockchain.secret_network.first.latest_block_time / Blockchain.first.base_block_time).ceil }
+  %body.h-100.nk-body.body-wider.theme-dark.mode-onepage
     .nk-wrap.h-100
       = render 'header'
       = yield
+      %footer.fixed-bottom
+        = render 'blockchains/stats'
       - if @show_footer
         %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4
           %section.section.section-m.tc-light.tc-light-alt.bg-transparent
@@ -74,5 +76,3 @@
                   .copyright-text.copyright-text-s1.text-center.text-sm-left.text-lg-center
                     %p
                       © btn.group, 2021
-:javascript
-  document.secretNetwork.gasAndDelayFactor = Number($("[data-secret-network-gas-and-delay-factor]").first().attr('data-secret-network-gas-and-delay-factor'))

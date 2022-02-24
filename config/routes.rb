@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  resources :blockchains, only: :show, defaults: { format: 'json' } do
+    get :stats, on: :member, defaults: { format: 'js' }
+  end
   resources :cryptocurrencies, only: :index, defaults: { format: 'json' }
   resources :cryptocurrency_pools, only: :update, defaults: { format: 'json' }
   resources :pools, only: :index, defaults: { format: 'json' }

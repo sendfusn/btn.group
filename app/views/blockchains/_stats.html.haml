@@ -1,0 +1,17 @@
+#blockchain-stats
+  - if blockchain&.gas_and_delay_factor
+    .bg-white
+      .text-center
+        %h6
+          %span.mr-3
+            Latest block time:
+            %span#latest-block-time= blockchain.latest_block_time.seconds
+            secs
+          %span
+            %i.fa.fa-gas-pump
+            Gas fee x
+            %span#blockchain-gas-and-delay-factor= blockchain.gas_and_delay_factor
+    - if blockchain.identifier == 'secret_network'
+      :javascript
+        document.secretNetwork.gasAndDelayFactor = Number($('#blockchain-gas-and-delay-factor').text())
+        document.refreshBlockchainStats(1, 30_000)
