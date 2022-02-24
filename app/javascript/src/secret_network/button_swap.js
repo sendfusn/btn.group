@@ -152,7 +152,7 @@ $(document).ready(function(){
 
       // === Functions ===
       this.gasWrap = function() {
-        return 60_000 * document.secretNetwork.gasAndDelayFactor;
+        return 40_000 * document.secretNetwork.gasAndDelayFactor;
       } 
 
       this.updateAfterTokenSelect = async(event) => {
