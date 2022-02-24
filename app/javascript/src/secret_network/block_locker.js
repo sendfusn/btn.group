@@ -3,9 +3,6 @@ $(document).ready(function(){
     window.onload = async () => {
       this.blockLockerContractAddress = 'secret1dww8fs5xlj6es5vwyp7ccgm4xclkmhxajxfaqa';
       this.blockLockerContractDataHash = '9EF097E81EAB5AEC8594F8860AE47ED859FB6363C836F63BF02F01BE58343D36'
-      this.gasCreateOrUpdate = String(200_000 * document.secretNetwork.gasAndDelayFactor)
-      this.gasUnlock = String(100_000 * document.secretNetwork.gasAndDelayFactor)
-      this.gasViewWhenLocked = String(37_500 * document.secretNetwork.gasAndDelayFactor)
 
       // === LISTENERS ===
       $(document).on('keplr_connected', async(evt) => {
@@ -13,6 +10,16 @@ $(document).ready(function(){
       })
 
       // === FUNCTIONS ===
+      this.gasCreateOrUpdate = function(){
+        return String(200_000 * document.secretNetwork.gasAndDelayFactor)
+      }
+      this.gasUnlock = function() {
+        return String(100_000 * document.secretNetwork.gasAndDelayFactor)
+      }
+      this.gasViewWhenLocked = function() {
+        return String(37_500 * document.secretNetwork.gasAndDelayFactor)
+      }
+
       this.disableForm = function() {
         $(".submit-button").prop("disabled", true);
         $("#result-container").addClass("d-none");
@@ -62,8 +69,8 @@ $(document).ready(function(){
             handleMsg = { send: { amount: "1000000", recipient: this.blockLockerContractAddress, msg: Buffer.from(JSON.stringify({ create_or_update_locker: { content: content, passphrase: passphrase, whitelisted_addresses: whitelistedAddresses } })).toString('base64') } };
             let gasParams = {
               exec: {
-                amount: [{ amount: this.gasCreateOrUpdate, denom: 'uscrt' }],
-                gas: this.gasCreateOrUpdate,
+                amount: [{ amount: this.gasCreateOrUpdate(), denom: 'uscrt' }],
+                gas: this.gasCreateOrUpdate(),
               },
             }
             resultText = "Locker updated."
@@ -92,8 +99,8 @@ $(document).ready(function(){
             handleMsg = { send: { amount: "1000000", recipient: this.blockLockerContractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerUnlockForm.walletAddress.value } })).toString('base64') } };
             let gasParams = {
                 exec: {
-                  amount: [{ amount: this.gasUnlock, denom: 'uscrt' }],
-                  gas: this.gasUnlock,
+                  amount: [{ amount: this.gasUnlock(), denom: 'uscrt' }],
+                  gas: this.gasUnlock(),
                 },
               }
             resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
@@ -122,8 +129,8 @@ $(document).ready(function(){
             handleMsg = { get_user_locker: {} };
             let gasParams = {
                 exec: {
-                  amount: [{ amount: this.gasViewWhenLocked, denom: 'uscrt' }],
-                  gas: this.gasViewWhenLocked,
+                  amount: [{ amount: this.gasViewWhenLocked(), denom: 'uscrt' }],
+                  gas: this.gasViewWhenLocked(),
                 },
               }
             result = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.blockLockerContractAddress, handleMsg, '', [], gasParams.exec, this.blockLockerContractDataHash)
