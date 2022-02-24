@@ -17,6 +17,14 @@ class Blockchain < ApplicationRecord
     return unless latest_block_time
     return unless base_block_time
 
-    (latest_block_time / base_block_time).ceil
+    factor = latest_block_time / base_block_time
+    return 1 if factor <= 1
+    return factor if (factor % 1).zero?
+
+    if factor % 1 > 0.5
+      factor.ceil
+    else
+      factor.floor + 0.5
+    end
   end
 end
