@@ -13,7 +13,6 @@ $(document).ready(function(){
       this.toId = 351;
       this.tradePairs = {}
       this.client = document.secretNetwork.client();
-      this.gasWrap = 60_000 * document.secretNetwork.gasAndDelayFactor;
       this.queryCount = 0;
       this.tokenModalFor;
       this.vipLevels = {
@@ -152,6 +151,10 @@ $(document).ready(function(){
       }.bind(this))
 
       // === Functions ===
+      this.gasWrap = function() {
+        return 60_000 * document.secretNetwork.gasAndDelayFactor;
+      } 
+
       this.updateAfterTokenSelect = async(event) => {
         $('.modal').modal('hide');
         $('#input-text-2').val('');
@@ -699,8 +702,8 @@ $(document).ready(function(){
               }
               let gasParams = {
                 exec: {
-                  amount: [{ amount: String(this.gasWrap), denom: 'uscrt' }],
-                  gas: String(this.gasWrap),
+                  amount: [{ amount: String(this.gasWrap()), denom: 'uscrt' }],
+                  gas: String(this.gasWrap()),
                 },
               }
               this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
@@ -716,7 +719,7 @@ $(document).ready(function(){
               if(fromCryptocurrency['smart_contract'] == undefined) {
                 let wrapToSmartContract = this.cryptocurrencies[this.wrapPaths[currentFromId]]['smart_contract']
                 initNativeFromToken = {native: {address: wrapToSmartContract['address'], contract_hash: wrapToSmartContract['data_hash']}}
-                gas += this.gasWrap
+                gas += this.gasWrap()
               }
               gas += this.selectedSwapPath['gas']
               this.selectedSwapPath['swap_path_as_array'].forEach((tradePairId) => {
@@ -738,7 +741,7 @@ $(document).ready(function(){
                 let unwrapBySmartContract = this.cryptocurrencies[currentFromId]['smart_contract']
                 hop['redeem_denom'] = toCryptocurrency['denom']
                 hop['smart_contract'] = {address: unwrapBySmartContract['address'], contract_hash: unwrapBySmartContract['data_hash']}
-                gas += this.gasWrap
+                gas += this.gasWrap()
               }
               hops.push(hop)
               let recipient;
