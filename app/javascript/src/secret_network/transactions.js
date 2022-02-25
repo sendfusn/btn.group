@@ -46,10 +46,17 @@ $(document).ready(function(){
       })
       $(document).on('keplr_connected', async(evt) => {
         $('.load-wallet-link').removeClass('d-none')
+      })
+      $(document).on('keplr_dismissed', async(evt) => {
+        $('#loading-vip').addClass('d-none')
+        $('#pay-wall').removeClass('d-none')
+      })
+      $(document).on('vip_level_updated', async(evt) => {
+        $('#loading-vip').addClass('d-none')
         if (document.secretNetwork.userVipLevel == 0) {
           $('#pay-wall').removeClass('d-none')
         } else {
-          $('#pay-wall').addClass('d-none')
+          $('.alert').addClass('d-none')
         }
       })
 

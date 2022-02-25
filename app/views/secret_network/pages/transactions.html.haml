@@ -88,11 +88,16 @@
                   %br
                   2.
                   = link_to 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
-            .card.mb-3.d-none#pay-wall
-              %h4.title.title-sm You do not have full access.
-              %p
-                Only the 10 most recent transactions will be displayed. To get full access, please upgrade to at least
-                = link_to 'VIP level 1.', secret_network_button_index_path
+
+            .alert.alert-warning
+              .text-base#loading-vip
+                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                %em Getting your VIP level...
+              #pay-wall.d-none
+                %h4.title.title-sm.mb-0 You do not have full access.
+                %p
+                  Only the 10 most recent transactions will be displayed. To get full access, please upgrade to at least
+                  = link_to 'VIP level 1.', secret_network_button_index_path
             .card
               %h6
                 Balance:

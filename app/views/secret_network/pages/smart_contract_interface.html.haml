@@ -6,11 +6,11 @@
           .container
             .row.justify-content-center
               .col-lg-10
-                .alert.alert-warning.d-none
+                .alert.alert-warning
                   .text-base#loading-vip
                     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                     %em Getting your VIP level...
-                  #pay-wall
+                  #pay-wall.d-none
                     %h4.title.title-sm.mb-0 You do not have full access.
                     %p
                       To enable using params, please upgrade to at least

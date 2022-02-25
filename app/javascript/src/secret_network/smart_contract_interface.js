@@ -19,6 +19,15 @@ $(document).ready(function(){
         $('.alert').removeClass('d-none')
         $('#loading-vip').removeClass('d-none')
         $('#pay-wall').addClass('d-none')
+      })
+
+      $(document).on('keplr_dismissed', async(evt) => {
+        $('.alert').removeClass('d-none')
+        $('#loading-vip').addClass('d-none')
+        $('#pay-wall').removeClass('d-none')
+      })
+
+      $(document).on('vip_level_updated', async(evt) => {
         $('#loading-vip').addClass('d-none')
         if (document.secretNetwork.userVipLevel == 0) {
           $('#pay-wall').removeClass('d-none')
@@ -26,12 +35,6 @@ $(document).ready(function(){
           $('.alert').addClass('d-none')
           $('#add-new-param-container').removeClass('d-none')
         }
-      })
-
-      $(document).on('keplr_dismissed', async(evt) => {
-        $('.alert').removeClass('d-none')
-        $('#loading-vip').addClass('d-none')
-        $('#pay-wall').removeClass('d-none')
       })
 
       document.secretNetworkSmartContractInterfaceForm.onsubmit = () => {

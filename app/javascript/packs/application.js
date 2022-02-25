@@ -93,16 +93,16 @@ document.connectKeplrWallet = async(getAndSetUserVipLevel = true) => {
     $('.wallet-details').removeClass('d-none')
     $('.wallet-address').text(accounts[0].address)
     document.secretNetwork.walletAddress = accounts[0].address
-    if (getAndSetUserVipLevel) {
-      document.secretNetwork.environment = 'production'
-      await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client())
-    }
     // Only call this once
     // If the user changes wallets the page will refresh and this will still apply
     // If the user signs out then signs in, everything should look the same
     if (!document.secretNetwork.keplrConnectedTriggered) {
       $(document).trigger('keplr_connected', {});
       document.secretNetwork.keplrConnectedTriggered = true
+    }
+    if (getAndSetUserVipLevel) {
+      document.secretNetwork.environment = 'production'
+      document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client())
     }
   }
   catch(err) {

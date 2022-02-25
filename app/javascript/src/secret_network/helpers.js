@@ -98,6 +98,7 @@ document.secretNetwork = {
       console.error(err)
     } finally {
       $("#vip-level").text(document.secretNetwork.userVipLevel)
+      $(document).trigger('vip_level_updated', {});
       return document.secretNetwork.userVipLevel
     }
   },
