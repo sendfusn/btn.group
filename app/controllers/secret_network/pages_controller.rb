@@ -2,9 +2,11 @@
 
 module SecretNetwork
   class PagesController < ApplicationController
-    before_action :authenticate_admin_user!, only: %i[trade_pairs]
+    before_action :authenticate_admin_user!, only: %i[pools_admin trade_pairs]
     before_action :set_cryptocurrencies, only: %i[button_swap mount_doom transactions]
     before_action :set_nfts, only: %i[mount_doom transactions]
+
+    helper_method :pools_for_page
 
     def address_alias
       @head_description = 'Create an alias for your Secret Network wallet address.'
@@ -39,18 +41,18 @@ module SecretNetwork
       @head_title = 'Password manager | Secret network | btn.group'
     end
 
+    def pools_admin
+      @navbar_container_fluid = true
+      @head_description = 'Pools depositable amount admin page.'
+      @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls.png'
+      @head_title = 'Pools Admin | Secret network | btn.group'
+    end
+
     def pools
       @navbar_container_fluid = true
       @head_description = 'Farm, yield optimizer and profit sharing pools by btn.group on the Secret Network.'
       @head_image = 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,h_160/secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls.png'
       @head_title = 'Pools | Secret network | btn.group'
-      @pools = Protocol.btn_group
-                       .first
-                       .pools
-                       .enabled
-                       .includes(:smart_contract)
-                       .where(smart_contract: { blockchain: blockchain })
-                       .order(:created_at)
     end
 
     def smart_contract_interface
@@ -92,6 +94,16 @@ module SecretNetwork
     end
 
     private
+
+      def pools_for_page
+        @pools_for_page ||= Protocol.btn_group
+                                    .first
+                                    .pools
+                                    .enabled
+                                    .includes(:smart_contract)
+                                    .where(smart_contract: { blockchain: blockchain })
+                                    .order(:created_at)
+      end
 
       def set_cryptocurrencies
         cryptocurrency_ids = Pool.trade_pair

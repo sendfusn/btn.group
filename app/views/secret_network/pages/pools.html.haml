@@ -71,7 +71,7 @@
             .row.mb-5
               .col-12#pools
                 // === PROFIT DISTRIBUTORS ===
-                - @pools.profit_distributor.each do |profit_distributor|
+                - pools_for_page.profit_distributor.each do |profit_distributor|
                   .block.incentivized
                     .card.mb-3.profit-distributor.d-none{ 'data-pool-address': profit_distributor.address, 'data-depositable-price': profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.price }
                       .row
@@ -134,7 +134,7 @@
                         %br
                         Not financial advice.
                 // === FARM ===
-                - @pools.farm.each do |farm_pool|
+                - pools_for_page.farm.each do |farm_pool|
                   .block{ class: farm_pool.apr.zero? ? 'non-incentivized d-none' : 'incentivized' }
                     .card.farm.mb-3{ 'data-pool-address': farm_pool.address, 'data-depositable-price': farm_pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
                       .row
@@ -196,7 +196,7 @@
                                 %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
                                 %em Loading...
                               .ready Withdraw
-                - @pools.yield_optimizer.each do |yield_optimizer|
+                - pools_for_page.yield_optimizer.each do |yield_optimizer|
                   .block{ class: yield_optimizer.apy.zero? ? 'non-incentivized d-none' : 'incentivized' }
                     .card.yield-optimizer.mb-3{ 'data-pool-address': yield_optimizer.address, 'data-depositable-price': yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
                       .row

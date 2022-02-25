@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     get 'mount_doom' => 'pages#mount_doom'
     get 'password_manager' => 'pages#password_manager'
     get 'pools' => 'pages#pools'
+    get 'pools_admin' => 'pages#pools_admin'
     get 'smart_contract_interface' => 'pages#smart_contract_interface'
     get 'trade_pairs' => 'pages#trade_pairs'
     get 'transactions' => 'pages#transactions'

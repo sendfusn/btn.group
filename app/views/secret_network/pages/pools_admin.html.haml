@@ -1,0 +1,34 @@
+- content_for :header_banner do
+  .header-banner#secret-network-pools-admin
+    .nk-ovm.shape-q
+%main.nk-pages
+  %section.bg-light.pt-4
+    .container-fluid
+      .nk-block.nk-block-blog
+        .row
+          .col-12
+            .card.my-3
+              %h3 Pools admin
+              %p.mb-0
+                %b Blockchain:
+                = cl_image_tag(features[:secret_network][:cloudinary_public_id], width: 18, height: 18, crop: :fill, dpr: 2, aspect_ratio: 1, fetch_format: :auto, quality: :auto)
+                = features[:secret_network][:name]
+              .table-responsive
+                %table.table.table-striped
+                  %thead
+                    %tr
+                      %th id
+                      %th category
+                      %th address
+                      %th depositable amount
+                      %th data hash
+                      %th pool cryptocurrency deposit id
+                  %tbody
+                    - pools_for_page.each do |pool|
+                      %tr
+                        %td.id= pool.id
+                        %td.category= pool.category
+                        %td.address= pool.address
+                        %td.depositable-amount
+                        %td.data-hash= pool.smart_contract.data_hash
+                        %td.pool-cryptocurrency-deposit-id= pool.cryptocurrency_pools.deposit.first.id
