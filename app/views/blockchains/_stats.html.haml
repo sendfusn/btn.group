@@ -1,21 +1,15 @@
-#blockchain-stats{ style: 'border-top: 1px solid lightblue;' }
-  - if blockchain&.gas_and_delay_factor
-    .bg-white
-      .text-center
-        %h6
-          %span.mr-5
-            Latest block time:
-            %span#latest-block-time= blockchain.latest_block_time.seconds
-            secs
-          %span.mr-5
-            %i.fa.fa-gas-pump
-            Gas fee x
-            %span#blockchain-gas-and-delay-factor= blockchain.gas_and_delay_factor
-          %span
-            %i.fa.fa-sync
-            every 30 secs
-
-    - if blockchain.identifier == 'secret_network'
-      :javascript
-        document.secretNetwork.gasAndDelayFactor = Number($('#blockchain-gas-and-delay-factor').text())
-        document.refreshBlockchainStats(1, 30_000)
+%footer.fixed-bottom#blockchain-stats{ style: 'border-top: 1px solid lightblue;', 'data-blockchain-id': blockchain.id, 'data-blockchain-identifier': blockchain.identifier }
+  .bg-white
+    .text-center
+      %h6
+        %span.mr-5
+          Latest block time:
+          %span#latest-block-time= blockchain.latest_block_time.seconds
+          secs
+        %span.mr-5
+          %i.fa.fa-gas-pump
+          Gas fee x
+          %span#blockchain-gas-and-delay-factor= blockchain.gas_and_delay_factor
+        %span
+          %i.fa.fa-sync
+          every 30 secs

@@ -44,6 +44,29 @@ import '../src/secret_network/transactions'
 Rails.start()
 ActiveStorage.start()
 
+$(document).ready(function(){
+  if($('#blockchain-stats').length) {
+    setInterval(function() {
+      document.refreshBlockchainStats()
+    }, 30_000)
+    document.refreshBlockchainStats()
+  }
+})
+
+document.refreshBlockchainStats = async() => {
+  try {
+    let id = $('#blockchain-stats').data('blockchain-id')
+    await $.ajax({
+      url: '/blockchains/' + id + '/stats'
+    });
+    if ($('#blockchain-stats').data('blockchain-identifier') == 'secret_network') {
+      document.secretNetwork.gasAndDelayFactor = Number($('#blockchain-gas-and-delay-factor').text())
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 document.activateKeplr = async() => {
   if($(".keplr-wallet").length) {
     let keplrSelector = ".keplr-wallet-button"
@@ -177,14 +200,6 @@ document.prettyPrintJSON = function(json) {
     return '<span class="' + cls + '">' + match + '</span>';
   });
 };
-
-document.refreshBlockchainStats = function(id, delay) {
-  setTimeout(function(){
-    $.ajax({
-      url: '/blockchains/' + id + '/stats'
-    });
-  }, delay);
-}
 
 document.showAlertInfo = function(text) {
   toastr.options.closeButton = true;
