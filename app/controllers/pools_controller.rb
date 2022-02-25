@@ -10,4 +10,8 @@ class PoolsController < ApplicationController
     @pools = @pools.where(category: params['categories'].split(',')) if params['categories'].split(',').present?
     render json: @pools, include: { protocol: {}, smart_contract: {}, cryptocurrency_pools: { include: { cryptocurrency: { include: { smart_contract: {}, attachments: {} } } } } }
   end
+
+  def tvl
+    render json: Protocol.btn_group.first.pools.sum(:total_locked).to_s
+  end
 end

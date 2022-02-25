@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   end
   resources :cryptocurrencies, only: :index, defaults: { format: 'json' }
   resources :cryptocurrency_pools, only: :update, defaults: { format: 'json' }
-  resources :pools, only: :index, defaults: { format: 'json' }
+  resources :pools, only: :index, defaults: { format: 'json' } do
+    get :tvl, on: :collection, defaults: { format: 'js' }
+  end
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
   resources :swap_paths, only: :index, defaults: { format: 'json' }
 
