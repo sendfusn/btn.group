@@ -5,7 +5,7 @@ class SwapPathsController < ApplicationController
   before_action :set_swap_paths
 
   def index
-    max_number_of_swap_paths = arbitrage? ? 7 : 2
+    max_number_of_swap_paths = arbitrage? ? 3 : 2
     top_swap_paths = []
     @swap_paths.find_each do |sp|
       result_amount = sp.simulate_swaps(params['from_amount'])
@@ -55,6 +55,10 @@ class SwapPathsController < ApplicationController
       @swap_paths = @swap_paths.where(protocol_id: params[:protocol_id]) if params[:protocol_id]
       @swap_paths = @swap_paths.order(maximum_tradeable_value: :desc)
                                .order(:swap_count)
-      @swap_paths = @swap_paths.limit(50) unless arbitrage?
+      if arbitrage?
+        @swap_paths.limit(200)
+      else
+        @swap_paths.limit(50)
+      end
     end
 end
