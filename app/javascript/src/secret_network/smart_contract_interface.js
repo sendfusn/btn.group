@@ -93,7 +93,7 @@ $(document).ready(function(){
               this.client =  document.secretNetwork.client();
               result = await this.client.queryContractSmart(contractAddress, msg);
             } else {
-              if (!window.getOfflineSigner || !window.keplr) {
+              if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
                 alert("Please install keplr extension");
               } else {
                 if (window.keplr.experimentalSuggestChain) {
@@ -104,7 +104,7 @@ $(document).ready(function(){
                     await window.keplr.enable(chainId);
 
                     // @ts-ignore
-                    const keplrOfflineSigner = window.getOfflineSigner(chainId);
+                    const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(chainId);
                     const accounts = await keplrOfflineSigner.getAccounts();
                     document.secretNetwork.walletAddress = accounts[0].address;
                     let gasParams = {

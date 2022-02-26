@@ -93,10 +93,10 @@ document.connectKeplrWallet = async(getAndSetUserVipLevel = true) => {
   $keplrButton.find(".ready").addClass("d-none")
   try {
     // Keplr extension injects the offline signer that is compatible with cosmJS.
-    // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
+    // You can get this offline signer from `window.getOfflineSignerOnlyAmino(chainId:string)` after load event.
     // And it also injects the helper function to `window.keplr`.
-    // If `window.getOfflineSigner` or `window.keplr` is null, Keplr extension may be not installed on browser.
-    if (!window.getOfflineSigner || !window.keplr) {
+    // If `window.getOfflineSignerOnlyAmino` or `window.keplr` is null, Keplr extension may be not installed on browser.
+    if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
       throw "Please install keplr extension";
     } else {
       if (window.keplr.experimentalSuggestChain) {
@@ -106,7 +106,7 @@ document.connectKeplrWallet = async(getAndSetUserVipLevel = true) => {
         await window.keplr.enable('secret-4');
 
         // @ts-ignore
-        window.keplrOfflineSigner = window.getOfflineSigner('secret-4');
+        window.keplrOfflineSigner = window.getOfflineSignerOnlyAmino('secret-4');
       } else {
         throw "Please use the recent version of keplr extension";
       }
