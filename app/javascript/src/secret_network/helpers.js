@@ -127,7 +127,7 @@ document.secretNetwork = {
 
     let chainId = document.secretNetwork.chainId(document.secretNetwork.environment)
     let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(document.secretNetwork.environment))
-    let keplrOfflineSigner = window.getOfflineSigner(chainId);
+    let keplrOfflineSigner = window.getOfflineSignerOnlyAmino(chainId);
     if (document.secretNetwork.environment == 'staging') {
       if (!document.secretNetworkSigningClientStaging) {
         document.secretNetworkSigningClientStaging = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
