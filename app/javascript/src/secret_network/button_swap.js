@@ -787,7 +787,6 @@ $(document).ready(function(){
                 sentFunds: sentFunds,
               }
               let response = await document.secretNetwork.executeContract(params, gas)
-              console.log(response)
               let returnAmount;
               response['arrayLog'].forEach(function(attribute){
                 if(attribute['key'] == 'return_amount') {

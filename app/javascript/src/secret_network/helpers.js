@@ -73,7 +73,12 @@ document.secretNetwork = {
   },
   executeContract: async(params, gasLimit, environment = 'production') => {
     let client = await document.secretNetwork.signingClient(environment)
-    return await client.tx.compute.executeContract(params, { gasLimit })
+    let response = await client.tx.compute.executeContract(params, { gasLimit })
+    if (response['code'] > 0) {
+      throw response['jsonLog']['generic_err']
+    } else {
+      return response
+    }
   },
   getAndSetUserVipLevel: async(address) => {
     let chainId = document.secretNetwork.chainId()
