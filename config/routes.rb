@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   authenticate :admin_user do
     mount Sidekiq::Web, at: '/sidekiq', as: 'sidekiq'
   end
+  devise_for :admin_users, except: %w[sessions#new session#destroy]
 
   resources :blockchains, only: :show, defaults: { format: 'json' } do
     get :stats, on: :member, defaults: { format: 'js' }

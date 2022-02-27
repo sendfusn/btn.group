@@ -2,5 +2,5 @@
 
 class AdminUser < ApplicationRecord
   # === DEVISE ===
-  devise :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :rememberable, :validatable
 end
