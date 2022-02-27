@@ -63,7 +63,12 @@ $(document).ready(function(){
                 }
               }
             })
-            let result = await this.client.queryContractSmart(address, msg, undefined, tradePair['smart_contract']['data_hash']);
+            let queryParams = {
+              address: address,
+              contractHash: tradePair['smart_contract']['data_hash'],
+              query: msg
+            }
+            let result = await document.secretNetwork.queryContractSmart(queryParams)
             if (protocolIdentifier == 'sienna') {
               asset_0_address = result['pair_info'][
               'pair']['token_0']['custom_token']['contract_addr']

@@ -14,9 +14,7 @@ import "./src/buffer";
 // LODASH
 import 'lodash'
 // DATATABLES
-import 'datatables.net-bs4'
-import 'datatables.net-buttons-bs4'
-import 'datatables.net-buttons/js/buttons.html5.js'
+import "./src/datatables"
 
 // TOASTR
 import './src/toastr'
