@@ -404,7 +404,7 @@ $(document).ready(function(){
         try {
           let queryParams = {
             address: pool['smart_contract']['address'],
-            contractHash: pool['smart_contract']['data_hash'],
+            codeHash: pool['smart_contract']['data_hash'],
             query: swapMsg
           }
           let result = await document.secretNetwork.queryContractSmart(queryParams)
@@ -423,7 +423,7 @@ $(document).ready(function(){
             swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
             queryParams = {
               address: pool['smart_contract']['address'],
-              contractHash: pool['smart_contract']['data_hash'],
+              codeHash: pool['smart_contract']['data_hash'],
               query: swapMsg
             }
             let result = await document.secretNetwork.queryContractSmart(queryParams)
@@ -615,7 +615,7 @@ $(document).ready(function(){
               // If they have the key, replace the button with the balance
               let queryParams = {
                 address: cryptoAddress,
-                contractHash: cryptocurrency['smart_contract']['data_hash'],
+                codeHash: cryptocurrency['smart_contract']['data_hash'],
                 query: { balance: { address: document.secretNetwork.walletAddress, key: key } }
               }
               let balanceResponse = await document.secretNetwork.queryContractSmart(queryParams)

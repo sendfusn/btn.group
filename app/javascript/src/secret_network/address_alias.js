@@ -107,7 +107,7 @@ $(document).ready(function(){
           let search_params = { search_type: search_type, search_value: search_value };
           let queryParams = {
             address: this.addressAliasContractAddress,
-            contractHash: this.addressAliasContractDataHash,
+            codeHash: this.addressAliasContractDataHash,
             query: { search: search_params }
           }
           let result = await document.secretNetwork.queryContractSmart(queryParams)
