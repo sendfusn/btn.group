@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   # === CALLBACKS ===
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # === SINCE THE RAILS 7 CSRF TOKEN ERROR COMES UP - Possibly due to turbo links etc...
+  # Investigate more when you get time
+  protect_from_forgery with: :null_session, if: proc { |c| c.request.format =~ /application\/json/ }
+
   def brand_assets
     @show_footer = true
   end
