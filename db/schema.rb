@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_22_221747) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_22_221747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -23,8 +22,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.bigint "resource_id"
     t.string "author_type"
     t.bigint "author_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
@@ -34,10 +33,10 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
@@ -53,15 +52,15 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.string "url"
     t.string "cloudinary_public_id"
     t.integer "identifier"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable"
   end
 
   create_table "blockchains", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "identifier", default: 0, null: false
     t.decimal "base_block_time", precision: 6, scale: 2
     t.decimal "latest_block_time", precision: 6, scale: 2
@@ -72,8 +71,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.integer "decimals", null: false
     t.string "name", null: false
     t.string "symbol", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "price", precision: 30, scale: 10
     t.bigint "smart_contract_id"
     t.boolean "official"
@@ -92,8 +91,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.integer "cryptocurrency_role", null: false
     t.bigint "cryptocurrency_id"
     t.bigint "pool_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "amount"
     t.boolean "downcase_data_hash_for_swap_simulation"
     t.index ["cryptocurrency_id"], name: "index_cryptocurrencies_pools_on_cryptocurrency_id"
@@ -105,8 +104,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.integer "position"
     t.bigint "pool_id"
     t.bigint "swap_path_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["pool_id"], name: "index_pool_swap_paths_on_pool_id"
     t.index ["position", "pool_id", "swap_path_id"], name: "index_pool_swap_paths_on_position_and_pool_id_and_swap_path_id", unique: true
     t.index ["swap_path_id"], name: "index_pool_swap_paths_on_swap_path_id"
@@ -114,8 +113,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
 
   create_table "pools", force: :cascade do |t|
     t.bigint "protocol_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "smart_contract_id"
     t.decimal "deadline", precision: 40
     t.decimal "pending_rewards", precision: 40
@@ -134,8 +133,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
 
   create_table "protocols", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "url", null: false
     t.integer "identifier", null: false
     t.index ["identifier"], name: "index_protocols_on_identifier", unique: true
@@ -145,8 +144,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.bigint "blockchain_id"
     t.string "address"
     t.string "data_hash"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "code_id"
     t.string "creator"
     t.string "label"
@@ -158,8 +157,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_221747) do
     t.string "swap_path_as_string"
     t.bigint "from_id"
     t.bigint "to_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "swap_count", null: false
     t.decimal "maximum_tradeable_value", precision: 15, scale: 2
     t.bigint "protocol_id"

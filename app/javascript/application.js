@@ -1,17 +1,16 @@
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
+// Entry point for the build script in your package.json
 
-import Rails from "@rails/ujs"
-import * as ActiveStorage from "@rails/activestorage"
-import "channels"
+import "@hotwired/turbo-rails"
+import "./controllers"
 
-// Popper.js
-import 'popper.js';
-import 'bootstrap';
+// jquery
+import "./src/jquery"
+// Bootstrap
+import * as bootstrap from "bootstrap"
 // BigNumber.js
 import BigNumber from "bignumber.js";
+// Buffer
+import "./src/buffer";
 // LODASH
 import 'lodash'
 // DATATABLES
@@ -19,30 +18,29 @@ import 'datatables.net-bs4'
 import 'datatables.net-buttons-bs4'
 import 'datatables.net-buttons/js/buttons.html5.js'
 
-// APP
-import '../src/application/_environment_switch'
-import '../src/ico_crypto'
+// TOASTR
+import './src/toastr'
 
+// APP
+import './src/application/_environment_switch'
+import './src/ico_crypto'
 // NEAR
-import '../src/near/helpers'
-import '../src/near/smart_contract_interface'
+import './src/near/helpers'
+import './src/near/smart_contract_interface'
 
 // SECRET NETWORK
-import '../src/secret_network/helpers'
-import '../src/secret_network/address_alias'
-import '../src/secret_network/block_locker'
-import '../src/secret_network/butt_lode'
-import '../src/secret_network/button_swap'
-import '../src/secret_network/mount_doom'
-import '../src/secret_network/password_manager'
-import '../src/secret_network/pools'
-import '../src/secret_network/pools_admin'
-import '../src/secret_network/smart_contract_interface'
-import '../src/secret_network/trade_pairs'
-import '../src/secret_network/transactions'
-
-Rails.start()
-ActiveStorage.start()
+import './src/secret_network/helpers'
+import './src/secret_network/address_alias'
+import './src/secret_network/block_locker'
+import './src/secret_network/butt_lode'
+import './src/secret_network/button_swap'
+import './src/secret_network/mount_doom'
+import './src/secret_network/password_manager'
+import './src/secret_network/pools'
+import './src/secret_network/pools_admin'
+import './src/secret_network/smart_contract_interface'
+import './src/secret_network/trade_pairs'
+import './src/secret_network/transactions'
 
 $(document).ready(function(){
   if($('#blockchain-stats').length) {
@@ -125,7 +123,7 @@ document.connectKeplrWallet = async(getAndSetUserVipLevel = true) => {
     }
     if (getAndSetUserVipLevel) {
       document.secretNetwork.environment = 'production'
-      document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client())
+      document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress)
     }
   }
   catch(err) {

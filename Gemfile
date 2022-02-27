@@ -6,22 +6,22 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 gem 'actionpack', '>= 6.1.4.6'
-gem 'activeadmin'
+# gem 'activeadmin'
 gem 'airbrake'
-# For ruby metrics
 gem 'barnes'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.6', require: false
 gem 'cloudinary'
+# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem 'cssbundling-rails', '>= 0.1.0'
 gem 'devise'
-# Barebones two-factor authentication with Devise
-gem 'devise-two-factor'
 # Provides Haml generators for Rails 4 etc
 gem 'haml-rails', '~> 2.0'
 # Foreign key migration generator for Rails (Using in Semaphore also)
 gem 'immigrant'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
+gem 'jsbundling-rails'
 gem 'nokogiri', '>= 1.12.5'
 gem 'pg'
 # Use Puma as the app server
@@ -30,19 +30,20 @@ gem 'rack-cors'
 # Recommended by Heroku: https://devcenter.heroku.com/articles/h12-request-timeout-in-ruby-mri
 gem 'rack-timeout', require: 'rack/timeout/base'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 7.0.2.2'
 gem 'rails_autoscale_agent'
 gem 'rails-reverse-proxy'
 # Use Redis adapter to run Action Cable in production
 gem 'redis'
-# Use SCSS for stylesheets
-gem 'sass-rails'
 # Simple, efficient background processing for Ruby
 gem 'sidekiq', '>= 6.4.0'
+gem 'sprockets-rails'
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'stimulus-rails', '>= 0.4.0'
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem 'turbo-rails', '>= 0.7.11'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0'
 
 group :development do
   # Guard::RSpec automatically run your specs

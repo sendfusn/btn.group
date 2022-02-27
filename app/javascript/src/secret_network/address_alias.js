@@ -22,14 +22,14 @@ $(document).ready(function(){
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
             let alias = $("#delete-button").data('alias');
-            let gasParams = {
-              exec: {
-                amount: [{ amount: this.gasDelete(), denom: 'uscrt' }],
-                gas: this.gasDelete(),
-              },
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: this.addressAliasContractAddress,
+              codeHash: this.addressAliasContractDataHash, // optional but way faster
+              msg: { destroy: { alias: alias } },
+              sentFunds: [], // optional
             }
-            let handleMsg = { destroy: { alias: alias } }
-            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.addressAliasContractAddress, handleMsg, '', [], gasParams.exec, this.addressAliasContractDataHash)
+            await document.secretNetwork.executeContract(params, this.gasDelete())
             $("#result-value").html('')
             $("#result-container").addClass("d-none");
             $("#result-value-container").addClass("d-none");
@@ -57,14 +57,15 @@ $(document).ready(function(){
           if (document.secretNetwork.walletAddress) {
             let alias = document.aliasCreateForm.alias.value
             let avatarUrl = document.aliasCreateForm.avatarUrl.value;
-            let gasParams = {
-              exec: {
-                amount: [{ amount: this.gasCreate(), denom: 'uscrt' }],
-                gas: this.gasCreate(),
-              },
-            }
             let handleMsg = { send: { amount: '1000000', recipient: this.addressAliasContractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
-            let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: this.addressAliasContractAddress,
+              codeHash: this.addressAliasContractDataHash, // optional but way faster
+              msg: handleMsg,
+              sentFunds: [], // optional
+            }
+            await document.secretNetwork.executeContract(params, this.gasCreate())
             $("#result-value-container").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
             let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId() + '/accounts/' + document.secretNetwork.walletAddress

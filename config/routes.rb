@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   authenticate :admin_user do
     mount Sidekiq::Web, at: '/sidekiq', as: 'sidekiq'
   end
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
 
   resources :blockchains, only: :show, defaults: { format: 'json' } do
     get :stats, on: :member, defaults: { format: 'js' }
@@ -51,6 +49,8 @@ Rails.application.routes.draw do
   match 'near/datahub' => 'near/datahub#index', via: :post, defaults: { format: 'json' }
   match 'near/datahub_staging' => 'near/datahub#index_staging', via: :post, defaults: { format: 'json' }
   match 'datahub/*path' => 'datahub#index', via: %i[get post put patch delete], defaults: { format: 'json' }
+  match 'datahub_rpc' => 'datahub#rpc', via: %i[get post put patch delete], defaults: { format: 'json' }
+  match 'datahub_rpc/*path' => 'datahub#rpc', via: %i[get post put patch delete], defaults: { format: 'json' }
   match 'datahub_staging/*path' => 'datahub#index_staging', via: %i[get post put patch delete],
         defaults: { format: 'json' }
 

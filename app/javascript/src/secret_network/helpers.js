@@ -1,3 +1,4 @@
+// SECRETJS
 document.secretNetwork = {
   butt: {
     address: 'secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt',
@@ -52,35 +53,45 @@ document.secretNetwork = {
     };
     return chainId
   },
-  client: function() {
+  client: async(environment) => {
     const {
-      CosmWasmClient,
+      SecretNetworkClient,
     } = require('secretjs');
 
-    if (document.secretNetwork.environment == 'staging') {
+    if (environment == 'staging') {
       if (!document.secretNetworkClientStaging) {
-        document.secretNetworkClientStaging = new CosmWasmClient(document.secretNetworkHttpUrl(document.secretNetwork.environment))
+        document.secretNetworkClientStaging = await SecretNetworkClient.create({ rpcUrl: document.secretNetwork.httpUrl(environment) })
       }
       return document.secretNetworkClientStaging
     } else {
       if (!document.secretNetworkClientProduction) {
-        document.secretNetworkClientProduction = new CosmWasmClient(document.secretNetworkHttpUrl(document.secretNetwork.environment))
+        document.secretNetworkClientProduction = await SecretNetworkClient.create({ rpcUrl: document.secretNetwork.httpUrl(document.secretNetwork.environment) })
       }
+      window.test = document.secretNetworkClientProduction
       return document.secretNetworkClientProduction
     }
   },
-  getAndSetUserVipLevel: async(address, client) => {
+  executeContract: async(params, gasLimit, environment = 'production') => {
+    let client = await document.secretNetwork.signingClient(environment)
+    return await client.tx.compute.executeContract(params, { gasLimit })
+  },
+  getAndSetUserVipLevel: async(address) => {
     let chainId = document.secretNetwork.chainId()
     document.secretNetwork.userVipLevel = 0
     // Set users vip level
     try {
-      let params = {
+      let query = {
         balance: {
           address: address,
           key: await window.keplr.getSecret20ViewingKey(chainId, document.secretNetwork.butt.address)
         }
       }
-      let balance_response = await client.queryContractSmart(document.secretNetwork.butt.address, params, undefined, document.secretNetwork.butt.dataHash);
+      let params = {
+        address: document.secretNetwork.butt.address,
+        codeHash: document.secretNetwork.butt.dataHash,
+        query: query
+      }
+      let balance_response = await document.secretNetwork.queryContractSmart(params)
       let balance = balance_response["balance"]["amount"]
       balance = Number(balance)
       if (balance >= 100_000_000_000) {
@@ -120,32 +131,52 @@ document.secretNetwork = {
       document.secretNetwork.gettingBlockHeight = false
     }
   },
-  signingClient: function(walletAddress, gasParams) {
+  httpUrl: function (environment) {
+    let http_url = '/datahub_rpc';
+    if (environment == 'staging') {
+      http_url = http_url + '_staging'
+    };
+    return window.location.origin + http_url
+  },
+  queryContractSmart: async(params, environment = 'production') => {
+    let client = await document.secretNetwork.client(environment)
+    return await client.query.compute.queryContract(params);
+  },
+  signingClient: async(environment = 'production') => {
     const {
-      SigningCosmWasmClient,
+      SecretNetworkClient,
     } = require('secretjs');
 
     let chainId = document.secretNetwork.chainId(document.secretNetwork.environment)
-    let httpUrl = document.secretNetworkHttpUrl(document.secretNetworkHttpUrl(document.secretNetwork.environment))
+    let httpUrl = document.secretNetwork.httpUrl(document.secretNetwork.environment)
     let keplrOfflineSigner = window.getOfflineSignerOnlyAmino(chainId);
-    if (document.secretNetwork.environment == 'staging') {
+    let [{ address: myAddress }] = await keplrOfflineSigner.getAccounts();
+    if (environment == 'staging') {
       if (!document.secretNetworkSigningClientStaging) {
-        document.secretNetworkSigningClientStaging = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
+        document.secretNetworkSigningClientStaging = await SecretNetworkClient.create(
+          {
+            rpcUrl: httpUrl,
+            chainId: chainId,
+            wallet: keplrOfflineSigner,
+            walletAddress: myAddress,
+            encryptionUtils: window.getEnigmaUtils(chainId),
+          }
+        );
       }
       return document.secretNetworkSigningClientStaging
     } else {
       if (!document.secretNetworkSigningClientProduction) {
-        document.secretNetworkSigningClientProduction = new SigningCosmWasmClient(httpUrl, walletAddress, keplrOfflineSigner, window.getEnigmaUtils(chainId), gasParams)
+        document.secretNetworkSigningClientProduction = await SecretNetworkClient.create(
+          {
+            rpcUrl: httpUrl,
+            chainId: chainId,
+            wallet: keplrOfflineSigner,
+            walletAddress: myAddress,
+            encryptionUtils: window.getEnigmaUtils(chainId),
+          }
+        );
       }
       return document.secretNetworkSigningClientProduction
     }
   }
-}
-
-document.secretNetworkHttpUrl = function(environment) {
-  let http_url = '/datahub';
-  if (environment == 'staging') {
-    http_url = http_url + '_staging'
-  };
-  return http_url
 }
