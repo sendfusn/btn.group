@@ -37,6 +37,7 @@ gem 'rails_autoscale_agent'
 gem 'rails-reverse-proxy'
 # Use Redis adapter to run Action Cable in production
 gem 'redis'
+gem 'sass-rails'
 # Simple, efficient background processing for Ruby
 gem 'sidekiq', '>= 6.4.0'
 gem 'sprockets-rails'
