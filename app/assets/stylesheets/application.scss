@@ -1,4 +1,6 @@
-@import "@fortawesome/fontawesome-free";
+@import "bootstrap/scss/bootstrap";
+@import "@fortawesome/fontawesome-free/css/fontawesome.min";
+@import "toastr/toastr";
 
 .btn-group-toggle {
   .active {

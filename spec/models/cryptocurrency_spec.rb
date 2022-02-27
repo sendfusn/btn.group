@@ -19,6 +19,7 @@ RSpec.describe Cryptocurrency, type: :model do
 
   describe 'DELEGATES' do
     it { should delegate_method(:address).to(:smart_contract).allow_nil }
+    it { should delegate_method(:data_hash).to(:smart_contract).allow_nil }
   end
 
   describe 'VALIDATIONS' do

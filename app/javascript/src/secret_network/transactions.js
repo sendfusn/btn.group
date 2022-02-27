@@ -135,6 +135,7 @@ $(document).ready(function(){
       document.secretNetworkTransactionsForm.onsubmit = async (e) => {
         e.preventDefault()
         let address = document.secretNetworkTransactionsForm.address.value;
+        let queryParams;
         let tokenAddress;
         let token_decimals;
         let token_symbol;
@@ -166,7 +167,7 @@ $(document).ready(function(){
 
         try {
           // First we need to find out if the user has premium access
-          await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, document.secretNetwork.client())
+          await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress)
           if (document.secretNetwork.userVipLevel == 0) {
             $('#pay-wall').removeClass('d-none')
             document.secretNetworkTransactionsForm.page.value = 1
@@ -187,7 +188,11 @@ $(document).ready(function(){
             }
           } else {
             // Get the token info
-            let token_info_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, { token_info: {} });
+            queryParams = {
+              address: tokenAddress,
+              query: { token_info: {} }
+            }
+            let token_info_response = await document.secretNetwork.queryContractSmart(queryParams);
             token_decimals = token_info_response["token_info"]["decimals"]
             token_symbol = token_info_response["token_info"]["symbol"]
             params = {
@@ -201,7 +206,11 @@ $(document).ready(function(){
           }
 
           // Get the transactions for that token
-          let transactions_response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
+          queryParams = {
+            address: tokenAddress,
+            query: params
+          }
+          let transactions_response = await document.secretNetwork.queryContractSmart(queryParams);
           if (transactions_response['viewing_key_error']) {
             throw(transactions_response['viewing_key_error']['msg'])
           }
@@ -295,8 +304,11 @@ $(document).ready(function(){
               }
             }
           }
-          let response = await document.secretNetwork.client().queryContractSmart(tokenAddress, params);
-
+          let queryParams2 = {
+            address: tokenAddress,
+            query: params
+          }
+          let response = await document.secretNetwork.queryContractSmart(queryParams2);
           // Display results
           let balance;
           if (this.tokenType == 'nft') {

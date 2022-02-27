@@ -9,7 +9,7 @@ class Cryptocurrency < ApplicationRecord
   has_many :pools, through: :cryptocurrency_pools
 
   # === DELEGATES ===
-  delegate :address, to: :smart_contract, allow_nil: true
+  delegate :address, :data_hash, to: :smart_contract, allow_nil: true
 
   # === SCOPES ===
   scope :tradeable, lambda {
