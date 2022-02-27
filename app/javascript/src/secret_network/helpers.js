@@ -138,9 +138,17 @@ document.secretNetwork = {
     };
     return window.location.origin + http_url
   },
-  queryContractSmart: async(params, environment = 'production') => {
-    let client = await document.secretNetwork.client(environment)
-    return await client.query.compute.queryContract(params);
+  queryContractSmart: async(params, environment = 'production', attempt = 1) => {
+    try {
+      let client = await document.secretNetwork.client(environment)
+      return await client.query.compute.queryContract(params);
+    } catch(err) {
+      if (err.message.includes('Bad status on response: 502') && attempt < 5) {
+        return await document.secretNetwork.queryContractSmart(params, environment, attempt + 1)
+      } else {
+        throw err
+      }
+    }
   },
   signingClient: async(environment = 'production') => {
     const {
