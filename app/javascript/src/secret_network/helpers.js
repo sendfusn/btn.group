@@ -71,13 +71,30 @@ document.secretNetwork = {
       return document.secretNetworkClientProduction
     }
   },
-  executeContract: async(params, gasLimit, environment = 'production') => {
-    let client = await document.secretNetwork.signingClient(environment)
-    let response = await client.tx.compute.executeContract(params, { gasLimit })
-    if (response['code'] > 0) {
-      throw response['jsonLog']['generic_err']
-    } else {
-      return response
+  executeContract: async(params, gasLimit, environment = 'production', attempt = 1) => {
+    let response;
+    try {
+      let client = await document.secretNetwork.signingClient(environment)
+      response = await client.tx.compute.executeContract(params, { gasLimit })
+    } catch(err) {
+      if (err.message.includes('Bad status on response: 502') && attempt < 5) {
+        return await document.secretNetwork.executeContract(params, gasLimit, environment, attempt + 1)
+      } else {
+        throw err
+      }
+    } finally {
+      if (response['code'] > 0) {
+        console.log(response)
+        if (response['jsonLog']['generic_err']) {
+          throw response['jsonLog']['generic_err']
+        } else if(response['jsonLog']['not_found']) {
+          throw response['jsonLog']['not_found']['kind'] + ' ' + 'not found'
+        } else {
+          throw response['jsonLog']['rawLog']
+        }
+      } else {
+        return response
+      }
     }
   },
   getAndSetUserVipLevel: async(address) => {

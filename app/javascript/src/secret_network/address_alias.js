@@ -60,12 +60,13 @@ $(document).ready(function(){
             let handleMsg = { send: { amount: '1000000', recipient: this.addressAliasContractAddress, msg: Buffer.from(JSON.stringify({ create: { alias: alias, avatar_url: avatarUrl } })).toString('base64') } }
             let params = {
               sender: document.secretNetwork.walletAddress,
-              contract: this.addressAliasContractAddress,
-              codeHash: this.addressAliasContractDataHash, // optional but way faster
+              contract: document.secretNetwork.butt.address,
+              codeHash: document.secretNetwork.butt.dataHash, // optional but way faster
               msg: handleMsg,
               sentFunds: [], // optional
             }
-            await document.secretNetwork.executeContract(params, this.gasCreate())
+            let response = await document.secretNetwork.executeContract(params, this.gasCreate())
+            console.log(response)
             $("#result-value-container").removeClass("d-none");
             // $("#result-value").html(document.prettyPrintJSON(result));
             let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId() + '/accounts/' + document.secretNetwork.walletAddress
@@ -81,11 +82,7 @@ $(document).ready(function(){
           }
         }
         catch(err) {
-          let errorDisplayMessage = err;
-          if (err.message.includes('Address already has an alias')) {
-            errorDisplayMessage = 'Address already has an alias.'
-          }
-          document.showAlertDanger(errorDisplayMessage)
+          document.showAlertDanger(err.msg)
         }
         finally {
           $("#create-button").prop("disabled", false);
