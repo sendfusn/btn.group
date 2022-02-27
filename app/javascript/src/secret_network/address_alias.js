@@ -105,7 +105,12 @@ $(document).ready(function(){
           let search_type = document.aliasSearchForm.searchType.value;
           let search_value = document.aliasSearchForm.searchValue.value;
           let search_params = { search_type: search_type, search_value: search_value };
-          let result = await document.secretNetwork.client().queryContractSmart(this.addressAliasContractAddress, { search: search_params }, undefined, this.addressAliasContractDataHash)
+          let queryParams = {
+            address: this.addressAliasContractAddress,
+            contractHash: this.addressAliasContractDataHash,
+            query: { search: search_params }
+          }
+          let result = await document.secretNetwork.queryContractSmart(queryParams)
           $("#result-value-container").removeClass("d-none");
           // $("#result-value").html(document.prettyPrintJSON(result));
           let url = 'https://secretnodes.com/secret/chains/' + document.secretNetwork.chainId() + '/accounts/' + result['attributes']['address']
