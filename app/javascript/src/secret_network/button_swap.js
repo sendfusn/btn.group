@@ -12,7 +12,7 @@ $(document).ready(function(){
       this.fromId = 515;
       this.toId = 351;
       this.tradePairs = {}
-      this.client = document.secretNetwork.client();
+      this.client = await document.secretNetwork.client();
       this.queryCount = 0;
       this.tokenModalFor;
       this.vipLevels = {
@@ -402,7 +402,12 @@ $(document).ready(function(){
           return fromAmountFormatted
         }
         try {
-          let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg, undefined, pool['smart_contract']['data_hash'])
+          let queryParams = {
+            address: pool['smart_contract']['address'],
+            contractHash: pool['smart_contract']['data_hash'],
+            query: swapMsg
+          }
+          let result = await document.secretNetwork.queryContractSmart(queryParams)
           this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
           return result['return_amount']
         } catch(error) {
@@ -416,7 +421,12 @@ $(document).ready(function(){
               dataType: 'json'
             })
             swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
-            let result = await this.client.queryContractSmart(pool['smart_contract']['address'], swapMsg, undefined, pool['smart_contract']['data_hash'])
+            queryParams = {
+              address: pool['smart_contract']['address'],
+              contractHash: pool['smart_contract']['data_hash'],
+              query: swapMsg
+            }
+            let result = await document.secretNetwork.queryContractSmart(queryParams)
             this.simulationSwapResults[poolId][fromId][fromAmountFormatted] = result['return_amount']
             return result['return_amount']
           } else if (currentQueryCount == this.queryCount) {
@@ -603,11 +613,16 @@ $(document).ready(function(){
               cryptoAddress = cryptocurrency['smart_contract']['address']
               let key = await window.keplr.getSecret20ViewingKey(document.secretNetwork.chainId(), cryptoAddress)
               // If they have the key, replace the button with the balance
-              let balanceResponse = await this.client.queryContractSmart(cryptoAddress, { balance: { address: document.secretNetwork.walletAddress, key: key } }, undefined, cryptocurrency['smart_contract']['data_hash'])
+              let queryParams = {
+                address: cryptoAddress,
+                contractHash: cryptocurrency['smart_contract']['data_hash'],
+                query: { balance: { address: document.secretNetwork.walletAddress, key: key } }
+              }
+              let balanceResponse = await document.secretNetwork.queryContractSmart(queryParams)
               balance = balanceResponse['balance']['amount']
             } else {
-              let accountDetails = await this.client.getAccount(document.secretNetwork.walletAddress)
-              accountDetails['balance'].forEach(function(balanceDetails) {
+              let accountDetails = await this.client.query.bank.allBalances({ address: document.secretNetwork.walletAddress})
+              accountDetails['balances'].forEach(function(balanceDetails) {
                 if (cryptocurrency['denom'] == balanceDetails['denom']) {
                   balance = balanceDetails['amount']
                 }
@@ -700,14 +715,14 @@ $(document).ready(function(){
                 sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
                 successMessage = 'Wrapped'
               }
-              let gasParams = {
-                exec: {
-                  amount: [{ amount: String(this.gasWrap()), denom: 'uscrt' }],
-                  gas: String(this.gasWrap()),
-                },
+              let params = {
+                sender: document.secretNetwork.walletAddress,
+                contract: contract,
+                codeHash: contractDataHash, // optional but way faster
+                msg: handleMsg,
+                sentFunds: sentFunds,
               }
-              this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-              let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
+              let response = await document.secretNetwork.executeContract(params, this.gasWrap())
             } else {
               let currentFromId = fromId
               let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
@@ -764,14 +779,14 @@ $(document).ready(function(){
                 handleMsg = { receive: { amount: fromAmount, from: document.secretNetwork.walletAddress, msg: routeMsgEncoded } }
                 sentFunds = [{ "denom": fromCryptocurrency['denom'], "amount": fromAmount }]
               }
-              let gasParams = {
-                exec: {
-                  amount: [{ amount: String(gas), denom: 'uscrt' }],
-                  gas: String(gas),
-                },
+              let params = {
+                sender: document.secretNetwork.walletAddress,
+                contract: contract,
+                codeHash: contractDataHash, // optional but way faster
+                msg: handleMsg,
+                sentFunds: sentFunds,
               }
-              this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-              let response = await this.client.execute(contract, handleMsg, '', sentFunds, gasParams.exec, contractDataHash)
+              let response = await document.secretNetwork.executeContract(params, gas)
               let returnAmount;
               response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
                 if(attribute['key'] == 'return_amount') {

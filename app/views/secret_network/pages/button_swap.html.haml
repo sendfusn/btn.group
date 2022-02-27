@@ -6,159 +6,157 @@
           .container
             .row.justify-content-center
               .col-12
-                %h1 Under maintenance
--#               .col-xl-6.col-lg-7.col-md-9.col-sm-10
--#                 - if current_admin_user
--#                   %audio#bird-audio{ src: '../audios/birds.mp3' }
--#                   .card#arbitrage-container
--#                     %h5 Admin arbitrage options
--#                     %p.mb-0
--#                       %b Enabled:
--#                       %input#arbitrage-enabled{ type: 'checkbox', checked: false }
--#                     .form-group
--#                       .input-group.mb-3
--#                         %input.form-control#arbitrage-seconds{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0', step: '1', value: '300' }
--#                         .input-group-append
--#                           %span.input-group-text Seconds
--#                     .form-group
--#                       .input-group.mb-3
--#                         %input.form-control#arbitrage-profit{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0', step: '0.1', value: '1' }
--#                         .input-group-append
--#                           %span.input-group-text Profit
--#                 .card.my-3
--#                   = render 'features_header', blockchain: :secret_network, feature: :button_swap, show_environment_switch: false
--#                   .collapse.mt-2#exampleCollapseExample
--#                     .card.card-default.bg-theme-light
--#                       .card-block
--#                         %p DeFi / DEX aggregator offering the best token swap rates on the Secret network.
--#                         %h5 VIP levels
--#                         %table.table.table-striped.table-bordered
--#                           %thead
--#                             %tr
--#                               %th Level
--#                               %th BUTT balance
--#                               %th Commission *
--#                               %th Trading fee *
--#                           %tbody
--#                             %tr
--#                               %td VIP 0
--#                               %td < 6,250
--#                               %td 5%
--#                               %td 0.1%
--#                             %tr
--#                               %td VIP 1
--#                               %td >= 6,250 BUTT
--#                               %td 4%
--#                               %td 0.08%
--#                             %tr
--#                               %td VIP 2
--#                               %td >= 12,500 BUTT
--#                               %td 3%
--#                               %td 0.06%
--#                             %tr
--#                               %td VIP 3
--#                               %td >= 25,000 BUTT
--#                               %td 2%
--#                               %td 0.04%
--#                             %tr
--#                               %td VIP 4
--#                               %td >= 50,000 BUTT
--#                               %td 1%
--#                               %td 0.02%
--#                             %tr
--#                               %td VIP 5
--#                               %td >= 100,000 BUTT
--#                               %td 0%
--#                               %td 0%
--#                         %p
--#                           *
--#                           %b Commission
--#                           is applied on the difference between btn.group's best offer and the other procols' best offer.
--#                           %br
--#                           *
--#                           %b Trading fee
--#                           is only applied when other protocols do not offer a swap path.
--#                           %br
--#                           * VIP 5 will gain access to swap path analytics.
--#                           %br
--#                           * We are working on increasing search speeds based on VIP levels.
--#                   %hr
--#                   #loading-container
--#                     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
--#                     %b
--#                       %em Loading trade pairs...
--#                   %form.d-none{ name: 'secretNetworkDexAggregatorForm' }
--#                     .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
--#                       .form-group.mb-0
--#                         = render 'secret_network/balance', selector_prefix: 'from', active_balance_link: true
--#                         .row.gutter-10px
--#                           .col-7.col-sm-8
--#                             %input.amount-input.form-control.p-0#from-amount-input{ autocomplete: 'off', name: 'fromAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any' }
--#                             #from-usd-price
--#                           .col-5.col-sm-4
--#                             .btn.btn-transparent.dropdown-toggle.float-right#from-token-button{ 'data-target' => '#buttonSwap', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
--#                               = cl_image_tag(Cryptocurrency.find_by(symbol: 'SSCRT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
--#                               %span.symbol SCRT
--#                     .text-center
--#                       = link_to '#' do
--#                         %em.fas.fa-arrow-down#flip-token
--#                     .card.border.mb-2.p-3{ style: 'background-color: rgb(247, 248, 250);' }
--#                       %span#cog-container{ 'aria-controls' => 'configCollapse', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#configCollapse', style: 'position: absolute; top: 11px; right: 16px;' }
--#                         %em.fas.fa-cog{ style: 'cursor: pointer;' }
--#                       .form-group.mb-0
--#                         = render 'secret_network/balance', selector_prefix: 'to'
--#                         .row.gutter-10px
--#                           .col-7.col-sm-8
--#                             %input.amount-input.form-control#to-amount-input{ name: 'estimateAmount', type: 'number', min: '0', disabled: true, step: 'any' }
--#                             #to-usd-price
--#                           .col-5.col-sm-4
--#                             .btn.btn-transparent.dropdown-toggle.float-right#to-token-button{ 'data-target' => '#buttonSwap', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
--#                               = cl_image_tag(Cryptocurrency.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
--#                               %span.symbol BUTT
--#                       .collapse#configCollapse
--#                         .form-group.mb-0.mt-2#slippage-container
--#                           %label Minimum acceptable amount
--#                           .row.gutter-10px
--#                             .col-7.col-sm-8
--#                               %input.form-control{ name: 'minAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any', disabled: true }
--#                               #min-acceptable-amount-usd-price
--#                             .col-5.col-sm-4
--#                               .input-group
--#                                 %input.form-control#slippage-tolerance{ name: 'slippageTolerance', value: 0.5, type: 'number', min: '0', step: '0.1', max: '100' }
--#                                 .input-group-append
--#                                   %span.input-group-text %
--#                     %button.btn.btn-grad.w-100.mt-2#submit-button
--#                       .d-none.loading
--#                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
--#                         %em#status Loading...
--#                       .ready
--#                         Swap
--#                 .d-none#results
--#                   .card
--#                     %h3.title.title-sm Results
--#                     %table.table
--#                       %thead
--#                         %tr
--#                           %th.table-head Protocol
--#                           %th.table-head Return amount
--#                           %th.table-head Gas ($)
--#                           %th.table-head Net ($)
--#                       %tbody
--#                         %tr#btn-best-result
--#                           %td.table-des Aggregated
--#                           %td.table-des -
--#                           %td.table-des -
--#                           %td.table-des -
--#                         %tr#secret-swap-best-result
--#                           %td.table-des Secret Swap
--#                           %td.table-des -
--#                           %td.table-des -
--#                           %td.table-des -
--#                         %tr#sienna-best-result
--#                           %td.table-des Sienna
--#                           %td.table-des -
--#                           %td.table-des -
--#                           %td.table-des -
--#                 #swap-paths
--#     .nk-ovm.shape-q
--# = render 'token_list', modal_title_id: 'buttonSwapLabel', modal_id: 'buttonSwap', modal_content_id: 'hacker-list', modal_input_id: 'input-text-2', cryptocurrencies: @cryptocurrencies, label_type: 'symbol'
+              .col-xl-6.col-lg-7.col-md-9.col-sm-10
+                - if current_admin_user
+                  %audio#bird-audio{ src: '../audios/birds.mp3' }
+                  .card#arbitrage-container
+                    %h5 Admin arbitrage options
+                    %p.mb-0
+                      %b Enabled:
+                      %input#arbitrage-enabled{ type: 'checkbox', checked: false }
+                    .form-group
+                      .input-group.mb-3
+                        %input.form-control#arbitrage-seconds{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0', step: '1', value: '300' }
+                        .input-group-append
+                          %span.input-group-text Seconds
+                    .form-group
+                      .input-group.mb-3
+                        %input.form-control#arbitrage-profit{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0', step: '0.1', value: '1' }
+                        .input-group-append
+                          %span.input-group-text Profit
+                .card.my-3
+                  = render 'features_header', blockchain: :secret_network, feature: :button_swap, show_environment_switch: false
+                  .collapse.mt-2#exampleCollapseExample
+                    .card.card-default.bg-theme-light
+                      .card-block
+                        %p DeFi / DEX aggregator offering the best token swap rates on the Secret network.
+                        %h5 VIP levels
+                        %table.table.table-striped.table-bordered
+                          %thead
+                            %tr
+                              %th Level
+                              %th BUTT balance
+                              %th Commission *
+                              %th Trading fee *
+                          %tbody
+                            %tr
+                              %td VIP 0
+                              %td < 6,250
+                              %td 5%
+                              %td 0.1%
+                            %tr
+                              %td VIP 1
+                              %td >= 6,250 BUTT
+                              %td 4%
+                              %td 0.08%
+                            %tr
+                              %td VIP 2
+                              %td >= 12,500 BUTT
+                              %td 3%
+                              %td 0.06%
+                            %tr
+                              %td VIP 3
+                              %td >= 25,000 BUTT
+                              %td 2%
+                              %td 0.04%
+                            %tr
+                              %td VIP 4
+                              %td >= 50,000 BUTT
+                              %td 1%
+                              %td 0.02%
+                            %tr
+                              %td VIP 5
+                              %td >= 100,000 BUTT
+                              %td 0%
+                              %td 0%
+                        %p
+                          *
+                          %b Commission
+                          is applied on the difference between btn.group's best offer and the other procols' best offer.
+                          %br
+                          *
+                          %b Trading fee
+                          is only applied when other protocols do not offer a swap path.
+                          %br
+                          * VIP 5 will gain access to swap path analytics.
+                          %br
+                          * We are working on increasing search speeds based on VIP levels.
+                  %hr
+                  #loading-container
+                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                    %b
+                      %em Loading trade pairs...
+                  %form.d-none{ name: 'secretNetworkDexAggregatorForm' }
+                    .card.border.p-3{ style: 'background-color: rgb(247, 248, 250);' }
+                      .form-group.mb-0
+                        = render 'secret_network/balance', selector_prefix: 'from', active_balance_link: true
+                        .row.gutter-10px
+                          .col-7.col-sm-8
+                            %input.amount-input.form-control.p-0#from-amount-input{ autocomplete: 'off', name: 'fromAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any' }
+                            #from-usd-price
+                          .col-5.col-sm-4
+                            .btn.btn-transparent.dropdown-toggle.float-right#from-token-button{ 'data-target' => '#buttonSwap', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                              = cl_image_tag(Cryptocurrency.find_by(symbol: 'SSCRT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                              %span.symbol SCRT
+                    .text-center
+                      = link_to '#' do
+                        %em.fas.fa-arrow-down#flip-token
+                    .card.border.mb-2.p-3{ style: 'background-color: rgb(247, 248, 250);' }
+                      %span#cog-container{ 'aria-controls' => 'configCollapse', 'aria-expanded' => 'true', 'data-toggle' => 'collapse', :href => '#configCollapse', style: 'position: absolute; top: 11px; right: 16px;' }
+                        %em.fas.fa-cog{ style: 'cursor: pointer;' }
+                      .form-group.mb-0
+                        = render 'secret_network/balance', selector_prefix: 'to'
+                        .row.gutter-10px
+                          .col-7.col-sm-8
+                            %input.amount-input.form-control#to-amount-input{ name: 'estimateAmount', type: 'number', min: '0', disabled: true, step: 'any' }
+                            #to-usd-price
+                          .col-5.col-sm-4
+                            .btn.btn-transparent.dropdown-toggle.float-right#to-token-button{ 'data-target' => '#buttonSwap', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                              = cl_image_tag(Cryptocurrency.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                              %span.symbol BUTT
+                      .collapse#configCollapse
+                        .form-group.mb-0.mt-2#slippage-container
+                          %label Minimum acceptable amount
+                          .row.gutter-10px
+                            .col-7.col-sm-8
+                              %input.form-control{ name: 'minAmount', placeholder: '0.0', type: 'number', min: '0', step: 'any', disabled: true }
+                              #min-acceptable-amount-usd-price
+                            .col-5.col-sm-4
+                              .input-group
+                                %input.form-control#slippage-tolerance{ name: 'slippageTolerance', value: 0.5, type: 'number', min: '0', step: '0.1', max: '100' }
+                                .input-group-append
+                                  %span.input-group-text %
+                    %button.btn.btn-grad.w-100.mt-2#submit-button
+                      .d-none.loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em#status Loading...
+                      .ready
+                        Swap
+                .d-none#results
+                  .card
+                    %h3.title.title-sm Results
+                    %table.table
+                      %thead
+                        %tr
+                          %th.table-head Protocol
+                          %th.table-head Return amount
+                          %th.table-head Gas ($)
+                          %th.table-head Net ($)
+                      %tbody
+                        %tr#btn-best-result
+                          %td.table-des Aggregated
+                          %td.table-des -
+                          %td.table-des -
+                          %td.table-des -
+                        %tr#secret-swap-best-result
+                          %td.table-des Secret Swap
+                          %td.table-des -
+                          %td.table-des -
+                          %td.table-des -
+                        %tr#sienna-best-result
+                          %td.table-des Sienna
+                          %td.table-des -
+                          %td.table-des -
+                          %td.table-des -
+                #swap-paths
+= render 'token_list', modal_title_id: 'buttonSwapLabel', modal_id: 'buttonSwap', modal_content_id: 'hacker-list', modal_input_id: 'input-text-2', cryptocurrencies: @cryptocurrencies, label_type: 'symbol'
