@@ -5,112 +5,114 @@
         .mt-3.mt-lg-5.w-100
           .container
             .row.justify-content-center
-              .col-lg-10
-                .card
-                  = render 'features_header', blockchain: :near, feature: :smart_contract_interface, show_environment_switch: true
-                  .collapse.mt-2#exampleCollapseExample
-                    .card.card-default.bg-theme-light
-                      .card-block
-                        %h6 Requirements
-                        %p
-                          Near web wallet for
-                          = link_to 'mainnet', 'https://wallet.near.org/', target: '_blank', rel: 'noopener'
-                          and/or
-                          = link_to 'testnet', 'https://wallet.testnet.near.org/', target: '_blank', rel: 'noopener'
-                        %hr
-                        %h6 Example with smart contract crud.btngroup.testnet
-                        %p
-                          %b 1. Create or update a key, value combo.
-                          %br
-                          \=> Environment: Staging / Testnet
-                          %br
-                          \=> Interaction type: Handle
-                          %br
-                          \=> Contract address: crud.btngroup.testnet
-                          %br
-                          \=> Function name: create_update
-                          %br
-                          \=> Param 1 key: k
-                          %br
-                          \=> Param 1 value: key_1
-                          %br
-                          \=> Param 2 key: v
-                          %br
-                          \=> Param 2 value: value_1
-                          %br
-                          \=> Submit
-                          %br
-                          %b 2. Read the value for a key
-                          %br
-                          \=> Environment: Staging / Testnet
-                          %br
-                          \=> Interaction type: Query
-                          %br
-                          \=> Contract address: crud.btngroup.testnet
-                          %br
-                          \=> Function name: read
-                          %br
-                          \=> Param 1 key: k
-                          %br
-                          \=> Param 1 value: key_1
-                          %br
-                          \=> Submit
-                          %br
-                          %b 3. Delete the value for a key
-                          %br
-                          \=> Environment: Staging / Testnet
-                          %br
-                          \=> Interaction type: Handle
-                          %br
-                          \=> Contract address: crud.btngroup.testnet
-                          %br
-                          \=> Function name: delete
-                          %br
-                          \=> Param 1 key: k
-                          %br
-                          \=> Param 1 value: key_1
-                          %br
-                          \=> Submit
-                        %hr
-                        %h6 References
-                        1.
-                        = link_to 'code for smart contract', 'https://github.com/btn-group/near-crud', target: '_blank', rel: 'noopener'
-                        %br
-                        2.
-                        = link_to 'smart contract on testnet explorer', 'https://explorer.testnet.near.org/accounts/crud.btngroup.testnet', target: '_blank', rel: 'noopener'
-                  %hr
-                  %form{ name: 'nearSmartContractInterfaceForm' }
-                    %ul.d-flex.flex-wrap.gutter-30px
-                      %li.mb-3
-                        .field-wrap
-                          %input.input-radio#handle{ name: 'interactionType', type: 'radio', value: 'handle' }
-                          %label{ for: 'handle' } Handle
-                      %li.mb-3
-                        .field-wrap
-                          %input.input-radio#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true }
-                          %label{ for: 'query' } Query
-                    .field-item
-                      %label.field-label{ for: 'contract-address' } Contract address
-                      .field-wrap
-                        %input.input-bordered#contract-address{ name: 'contractAddress', required: true, placeholder: 'smart-contract-address123...' }
-                    .field-item
-                      %label.field-label{ for: 'function-name' } Function name
-                      .field-wrap
-                        %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
-                    #params-container
-                    .row
-                      .col-lg-12
-                        .field-item
-                          .text-center
-                            %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
-                    %button.btn.btn-grad#search-button{ type: 'submit' }
-                      .d-none#loading
-                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-                        %em Loading...
-                      #ready
-                        Submit
-                .card.bg-light.mt-3.d-none#result-container
-                  .card-body.bg-white.border
-                    %h3.title.title-sm Result
-                    %pre.d-none#result-value
+              .col-12
+                %h1 Under maintenance
+              -# .col-lg-10
+              -#   .card
+              -#     = render 'features_header', blockchain: :near, feature: :smart_contract_interface, show_environment_switch: true
+              -#     .collapse.mt-2#exampleCollapseExample
+              -#       .card.card-default.bg-theme-light
+              -#         .card-block
+              -#           %h6 Requirements
+              -#           %p
+              -#             Near web wallet for
+              -#             = link_to 'mainnet', 'https://wallet.near.org/', target: '_blank', rel: 'noopener'
+              -#             and/or
+              -#             = link_to 'testnet', 'https://wallet.testnet.near.org/', target: '_blank', rel: 'noopener'
+              -#           %hr
+              -#           %h6 Example with smart contract crud.btngroup.testnet
+              -#           %p
+              -#             %b 1. Create or update a key, value combo.
+              -#             %br
+              -#             \=> Environment: Staging / Testnet
+              -#             %br
+              -#             \=> Interaction type: Handle
+              -#             %br
+              -#             \=> Contract address: crud.btngroup.testnet
+              -#             %br
+              -#             \=> Function name: create_update
+              -#             %br
+              -#             \=> Param 1 key: k
+              -#             %br
+              -#             \=> Param 1 value: key_1
+              -#             %br
+              -#             \=> Param 2 key: v
+              -#             %br
+              -#             \=> Param 2 value: value_1
+              -#             %br
+              -#             \=> Submit
+              -#             %br
+              -#             %b 2. Read the value for a key
+              -#             %br
+              -#             \=> Environment: Staging / Testnet
+              -#             %br
+              -#             \=> Interaction type: Query
+              -#             %br
+              -#             \=> Contract address: crud.btngroup.testnet
+              -#             %br
+              -#             \=> Function name: read
+              -#             %br
+              -#             \=> Param 1 key: k
+              -#             %br
+              -#             \=> Param 1 value: key_1
+              -#             %br
+              -#             \=> Submit
+              -#             %br
+              -#             %b 3. Delete the value for a key
+              -#             %br
+              -#             \=> Environment: Staging / Testnet
+              -#             %br
+              -#             \=> Interaction type: Handle
+              -#             %br
+              -#             \=> Contract address: crud.btngroup.testnet
+              -#             %br
+              -#             \=> Function name: delete
+              -#             %br
+              -#             \=> Param 1 key: k
+              -#             %br
+              -#             \=> Param 1 value: key_1
+              -#             %br
+              -#             \=> Submit
+              -#           %hr
+              -#           %h6 References
+              -#           1.
+              -#           = link_to 'code for smart contract', 'https://github.com/btn-group/near-crud', target: '_blank', rel: 'noopener'
+              -#           %br
+              -#           2.
+              -#           = link_to 'smart contract on testnet explorer', 'https://explorer.testnet.near.org/accounts/crud.btngroup.testnet', target: '_blank', rel: 'noopener'
+              -#     %hr
+              -#     %form{ name: 'nearSmartContractInterfaceForm' }
+              -#       %ul.d-flex.flex-wrap.gutter-30px
+              -#         %li.mb-3
+              -#           .field-wrap
+              -#             %input.input-radio#handle{ name: 'interactionType', type: 'radio', value: 'handle' }
+              -#             %label{ for: 'handle' } Handle
+              -#         %li.mb-3
+              -#           .field-wrap
+              -#             %input.input-radio#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true }
+              -#             %label{ for: 'query' } Query
+              -#       .field-item
+              -#         %label.field-label{ for: 'contract-address' } Contract address
+              -#         .field-wrap
+              -#           %input.input-bordered#contract-address{ name: 'contractAddress', required: true, placeholder: 'smart-contract-address123...' }
+              -#       .field-item
+              -#         %label.field-label{ for: 'function-name' } Function name
+              -#         .field-wrap
+              -#           %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+              -#       #params-container
+              -#       .row
+              -#         .col-lg-12
+              -#           .field-item
+              -#             .text-center
+              -#               %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
+              -#       %button.btn.btn-grad#search-button{ type: 'submit' }
+              -#         .d-none#loading
+              -#           %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+              -#           %em Loading...
+              -#         #ready
+              -#           Submit
+              -#   .card.bg-light.mt-3.d-none#result-container
+              -#     .card-body.bg-white.border
+              -#       %h3.title.title-sm Result
+              -#       %pre.d-none#result-value
     .nk-ovm.shape-d
