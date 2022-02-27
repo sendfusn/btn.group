@@ -17,7 +17,7 @@ module PayMeCrypto
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-
+    config.active_record.legacy_connection_handling = true
     config.active_job.queue_adapter = :sidekiq
     config.after_initialize do
       if initialized_server? && !Rails.env.test?
