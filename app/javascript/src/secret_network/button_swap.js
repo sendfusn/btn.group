@@ -787,8 +787,9 @@ $(document).ready(function(){
                 sentFunds: sentFunds,
               }
               let response = await document.secretNetwork.executeContract(params, gas)
+              console.log(response)
               let returnAmount;
-              response['logs'][0]['events'][response['logs'][0]['events'].length - 1]['attributes'].forEach(function(attribute){
+              response['arrayLog'].forEach(function(attribute){
                 if(attribute['key'] == 'return_amount') {
                   returnAmount = attribute['value']
                 }
@@ -798,7 +799,6 @@ $(document).ready(function(){
               }
               successMessage = "Amount received " + document.humanizeStringNumberFromSmartContract(returnAmount, toCryptocurrency['decimals'])
             }
-            await document.delay(6_500 * document.secretNetwork.gasAndDelayFactor)
             this.resetAfterSwap()
             // Update vip levels if swap involves BUTT
             if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
@@ -807,22 +807,7 @@ $(document).ready(function(){
             document.showAlertSuccess(successMessage);
           }
         } catch(error) {
-          // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
-          // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
-          if (error.message.includes('timed out waiting for tx to be included in a block')) {
-            // Wait 6.5 seconds and if balance of the to and from token has changed... Success
-            await document.delay(6_500 * document.secretNetwork.gasAndDelayFactor)
-            await this.updateWalletBalance(fromId, '.from', this.fromAmountInputSelector)
-            await this.updateWalletBalance(toId, '.to')
-            if (this.cryptocurrencies[fromId]['balance'] != fromBalance && this.cryptocurrencies[toId]['balance'] != toBalance) {
-              document.showAlertSuccess("Swap successful");
-              this.resetAfterSwap()
-            } else {
-              document.showAlertDanger("Timeout error. Please check your wallet to see if transaction went through. Otherwise try with more gas.")
-            }
-          } else {
-            document.showAlertDanger(error)
-          }
+          document.showAlertDanger(error)
         } finally {
           $submitButton.prop("disabled", false);
           $submitButton.find('.loading').addClass('d-none')
