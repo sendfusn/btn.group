@@ -6,249 +6,247 @@
     .container-fluid
       .nk-block.nk-block-blog
         .row
-          .col-12
-            %h1 Under maintenance
-          -# .col-lg-4.col-xl-3
-          -#   .sidebar.mr-lg-4.mb-4
-          -#     = render 'features_header', blockchain: :secret_network, feature: :pools, show_environment_switch: false
-          -#     %hr
-          -#     .field-item
-          -#       %label.field-label Category
-          -#       %ul.d-flex.flex-wrap.gutter-30px
-          -#         %li.mb-3
-          -#           .field-wrap
-          -#             %input.input-checkbox#farm-checkbox{ checked: true, type: 'checkbox' }
-          -#             %label{ for: 'farm-checkbox' } Farm
-          -#         %li.mb-3
-          -#           .field-wra
-          -#             %input.input-checkbox#profit-distributor-checkbox{ type: 'checkbox' }
-          -#             %label{ for: 'profit-distributor-checkbox' } Profit distributor
-          -#         %li.mb-3
-          -#           .field-wrap
-          -#             %input.input-checkbox#yield-optimizer-checkbox{ checked: true, type: 'checkbox' }
-          -#             %label{ for: 'yield-optimizer-checkbox' } Yield optimizer
-          -#     .field-item.pb-0
-          -#       %label.field-label State
-          -#       %ul.d-flex.flex-wrap.gutter-30px
-          -#         %li.mb-3
-          -#           .field-wrap
-          -#             %input.input-checkbox#incentivized-checkbox{ checked: true, type: 'checkbox' }
-          -#             %label{ for: 'incentivized-checkbox' } Incentivized
-          -#         %li.mb-3
-          -#           .field-wrap
-          -#             %input.input-checkbox#non-incentivized-checkbox{ type: 'checkbox' }
-          -#             %label{ for: 'non-incentivized-checkbox' } Non-incentivized
-          -# .col-lg-8.col-xl-9
-          -#   .alert.alert-warning
-          -#     %h4.title.title-sm.mb-0
-          -#       %span.fa.fa-exclamation-triangle
-          -#       Warning
-          -#     %p
-          -#       These pools are not private. This is by design. Click
-          -#       = link_to 'here', secret_network_why_some_of_our_contracts_are_not_private_path
-          -#       to find out why.
-          -#   .collapse.mb-4#exampleCollapseExample
-          -#     .card.card-default
-          -#       .card-block
-          -#         = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
-          -#         %h6.mt-4 What is it?
-          -#         %p
-          -#           This is a collection of profit distributor, farm and yield optimizer pools.
-          -#           %br
-          -#           * Please use the gas recommended for deposits and withdrawals.
-          -#           %br
-          -#           * Rewards are claimed every time you deposit or withdraw.
-          -#           %br
-          -#           * 5% of yield from yield optimizers sent to profit distributor.
-          -#         %h6 Requirements
-          -#         %p
-          -#           1.
-          -#           = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-          -#           %br
-          -#           2. SCRT for gas
-          -#         %h6 References
-          -#         %p
-          -#           1.
-          -#           = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
-          -#   .row.mb-5
-          -#     .col-12#pools
-          -#       // === PROFIT DISTRIBUTORS ===
-          -#       - pools_for_page.profit_distributor.each do |profit_distributor|
-          -#         .block.incentivized
-          -#           .card.mb-3.profit-distributor.d-none{ 'data-pool-address': profit_distributor.address, 'data-depositable-price': profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.price }
-          -#             .row
-          -#               .col-12
-          -#                 %h5.title.title-sm.mb-1
-          -#                   Profit distributor
-          -#                   %a.float-right{ href: '#' }
-          -#                     %span.fa.fa-sync
-          -#               .col-md-6.text-regular-sm
-          -#                 %span.mr-1 Deposit #{profit_distributor.deposit_label}
-          -#                 %span
-          -#                   = cl_image_tag profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
-          -#                 %br
-          -#                 %span.mr-1 Earn #{profit_distributor.earn_label}
-          -#                 %span
-          -#                   = cl_image_tag profit_distributor.cryptocurrency_pools.reward.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
-          -#               .col-md-6.text-regular-sm
-          -#                 TVL:
-          -#                 %span.total-shares Loading...
-          -#                 %br
-          -#                 Claimable #{profit_distributor.earn_label}:
-          -#                 = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
-          -#                 %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
-          -#                   .loading
-          -#                     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                     %em Loading...
-          -#                   .d-none.ready
-          -#             .row.deposit-withdraw-forms-container.d-none
-          -#               .col-12
-          -#                 %hr
-          -#               .col-md-6.text-regular-sm.mb-3.mb-lg-0
-          -#                 = render 'secret_network/balance', selector_prefix: profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
-          -#                 %form{ name: "#{profit_distributor.address}DepositForm" }
-          -#                   .input-group.mb-3
-          -#                     %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-          -#                     .input-group-append
-          -#                       %span.input-group-text= profit_distributor.earn_label
-          -#                   %button.btn.btn-primary.btn-rg{ type: 'submit' }
-          -#                     .d-none.loading
-          -#                       %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                       %em Loading...
-          -#                     .ready Deposit
-          -#               .col-md-6.text-regular-sm
-          -#                 = render 'secret_network/balance', selector_prefix: "#{profit_distributor.address}-user-shares", show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
-          -#                 %form{ name: "#{profit_distributor.address}WithdrawForm" }
-          -#                   .input-group.mb-3
-          -#                     %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-          -#                     .input-group-append
-          -#                       %span.input-group-text= profit_distributor.earn_label
-          -#                   %button.btn.btn-primary.btn-rg{ type: 'submit' }
-          -#                     .d-none.loading
-          -#                       %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                       %em Loading...
-          -#                     .ready Withdraw
-          -#             %hr
-          -#             .text-regular-sm
-          -#               We recommend farming BUTT instead of using the profit distributor.
-          -#               %br
-          -#               This is due to the less than desired TVL in the yield optimizer pools and the price of SEFI.
-          -#               %br
-          -#               Not financial advice.
-          -#       // === FARM ===
-          -#       - pools_for_page.farm.each do |farm_pool|
-          -#         .block{ class: farm_pool.apr.zero? ? 'non-incentivized d-none' : 'incentivized' }
-          -#           .card.farm.mb-3{ 'data-pool-address': farm_pool.address, 'data-depositable-price': farm_pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
-          -#             .row
-          -#               .col-12
-          -#                 %h5.title.title-sm.mb-1
-          -#                   Farm
-          -#                   %a.float-right{ href: '#' }
-          -#                     %span.fa.fa-sync
-          -#               .col-md-6.text-regular-sm
-          -#                 %span.mr-1
-          -#                   Deposit
-          -#                   = link_to farm_pool.deposit_label, farm_pool.pool.protocol.provide_url, target: '_blank', rel: 'noopener'
-          -#                 - farm_pool.root_pool.cryptocurrency_pools.deposit.each do |cp|
-          -#                   %span
-          -#                     = cl_image_tag cp.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
-          -#                 %br
-          -#                 %span.mr-1 Earn #{farm_pool.earn_label}
-          -#                 %span
-          -#                   = cl_image_tag farm_pool.cryptocurrency_pools.reward.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
-          -#               .col-md-6.text-regular-sm
-          -#                 TVL:
-          -#                 %span.total-shares Loading...
-          -#                 %br
-          -#                 🔥🔥
-          -#                 %b.ml-1 APR: #{farm_pool.apr}%
-          -#                 🔥🔥
-          -#                 %br
-          -#                 Claimable #{farm_pool.earn_label}:
-          -#                 = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
-          -#                 %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
-          -#                   .loading
-          -#                     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                     %em Loading...
-          -#                   .d-none.ready
-          -#             .row.deposit-withdraw-forms-container.d-none
-          -#               .col-12
-          -#                 %hr
-          -#               .col-md-6.text-regular-sm.mb-3.mb-lg-0
-          -#                 = render 'secret_network/balance', selector_prefix: farm_pool.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
-          -#                 %form{ name: "#{farm_pool.address}DepositForm" }
-          -#                   .input-group.mb-3
-          -#                     %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-          -#                     .input-group-append
-          -#                       %span.input-group-text= farm_pool.deposit_label
-          -#                   %button.btn.btn-primary.btn-rg{ type: 'submit' }
-          -#                     .loading.d-none
-          -#                       %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                       %em Loading...
-          -#                     .ready Deposit
-          -#               .col-md-6.text-regular-sm
-          -#                 = render 'secret_network/balance', selector_prefix: "#{farm_pool.address}-user-shares", show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
-          -#                 %form{ name: "#{farm_pool.address}WithdrawForm" }
-          -#                   .input-group.mb-3
-          -#                     %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-          -#                     .input-group-append
-          -#                       %span.input-group-text= farm_pool.deposit_label
-          -#                   %button.btn.btn-primary.btn-rg{ type: 'submit' }
-          -#                     .d-none.loading
-          -#                       %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                       %em Loading...
-          -#                     .ready Withdraw
-          -#       - pools_for_page.yield_optimizer.each do |yield_optimizer|
-          -#         .block{ class: yield_optimizer.apy.zero? ? 'non-incentivized d-none' : 'incentivized' }
-          -#           .card.yield-optimizer.mb-3{ 'data-pool-address': yield_optimizer.address, 'data-depositable-price': yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
-          -#             .row
-          -#               .col-12
-          -#                 %h5.title.title-sm.mb-1
-          -#                   Yield optimizer
-          -#                   %a.float-right{ href: '#' }
-          -#                     %span.fa.fa-sync
-          -#               .col-md-6.text-regular-sm
-          -#                 %div Deposit & Earn
-          -#                 %span.mr-1= yield_optimizer.deposit_label
-          -#                 - yield_optimizer.root_pool.cryptocurrency_pools.deposit.order(:cryptocurrency_id).each do |cp|
-          -#                   %span
-          -#                     = cl_image_tag cp.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
-          -#                 %br
-          -#                 %span via
-          -#                 = link_to yield_optimizer.pool.protocol.name, yield_optimizer.pool.protocol.url, rel: 'noopener', target: '_blank'
-          -#               .col-md-6.text-regular-sm
-          -#                 TVL:
-          -#                 %span.total-shares Loading...
-          -#                 %br
-          -#                 APY: #{yield_optimizer.apy}%
-          -#                 %br
-          -#                 Rewards to process:
-          -#                 %span.rewards-to-process Loading...
-          -#                 %span SEFI
-          -#             .row.deposit-withdraw-forms-container.d-none
-          -#               .col-12
-          -#                 %hr
-          -#               .col-md-6.text-regular-sm.mb-3.mb-lg-0
-          -#                 = render 'secret_network/balance', selector_prefix: yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
-          -#                 %form{ name: "#{yield_optimizer.address}DepositForm" }
-          -#                   .input-group.mb-3
-          -#                     %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-          -#                     .input-group-append
-          -#                       %span.input-group-text= yield_optimizer.deposit_label
-          -#                   %button.btn.btn-primary.btn-rg{ type: 'submit' }
-          -#                     .d-none.loading
-          -#                       %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                       %em Loading...
-          -#                     .ready Deposit
-          -#               .col-md-6.text-regular-sm
-          -#                 = render 'secret_network/balance', selector_prefix: "#{yield_optimizer.address}-user-shares", show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
-          -#                 %form{ name: "#{yield_optimizer.address}WithdrawForm" }
-          -#                   .input-group.mb-3
-          -#                     %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
-          -#                     .input-group-append
-          -#                       %span.input-group-text= yield_optimizer.deposit_label
-          -#                   %button.btn.btn-primary.btn-rg{ type: 'submit' }
-          -#                     .d-none.loading
-          -#                       %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-          -#                       %em Loading...
-          -#                     .ready Withdraw
+          .col-lg-4.col-xl-3
+            .sidebar.mr-lg-4.mb-4
+              = render 'features_header', blockchain: :secret_network, feature: :pools, show_environment_switch: false
+              %hr
+              .field-item
+                %label.field-label Category
+                %ul.d-flex.flex-wrap.gutter-30px
+                  %li.mb-3
+                    .field-wrap
+                      %input.input-checkbox#farm-checkbox{ checked: true, type: 'checkbox' }
+                      %label{ for: 'farm-checkbox' } Farm
+                  %li.mb-3
+                    .field-wra
+                      %input.input-checkbox#profit-distributor-checkbox{ type: 'checkbox' }
+                      %label{ for: 'profit-distributor-checkbox' } Profit distributor
+                  %li.mb-3
+                    .field-wrap
+                      %input.input-checkbox#yield-optimizer-checkbox{ checked: true, type: 'checkbox' }
+                      %label{ for: 'yield-optimizer-checkbox' } Yield optimizer
+              .field-item.pb-0
+                %label.field-label State
+                %ul.d-flex.flex-wrap.gutter-30px
+                  %li.mb-3
+                    .field-wrap
+                      %input.input-checkbox#incentivized-checkbox{ checked: true, type: 'checkbox' }
+                      %label{ for: 'incentivized-checkbox' } Incentivized
+                  %li.mb-3
+                    .field-wrap
+                      %input.input-checkbox#non-incentivized-checkbox{ type: 'checkbox' }
+                      %label{ for: 'non-incentivized-checkbox' } Non-incentivized
+          .col-lg-8.col-xl-9
+            .alert.alert-warning
+              %h4.title.title-sm.mb-0
+                %span.fa.fa-exclamation-triangle
+                Warning
+              %p
+                These pools are not private. This is by design. Click
+                = link_to 'here', secret_network_why_some_of_our_contracts_are_not_private_path
+                to find out why.
+            .collapse.mb-4#exampleCollapseExample
+              .card.card-default
+                .card-block
+                  = cl_image_tag 'secret_network/yield_optimizer/3143e566-c3f1-4252-80f2-6bbbc5242368_pfkrls', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
+                  %h6.mt-4 What is it?
+                  %p
+                    This is a collection of profit distributor, farm and yield optimizer pools.
+                    %br
+                    * Please use the gas recommended for deposits and withdrawals.
+                    %br
+                    * Rewards are claimed every time you deposit or withdraw.
+                    %br
+                    * 5% of yield from yield optimizers sent to profit distributor.
+                  %h6 Requirements
+                  %p
+                    1.
+                    = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                    %br
+                    2. SCRT for gas
+                  %h6 References
+                  %p
+                    1.
+                    = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+            .row.mb-5
+              .col-12#pools
+                // === PROFIT DISTRIBUTORS ===
+                - pools_for_page.profit_distributor.each do |profit_distributor|
+                  .block.incentivized
+                    .card.mb-3.profit-distributor.d-none{ 'data-pool-address': profit_distributor.address, 'data-depositable-price': profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.price }
+                      .row
+                        .col-12
+                          %h5.title.title-sm.mb-1
+                            Profit distributor
+                            %a.float-right{ href: '#' }
+                              %span.fa.fa-sync
+                        .col-md-6.text-regular-sm
+                          %span.mr-1 Deposit #{profit_distributor.deposit_label}
+                          %span
+                            = cl_image_tag profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
+                          %br
+                          %span.mr-1 Earn #{profit_distributor.earn_label}
+                          %span
+                            = cl_image_tag profit_distributor.cryptocurrency_pools.reward.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
+                        .col-md-6.text-regular-sm
+                          TVL:
+                          %span.total-shares Loading...
+                          %br
+                          Claimable #{profit_distributor.earn_label}:
+                          = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
+                          %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
+                            .loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .d-none.ready
+                      .row.deposit-withdraw-forms-container.d-none
+                        .col-12
+                          %hr
+                        .col-md-6.text-regular-sm.mb-3.mb-lg-0
+                          = render 'secret_network/balance', selector_prefix: profit_distributor.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
+                          %form{ name: "#{profit_distributor.address}DepositForm" }
+                            .input-group.mb-3
+                              %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                              .input-group-append
+                                %span.input-group-text= profit_distributor.earn_label
+                            %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready Deposit
+                        .col-md-6.text-regular-sm
+                          = render 'secret_network/balance', selector_prefix: "#{profit_distributor.address}-user-shares", show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
+                          %form{ name: "#{profit_distributor.address}WithdrawForm" }
+                            .input-group.mb-3
+                              %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                              .input-group-append
+                                %span.input-group-text= profit_distributor.earn_label
+                            %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready Withdraw
+                      %hr
+                      .text-regular-sm
+                        We recommend farming BUTT instead of using the profit distributor.
+                        %br
+                        This is due to the less than desired TVL in the yield optimizer pools and the price of SEFI.
+                        %br
+                        Not financial advice.
+                // === FARM ===
+                - pools_for_page.farm.each do |farm_pool|
+                  .block{ class: farm_pool.apr.zero? ? 'non-incentivized d-none' : 'incentivized' }
+                    .card.farm.mb-3{ 'data-pool-address': farm_pool.address, 'data-depositable-price': farm_pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
+                      .row
+                        .col-12
+                          %h5.title.title-sm.mb-1
+                            Farm
+                            %a.float-right{ href: '#' }
+                              %span.fa.fa-sync
+                        .col-md-6.text-regular-sm
+                          %span.mr-1
+                            Deposit
+                            = link_to farm_pool.deposit_label, farm_pool.pool.protocol.provide_url, target: '_blank', rel: 'noopener'
+                          - farm_pool.root_pool.cryptocurrency_pools.deposit.each do |cp|
+                            %span
+                              = cl_image_tag cp.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
+                          %br
+                          %span.mr-1 Earn #{farm_pool.earn_label}
+                          %span
+                            = cl_image_tag farm_pool.cryptocurrency_pools.reward.first.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
+                        .col-md-6.text-regular-sm
+                          TVL:
+                          %span.total-shares Loading...
+                          %br
+                          🔥🔥
+                          %b.ml-1 APR: #{farm_pool.apr}%
+                          🔥🔥
+                          %br
+                          Claimable #{farm_pool.earn_label}:
+                          = render 'keplr_connect_button', extra_button_classes: 'btn-xxs mb-1 border btn-round btn-auto', extra_logo_classes: 'd-none'
+                          %button.btn.btn-light.btn-xxs.ml-2.mb-1.border.claim-button.d-none{ type: 'button' }
+                            .loading
+                              %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                              %em Loading...
+                            .d-none.ready
+                      .row.deposit-withdraw-forms-container.d-none
+                        .col-12
+                          %hr
+                        .col-md-6.text-regular-sm.mb-3.mb-lg-0
+                          = render 'secret_network/balance', selector_prefix: farm_pool.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
+                          %form{ name: "#{farm_pool.address}DepositForm" }
+                            .input-group.mb-3
+                              %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                              .input-group-append
+                                %span.input-group-text= farm_pool.deposit_label
+                            %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                              .loading.d-none
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready Deposit
+                        .col-md-6.text-regular-sm
+                          = render 'secret_network/balance', selector_prefix: "#{farm_pool.address}-user-shares", show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
+                          %form{ name: "#{farm_pool.address}WithdrawForm" }
+                            .input-group.mb-3
+                              %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                              .input-group-append
+                                %span.input-group-text= farm_pool.deposit_label
+                            %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready Withdraw
+                - pools_for_page.yield_optimizer.each do |yield_optimizer|
+                  .block{ class: yield_optimizer.apy.zero? ? 'non-incentivized d-none' : 'incentivized' }
+                    .card.yield-optimizer.mb-3{ 'data-pool-address': yield_optimizer.address, 'data-depositable-price': yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.price }
+                      .row
+                        .col-12
+                          %h5.title.title-sm.mb-1
+                            Yield optimizer
+                            %a.float-right{ href: '#' }
+                              %span.fa.fa-sync
+                        .col-md-6.text-regular-sm
+                          %div Deposit & Earn
+                          %span.mr-1= yield_optimizer.deposit_label
+                          - yield_optimizer.root_pool.cryptocurrency_pools.deposit.order(:cryptocurrency_id).each do |cp|
+                            %span
+                              = cl_image_tag cp.cryptocurrency.attachments.first.cloudinary_public_id, class: 'logo-avatar'
+                          %br
+                          %span via
+                          = link_to yield_optimizer.pool.protocol.name, yield_optimizer.pool.protocol.url, rel: 'noopener', target: '_blank'
+                        .col-md-6.text-regular-sm
+                          TVL:
+                          %span.total-shares Loading...
+                          %br
+                          APY: #{yield_optimizer.apy}%
+                          %br
+                          Rewards to process:
+                          %span.rewards-to-process Loading...
+                          %span SEFI
+                      .row.deposit-withdraw-forms-container.d-none
+                        .col-12
+                          %hr
+                        .col-md-6.text-regular-sm.mb-3.mb-lg-0
+                          = render 'secret_network/balance', selector_prefix: yield_optimizer.pool.cryptocurrency_pools.deposit.first.cryptocurrency.address, show_keplr_connect_button: false, label: 'Depositable', active_balance_link: true
+                          %form{ name: "#{yield_optimizer.address}DepositForm" }
+                            .input-group.mb-3
+                              %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                              .input-group-append
+                                %span.input-group-text= yield_optimizer.deposit_label
+                            %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready Deposit
+                        .col-md-6.text-regular-sm
+                          = render 'secret_network/balance', selector_prefix: "#{yield_optimizer.address}-user-shares", show_keplr_connect_button: false, label: 'Withdrawable', active_balance_link: true
+                          %form{ name: "#{yield_optimizer.address}WithdrawForm" }
+                            .input-group.mb-3
+                              %input.form-control{ autocomplete: 'off', name: 'amount', placeholder: '0.0' }
+                              .input-group-append
+                                %span.input-group-text= yield_optimizer.deposit_label
+                            %button.btn.btn-primary.btn-rg{ type: 'submit' }
+                              .d-none.loading
+                                %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                                %em Loading...
+                              .ready Withdraw

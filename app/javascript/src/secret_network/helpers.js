@@ -123,7 +123,9 @@ document.secretNetwork = {
 
     try {
       document.secretNetwork.gettingBlockHeight = true
-      document.secretNetwork.height = await document.secretNetwork.client().getHeight();
+      let client = await document.secretNetwork.client()
+      let response = await client.query.tendermint.getLatestBlock()
+      document.secretNetwork.height = Number(response['block']['header']['height'])
       return document.secretNetwork.height
     } catch (err) {
       document.showAlertDanger(err)
