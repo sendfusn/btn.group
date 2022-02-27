@@ -6,7 +6,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 gem 'actionpack', '>= 6.1.4.6'
-# gem 'activeadmin'
+gem 'activeadmin', github: 'tagliala/activeadmin', branch: 'feature/railties-7' # FIXME: remove
+gem 'arbre', github: 'activeadmin/arbre' # FIXME: remove
+gem 'inherited_resources', github: 'activeadmin/inherited_resources' # FIXME: remove
 gem 'airbrake'
 gem 'barnes'
 # Reduces boot times through caching; required in config/boot.rb

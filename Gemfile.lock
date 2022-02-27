@@ -1,3 +1,36 @@
+GIT
+  remote: https://github.com/activeadmin/arbre.git
+  revision: 555d5fd7b1df19a6cfe48873cfea25bef3ad0e72
+  specs:
+    arbre (1.5.0)
+      activesupport (>= 3.0.0, < 7.1)
+      ruby2_keywords (>= 0.0.2, < 1.0)
+
+GIT
+  remote: https://github.com/activeadmin/inherited_resources.git
+  revision: f5ceafb10f0ba371e97f9164bc4cff1b887d310b
+  specs:
+    inherited_resources (1.13.1)
+      actionpack (>= 6.0, < 7.1)
+      has_scope (~> 0.6)
+      railties (>= 6.0, < 7.1)
+      responders (>= 2, < 4)
+
+GIT
+  remote: https://github.com/tagliala/activeadmin.git
+  revision: 871c6af8dec41f764a9f08bf04b5422971a23e32
+  branch: feature/railties-7
+  specs:
+    activeadmin (2.10.1)
+      arbre (~> 1.2, >= 1.2.1)
+      formtastic (>= 3.1, < 5.0)
+      formtastic_i18n (~> 0.4)
+      inherited_resources (~> 1.7)
+      jquery-rails (~> 4.2)
+      kaminari (~> 1.0, >= 1.2.1)
+      railties (>= 6.0, < 7.1)
+      ransack (~> 2.1, >= 2.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -123,6 +156,9 @@ GEM
       railties (>= 5.0.0)
     ffi (1.15.5)
     formatador (1.1.0)
+    formtastic (4.0.0)
+      actionpack (>= 5.2.0)
+    formtastic_i18n (0.7.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     guard (2.18.0)
@@ -154,6 +190,9 @@ GEM
       rainbow
       rubocop (>= 0.50.0)
       sysexits (~> 1.1)
+    has_scope (0.8.0)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -170,8 +209,24 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jquery-rails (4.4.0)
+      rails-dom-testing (>= 1, < 3)
+      railties (>= 4.2.0)
+      thor (>= 0.14, < 2.0)
     jsbundling-rails (1.0.2)
       railties (>= 6.0.0)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -268,6 +323,10 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    ransack (2.5.0)
+      activerecord (>= 5.2.4)
+      activesupport (>= 5.2.4)
+      i18n
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -325,6 +384,7 @@ GEM
     rubocop-rspec (2.8.0)
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
     ruby_parser (3.18.1)
       sexp_processor (~> 4.16)
     rubyzip (2.3.2)
@@ -391,7 +451,9 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack (>= 6.1.4.6)
+  activeadmin!
   airbrake
+  arbre!
   barnes
   bootsnap (>= 1.4.6)
   capybara
@@ -404,6 +466,7 @@ DEPENDENCIES
   haml-rails (~> 2.0)
   haml_lint
   immigrant
+  inherited_resources!
   jbuilder (~> 2.7)
   jsbundling-rails
   listen (~> 3.3)
