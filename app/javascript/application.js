@@ -12,7 +12,7 @@ import BigNumber from "bignumber.js";
 // Buffer
 import "./src/buffer";
 // LODASH
-import 'lodash'
+import "./src/lodash";
 // DATATABLES
 import "./src/datatables"
 

@@ -6,125 +6,123 @@
     .container-fluid
       .nk-block.nk-block-blog
         .row
-          .col-12
-            %h1 Under maintenance
--#           .col-lg-4.col-xl-3
--#             .sidebar.mr-lg-4.mb-4
--#               = render 'features_header', blockchain: :secret_network, feature: :mount_doom, show_environment_switch: false
--#               %hr
--#               %ul.nav.tab-nav.tab-nav-btn
--#                 %li
--#                   %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Query
--#                 %li
--#                   %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Set viewing key
--#               .tab-content
--#                 .tab-pane.fade.active.show#tab-2-1
--#                   %ul.d-flex.flex-wrap.gutter-30px
--#                     %li.mb-3
--#                       .field-wrap
--#                         %input.input-radio#nft{ name: 'tokenType', type: 'radio', value: 'nft', checked: true }
--#                         %label{ for: 'nft' } NFT
--#                     %li.mb-3
--#                       .field-wrap
--#                         %input.input-radio#snip-20{ name: 'tokenType', type: 'radio', value: 'snip-20' }
--#                         %label{ for: 'snip-20' } SNIP-20
--#                   %form.d-none#fungible-token-inputs{ name: 'mountDoomFungibleTokenQueryForm' }
--#                     .field-item.pb-0
--#                       .field-wrap
--#                         .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0#fungibleTokenAddress{ 'data-target' => '#mountDoomTokens', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
--#                           = cl_image_tag(@fungible_tokens.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
--#                           %span.symbol BUTT
--#                     .field-item.pb-0.d-none.other-field-item
--#                       %label.field-label Token Address
--#                       .field-wrap
--#                         %input.input-bordered{ name: 'otherTokenAddress', autocomplete: 'off' }
--#                     %button.btn.btn-grad.mt-4{ type: 'submit' }
--#                       .d-none.loading
--#                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
--#                         %em Loading...
--#                       .ready
--#                         Submit
--#                   %form#non-fungible-token-inputs{ name: 'mountDoomNonFungibleTokenQueryForm' }
--#                     .field-item.pb-0
--#                       .field-wrap
--#                         .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0#nonFungibleTokenAddress{ 'data-target' => '#mountDoomNFTs', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
--#                           .block
--#                             = cl_image_tag(@nfts.find_by(symbol: 'ANONS').attachments.first&.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
--#                           %span.symbol ANONS
--#                     .field-item.pb-0.d-none.other-field-item
--#                       %label.field-label Token Address
--#                       .field-wrap
--#                         %input.input-bordered{ name: 'otherTokenAddress', autocomplete: 'off' }
--#                     %button.btn.btn-grad.mt-4{ type: 'submit' }
--#                       .d-none.loading
--#                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
--#                         %em Loading...
--#                       .ready
--#                         Submit
--#                 .tab-pane.fade#tab-2-2
--#                   %form{ name: 'mountDoomSetViewingKeyForm' }
--#                     .field-item
--#                       %label.field-label Token Address
--#                       .field-wrap
--#                         %input.input-bordered{ name: 'tokenAddress', required: true, autocomplete: 'off' }
--#                     %button.btn.btn-grad{ type: 'submit' }
--#                       .d-none.loading
--#                         %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
--#                         %em Loading...
--#                       .ready
--#                         Submit
--#           .col-lg-8.col-xl-9
--#             .collapse.mb-4#exampleCollapseExample
--#               .card.card-default
--#                 .card-block
--#                   = cl_image_tag 'secret_network/mount_doom/mt_doom_biwkdj', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
--#                   %p
--#                     %b Contract:
--#                     = link_to 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq', 'https://secretnodes.com/secret/chains/secret-4/contracts/secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq', target: '_blank', rel: 'noopener'
--#                   %h6 What is it?
--#                   %p This is a burn address smart contract for the Secret network. Anyone can send any token to Mount Doom and set a viewing key for that token. It has no admin functionality so it is completely decentralized.
--#                   %h6 Why it was created
--#                   %p We wanted to send some BUTT to a burn address and realised that there wasn't anywhere to send it to, and even if we did, nobody could see it.
--#                   %h6 How to use
--#                   %p
--#                     1. Send tokens to regular Mount Doom contract
--#                     %br
--#                     2. Set viewing key for token if required.
--#                     %br
--#                     3. Query token.
+          .col-lg-4.col-xl-3
+            .sidebar.mr-lg-4.mb-4
+              = render 'features_header', blockchain: :secret_network, feature: :mount_doom, show_environment_switch: false
+              %hr
+              %ul.nav.tab-nav.tab-nav-btn
+                %li
+                  %a.active{ 'data-toggle' => 'tab', :href => '#tab-2-1' } Query
+                %li
+                  %a{ 'data-toggle' => 'tab', :href => '#tab-2-2' } Set viewing key
+              .tab-content
+                .tab-pane.fade.active.show#tab-2-1
+                  %ul.d-flex.flex-wrap.gutter-30px
+                    %li.mb-3
+                      .field-wrap
+                        %input.input-radio#nft{ name: 'tokenType', type: 'radio', value: 'nft', checked: true }
+                        %label{ for: 'nft' } NFT
+                    %li.mb-3
+                      .field-wrap
+                        %input.input-radio#snip-20{ name: 'tokenType', type: 'radio', value: 'snip-20' }
+                        %label{ for: 'snip-20' } SNIP-20
+                  %form.d-none#fungible-token-inputs{ name: 'mountDoomFungibleTokenQueryForm' }
+                    .field-item.pb-0
+                      .field-wrap
+                        .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0#fungibleTokenAddress{ 'data-target' => '#mountDoomTokens', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                          = cl_image_tag(@fungible_tokens.find_by(symbol: 'BUTT').attachments.first.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                          %span.symbol BUTT
+                    .field-item.pb-0.d-none.other-field-item
+                      %label.field-label Token Address
+                      .field-wrap
+                        %input.input-bordered{ name: 'otherTokenAddress', autocomplete: 'off' }
+                    %button.btn.btn-grad.mt-4{ type: 'submit' }
+                      .d-none.loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      .ready
+                        Submit
+                  %form#non-fungible-token-inputs{ name: 'mountDoomNonFungibleTokenQueryForm' }
+                    .field-item.pb-0
+                      .field-wrap
+                        .btn.btn-auto.btn-transparent.dropdown-toggle.pl-0#nonFungibleTokenAddress{ 'data-target' => '#mountDoomNFTs', 'data-toggle' => 'modal', type: 'button', style: 'color: #415076 !important;' }
+                          .block
+                            = cl_image_tag(@nfts.find_by(symbol: 'ANONS').attachments.first&.cloudinary_public_id, transformation: [{ fetch_format: :auto, quality: 100, crop: :scale, drp: 2, height: 48, width: 48 }], class: 'mr-2 logo-avatar', style: 'vertical-align: text-bottom')
+                          %span.symbol ANONS
+                    .field-item.pb-0.d-none.other-field-item
+                      %label.field-label Token Address
+                      .field-wrap
+                        %input.input-bordered{ name: 'otherTokenAddress', autocomplete: 'off' }
+                    %button.btn.btn-grad.mt-4{ type: 'submit' }
+                      .d-none.loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      .ready
+                        Submit
+                .tab-pane.fade#tab-2-2
+                  %form{ name: 'mountDoomSetViewingKeyForm' }
+                    .field-item
+                      %label.field-label Token Address
+                      .field-wrap
+                        %input.input-bordered{ name: 'tokenAddress', required: true, autocomplete: 'off' }
+                    %button.btn.btn-grad{ type: 'submit' }
+                      .d-none.loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      .ready
+                        Submit
+          .col-lg-8.col-xl-9
+            .collapse.mb-4#exampleCollapseExample
+              .card.card-default
+                .card-block
+                  = cl_image_tag 'secret_network/mount_doom/mt_doom_biwkdj', width: 230, crop: :scale, dpr: 2, fetch_format: :auto
+                  %p
+                    %b Contract:
+                    = link_to 'secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq', 'https://secretnodes.com/secret/chains/secret-4/contracts/secret177e9pz4heqx3jtrxav3cqrq7jvp7uthhayk8uq', target: '_blank', rel: 'noopener'
+                  %h6 What is it?
+                  %p This is a burn address smart contract for the Secret network. Anyone can send any token to Mount Doom and set a viewing key for that token. It has no admin functionality so it is completely decentralized.
+                  %h6 Why it was created
+                  %p We wanted to send some BUTT to a burn address and realised that there wasn't anywhere to send it to, and even if we did, nobody could see it.
+                  %h6 How to use
+                  %p
+                    1. Send tokens to regular Mount Doom contract
+                    %br
+                    2. Set viewing key for token if required.
+                    %br
+                    3. Query token.
 
--#                   %h6 Requirements
--#                   %p
--#                     1.
--#                     = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
--#                     %br
--#                     2. SCRT for gas, if setting a viewing key
+                  %h6 Requirements
+                  %p
+                    1.
+                    = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                    %br
+                    2. SCRT for gas, if setting a viewing key
 
--#                   %h6 References
--#                   %p
--#                     1.
--#                     = link_to 'github - mount-doom', 'https://github.com/btn-group/mount-doom', target: '_blank', rel: 'noopener'
--#                     %br
--#                     2.
--#                     = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
--#             .d-none#transactions-container
--#               .card
--#                 %h6.mt-4
--#                   Balance:
--#                   %span#balance
--#                 .table-responsive
--#                   %table.table.table-striped.table-bordered
--#                     %thead
--#                       %tr
--#                         %th{ style: 'min-width: 135px !important;' }
--#                         %th Description
--#                         %th Amount
--#                     %tbody#transactions-table-body
--#             .row.d-none#nfts-container
--#               .col-12
--#                 %b
--#                   %span#sacrifice-count
--#                   sent to Mount Doom
--#                 .row.mt-3#nfts-results
--# = render 'token_list', modal_title_id: 'mountDoomTokenLabel', modal_id: 'mountDoomTokens', modal_content_id: 'token-list', modal_input_id: 'input-text-1', cryptocurrencies: @fungible_tokens, label_type: 'symbol', include_other: true
--# = render 'token_list', modal_title_id: 'mountDoomNFTLabel', modal_id: 'mountDoomNFTs', modal_content_id: 'nft-list', modal_input_id: 'input-text-2', cryptocurrencies: @nfts, label_type: 'name', include_other: true
+                  %h6 References
+                  %p
+                    1.
+                    = link_to 'github - mount-doom', 'https://github.com/btn-group/mount-doom', target: '_blank', rel: 'noopener'
+                    %br
+                    2.
+                    = link_to 'github - btn.group', 'https://github.com/btn-group/btn.group', target: '_blank', rel: 'noopener'
+            .d-none#transactions-container
+              .card
+                %h6.mt-4
+                  Balance:
+                  %span#balance
+                .table-responsive
+                  %table.table.table-striped.table-bordered
+                    %thead
+                      %tr
+                        %th{ style: 'min-width: 135px !important;' }
+                        %th Description
+                        %th Amount
+                    %tbody#transactions-table-body
+            .row.d-none#nfts-container
+              .col-12
+                %b
+                  %span#sacrifice-count
+                  sent to Mount Doom
+                .row.mt-3#nfts-results
+= render 'token_list', modal_title_id: 'mountDoomTokenLabel', modal_id: 'mountDoomTokens', modal_content_id: 'token-list', modal_input_id: 'input-text-1', cryptocurrencies: @fungible_tokens, label_type: 'symbol', include_other: true
+= render 'token_list', modal_title_id: 'mountDoomNFTLabel', modal_id: 'mountDoomNFTs', modal_content_id: 'nft-list', modal_input_id: 'input-text-2', cryptocurrencies: @nfts, label_type: 'name', include_other: true

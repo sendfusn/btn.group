@@ -96,7 +96,11 @@ $(document).ready(function(){
                   token_id: value['token_id'],
                 }
               }
-              let nftInfoResponse = await document.secretNetwork.client().queryContractSmart(address, params);
+              let queryParams = {
+                address: address,
+                query: params
+              }
+              let nftInfoResponse = await document.secretNetwork.queryContractSmart(queryParams)
               let imageUrl;
               let nftName;
               let svg;
@@ -151,7 +155,11 @@ $(document).ready(function(){
           $("#balance").text('')
           $($('th')[2]).text('Amount')
           // Get the token info
-          let token_info_response = await document.secretNetwork.client().queryContractSmart(address, { token_info: {} });
+          let queryParams = {
+            address: address,
+            query: { token_info: {} }
+          }
+          let token_info_response = await document.secretNetwork.queryContractSmart(queryParams)
           let token_decimals = token_info_response["token_info"]["decimals"]
           let token_symbol = token_info_response["token_info"]["symbol"]
           // Get the transactions for that token
@@ -163,7 +171,11 @@ $(document).ready(function(){
               page_size: 1000
             }
           }
-          let transactions_response = await document.secretNetwork.client().queryContractSmart(address, params);
+          queryParams = {
+            address: address,
+            query: params
+          }
+          let transactions_response = await document.secretNetwork.queryContractSmart(queryParams)
           if (transactions_response['viewing_key_error']) {
             throw(transactions_response['viewing_key_error']['msg'])
           }
@@ -207,7 +219,11 @@ $(document).ready(function(){
 
           // Get the balance for the token
           let msg = { balance:{ address: this.mountDoomContractAddress, key: "DoTheRightThing." } };
-          let balance_response = await document.secretNetwork.client().queryContractSmart(address, msg)
+          queryParams = {
+            address: address,
+            query: msg
+          }
+          let balance_response = await document.secretNetwork.queryContractSmart(queryParams)
           if (balance_response["viewing_key_error"]) {
             throw balance_response["viewing_key_error"]["msg"]
           }
@@ -246,7 +262,12 @@ $(document).ready(function(){
               viewing_key: "DoTheRightThing.",
             }
           }
-          let transactions_response = await document.secretNetwork.client().queryContractSmart(address, params);
+          let queryParams = {
+            address: address,
+            query: params
+          }
+          let transactions_response = await document.secretNetwork.queryContractSmart(queryParams)
+
           if (transactions_response['viewing_key_error']) {
             throw(transactions_response['viewing_key_error']['msg'])
           }
@@ -273,15 +294,17 @@ $(document).ready(function(){
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
             let tokenAddress = document.mountDoomSetViewingKeyForm.tokenAddress.value;
-            let contractHash = await document.secretNetwork.client().getCodeHashByContractAddr(tokenAddress)
+            let client = await document.secretNetworkClientProduction.client()
+            let contractHash = await client.query.compute.contractCodeHash(tokenAddress)
             let msg = { set_viewing_key_for_snip20: { address: tokenAddress, contract_hash: contractHash } };
-            let gasParams = {
-              exec: {
-                amount: [{ amount: this.gasSetViewingKey(), denom: 'uscrt' }],
-                gas: this.gasSetViewingKey(),
-              },
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: this.mountDoomContractAddress,
+              codeHash: this.mountDoomContractDataHash, // optional but way faster
+              msg: msg,
+              sentFunds: [], // optional
             }
-            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.mountDoomContractAddress, msg, '', [], gasParams.exec, this.mountDoomContractDataHash)
+            await document.secretNetwork.executeContract(params, this.gasSetViewingKey())
             document.showAlertSuccess("Viewing key \"DoTheRightThing.\" set.");
           }
         }
