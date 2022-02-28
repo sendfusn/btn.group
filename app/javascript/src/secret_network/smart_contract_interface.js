@@ -3,7 +3,6 @@ $(document).ready(function(){
     window.onload = async () => {
       document.activateKeplr()
       let paramCount = 0;
-      this.client = document.secretNetwork.client();
 
       // === LISTENERS ===
       $('#add-new-param').click(function(event){
@@ -55,7 +54,7 @@ $(document).ready(function(){
             let params = {};
             let last_key;
             if (document.secretNetwork.walletAddress) {
-              await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
+              await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress)
               $('#loading-vip').addClass('d-none')
               if (document.secretNetwork.userVipLevel == 0) {
                 $('#pay-wall').removeClass('d-none')
@@ -90,39 +89,22 @@ $(document).ready(function(){
             // Interact with smart contract
             let result;
             if(document.secretNetworkSmartContractInterfaceForm.interactionType.value == 'query') {
-              this.client =  document.secretNetwork.client();
-              result = await this.client.queryContractSmart(contractAddress, msg);
-            } else {
-              if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
-                alert("Please install keplr extension");
-              } else {
-                if (window.keplr.experimentalSuggestChain) {
-                  try {
-                    // This method will ask the user whether or not to allow access if they haven't visited this website.
-                    // Also, it will request user to unlock the wallet if the wallet is locked.
-                    // If you don't request enabling before usage, there is no guarantee that other methods will work.
-                    await window.keplr.enable(chainId);
-
-                    // @ts-ignore
-                    const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(chainId);
-                    const accounts = await keplrOfflineSigner.getAccounts();
-                    document.secretNetwork.walletAddress = accounts[0].address;
-                    let gasParams = {
-                        exec: {
-                          amount: [{ amount: '75000', denom: 'uscrt' }],
-                          gas: '75000',
-                        },
-                      }
-                    this.client = document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams)
-                  } catch (error) {
-                    console.error(error)
-                  }
-                } else {
-                  alert("Please use the recent version of keplr extension");
-                }
+              let queryParams = {
+                address: contractAddress,
+                query: msg
               }
-
-              result = await this.client.execute(contractAddress, msg)
+              result = await document.secretNetwork.queryContractSmart(queryParams);
+            } else {
+              await document.connectKeplrWallet()
+              if (document.secretNetwork.walletAddress) {
+                let params = {
+                  sender: document.secretNetwork.walletAddress,
+                  contract: contractAddress,
+                  msg: msg,
+                  sentFunds: [],
+                }
+                result = await document.secretNetwork.executeContract(params, 75_000, document.secretNetwork.environment)
+              }
             }
 
             // Display results
@@ -134,12 +116,7 @@ $(document).ready(function(){
             }, 2000);
           }
           catch(err) {
-            console.error(err)
-            let errorDisplayMessage = err.message;
-            if (err.message.includes('decoding bech32 failed')) {
-              errorDisplayMessage = 'Smart contract address is invalid.'
-            }
-            document.showAlertDanger(errorDisplayMessage)
+            document.showAlertDanger(err)
           }
           finally {
             // Enable form

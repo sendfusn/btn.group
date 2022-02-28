@@ -65,7 +65,7 @@ document.secretNetwork = {
       return document.secretNetworkClientStaging
     } else {
       if (!document.secretNetworkClientProduction) {
-        document.secretNetworkClientProduction = await SecretNetworkClient.create({ rpcUrl: document.secretNetwork.httpUrl(document.secretNetwork.environment) })
+        document.secretNetworkClientProduction = await SecretNetworkClient.create({ rpcUrl: document.secretNetwork.httpUrl(environment) })
       }
       window.test = document.secretNetworkClientProduction
       return document.secretNetworkClientProduction
@@ -179,8 +179,8 @@ document.secretNetwork = {
       SecretNetworkClient,
     } = require('secretjs');
 
-    let chainId = document.secretNetwork.chainId(document.secretNetwork.environment)
-    let httpUrl = document.secretNetwork.httpUrl(document.secretNetwork.environment)
+    let chainId = document.secretNetwork.chainId(environment)
+    let httpUrl = document.secretNetwork.httpUrl(environment)
     let keplrOfflineSigner = window.getOfflineSignerOnlyAmino(chainId);
     let [{ address: myAddress }] = await keplrOfflineSigner.getAccounts();
     if (environment == 'staging') {

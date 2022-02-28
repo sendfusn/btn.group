@@ -5,61 +5,59 @@
         .mt-3.w-100
           .container
             .row.justify-content-center
-              .col-12
-                %h1 Under maintenance
-    -#           .col-lg-10
-    -#             .alert.alert-warning
-    -#               .text-base#loading-vip
-    -#                 %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-    -#                 %em Getting your VIP level...
-    -#               .d-none#pay-wall
-    -#                 %h4.title.title-sm.mb-0 You do not have full access.
-    -#                 %p
-    -#                   To enable using params, please upgrade to at least
-    -#                   = link_to 'VIP level 1.', secret_network_button_index_path
-    -#             .card
-    -#               = render 'features_header', blockchain: :secret_network, feature: :smart_contract_interface, show_environment_switch: true
-    -#               .collapse.mt-2#exampleCollapseExample
-    -#                 .card.card-default.bg-theme-light
-    -#                   .card-block
-    -#                     %h6 Requirements
-    -#                     %p
-    -#                       1.
-    -#                       = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
-    -#                       %br
-    -#                       2. SCRT for gas, if performing a handle function.
-    -#               %hr
-    -#               %form{ name: 'secretNetworkSmartContractInterfaceForm' }
-    -#                 %ul.d-flex.flex-wrap.gutter-30px
-    -#                   %li.mb-3
-    -#                     .field-wrap
-    -#                       %input.input-radio#handle{ name: 'interactionType', type: 'radio', value: 'handle' }
-    -#                       %label{ for: 'handle' } Handle
-    -#                   %li.mb-3
-    -#                     .field-wrap
-    -#                       %input.input-radio#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true }
-    -#                       %label{ for: 'query' } Query
-    -#                 .field-item
-    -#                   %label.field-label{ for: 'contract-address' } Contract address
-    -#                   .field-wrap
-    -#                     %input.input-bordered#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
-    -#                 .field-item
-    -#                   %label.field-label{ for: 'function-name' } Function name
-    -#                   .field-wrap
-    -#                     %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
-    -#                 #params-container
-    -#                 .field-item.d-none#add-new-param-container
-    -#                   %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
-    -#                 %button.btn.btn-grad#search-button{ type: 'submit' }
-    -#                   .d-none#loading
-    -#                     %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
-    -#                     %em Loading...
-    -#                   #ready
-    -#                     Submit
-    -#                 %p.mt-3
-    -#                   %b * When calling handle functions, please update gas fee as required.
-    -#             .card.bg-light.mt-3.d-none#result-container
-    -#               .card-body.bg-white.border
-    -#                 %h3 Result
-    -#                 %pre.d-none#result-value
-    -# .nk-ovm.shape-g
+              .col-lg-10
+                .alert.alert-warning
+                  .text-base#loading-vip
+                    %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                    %em Getting your VIP level...
+                  .d-none#pay-wall
+                    %h4.title.title-sm.mb-0 You do not have full access.
+                    %p
+                      To enable using params, please upgrade to at least
+                      = link_to 'VIP level 1.', secret_network_button_index_path
+                .card
+                  = render 'features_header', blockchain: :secret_network, feature: :smart_contract_interface, show_environment_switch: true
+                  .collapse.mt-2#exampleCollapseExample
+                    .card.card-default.bg-theme-light
+                      .card-block
+                        %h6 Requirements
+                        %p
+                          1.
+                          = link_to 'Keplr web wallet', 'https://www.keplr.app/', target: '_blank', rel: 'noopener'
+                          %br
+                          2. SCRT for gas, if performing a handle function.
+                  %hr
+                  %form{ name: 'secretNetworkSmartContractInterfaceForm' }
+                    %ul.d-flex.flex-wrap.gutter-30px
+                      %li.mb-3
+                        .field-wrap
+                          %input.input-radio#handle{ name: 'interactionType', type: 'radio', value: 'handle' }
+                          %label{ for: 'handle' } Handle
+                      %li.mb-3
+                        .field-wrap
+                          %input.input-radio#query{ name: 'interactionType', type: 'radio', value: 'query', checked: true }
+                          %label{ for: 'query' } Query
+                    .field-item
+                      %label.field-label{ for: 'contract-address' } Contract address
+                      .field-wrap
+                        %input.input-bordered#contract-address{ name: 'contractAddress', required: true, placeholder: 'secret123456...' }
+                    .field-item
+                      %label.field-label{ for: 'function-name' } Function name
+                      .field-wrap
+                        %input.input-bordered#function-name{ name: 'functionName', placeholder: 'show...', required: true }
+                    #params-container
+                    .field-item.d-none#add-new-param-container
+                      %button.btn.btn-md.btn-light.w-100#add-new-param{ type: 'button' } + Param
+                    %button.btn.btn-grad#search-button{ type: 'submit' }
+                      .d-none#loading
+                        %em.spinner-grow.spinner-grow-sm{ 'aria-hidden' => 'true', :role => 'status' }
+                        %em Loading...
+                      #ready
+                        Submit
+                    %p.mt-3
+                      %b * When calling handle functions, please update gas fee as required.
+                .card.bg-light.mt-3.d-none#result-container
+                  .card-body.bg-white.border
+                    %h3 Result
+                    %pre.d-none#result-value
+    .nk-ovm.shape-g
