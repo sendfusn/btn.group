@@ -15,7 +15,7 @@ $(document).ready(function(){
       this.client = await document.secretNetwork.client();
       this.queryCount = 0;
       this.tokenModalFor;
-      this.vipLevels = {
+      const vipLevels = {
         0: {
           commission: 5,
           tradingFee: 0.1
@@ -191,9 +191,9 @@ $(document).ready(function(){
             }
           }
           if(otherProtocolsBestResultAmount) {
-            fee = this.vipLevels[document.secretNetwork.userVipLevel]['commission'] * (this.selectedSwapPath['resultOfSwaps'] - otherProtocolsBestResultAmount) / 100
+            fee = vipLevels[document.secretNetwork.userVipLevel]['commission'] * (this.selectedSwapPath['resultOfSwaps'] - otherProtocolsBestResultAmount) / 100
           } else {
-            fee = this.selectedSwapPath['resultOfSwaps'] * this.vipLevels[document.secretNetwork.userVipLevel]['tradingFee'] / 100
+            fee = this.selectedSwapPath['resultOfSwaps'] * vipLevels[document.secretNetwork.userVipLevel]['tradingFee'] / 100
           }
           this.selectedSwapPath['resultOfSwaps'] = Math.round(this.selectedSwapPath['resultOfSwaps'] - fee)
           this.setNetUsdResultOfSwaps(this.selectedSwapPath)

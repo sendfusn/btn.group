@@ -83,8 +83,8 @@ document.secretNetwork = {
         throw err
       }
     } finally {
+      console.log(response)
       if (response['code'] > 0) {
-        console.log(response)
         if (response['jsonLog']['generic_err']) {
           throw response['jsonLog']['generic_err']
         } else if(response['jsonLog']['not_found']) {
