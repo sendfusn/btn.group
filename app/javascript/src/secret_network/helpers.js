@@ -81,10 +81,6 @@ document.secretNetwork = {
     return chainId
   },
   client: async(environment) => {
-    const {
-      SecretNetworkClient,
-    } = require('secretjs');
-
     if (environment == 'staging') {
       if (!document.secretNetworkClientStaging) {
         document.secretNetworkClientStaging = await SecretNetworkClient.create({ rpcUrl: document.secretNetwork.httpUrl(environment) })
@@ -204,10 +200,6 @@ document.secretNetwork = {
     }
   },
   signingClient: async(environment = 'production') => {
-    const {
-      SecretNetworkClient,
-    } = require('secretjs');
-
     let chainId = document.secretNetwork.chainId(environment)
     let httpUrl = document.secretNetwork.httpUrl(environment)
     let keplrOfflineSigner = window.getOfflineSignerOnlyAmino(chainId);

@@ -16,7 +16,8 @@ import "./src/datatables"
 import './src/list'
 // MASONRY-LAYOUT
 import 'masonry-layout'
-
+// secretjs
+import './src/secretjs'
 // TOASTR
 import './src/toastr'
 
