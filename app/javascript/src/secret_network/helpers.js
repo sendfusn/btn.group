@@ -83,17 +83,18 @@ document.secretNetwork = {
         throw err
       }
     } finally {
-      console.log(response)
-      if (response['code'] > 0) {
-        if (response['jsonLog']['generic_err']) {
-          throw response['jsonLog']['generic_err']
-        } else if(response['jsonLog']['not_found']) {
-          throw response['jsonLog']['not_found']['kind'] + ' ' + 'not found'
+      if (response) {
+        if (response['code'] > 0) {
+          if (response['jsonLog']['generic_err']) {
+            throw response['jsonLog']['generic_err']
+          } else if(response['jsonLog']['not_found']) {
+            throw response['jsonLog']['not_found']['kind'] + ' ' + 'not found'
+          } else {
+            throw response['jsonLog']['rawLog']
+          }
         } else {
-          throw response['jsonLog']['rawLog']
+          return response
         }
-      } else {
-        return response
       }
     }
   },
