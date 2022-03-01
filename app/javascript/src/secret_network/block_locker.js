@@ -37,13 +37,11 @@ $(document).ready(function(){
       document.blockLockerCreateOrUpdateForm.onsubmit = async (e) => {
         e.preventDefault()
         this.disableForm()
-        let handleMsg;
         try {
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
             let content = undefined;
             let passphrase = undefined;
-            let resultText = "";
             let whitelistedAddresses = undefined;
             if (document.blockLockerCreateOrUpdateForm.content.value.length > 0) {
               content = document.blockLockerCreateOrUpdateForm.content.value
@@ -66,16 +64,16 @@ $(document).ready(function(){
                 throw('Recovery address must be different to wallet address.')
               }
             }
-            handleMsg = { send: { amount: "1000000", recipient: this.blockLockerContractAddress, msg: Buffer.from(JSON.stringify({ create_or_update_locker: { content: content, passphrase: passphrase, whitelisted_addresses: whitelistedAddresses } })).toString('base64') } };
-            let gasParams = {
-              exec: {
-                amount: [{ amount: this.gasCreateOrUpdate(), denom: 'uscrt' }],
-                gas: this.gasCreateOrUpdate(),
-              },
+            let handleMsg = { send: { amount: "1000000", recipient: this.blockLockerContractAddress, msg: Buffer.from(JSON.stringify({ create_or_update_locker: { content: content, passphrase: passphrase, whitelisted_addresses: whitelistedAddresses } })).toString('base64') } };
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: document.secretNetwork.butt.address,
+              codeHash: document.secretNetwork.butt.dataHash, // optional but way faster
+              msg: handleMsg,
+              sentFunds: [], // optional
             }
-            resultText = "Locker updated."
-            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
-            document.showAlertSuccess(resultText)
+            await document.secretNetwork.executeContract(params, this.gasCreateOrUpdate())
+            document.showAlertSuccess("Locker updated.")
             $(e.target)[0].reset()
           }
         }
@@ -90,21 +88,20 @@ $(document).ready(function(){
       document.blockLockerUnlockForm.onsubmit = async (e) => {
         e.preventDefault()
         this.disableForm()
-        let handleMsg;
         try {
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
-            let resultText = "";
+            let resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked.";
             confirm("Are you sure you want to unlock? Once unlocked, the current contents of the locker can be accessed with only the passphrase forever.")
-            handleMsg = { send: { amount: "1000000", recipient: this.blockLockerContractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerUnlockForm.walletAddress.value } })).toString('base64') } };
-            let gasParams = {
-                exec: {
-                  amount: [{ amount: this.gasUnlock(), denom: 'uscrt' }],
-                  gas: this.gasUnlock(),
-                },
-              }
-            resultText = "If the locker exists and you're allowed to unlock it, it will be unlocked."
-            await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
+            let handleMsg = { send: { amount: "1000000", recipient: this.blockLockerContractAddress, msg: Buffer.from(JSON.stringify({ unlock_locker: { address: document.blockLockerUnlockForm.walletAddress.value } })).toString('base64') } };
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: document.secretNetwork.butt.address,
+              codeHash: document.secretNetwork.butt.dataHash,
+              msg: handleMsg,
+              sentFunds: [],
+            }
+            await document.secretNetwork.executeContract(params, this.gasUnlock())
             document.showAlertSuccess(resultText)
             $(e.target)[0].reset()
           }
@@ -120,20 +117,19 @@ $(document).ready(function(){
       document.blockLockerViewWhenLockedForm.onsubmit = async (e) => {
         e.preventDefault()
         this.disableForm()
-        let handleMsg;
-        let result;
         try {
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
+            let handleMsg = { get_user_locker: {} };
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: this.blockLockerContractAddress,
+              codeHash: this.blockLockerContractDataHash,
+              msg: handleMsg,
+              sentFunds: [],
+            }
+            let result = await document.secretNetwork.executeContract(params, this.gasViewWhenLocked())
             let resultText = "";
-            handleMsg = { get_user_locker: {} };
-            let gasParams = {
-                exec: {
-                  amount: [{ amount: this.gasViewWhenLocked(), denom: 'uscrt' }],
-                  gas: this.gasViewWhenLocked(),
-                },
-              }
-            result = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.blockLockerContractAddress, handleMsg, '', [], gasParams.exec, this.blockLockerContractDataHash)
             result['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
             result = JSON.parse(resultText)
             // Display results
@@ -155,11 +151,14 @@ $(document).ready(function(){
       document.blockLockerViewWhenUnlockedForm.onsubmit = async (e) => {
         e.preventDefault()
         this.disableForm()
-        let handleMsg;
-        let result;
         try {
-          handleMsg = { user_locker: { address: document.blockLockerViewWhenUnlockedForm.walletAddress.value, passphrase: document.blockLockerViewWhenUnlockedForm.passphrase.value } };
-          result = await document.secretNetwork.client().queryContractSmart(this.blockLockerContractAddress, handleMsg, undefined, this.blockLockerContractDataHash)
+          let handleMsg = { user_locker: { address: document.blockLockerViewWhenUnlockedForm.walletAddress.value, passphrase: document.blockLockerViewWhenUnlockedForm.passphrase.value } };
+          let queryParams = {
+            address: this.blockLockerContractAddress,
+            codeHash: this.blockLockerContractDataHash,
+            query: handleMsg
+          }
+          let result = await document.secretNetwork.queryContractSmart(queryParams)
           // Display results
           $("#result-value").html(document.prettyPrintJSON(result));
           $("#result-container").removeClass("d-none");
