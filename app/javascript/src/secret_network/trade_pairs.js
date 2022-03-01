@@ -65,7 +65,7 @@ $(document).ready(function(){
             })
             let queryParams = {
               address: address,
-              contractHash: tradePair['smart_contract']['data_hash'],
+              codeHash: tradePair['smart_contract']['data_hash'],
               query: msg
             }
             let result = await document.secretNetwork.queryContractSmart(queryParams)
