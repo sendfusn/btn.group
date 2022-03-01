@@ -23,11 +23,17 @@ $(document).ready(function(){
           let response;
           let depositableAmountTotal;
           let cpId = $selector.find('.pool-cryptocurrency-deposit-id').first().text()
+          let queryParams = {
+            address: poolAddress,
+            codeHash: poolDataHash,
+          }
           if ($selector.find('.category').first().text() == 'profit_distributor') {
-            response = await document.secretNetwork.client().queryContractSmart(poolAddress, {config: {}}, undefined, poolDataHash)
+            queryParams.query = {config: {}}
+            response = await document.secretNetwork.queryContractSmart(queryParams)
             depositableAmountTotal = response['config']['total_shares']
           } else {
-            response = await document.secretNetwork.client().queryContractSmart(poolAddress, {pool: {}}, undefined, poolDataHash)
+            queryParams.query = {pool: {}}
+            response = await document.secretNetwork.queryContractSmart(queryParams)
             if (category == 'farm') {
               depositableAmountTotal = response['pool']['shares_total']
             } else {
