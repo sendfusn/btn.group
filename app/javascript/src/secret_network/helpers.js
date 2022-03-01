@@ -46,6 +46,33 @@ document.secretNetwork = {
       }
     }
   },
+  allBalances: async(environment = 'production', attempt = 1) => {
+    let response;
+    try {
+      let client = await document.secretNetwork.signingClient(environment)
+      response = await client.query.bank.allBalances({ address: document.secretNetwork.walletAddress})
+    } catch(err) {
+      if (err.message.includes('Bad status on response: 502') && attempt < 5) {
+        return await document.secretNetwork.allBalances(environment, attempt + 1)
+      } else {
+        throw err
+      }
+    } finally {
+      if (response) {
+        if (response['code'] > 0) {
+          if (response['jsonLog']['generic_err']) {
+            throw response['jsonLog']['generic_err']
+          } else if(response['jsonLog']['not_found']) {
+            throw response['jsonLog']['not_found']['kind'] + ' ' + 'not found'
+          } else {
+            throw response['jsonLog']['rawLog']
+          }
+        } else {
+          return response
+        }
+      }
+    }
+  },
   chainId: function(environment = 'production') {
     let chainId = 'secret-4'
     if (environment == 'staging') {

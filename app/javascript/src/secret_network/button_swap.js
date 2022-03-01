@@ -12,7 +12,6 @@ $(document).ready(function(){
       this.fromId = 515;
       this.toId = 351;
       this.tradePairs = {}
-      this.client = await document.secretNetwork.client();
       this.queryCount = 0;
       this.tokenModalFor;
       const vipLevels = {
@@ -621,7 +620,7 @@ $(document).ready(function(){
               let balanceResponse = await document.secretNetwork.queryContractSmart(queryParams)
               balance = balanceResponse['balance']['amount']
             } else {
-              let accountDetails = await this.client.query.bank.allBalances({ address: document.secretNetwork.walletAddress})
+              let accountDetails = await document.secretNetwork.allBalances()
               accountDetails['balances'].forEach(function(balanceDetails) {
                 if (cryptocurrency['denom'] == balanceDetails['denom']) {
                   balance = balanceDetails['amount']
@@ -801,7 +800,7 @@ $(document).ready(function(){
             this.resetAfterSwap()
             // Update vip levels if swap involves BUTT
             if (fromCryptocurrency['symbol'] == 'BUTT' || toCryptocurrency['symbol'] == 'BUTT') {
-              await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress, this.client)
+              await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress)
             }
             document.showAlertSuccess(successMessage);
           }
