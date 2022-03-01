@@ -67,7 +67,6 @@ document.secretNetwork = {
       if (!document.secretNetworkClientProduction) {
         document.secretNetworkClientProduction = await SecretNetworkClient.create({ rpcUrl: document.secretNetwork.httpUrl(environment) })
       }
-      window.test = document.secretNetworkClientProduction
       return document.secretNetworkClientProduction
     }
   },
@@ -168,6 +167,8 @@ document.secretNetwork = {
       let client = await document.secretNetwork.client(environment)
       return await client.query.compute.queryContract(params);
     } catch(err) {
+      window.test = err
+      console.log(err)
       if (err.message.includes('Bad status on response: 502') && attempt < 5) {
         return await document.secretNetwork.queryContractSmart(params, environment, attempt + 1)
       } else {
