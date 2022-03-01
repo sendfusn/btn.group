@@ -127,6 +127,9 @@ $(document).ready(function(){
               } else {
                 nftsContainerHtml += '<div class="blog-photo">' + svg + '</div>'
               }
+              if (!nftName) {
+                nftName = value['token_id']
+              }
               nftsContainerHtml += '<div class="blog-text"><h5 class="title title-sm">' + nftName + '</h5>'
               nftsContainerHtml += '</div></div></div>'
               this.$nftsResults.html(nftsContainerHtml)
