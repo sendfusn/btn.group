@@ -12,8 +12,10 @@ import "./src/buffer";
 import "./src/lodash";
 // DATATABLES
 import "./src/datatables"
+// list.js
+import './src/list'
 // MASONRY-LAYOUT
-import'masonry-layout/dist/masonry.pkgd.min'
+import 'masonry-layout'
 
 // TOASTR
 import './src/toastr'
