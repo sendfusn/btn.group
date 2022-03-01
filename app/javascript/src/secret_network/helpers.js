@@ -169,7 +169,7 @@ document.secretNetwork = {
     } catch(err) {
       window.test = err
       console.log(err)
-      if (err.message.includes('Bad status on response: 502') && attempt < 5) {
+      if ((err.message.includes('Bad status on response: 502') || err.message.includes('Bad status on response: 520')) && attempt < 5) {
         return await document.secretNetwork.queryContractSmart(params, environment, attempt + 1)
       } else {
         throw err
