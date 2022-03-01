@@ -2,6 +2,7 @@ $(document).ready(function(){
   if($("#secret-network-trade-pairs").length) {
     // === LISTENERS ===
     window.onload = async () => {
+      console.log(666)
       this.tradePairs = []
       this.client = document.secretNetwork.client();
       // datatable

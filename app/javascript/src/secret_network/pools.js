@@ -1,5 +1,3 @@
-import BigNumber from "bignumber.js";
-
 $(document).ready(function(){
   if($("#secret-network-pools").length) {
     window.onload = async () => {

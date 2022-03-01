@@ -5,7 +5,7 @@ import "./src/jquery"
 // Bootstrap
 import * as bootstrap from "bootstrap"
 // BigNumber.js
-import BigNumber from "bignumber.js";
+import "./src/big_number"
 // Buffer
 import "./src/buffer";
 // LODASH
