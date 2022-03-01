@@ -356,17 +356,12 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     statsd-ruby (1.5.0)
-    stimulus-rails (1.0.4)
-      railties (>= 6.0.0)
     strscan (3.0.1)
     sysexits (1.2.0)
     temple (0.8.2)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.2.0)
-    turbo-rails (1.0.1)
-      actionpack (>= 6.0.0)
-      railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -428,8 +423,6 @@ DEPENDENCIES
   sidekiq (>= 6.4.0)
   spring
   sprockets-rails
-  stimulus-rails (>= 0.4.0)
-  turbo-rails (>= 0.7.11)
   tzinfo-data
   webdrivers
 

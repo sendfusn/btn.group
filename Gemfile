@@ -38,10 +38,6 @@ gem 'redis'
 # Simple, efficient background processing for Ruby
 gem 'sidekiq', '>= 6.4.0'
 gem 'sprockets-rails'
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem 'stimulus-rails', '>= 0.4.0'
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem 'turbo-rails', '>= 0.7.11'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
