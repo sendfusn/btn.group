@@ -12,6 +12,8 @@ import "./src/buffer";
 import "./src/lodash";
 // DATATABLES
 import "./src/datatables"
+// MASONRY-LAYOUT
+import'masonry-layout/dist/masonry.pkgd.min'
 
 // TOASTR
 import './src/toastr'
