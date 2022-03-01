@@ -13,7 +13,12 @@ $(document).ready(function(){
       }
 
       try {
-        let result = await document.secretNetwork.client().queryContractSmart(this.buttLodeAddress, { config: {} }, undefined, this.buttLodeDataHash)
+        let queryParams = {
+          address: this.buttLodeAddress,
+          codeHash: this.buttLodeDataHash,
+          query: { config: {} }
+        }
+        let result = await document.secretNetwork.queryContractSmart(queryParams)
         this.admin = result['admin']
         $('#admin-table-data').text(this.admin)
         if (result['new_admin_nomination']) {
@@ -33,7 +38,12 @@ $(document).ready(function(){
         this.receivableAddress = result['receivable_address']
         $('input[name=receivableAddress]').first().val(this.receivableAddress)
         $('#receivable-address-table-data').text(this.receivableAddress)
-        let balance_response = await document.secretNetwork.client().queryContractSmart(document.secretNetwork.butt.address, { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } }, undefined, document.secretNetwork.butt.dataHash);
+        queryParams = {
+          address: document.secretNetwork.butt.address,
+          codeHash: document.secretNetwork.butt.dataHash,
+          query: { balance: { address: this.buttLodeAddress, key: 'DoTheRightThing.' } }
+        }
+        let balance_response = await document.secretNetwork.queryContractSmart(queryParams)
         this.buttonBalance = document.applyDecimals(balance_response["balance"]["amount"], 6).toLocaleString('en', { minimumFractionDigits: 6 })
         $('#butt-balance-table-data').text(this.buttonBalance)
         $('#butt-amount').val(this.buttonBalance)
@@ -52,17 +62,18 @@ $(document).ready(function(){
         try {
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
-            let gasParams = {
-              exec: {
-                amount: [{ amount: this.gasSend(), denom: 'uscrt' }],
-                gas: this.gasSend(),
-              },
-            }
             let amount = document['buttLodeSendForm'].amount.value;
             amount = amount.replace(/,/g, '');
             amount = (amount * Math.pow(10, 6)).toFixed(0)
             let handleMsg = { send_token: { amount: amount, token: { address: document.secretNetwork.butt.address, contract_hash: document.secretNetwork.butt.dataHash } } }
-            await document.secretNetwork.signingClient(this.admin, gasParams).execute(this.buttLodeAddress, handleMsg, '', [], gasParams.exec, this.buttLodeDataHash)
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: this.buttLodeAddress,
+              codeHash: this.buttLodeDataHash, // optional but way faster
+              msg: handleMsg,
+              sentFunds: [], // optional
+            }
+            await document.secretNetwork.executeContract(params, this.gasSend())
             document.showAlertSuccess("Send successful");
             document['buttLodeSendForm'].amount.value = ''
           }
