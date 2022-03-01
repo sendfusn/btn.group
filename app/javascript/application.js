@@ -52,9 +52,6 @@ document.refreshBlockchainStats = async() => {
     await $.ajax({
       url: '/blockchains/' + id + '/stats'
     });
-    if ($('#blockchain-stats').data('blockchain-identifier') == 'secret_network') {
-      document.secretNetwork.gasAndDelayFactor = Number($('#blockchain-gas-and-delay-factor').text())
-    }
   } catch (err) {
     console.log(err)
   }

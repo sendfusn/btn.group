@@ -29,7 +29,7 @@
     .nk-wrap.h-100
       = render 'header'
       = yield
-      - if blockchain&.gas_and_delay_factor
+      - if blockchain&.latest_block_time
         = render 'blockchains/stats'
       - if @show_footer
         %footer.nk-footer.bg-theme.ov-h.overlay-x.fw-4

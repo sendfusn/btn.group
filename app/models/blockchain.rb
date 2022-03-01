@@ -11,20 +11,4 @@ class Blockchain < ApplicationRecord
   # === VALIDATIONS ===
   validates :identifier, presence: true
   validates :identifier, uniqueness: true
-
-  # === INSTANCE METHODS ===
-  def gas_and_delay_factor
-    return unless latest_block_time
-    return unless base_block_time
-
-    factor = latest_block_time / base_block_time
-    return 1 if factor <= 1
-    return factor if (factor % 1).zero?
-
-    if factor % 1 > 0.5
-      factor.ceil
-    else
-      factor.floor + 0.5
-    end
-  end
 end
