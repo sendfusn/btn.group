@@ -408,13 +408,6 @@ $(document).ready(function(){
       } catch(error) {
         console.log(error)
         if (error.message && error.message.includes('Query failed with (18)') && !cryptocurrencyPool['downcase_data_hash_for_swap_simulation']) {
-          cryptocurrencyPool['downcase_data_hash_for_swap_simulation'] = true
-          $.ajax({
-            url: '/cryptocurrency_pools/' + cryptocurrencyPool['id'],
-            type: 'put',
-            data: { cryptocurrency_pool: { downcase_data_hash_for_swap_simulation: true } },
-            dataType: 'json'
-          })
           swapMsg = {swap_simulation: {offer: {token: {custom_token: {contract_addr: fromCryptoAddress, token_code_hash: fromCryptoCodeHash.toLowerCase(), viewing_key: ''}}, amount: fromAmountFormatted}}}
           queryParams = {
             address: pool['smart_contract']['address'],
