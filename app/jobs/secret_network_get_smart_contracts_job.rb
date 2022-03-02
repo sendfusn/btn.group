@@ -9,7 +9,7 @@ class SecretNetworkGetSmartContractsJob < ApplicationJob
   end
 
   def perform
-    response = RestClient.get "https://secret-4--lcd--archive.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}/wasm/code"
+    response = RestClient.get "https://secret-4--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}/wasm/code"
     smart_contract_upload_codes = JSON.parse(response)['result']
     smart_contract_upload_codes.reverse_each do |code|
       SecretNetworkGetSmartContractInstancesJob.set(wait_until: Time.current + rand(60 * 24).minutes).perform_later(code['id'], code['data_hash'])
