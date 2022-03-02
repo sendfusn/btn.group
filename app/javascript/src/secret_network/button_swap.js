@@ -48,7 +48,11 @@ $(document).ready(function(){
       $('#arbitrage-enabled').change(function() {
         if($('#arbitrage-enabled').is(":checked")) {
           let arbitrageSeconds = $("#arbitrage-seconds").val()
-          this.arbitrageInterval = setInterval(function() { $('#from-amount-input').trigger("input") }, arbitrageSeconds * 1_000);
+          this.arbitrageInterval = setInterval(function() {
+            if (!this.processingTransaction) {
+              $('#from-amount-input').trigger("input")
+            }
+          }.bind(this), arbitrageSeconds * 1_000);
         } else {
           clearInterval(this.arbitrageInterval);
         }
@@ -321,33 +325,35 @@ $(document).ready(function(){
         this.swapPaths[from_id] = {}
         if (Number(fromAmount) > 0) {
           let url = "/swap_paths?from_id=" + tokenFromId + "&to_id=" + tokenToId + "&from_amount=" + document.formatHumanizedNumberForSmartContract(fromAmount, this.cryptocurrencies[from_id]['decimals']);
-          this.swapPaths[from_id][to_id] = await $.ajax({
+          let results = await $.ajax({
             url: url,
             type: 'GET'
           })
-          if(this.swapPaths[from_id][to_id].length) {
-            this.renderResults(from_id, to_id)
-            for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
-              if(currentQueryCount == this.queryCount) {
-                $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
-                let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
-                swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
-                this.setNetUsdResultOfSwaps(swapPath)
-                this.setBestResultForProtocol(swapPath)
-                this.renderResults(from_id, to_id)
-              }
-            }
-            if(currentQueryCount == this.queryCount) {
-              this.applyFee()
-              this.renderTable()
-              this.fillForm()
-              $('#results').removeClass('d-none')
-              if ($('#arbitrage-enabled').length && $('#arbitrage-enabled').is(":checked") && Number($("#to-amount-input").val()) - Number($("#arbitrage-profit").val()) > Number($("#from-amount-input").val())) {
-                $('#bird-audio')[0].play()
-              }
-            }
+          if(!results.length) {
+            return document.showAlertInfo('No swap paths available. Please try different tokens or different amounts.')
           } else {
-            document.showAlertInfo('No swap paths available. Please try different tokens or different amounts.')
+            this.swapPaths[from_id][to_id] = results
+          }
+
+          this.renderResults(from_id, to_id)
+          for (const [index, swapPath] of this.swapPaths[from_id][to_id].entries()) {
+            if(currentQueryCount == this.queryCount) {
+              $submitButton.find('.loading #status').text('Checking swap path ' + (index + 1) + ' of ' + this.swapPaths[from_id][to_id].length)
+              let resultOfSwaps = await this.getResultOfSwaps(swapPath, currentQueryCount)
+              swapPath['resultOfSwaps'] = parseFloat(resultOfSwaps)
+              this.setNetUsdResultOfSwaps(swapPath)
+              this.setBestResultForProtocol(swapPath)
+              this.renderResults(from_id, to_id)
+            }
+          }
+          if(currentQueryCount == this.queryCount) {
+            this.applyFee()
+            this.renderTable()
+            this.fillForm()
+            $('#results').removeClass('d-none')
+            if ($('#arbitrage-enabled').length && $('#arbitrage-enabled').is(":checked") && Number($("#to-amount-input").val()) - Number($("#arbitrage-profit").val()) > Number($("#from-amount-input").val())) {
+              $('#bird-audio')[0].play()
+            }
           }
         }
       } catch(error) {
@@ -662,6 +668,7 @@ $(document).ready(function(){
 
     document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
       e.preventDefault()
+      this.processingTransaction = true
       let fromId = this.fromId
       let toId = this.toId
       if (this.wrapPaths[fromId] != toId && !this.selectedSwapPath) {
@@ -799,6 +806,7 @@ $(document).ready(function(){
         $submitButton.prop("disabled", false);
         $submitButton.find('.loading').addClass('d-none')
         $submitButton.find('.ready').removeClass('d-none')
+        this.processingTransaction = false
       }
     };
 
