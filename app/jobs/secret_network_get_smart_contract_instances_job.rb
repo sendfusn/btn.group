@@ -4,7 +4,7 @@ require 'rest-client'
 
 class SecretNetworkGetSmartContractInstancesJob < ApplicationJob
   def perform(code_id, data_hash)
-    contracts_for_code_id_response = RestClient.get "https://api.secretapi.io/wasm/code/#{code_id}/contracts"
+    contracts_for_code_id_response = RestClient.get "https://secret-4--lcd--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}/wasm/code/#{code_id}/contracts"
     contracts_for_code_id = JSON.parse(contracts_for_code_id_response)['result']
     contracts_for_code_id&.each do |contract|
       sc = SmartContract.find_or_initialize_by(address: contract['address'])
