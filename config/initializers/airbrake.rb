@@ -57,7 +57,7 @@ if Rails.env.production?
   end
 
   Airbrake.add_filter do |notice|
-    notice.ignore! if notice[:errors].any? { |error| error[:type] == 'SignalException' }
+    notice.ignore! if notice[:errors].any? { |error| %w[SignalException].include?(error[:type]) || [Sidekiq::Shutdown].include?(error.class) }
   end
 
   # A filter that collects request body information. Enable it if you are sure you
