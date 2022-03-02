@@ -23,9 +23,15 @@ class CryptoPricesJob < ApplicationJob
         c.update!(price: price['usd']) if price['usd'].present?
       end
     end
+    # SHD PRICE
     shd = Cryptocurrency.find_by(symbol: 'SHD', official: true)
     sscrt = Cryptocurrency.find_by(symbol: 'SSCRT', official: true)
     sscrt_per_shd = sscrt.amount_with_decimals(Pool.find(865).simulate_swap(100_000_000, shd.id)[:return_amount])
     shd.update(price: sscrt_per_shd * sscrt.price)
+    # FATS PRICE
+    fats = Cryptocurrency.find_by(symbol: 'FATS', official: true)
+    dai = Cryptocurrency.find_by(symbol: 'SDAI', official: true)
+    dai_per_fat = dai.amount_with_decimals(Pool.find(604).simulate_swap(1_000, fats.id)[:return_amount])
+    fats.update(price: dai_per_fat * dai.price)
   end
 end
