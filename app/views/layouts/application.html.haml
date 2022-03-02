@@ -14,6 +14,8 @@
 
     -# === THEME STYLESHEETS ===
     = stylesheet_link_tag 'application'
+    :javascript
+      global = globalThis
     = javascript_include_tag 'application', defer: true
     %link{ href: '/ico-crypto-html-v1.9.3/main-html/assets/css/vendor.bundle.css?ver=1930', rel: 'stylesheet' }
     %link#changeTheme{ href: '/ico-crypto-html-v1.9.3/main-html/assets/css/style-salvia.css?ver=1930', rel: 'stylesheet' }

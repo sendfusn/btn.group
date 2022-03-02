@@ -61,7 +61,6 @@ $(document).ready(function(){
           // Interact with smart contract
           let result;
           if(document.nearSmartContractInterfaceForm.interactionType.value == 'query') {
-            const {connect, keyStores} = require("near-api-js");
             // account ID associated with the transaction
             let config = {
               networkId: chainId,
@@ -76,7 +75,6 @@ $(document).ready(function(){
               params,
             )
           } else {
-            const {connect, keyStores, WalletConnection} = require("near-api-js");
             // account ID associated with the transaction
             let config = {
               networkId: chainId,
@@ -88,9 +86,9 @@ $(document).ready(function(){
             const wallet = new WalletConnection(near);
             if(!wallet.isSignedIn()) return wallet.requestSignIn({ contractId: contractAddress })
             const optionsCall = {
-                contractId: contractAddress,
-                methodName: functionName,
-                args: params
+              contractId: contractAddress,
+              methodName: functionName,
+              args: params,
             }
             const account = await wallet.account()
             result = await account.functionCall(optionsCall);

@@ -16,6 +16,8 @@ import "./src/datatables"
 import './src/list'
 // MASONRY-LAYOUT
 import 'masonry-layout'
+// NEAR
+import './src/near'
 // secretjs
 import './src/secretjs'
 // TOASTR
