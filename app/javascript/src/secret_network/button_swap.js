@@ -407,7 +407,7 @@ $(document).ready(function(){
         return result['return_amount']
       } catch(error) {
         console.log(error)
-        if (error.message && error.message.includes('not managed by this') && !cryptocurrencyPool['downcase_data_hash_for_swap_simulation']) {
+        if (error.message && error.message.includes('Query failed with (18)') && !cryptocurrencyPool['downcase_data_hash_for_swap_simulation']) {
           cryptocurrencyPool['downcase_data_hash_for_swap_simulation'] = true
           $.ajax({
             url: '/cryptocurrency_pools/' + cryptocurrencyPool['id'],
