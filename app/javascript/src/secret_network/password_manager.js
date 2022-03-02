@@ -112,14 +112,14 @@ $(document).ready(function(){
         try {
           await document.connectKeplrWallet()
           if (document.secretNetwork.walletAddress) {
-            let gasParams = {
-              exec: {
-                amount: [{ amount: this.gasReveal(), denom: 'uscrt' }],
-                gas: this.gasReveal(),
-              },
+            let params = {
+              sender: document.secretNetwork.walletAddress,
+              contract: this.passwordManagerContractAddress,
+              codeHash: this.passwordManagerContractDataHash,
+              msg: { show: { position: Number(this.chosenPosition) } },
+              sentFunds: [], // optional
             }
-            let handleMsg = { show: { position: Number(this.chosenPosition) } }
-            let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.passwordManagerContractAddress, handleMsg, '', [], gasParams.exec, this.passwordManagerContractDataHash)
+            let response = await document.secretNetwork.executeContract(params, this.gasReveal())
             let resultText = '';
             response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
             let authentication = JSON.parse(resultText)['show']['authentication']
@@ -157,14 +157,15 @@ $(document).ready(function(){
       try {
         await document.connectKeplrWallet()
         if (document.secretNetwork.walletAddress) {
-          let gasParams = {
-            exec: {
-              amount: [{ amount: gas, denom: 'uscrt' }],
-              gas: gas,
-            },
-          }
           let handleMsg = { send: { amount: '1000000', recipient: this.passwordManagerContractAddress, msg: Buffer.from(JSON.stringify({ create: { label: label, username: username, password: password, notes: notes } })).toString('base64') } }
-          let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(document.secretNetwork.butt.address, handleMsg, '', [], gasParams.exec, document.secretNetwork.butt.dataHash)
+          let params = {
+            sender: document.secretNetwork.walletAddress,
+            contract: document.secretNetwork.butt.address,
+            codeHash: document.secretNetwork.butt.dataHash,
+            msg: handleMsg,
+            sentFunds: []
+          }
+          let response = await document.secretNetwork.executeContract(params, gas)
           let newAuthentication = {
             revealed: true
           } 
@@ -213,16 +214,27 @@ $(document).ready(function(){
       $(".table-responsive").addClass("d-none");
       changeSubmitButtonToLoading()
       try {
+        let queryParams;
+        let searchParams;
         let searchType = document.passwordManagerSearchForm.searchType.value;
         this.searchedAddress = document.passwordManagerSearchForm.searchValue.value.toLowerCase();
         if (searchType == 'alias') {
-          let searchParams = { search_type: searchType, search_value: this.searchedAddress };
-          let result = await document.secretNetwork.client().queryContractSmart(this.addressAliasAddress, { search: searchParams }, undefined, this.addressAliasDataHash)
+          searchParams = { search: { search_type: searchType, search_value: this.searchedAddress } };
+          queryParams = {
+            address: this.addressAliasAddress,
+            codeHash: this.addressAliasDataHash,
+            query: searchParams
+          }
+          let result = await document.secretNetwork.queryContractSmart(queryParams)
           this.searchedAddress = result['attributes']['address']
         }
         let viewingKey = document.passwordManagerSearchForm.viewingKey.value;
-        let params = { address: this.searchedAddress, key: viewingKey };
-        let response = await document.secretNetwork.client().queryContractSmart(this.passwordManagerContractAddress, { hints: params }, undefined, this.passwordManagerContractDataHash)
+        queryParams = {
+          address: this.passwordManagerContractAddress,
+          codeHash: this.passwordManagerContractDataHash,
+          query: { hints: { address: this.searchedAddress, key: viewingKey } }
+        }
+        let response = await document.secretNetwork.queryContractSmart(queryParams)
         if (response['viewing_key_error']) {
           throw(response['viewing_key_error']['msg'])
         }
@@ -263,14 +275,15 @@ $(document).ready(function(){
       try {
         await document.connectKeplrWallet()
         if (document.secretNetwork.walletAddress) {
-          let gasParams = {
-            exec: {
-              amount: [{ amount: gas, denom: 'uscrt' }],
-              gas: gas,
-            },
-          }
           let handleMsg = { update_authentication: { position: position, id: id, label: label, username: username, password: password, notes: notes } }
-          let response = await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.passwordManagerContractAddress, handleMsg, 0, gasParams.exec, this.passwordManagerContractDataHash)
+          let params = {
+            sender: document.secretNetwork.walletAddress,
+            contract: this.passwordManagerContractAddress,
+            codeHash: this.passwordManagerContractDataHash,
+            msg: handleMsg,
+            sentFunds: [], // optional
+          }
+          let response = await document.secretNetwork.executeContract(params, gas)
           let resultText = '';
           response['data'].forEach(function(x){ resultText += String.fromCharCode(x) })
           let authentication = JSON.parse(resultText)['update_authentication']['authentication']
@@ -297,16 +310,17 @@ $(document).ready(function(){
       try {
         await document.connectKeplrWallet()
         if (document.secretNetwork.walletAddress) {
-          let gasParams = {
-            exec: {
-              amount: [{ amount: this.gasSetViewingKey(), denom: 'uscrt' }],
-              gas: this.gasSetViewingKey(),
-            },
-          }
           let viewingKey = document.setViewingKeyForm.viewingKey.value
           let padding = Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10)))) + Math.random().toString().substr(2, Math.floor(Math.random() * (10 + Math.floor(Math.random() * 10))))
           let handleMsg = { set_viewing_key: { key: viewingKey, padding: padding } }
-          await document.secretNetwork.signingClient(document.secretNetwork.walletAddress, gasParams).execute(this.passwordManagerContractAddress, handleMsg, '', [], gasParams.exec, this.passwordManagerContractDataHash)
+          let params = {
+            sender: document.secretNetwork.walletAddress,
+            contract: this.passwordManagerContractAddress,
+            codeHash: this.passwordManagerContractDataHash,
+            msg: handleMsg,
+            sentFunds: [], // optional
+          }
+          await document.secretNetwork.executeContract(params, this.gasSetViewingKey())
           document.showAlertSuccess('Viewing key set.')
         }
       }
