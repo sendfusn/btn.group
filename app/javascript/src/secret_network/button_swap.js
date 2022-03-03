@@ -378,8 +378,12 @@ $(document).ready(function(){
       } catch(error) {
         window.bsError = error
         console.log(error)
-        if(currentQueryCount == this.queryCount && error.status != 401) {
-          document.showAlertDanger(error)
+        if(currentQueryCount == this.queryCount) {
+          if (error.status == 503) {
+            $('#from-amount-input').trigger("input")
+          } else if (error.status != 401) {
+            document.showAlertDanger(error)
+          }
         }
       } finally {
         if(currentQueryCount == this.queryCount) {
