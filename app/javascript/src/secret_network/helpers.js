@@ -110,7 +110,7 @@ document.secretNetwork = {
         return response
       }
     } catch(err) {
-      if (err.message.includes('Bad status on response: 502') && attempt < 5) {
+      if (err.message && err.message.includes('Bad status on response: 502') && attempt < 5) {
         return await document.secretNetwork.executeContract(params, gasLimit, environment, attempt + 1)
       } else {
         throw err
