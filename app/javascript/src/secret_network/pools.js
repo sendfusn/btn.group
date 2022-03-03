@@ -372,11 +372,13 @@ $(document).ready(async function(){
       },
       {
         address: 'secret1vpvypnlcz0kng32qlp4727tx87e2kauffng79v',
+        dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
         deposit_gas: 1_125_000,
         deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
         deposit_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
         earn_token: cryptocurrencies['sscrt_swbtc_eth_lp'],
         farm_contract_address: 'secret1enpte7ll3r4zrs70najmf7g83hdzy33wmdx7nk',
+        farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
         withdraw_gas: 1_125_000,
         reward_token: cryptocurrencies['sefi'],
       },
@@ -394,11 +396,13 @@ $(document).ready(async function(){
       },
       {
         address: 'secret19dq8df5jyqqd7v6eugk4c255lgasj76kug242c',
+        dataHash: '44B1B5807377D957CB7252CDE9F45940982C0452CF190E175D62E7662347A165',
         deposit_gas: 1_125_000,
         deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
         deposit_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
         earn_token: cryptocurrencies['sscrt_sdot_bsc_lp'],
         farm_contract_address: 'secret1geklww0t0kwehc2w9llwce2wkg40pp4ljfpa8m',
+        farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
         withdraw_gas: 1_125_000,
         reward_token: cryptocurrencies['sefi'],
       },
@@ -416,11 +420,13 @@ $(document).ready(async function(){
       },
       {
         address: 'secret1uwr63xusz285r9ztqx6f4mx2jg6yug5f405ajm',
+        dataHash: '7F2CD7ED1969D142BDCAC1F2AAEB9D1E5C0B11768C79B1C1DB8CB9557DB97D34',
         deposit_gas: 1_050_000,
         deposit_msg: 'eyAiZGVwb3NpdF9pbmNlbnRpdml6ZWRfdG9rZW4iOiB7fSB9',
         deposit_token: cryptocurrencies['seth_eth_swbtc_lp'],
         earn_token: cryptocurrencies['seth_eth_swbtc_lp'],
         farm_contract_address: 'secret1zsnjdcjwpyamc98lyvd5v8u9rw0949px6r5agg',
+        farm_contract_data_hash: 'C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A',
         withdraw_gas: 1_050_000,
         reward_token: cryptocurrencies['sefi'],
       },
@@ -831,7 +837,7 @@ $(document).ready(async function(){
         codeHash: '99F94EDC0D744B35A8FBCBDC8FB71C140CFA8F3F91FAD8C35B7CC37862A4AC95',
         query: { config: {} }
       }
-      await document.secretNetwork.queryContractSmart(queryParams);
+      await document.secretNetwork.queryContractSmart(queryParams)
     }
 
     // === LISTENERS ===
