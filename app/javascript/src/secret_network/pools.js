@@ -957,10 +957,11 @@ $(document).ready(async function(){
       $('.balance-container').removeClass('d-none')
       $('.claim-button').removeClass('d-none')
       $('.deposit-withdraw-forms-container').removeClass('d-none')
+      await this.hackyFirstQuery()
       this.updateUserInterface(false, true)
     })
-    await this.hackyFirstQuery()
     document.activateKeplr()
+    await this.hackyFirstQuery()
     this.updateUserInterface(true, false)
   };
 });
