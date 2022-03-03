@@ -9,6 +9,7 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
+    "ansi-regex": "^5.0.1",
     "axios": "0.21.2",
     "bignumber.js": "^9.0.1",
     "bootstrap": "^4.3.1",
@@ -37,7 +38,7 @@
     "tar": "6.1.9",
     "toastr": "^2.1.4",
     "trim-newlines": "^3.0.1",
-    "url-parse": "^1.5.2"
+    "url-parse": "^1.5.9"
   },
   "scripts": {
     "build": "node esbuild.config.js --platform=node",
