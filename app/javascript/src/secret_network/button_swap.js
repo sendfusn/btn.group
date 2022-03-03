@@ -46,17 +46,36 @@ $(document).ready(function(){
     // === LISTENERS ===
     if ($('#arbitrage-container').length) {
       $('#arbitrage-enabled').change(function() {
+        this.applyArbitrageIntervalSettings()
+      }.bind(this));
+    }
+
+    this.actionArbitrageSettings = () => {
+      if ($('#arbitrage-container').length) {
+        if($('#arbitrage-enabled').is(":checked")) {
+          let arbitrageAmount = Number($("#arbitrage-amount").val())
+          if (!this.processingTransaction) {
+            if(arbitrageAmount > 0) {
+              $('#from-amount-input').val(arbitrageAmount)
+            }
+            $('#from-amount-input').trigger("input")
+          }
+        }
+      }
+    }
+
+    this.applyArbitrageIntervalSettings = () => {
+      if ($('#arbitrage-container').length) {
+        clearInterval(this.arbitrageInterval);
+
         if($('#arbitrage-enabled').is(":checked")) {
           let arbitrageSeconds = $("#arbitrage-seconds").val()
           this.arbitrageInterval = setInterval(function() {
-            if (!this.processingTransaction) {
-              $('#from-amount-input').trigger("input")
-            }
+            this.actionArbitrageSettings()
           }.bind(this), arbitrageSeconds * 1_000);
-        } else {
-          clearInterval(this.arbitrageInterval);
+          this.actionArbitrageSettings()
         }
-      }.bind(this));
+      }
     }
 
     $.each(['.from-balance-view-button', '.to-balance-view-button'], function(index, value) {
@@ -801,6 +820,7 @@ $(document).ready(function(){
             await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress)
           }
           document.showAlertSuccess(successMessage);
+          this.applyArbitrageIntervalSettings()
         }
       } catch(error) {
         document.showAlertDanger(error)
