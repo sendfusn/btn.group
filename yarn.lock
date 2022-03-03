@@ -1809,10 +1809,10 @@ secp256k1@^3.7.0:
     nan "^2.14.0"
     safe-buffer "^5.1.2"
 
-secretjs@^1.2.0-beta.50:
-  version "1.2.0-beta.50"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.2.0-beta.50.tgz#ab74d1613ad1ec79ccbbd786b140e3439db09bdf"
-  integrity sha512-NcNqXLXfls7npd9HnjhlstMz7S/xeYGzRPCjbCC7xo2jdH587LMh9zpO4n3gnsf4jsARGKkWguIcS1JqGfba6g==
+secretjs@^1.2.0-beta.51:
+  version "1.2.0-beta.51"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.2.0-beta.51.tgz#a41801840799676944ec15e4384259313c508dd9"
+  integrity sha512-8tywVYUBnljlhExuSyfltJLo6W8XIEW0H8u8uFXmGjGjXmyw/YhO51iec45ShJEP1pe/bH54mg/w0VBX4T0Ubg==
   dependencies:
     "@cosmjs/encoding" "0.27.1"
     "@cosmjs/math" "0.27.1"
