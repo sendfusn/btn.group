@@ -551,31 +551,7 @@ $(document).ready(async function(){
             }
           }
           catch(err) {
-            console.log(err)
-            window.error = err
-            // When this error happens, it may or may not have have gone through. Not sure why Datahub is sending this error.
-            // Doesn't matter how much gas I put up for some of these contracts. It either works or it doesn't
-            if (err.message.includes('HTTP 502') || err.message.includes('timed out waiting for tx to be included in a block')) {
-              // If TVL or Rewards to process has changed then it's a success, otherwise show gas error
-              let $totalSharesSelector = $('[data-pool-address="' + value['address'] + '"]').find('.total-shares')
-              let tVLBeforeUpdate = $totalSharesSelector.text()
-              let $rewardsToProcess = $('[data-pool-address="' + value['address'] + '"]').find('.rewards-to-process')
-              let rewardsToProcessBeforeUpdate = $rewardsToProcess.text()
-              await this.updateRewards(value)
-              await this.updateTotalShares(value)
-              let tVLAfterUpdate = $totalSharesSelector.text()
-              let rewardsToProcessAfterUpdate = $rewardsToProcess.text()
-              if (tVLBeforeUpdate != tVLAfterUpdate || rewardsToProcessBeforeUpdate != rewardsToProcessAfterUpdate) {
-                this.updatePoolInterface(value, true)
-                document.showAlertSuccess("Withdraw successful");
-                document[withdrawFormName].amount.value = ''
-              } else {
-                let errorDisplayMessage = "Out of gas. Please set a higher gas amount and try again.";
-                document.showAlertDanger(errorDisplayMessage)
-              }
-            } else {
-              document.showAlertDanger(err)
-            }
+            document.showAlertDanger(err)
           }
           finally {
             $withdrawButton.prop('disabled', false);
