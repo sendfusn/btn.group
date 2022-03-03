@@ -52,11 +52,11 @@ $(document).ready(function(){
 
     this.actionArbitrageSettings = () => {
       if ($('#arbitrage-container').length) {
-        if($('#arbitrage-enabled').is(":checked")) {
-          let arbitrageAmount = Number($("#arbitrage-amount").val())
+        if(document.buttonSwapArbitrageForm.enabled.checked) {
+          let arbitrageAmount = Number(document.buttonSwapArbitrageForm.amount.value)
           if (!this.processingTransaction) {
             if(arbitrageAmount > 0) {
-              $('#from-amount-input').val(arbitrageAmount)
+              document.secretNetworkDexAggregatorForm.fromAmount.value = arbitrageAmount
             }
             $('#from-amount-input').trigger("input")
           }
@@ -68,11 +68,10 @@ $(document).ready(function(){
       if ($('#arbitrage-container').length) {
         clearInterval(this.arbitrageInterval);
 
-        if($('#arbitrage-enabled').is(":checked")) {
-          let arbitrageSeconds = $("#arbitrage-seconds").val()
+        if(document.buttonSwapArbitrageForm.enabled.checked) {
           this.arbitrageInterval = setInterval(function() {
             this.actionArbitrageSettings()
-          }.bind(this), arbitrageSeconds * 1_000);
+          }.bind(this), document.buttonSwapArbitrageForm.interval.value * 1_000);
           this.actionArbitrageSettings()
         }
       }
@@ -370,8 +369,13 @@ $(document).ready(function(){
             this.renderTable()
             this.fillForm()
             $('#results').removeClass('d-none')
-            if ($('#arbitrage-enabled').length && $('#arbitrage-enabled').is(":checked") && Number($("#to-amount-input").val()) - Number($("#arbitrage-profit").val()) > Number($("#from-amount-input").val())) {
+            if ($('#arbitrage-container').length && document.buttonSwapArbitrageForm.enabled.checked && Number(document.secretNetworkDexAggregatorForm.estimateAmount.value) - Number(document.buttonSwapArbitrageForm.profit.value) > Number(document.secretNetworkDexAggregatorForm.fromAmount.value)) {
               $('#bird-audio')[0].play()
+              if(document.buttonSwapArbitrageForm.autoTrade.checked && document.buttonSwapArbitrageForm.mnemonicPhrase.value.length) {
+                setTimeout(function(){
+                  $('#submit-button').click()
+                }, 555)
+              }
             }
           }
         }
@@ -691,6 +695,20 @@ $(document).ready(function(){
       }
     }
 
+    this.clientFromWallet = async() => {
+      if (!this.cfw) {
+        let wallet = new Wallet(document.buttonSwapArbitrageForm.mnemonicPhrase.value);
+        let address = wallet.address
+        this.cfw = await SecretNetworkClient.create({
+          rpcUrl: document.secretNetwork.httpUrl('production'),
+          wallet: wallet,
+          walletAddress: address,
+          chainId: document.secretNetwork.chainId('production'),
+        });
+      }
+      return this.cfw
+    }
+
     document.secretNetworkDexAggregatorForm.onsubmit = async (e) => {
       e.preventDefault()
       this.processingTransaction = true
@@ -742,7 +760,13 @@ $(document).ready(function(){
               msg: handleMsg,
               sentFunds: sentFunds,
             }
-            let response = await document.secretNetwork.executeContract(params, this.gasWrap())
+            let response;
+            if($('#arbitrage-container').length && document.buttonSwapArbitrageForm.enabled.checked && document.buttonSwapArbitrageForm.autoTrade.checked && document.buttonSwapArbitrageForm.mnemonicPhrase.value.length && Number(document.secretNetworkDexAggregatorForm.estimateAmount.value) - Number(document.buttonSwapArbitrageForm.profit.value) > Number(document.secretNetworkDexAggregatorForm.fromAmount.value)) {
+              c = await this.clientFromWallet()
+              response = await c.tx.compute.executeContract(params, { gasLimit: this.gasWrap() })
+            } else {
+              response = await document.secretNetwork.executeContract(params, this.gasWrap())
+            }
           } else {
             let currentFromId = fromId
             let minAmount = document.secretNetworkDexAggregatorForm.minAmount.value
@@ -806,7 +830,13 @@ $(document).ready(function(){
               msg: handleMsg,
               sentFunds: sentFunds,
             }
-            let response = await document.secretNetwork.executeContract(params, gas)
+            let response;
+            if($('#arbitrage-container').length && document.buttonSwapArbitrageForm.enabled.checked && document.buttonSwapArbitrageForm.autoTrade.checked && document.buttonSwapArbitrageForm.mnemonicPhrase.value.length && Number(document.secretNetworkDexAggregatorForm.estimateAmount.value) - Number(document.buttonSwapArbitrageForm.profit.value) > Number(document.secretNetworkDexAggregatorForm.fromAmount.value)) {
+              c = await this.clientFromWallet()
+              response = await c.tx.compute.executeContract(params, { gasLimit: gas })
+            } else {
+              response = await document.secretNetwork.executeContract(params, gas)
+            }
             let returnAmount;
             response['arrayLog'].forEach(function(attribute){
               if(attribute['key'] == 'return_amount') {
@@ -824,7 +854,6 @@ $(document).ready(function(){
             await document.secretNetwork.getAndSetUserVipLevel(document.secretNetwork.walletAddress)
           }
           document.showAlertSuccess(successMessage);
-          this.applyArbitrageIntervalSettings()
         }
       } catch(error) {
         document.showAlertDanger(error)
@@ -833,6 +862,7 @@ $(document).ready(function(){
         $submitButton.find('.loading').addClass('d-none')
         $submitButton.find('.ready').removeClass('d-none')
         this.processingTransaction = false
+        this.applyArbitrageIntervalSettings()
       }
     };
 

@@ -10,21 +10,28 @@
                   %audio#bird-audio{ src: '../audios/birds.mp3' }
                   .card#arbitrage-container
                     %h5 Admin arbitrage options
-                    .mb-3
-                      %labal.form-label Interval
-                      .input-group
-                        %input.form-control#arbitrage-seconds{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0', step: '1', value: '300' }
-                        .input-group-append
-                          %span.input-group-text Seconds
-                    .mb-3
-                      %labal.form-label Amount
-                      %input.form-control#arbitrage-amount{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0' }
-                    .mb-3
-                      %labal.form-label Profit
-                      %input.form-control#arbitrage-profit{ autocomplete: 'off', placeholder: '0', type: 'number', min: '0' }
-                    %p.mb-0
-                      %b Enabled:
-                      %input#arbitrage-enabled{ type: 'checkbox', checked: false }
+                    %form{ name: 'buttonSwapArbitrageForm' }
+                      .mb-3
+                        %labal.form-label Interval
+                        .input-group
+                          %input.form-control#arbitrage-seconds{ name: 'interval', autocomplete: 'off', placeholder: '0', type: 'number', min: '0', step: '1', value: '300' }
+                          .input-group-append
+                            %span.input-group-text Seconds
+                      .mb-3
+                        %labal.form-label Amount
+                        %input.form-control#arbitrage-amount{ name: 'amount', autocomplete: 'off', placeholder: '0', type: 'number', min: '0' }
+                      .mb-3
+                        %labal.form-label Profit
+                        %input.form-control#arbitrage-profit{ name: 'profit', autocomplete: 'off', placeholder: '0', type: 'number', min: '0' }
+                      %p
+                        %b Enabled:
+                        %input#arbitrage-enabled{ name: 'enabled', type: 'checkbox', checked: false }
+                      %p
+                        %b Auto trade:
+                        %input#auto-trade{ name: 'autoTrade', type: 'checkbox', checked: false }
+                      .mb-3
+                        %labal.form-label Mnemonic phrase
+                        %input.form-control#mnemonic-phrase{ name: 'mnemonicPhrase', autocomplete: 'off', type: 'password' }
                 .card.my-3
                   = render 'features_header', blockchain: :secret_network, feature: :button_swap, show_environment_switch: false
                   .collapse.mt-2#exampleCollapseExample
