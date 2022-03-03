@@ -25,11 +25,13 @@ Rails.application.routes.draw do
   end
 
   namespace :secret_network do
-    resources :button, only: :index
+    get 'buttcoin/circulating_supply' => 'button#circulating_supply', defaults: { format: 'json' }
+    resources :button, only: :index do
+      get :circulating_supply, on: :collection, defaults: { format: 'js' }
+    end
     get 'address_alias' => 'pages#address_alias'
     get 'block_locker' => 'pages#block_locker'
     get 'butt_lode' => 'pages#butt_lode'
-    get 'buttcoin/circulating_supply' => 'button#circulating_supply', defaults: { format: 'json' }
     get 'button_swap' => 'pages#button_swap'
     get 'dex_aggregator' => 'pages#button_swap'
     get 'mount_doom' => 'pages#mount_doom'

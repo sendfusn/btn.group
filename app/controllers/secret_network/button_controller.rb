@@ -11,8 +11,8 @@ module SecretNetwork
     end
 
     def circulating_supply
-      response = RestClient.get 'https://api.secretapi.io/blocks/latest'
-      height = JSON.parse(response.body)['block']['header']['height']
+      response = RestClient.get "https://secret-4--rpc--full.datahub.figment.io/apikey/#{Rails.application.credentials.datahub_api_key}/block"
+      height = JSON.parse(response.body)['result']['block']['header']['height']
       circulating_supply = 28_000_006
       circulating_supply -= (15_060_000 - height.to_i) * 1.4 if height.to_i < 15_060_000
       render json: {
