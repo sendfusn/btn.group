@@ -52,16 +52,6 @@ $(document).ready(function(){
           let asset_0_amount;
           let asset_1_amount;
           let sharesAmount;
-          tradePair['cryptocurrency_pools'].forEach((cryptocurrencyPool) => {
-            if (cryptocurrencyPool['cryptocurrency_role'] == 'deposit') {
-              let cryptocurrency = cryptocurrencyPool['cryptocurrency']
-              if (asset_0_symbol) {
-                asset_1_symbol = cryptocurrency['symbol']
-              } else {
-                asset_0_symbol = cryptocurrency['symbol']
-              }
-            }
-          })
           let queryParams = {
             address: address,
             codeHash: tradePair['smart_contract']['data_hash'],
@@ -134,6 +124,29 @@ $(document).ready(function(){
               }
             }
           }
+          // Setting asset symbols and applying decimals to amounts after sending correct amounts to back end
+          tradePair['cryptocurrency_pools'].forEach((cryptocurrencyPool) => {
+            if (cryptocurrencyPool['cryptocurrency_role'] == 'deposit') {
+              let cryptocurrency = cryptocurrencyPool['cryptocurrency']
+              if (cryptocurrency.smart_contract) {
+                if (asset_0_address == cryptocurrency.smart_contract.address) {
+                  asset_0_symbol = cryptocurrency.symbol
+                  asset_0_amount = document.applyDecimals(asset_0_amount, cryptocurrency.decimals)
+                } else {
+                  asset_1_symbol = cryptocurrency.symbol
+                  asset_1_amount = document.applyDecimals(asset_1_amount, cryptocurrency.decimals)
+                }
+              } else {
+                if (!asset_0_address) {
+                  asset_0_symbol = cryptocurrency.symbol
+                  asset_0_amount = document.applyDecimals(asset_0_amount, cryptocurrency.decimals)
+                } else {
+                  asset_1_symbol = cryptocurrency.symbol
+                  asset_1_amount = document.applyDecimals(asset_1_amount, cryptocurrency.decimals)
+                }
+              }
+            }
+          })
 
           tradePairForDataTable['poolId'] = tradePair['id']
           tradePairForDataTable['crypto0Symbol'] = asset_0_symbol
