@@ -1,7 +1,9 @@
 $(document).ready(function(){
   if($("#secret-network-transactions").length) {
     this.nonFungibleTokenAddress = 'secret1xx4fp7qgkyxdk9elrzd8v5p7gj28lvxprwl9lw'
+    this.nonFungibleTokenDataHash = '481A283CA0D7988CFFB6987A35D1F455012A231E0D43C49F1EC191E8B89B7681'
     this.tokenAddress = document.secretNetwork.butt.address;
+    this.tokenDataHash = document.secretNetwork.butt.dataHash;
     this.tokenType = 'fungibleToken'
 
     // === LIST ===
@@ -116,12 +118,14 @@ $(document).ready(function(){
         cloudinaryPublicId = 'external-content.duckduckgo-1_memqe7'
       }
       if(this.tokenType == 'nft') {
-        this.nftAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
+        this.nonFungibleTokenAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
+        this.nonFungibleTokenDataHash = event['currentTarget']['dataset']['cryptocurrencyDataHash']
         $('#non-fungible-token-button .symbol').text(event['currentTarget']['dataset']['cryptocurrencyName'])
         $('#non-fungible-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
       } else {
         this.tokenAddress = event['currentTarget']['dataset']['cryptocurrencyAddress']
         $('#fungible-token-button .symbol').text(symbol)
+        this.tokenDataHash = event['currentTarget']['dataset']['cryptocurrencyDataHash']
         $('#fungible-token-button .logo-avatar').attr('src', 'https://res.cloudinary.com/hv5cxagki/image/upload/c_scale,f_auto,h_48,q_100,w_48/v1/' + cloudinaryPublicId)
       }
       if (symbol == 'OTHER') {
@@ -137,13 +141,16 @@ $(document).ready(function(){
       let queryParams;
       let tokenAddress;
       let token_decimals;
+      let tokenDataHash;
       let token_symbol;
       let viewingKey = document.secretNetworkTransactionsForm.viewingKey.value;
       let params;
       if (this.tokenType == 'nft') {
         tokenAddress = this.nonFungibleTokenAddress
+        tokenDataHash = this.nonFungibleTokenDataHash
       } else {
         tokenAddress = this.tokenAddress
+        tokenDataHash = this.tokenDataHash
       }
       if (!tokenAddress) {
         tokenAddress = document.secretNetworkTransactionsForm.otherTokenAddress.value;
@@ -189,6 +196,7 @@ $(document).ready(function(){
           // Get the token info
           queryParams = {
             address: tokenAddress,
+            codeHash: tokenDataHash,
             query: { token_info: {} }
           }
           let token_info_response = await document.secretNetwork.queryContractSmart(queryParams);
@@ -207,6 +215,7 @@ $(document).ready(function(){
         // Get the transactions for that token
         queryParams = {
           address: tokenAddress,
+          codeHash: tokenDataHash,
           query: params
         }
         let transactions_response = await document.secretNetwork.queryContractSmart(queryParams);
@@ -303,11 +312,12 @@ $(document).ready(function(){
             }
           }
         }
-        let queryParams2 = {
+        queryParamsTwo = {
           address: tokenAddress,
+          codeHash: tokenDataHash,
           query: params
         }
-        let response = await document.secretNetwork.queryContractSmart(queryParams2);
+        let response = await document.secretNetwork.queryContractSmart(queryParamsTwo);
         // Display results
         let balance;
         if (this.tokenType == 'nft') {
