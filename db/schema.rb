@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_03_234655) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_04_100351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -170,6 +170,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_234655) do
     t.index ["to_id"], name: "index_swap_paths_on_to_id"
   end
 
+  create_table "txs", force: :cascade do |t|
+    t.integer "identifier"
+    t.bigint "cryptocurrency_id"
+    t.string "from_type"
+    t.bigint "from_id"
+    t.string "to_type"
+    t.bigint "to_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cryptocurrency_id"], name: "index_txs_on_cryptocurrency_id"
+    t.index ["from_type", "from_id"], name: "index_txs_on_from"
+    t.index ["identifier", "cryptocurrency_id"], name: "index_txs_on_identifier_and_cryptocurrency_id", unique: true
+    t.index ["identifier"], name: "index_txs_on_identifier"
+    t.index ["to_type", "to_id"], name: "index_txs_on_to"
+  end
+
   create_table "wallets", force: :cascade do |t|
     t.string "address", null: false
     t.string "butt_staked"
@@ -192,4 +208,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_03_234655) do
   add_foreign_key "swap_paths", "cryptocurrencies", column: "from_id", name: "swap_paths_from_id_fk"
   add_foreign_key "swap_paths", "cryptocurrencies", column: "to_id", name: "swap_paths_to_id_fk"
   add_foreign_key "swap_paths", "protocols", name: "swap_paths_protocol_id_fk"
+  add_foreign_key "txs", "cryptocurrencies", name: "txs_cryptocurrency_id_fk"
+  add_foreign_key "wallets", "blockchains", name: "wallets_blockchain_id_fk"
 end
