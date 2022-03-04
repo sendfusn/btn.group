@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   end
   resources :smart_contracts, only: :index, defaults: { format: 'json' }
   resources :swap_paths, only: :index, defaults: { format: 'json' }
+  resources :wallets, only: :update, defaults: { format: 'json' }
 
   namespace :near do
     get 'smart_contract_interface' => 'pages#smart_contract_interface'
