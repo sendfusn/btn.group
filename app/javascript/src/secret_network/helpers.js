@@ -98,24 +98,27 @@ document.secretNetwork = {
     try {
       let client = await document.secretNetwork.signingClient(environment)
       response = await client.tx.compute.executeContract(params, { gasLimit })
-      if (response['code'] > 0) {
-        if (response['jsonLog']['generic_err']) {
-          throw response['jsonLog']['generic_err']
-        } else if(response['jsonLog']['not_found']) {
-          throw response['jsonLog']['not_found']['kind'] + ' ' + 'not found'
-        } else {
-          throw response['jsonLog']['rawLog']
-        }
-      } else {
-        return response
-      }
     } catch(err) {
       console.log(err)
       window.executeError = err
-      if (err.message && err.message.includes('Bad status on response: 502') && attempt < 5) {
+      if (err.message && (err.message.includes('Bad status on response: 502') || err.message.includes('Request failed with status code 429')) && attempt < 5) {
         return await document.secretNetwork.executeContract(params, gasLimit, environment, attempt + 1)
       } else {
         throw err
+      }
+    } finally {
+      if (response) {
+        if (response['code'] > 0) {
+          if (response['jsonLog']['generic_err']) {
+            throw response['jsonLog']['generic_err']
+          } else if(response['jsonLog']['not_found']) {
+            throw response['jsonLog']['not_found']['kind'] + ' ' + 'not found'
+          } else {
+            throw response['jsonLog']['rawLog']
+          }
+        } else {
+          return response
+        }
       }
     }
   },
